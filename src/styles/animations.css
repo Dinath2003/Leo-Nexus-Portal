@@ -1,0 +1,348 @@
+/* ============================================
+   LEO NEXUS PORTAL — ANIMATIONS
+   ============================================ */
+
+/* ---------- Core Keyframes ---------- */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes toastSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(60px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes toastSlideOut {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(60px);
+  }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-8px); }
+  40% { transform: translateX(8px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+}
+
+/* ---------- Ambient Animations ---------- */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes ambient-float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(30px, -20px) scale(1.05); }
+  50% { transform: translate(-10px, 20px) scale(0.95); }
+  75% { transform: translate(20px, 10px) scale(1.02); }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(0, 102, 255, 0.2), 0 0 60px rgba(0, 102, 255, 0.05); }
+  50% { box-shadow: 0 0 30px rgba(0, 102, 255, 0.4), 0 0 80px rgba(0, 102, 255, 0.1); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes ripple {
+  0% { transform: scale(0); opacity: 0.4; }
+  100% { transform: scale(4); opacity: 0; }
+}
+
+/* ---------- Bubble/Particle Animation for Login ---------- */
+@keyframes bubble-rise {
+  0% {
+    transform: translateY(100vh) translateX(0) scale(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.6;
+    transform: translateY(90vh) translateX(10px) scale(0.5);
+  }
+  50% {
+    opacity: 0.4;
+  }
+  100% {
+    transform: translateY(-10vh) translateX(-20px) scale(1);
+    opacity: 0;
+  }
+}
+
+.bubble {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(0, 212, 255, 0.15), rgba(0, 102, 255, 0.05));
+  border: 1px solid rgba(0, 212, 255, 0.08);
+  pointer-events: none;
+}
+
+.bubble-1 {
+  width: 20px; height: 20px;
+  left: 10%;
+  animation: bubble-rise 12s linear infinite;
+}
+
+.bubble-2 {
+  width: 14px; height: 14px;
+  left: 30%;
+  animation: bubble-rise 15s linear infinite 3s;
+}
+
+.bubble-3 {
+  width: 24px; height: 24px;
+  left: 55%;
+  animation: bubble-rise 18s linear infinite 6s;
+}
+
+.bubble-4 {
+  width: 10px; height: 10px;
+  left: 70%;
+  animation: bubble-rise 14s linear infinite 2s;
+}
+
+.bubble-5 {
+  width: 18px; height: 18px;
+  left: 85%;
+  animation: bubble-rise 16s linear infinite 8s;
+}
+
+.bubble-6 {
+  width: 12px; height: 12px;
+  left: 45%;
+  animation: bubble-rise 20s linear infinite 4s;
+}
+
+.bubble-7 {
+  width: 16px; height: 16px;
+  left: 20%;
+  animation: bubble-rise 17s linear infinite 10s;
+}
+
+.bubble-8 {
+  width: 8px; height: 8px;
+  left: 65%;
+  animation: bubble-rise 13s linear infinite 1s;
+}
+
+/* ---------- Page Transition ---------- */
+.page-enter {
+  animation: fadeInUp var(--duration-slow) var(--ease-smooth);
+}
+
+/* Staggered children animation */
+.stagger-enter > * {
+  opacity: 0;
+  animation: fadeInUp 0.5s var(--ease-smooth) forwards;
+}
+
+.stagger-enter > *:nth-child(1) { animation-delay: 0.05s; }
+.stagger-enter > *:nth-child(2) { animation-delay: 0.1s; }
+.stagger-enter > *:nth-child(3) { animation-delay: 0.15s; }
+.stagger-enter > *:nth-child(4) { animation-delay: 0.2s; }
+.stagger-enter > *:nth-child(5) { animation-delay: 0.25s; }
+.stagger-enter > *:nth-child(6) { animation-delay: 0.3s; }
+.stagger-enter > *:nth-child(7) { animation-delay: 0.35s; }
+.stagger-enter > *:nth-child(8) { animation-delay: 0.4s; }
+
+/* ---------- Scroll-Driven Entry Effects ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  @supports ((animation-timeline: view()) and (animation-range: entry)) {
+    @keyframes scroll-fade-in {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+    }
+
+    @keyframes scroll-fade-out {
+      to {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+    }
+
+    .scroll-reveal {
+      animation:
+        scroll-fade-in auto linear backwards,
+        scroll-fade-out auto linear forwards;
+      animation-timeline: view();
+      animation-range: entry 0% entry 100%, exit 80% exit 100%;
+    }
+  }
+}
+
+/* ---------- Hover Micro-interactions ---------- */
+.hover-lift {
+  transition: transform var(--duration-normal) var(--ease-smooth),
+              box-shadow var(--duration-normal) var(--ease-smooth);
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--glow-card), 0 12px 40px rgba(0, 0, 0, 0.3);
+}
+
+.hover-glow {
+  transition: box-shadow var(--duration-normal) var(--ease-smooth);
+}
+
+.hover-glow:hover {
+  box-shadow: var(--glow-blue);
+}
+
+.hover-scale {
+  transition: transform var(--duration-fast) var(--ease-smooth);
+}
+
+.hover-scale:hover {
+  transform: scale(1.02);
+}
+
+.hover-scale:active {
+  transform: scale(0.98);
+}
+
+/* ---------- Loading Skeleton ---------- */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(26, 33, 80, 0.5) 25%,
+    rgba(30, 39, 96, 0.5) 50%,
+    rgba(26, 33, 80, 0.5) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+  border-radius: var(--radius-md);
+}
+
+.skeleton-text {
+  height: 14px;
+  margin-bottom: var(--space-2);
+}
+
+.skeleton-text:last-child {
+  width: 60%;
+}
+
+.skeleton-title {
+  height: 24px;
+  width: 40%;
+  margin-bottom: var(--space-4);
+}
+
+.skeleton-circle {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+}
+
+/* ---------- Counter Animation ---------- */
+.count-up {
+  display: inline-block;
+}
+
+/* ---------- Water Caustics Effect for Cards ---------- */
+@keyframes caustics {
+  0%, 100% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+}
+
+.water-effect::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 30% 20%, rgba(0, 212, 255, 0.03) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 80%, rgba(0, 102, 255, 0.02) 0%, transparent 50%);
+  background-size: 200% 200%;
+  animation: caustics 10s ease-in-out infinite;
+  pointer-events: none;
+  border-radius: inherit;
+}
