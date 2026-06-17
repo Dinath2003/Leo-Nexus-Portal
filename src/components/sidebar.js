@@ -4,7 +4,6 @@
 
 import { auth } from '../auth.js';
 import { store } from '../store.js';
-import { router } from '../router.js';
 
 const districtMenuItems = [
   { section: 'Overview', items: [
@@ -79,6 +78,7 @@ function getRoleLabel(role) {
     district_secretary: 'District Secretary',
     district_membership: 'District Membership Chair',
     district_admin: 'District Admin',
+    district_treasurer: 'District Treasurer',
     club_president: 'Club President',
     club_secretary: 'Club Secretary',
     club_treasurer: 'Club Treasurer',
@@ -98,25 +98,32 @@ export function renderSidebar() {
   if (isDistrict) menuItems = districtMenuItems;
   else if (isMember) menuItems = memberMenuItems;
 
-  const currentPath = router.getCurrentPath();
+  const currentPath = window.location.hash.slice(1) || '/login';
   const user = auth.currentUser;
   const club = auth.userClub;
 
   let menuHtml = '';
   menuItems.forEach(section => {
-    menuHtml += `<div class="sidebar-section">
-      <div class="sidebar-section-label">${section.section}</div>`;
-    section.items.forEach(item => {
-      const isActive = currentPath === item.path;
-      const badgeCount = item.badge ? item.badge() : 0;
-      menuHtml += `
-        <a href="#${item.path}" class="sidebar-link ${isActive ? 'active' : ''}">
-          <i data-lucide="${item.icon}"></i>
-          <span>${item.label}</span>
-          ${badgeCount > 0 ? `<span class="link-badge">${badgeCount}</span>` : ''}
-        </a>`;
+    const visibleItems = section.items.filter(item => {
+      if (!user?.visibleOptions) return true;
+      return user.visibleOptions.includes(item.label);
     });
-    menuHtml += '</div>';
+
+    if (visibleItems.length > 0) {
+      menuHtml += `<div class="sidebar-section">
+        <div class="sidebar-section-label">${section.section}</div>`;
+      visibleItems.forEach(item => {
+        const isActive = currentPath === item.path;
+        const badgeCount = item.badge ? item.badge() : 0;
+        menuHtml += `
+          <a href="#${item.path}" class="sidebar-link ${isActive ? 'active' : ''}">
+            <i data-lucide="${item.icon}"></i>
+            <span>${item.label}</span>
+            ${badgeCount > 0 ? `<span class="link-badge">${badgeCount}</span>` : ''}
+          </a>`;
+      });
+      menuHtml += '</div>';
+    }
   });
 
   return `
@@ -154,7 +161,7 @@ export function initSidebar() {
     logoutBtn.querySelector('[data-lucide="log-out"]')?.addEventListener('click', (e) => {
       e.stopPropagation();
       auth.logout();
-      router.navigate('/login');
+      window.location.hash = '/login';
     });
   }
 
@@ -165,4 +172,37 @@ export function initSidebar() {
       backdrop.classList.remove('show');
     });
   }
+}
+
+export function isPathAllowed(path, user) {
+  if (!user) return false;
+  if (!user.visibleOptions) return true;
+
+  // Always allow home/dashboard routes and login to prevent redirect loops
+  if (['/district/dashboard', '/club/dashboard', '/member/dashboard', '/login'].includes(path)) {
+    return true;
+  }
+
+  const isDistrict = user.role === 'admin' || user.role?.startsWith('district_');
+  const isMember = user.role === 'club_member';
+  
+  let menuItems = clubMenuItems;
+  if (isDistrict) menuItems = districtMenuItems;
+  else if (isMember) menuItems = memberMenuItems;
+
+  // Find the menu item with the matching path
+  let foundItem = null;
+  for (const section of menuItems) {
+    const item = section.items.find(i => i.path === path);
+    if (item) {
+      foundItem = item;
+      break;
+    }
+  }
+
+  // If the path is not in the menu items, allow it
+  if (!foundItem) return true;
+
+  // Otherwise check if the item label is in the user's visibleOptions
+  return user.visibleOptions.includes(foundItem.label);
 }

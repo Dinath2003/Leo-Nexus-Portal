@@ -291,22 +291,41 @@ export function renderDistrictEvents() {
                               // Consolidated payment record from club
                               const cPayment = eventClubPayments.find(p => p.clubId === club.id);
                               
+                              // Check if an invoice has already been issued for this event and club
+                              const invoices = store.getAll('invoices');
+                              const existingInv = invoices.find(inv => inv.eventId === evt.id && inv.clubId === club.id);
+                              
                               let statusBadge = `<span class="badge badge-danger">Unpaid</span>`;
+                              let actionBtn = '—';
+
                               if (cPayment) {
                                 statusBadge = cPayment.status === 'paid' 
-                                  ? `<span class="badge badge-success">Settled</span>`
+                                  ? `<span class="badge badge-success">Settled (Direct)</span>`
                                   : `<span class="badge badge-warning">Verification Pending</span>`;
+                                
+                                if (cPayment.status === 'pending') {
+                                  actionBtn = `<button class="btn btn-primary btn-xs verify-club-pay" data-pay-id="${cPayment.id}" data-event-id="${evt.id}" data-club-name="${club.name}" data-ref="${cPayment.reference}">Review</button>`;
+                                } else if (cPayment.status === 'paid') {
+                                  actionBtn = `<span style="color:#14b8a6; font-weight:600;"><i data-lucide="check" style="width:12px;height:12px;display:inline-block;vertical-align:-1px;"></i> Receipt Verified</span>`;
+                                }
+                              } else if (existingInv) {
+                                if (existingInv.status === 'paid') {
+                                  statusBadge = `<span class="badge badge-success">Settled (Invoiced)</span>`;
+                                  actionBtn = `<span style="color:#14b8a6; font-weight:600;"><i data-lucide="check" style="width:12px;height:12px;display:inline-block;vertical-align:-1px;"></i> Paid (${existingInv.invoiceNumber})</span>`;
+                                } else if (existingInv.status === 'pending') {
+                                  statusBadge = `<span class="badge badge-warning">Invoice Pending</span>`;
+                                  actionBtn = `<a href="#/district/finance" class="btn btn-secondary btn-xs" style="text-decoration:none;"><i data-lucide="external-link" style="width:11px;height:11px;margin-right:2px;vertical-align:-1px;"></i> Verify Invoice</a>`;
+                                } else {
+                                  statusBadge = `<span class="badge badge-danger">Invoiced (Unpaid)</span>`;
+                                  actionBtn = `<span style="font-size:11px; color:var(--color-text-muted); font-weight:600;">${existingInv.invoiceNumber} Issued</span>`;
+                                }
                               } else if (amtOwed === 0) {
                                 statusBadge = `<span class="badge badge-secondary">No registrations</span>`;
+                              } else {
+                                statusBadge = `<span class="badge badge-danger">Unpaid</span>`;
+                                actionBtn = `<button class="btn btn-primary btn-xs create-event-invoice-btn" data-event-id="${evt.id}" data-club-id="${club.id}" data-amount="${amtOwed}" data-club-name="${club.name}" data-event-name="${evt.name}"><i data-lucide="file-plus" style="width:11px;height:11px;margin-right:2px;vertical-align:-1px;"></i> Invoice Club</button>`;
                               }
-
-                              let actionBtn = '—';
-                              if (cPayment && cPayment.status === 'pending') {
-                                actionBtn = `<button class="btn btn-primary btn-xs verify-club-pay" data-pay-id="${cPayment.id}" data-event-id="${evt.id}" data-club-name="${club.name}" data-ref="${cPayment.reference}">Review</button>`;
-                              } else if (cPayment && cPayment.status === 'paid') {
-                                actionBtn = `<span style="color:#14b8a6; font-weight:600;"><i data-lucide="check" style="width:12px;height:12px;display:inline-block;vertical-align:-1px;"></i> Receipt Verified</span>`;
-                              }
-
+ 
                               return `
                                 <tr>
                                   <td style="font-weight:600;">${club.name}</td>
@@ -432,17 +451,17 @@ export function renderDistrictEvents() {
             </div>
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
               <div style="padding:12px; background:rgba(255,255,255,0.02); border:1px solid var(--color-border); border-radius:10px;">
-                <div style="font-size:11px; color:var(--color-text-muted);">Amount Received</div>
-                <div style="font-weight:700; font-size:15px; color:#14b8a6; margin-top:4px;">Rs. ${cPay.amount.toLocaleString()}</div>
+                <div style="font-size:11px; color:var(--color-text-muted);">Amount Received (LKR)</div>
+                <input type="number" class="form-input" id="review-pay-amount" value="${cPay.amount}" style="padding:4px 8px; font-size:13px; height:28px; margin-top:4px;" />
               </div>
               <div style="padding:12px; background:rgba(255,255,255,0.02); border:1px solid var(--color-border); border-radius:10px;">
                 <div style="font-size:11px; color:var(--color-text-muted);">Registered Members</div>
-                <div style="font-weight:700; font-size:15px; color:var(--color-primary); margin-top:4px;">${cPay.registeredCount} members</div>
+                <div style="font-weight:700; font-size:15px; color:var(--color-primary); margin-top:10px;">${cPay.registeredCount} members</div>
               </div>
             </div>
             <div style="padding:12px; background:rgba(255,255,255,0.02); border:1px solid var(--color-border); border-radius:10px;">
-              <div style="font-size:11px; color:var(--color-text-muted);">Reference Code & Date</div>
-              <div style="font-weight:600; font-size:13px; color:var(--color-text-primary); margin-top:4px;">${ref} (Submitted: ${new Date(cPay.date).toLocaleDateString()})</div>
+              <div style="font-size:11px; color:var(--color-text-muted);">Reference Code</div>
+              <input type="text" class="form-input" id="review-pay-ref" value="${cPay.reference || ''}" style="padding:4px 8px; font-size:13px; height:28px; margin-top:4px;" />
             </div>
             
             <div>
@@ -460,8 +479,15 @@ export function renderDistrictEvents() {
           submitText: 'Approve & Settle',
           cancelText: 'Reject Dues',
           onSubmit: (close) => {
-            // Approve payment
-            store.update('clubPayments', payId, { status: 'paid' });
+            const updatedAmount = parseFloat(document.getElementById('review-pay-amount').value) || cPay.amount;
+            const updatedRef = document.getElementById('review-pay-ref').value.trim() || cPay.reference || 'REF';
+
+            // Approve payment and save updated details
+            store.update('clubPayments', payId, { 
+              status: 'paid',
+              amount: updatedAmount,
+              reference: updatedRef
+            });
             
             // Add transaction log to district finances
             const evt = store.getById('events', eventId);
@@ -469,10 +495,10 @@ export function renderDistrictEvents() {
               clubId: 'district',
               type: 'income',
               category: 'Events',
-              amount: cPay.amount,
+              amount: updatedAmount,
               date: new Date().toISOString().split('T')[0],
               description: `Consolidated Event Fees: ${evt?.name} from ${clubName}`,
-              reference: ref
+              reference: updatedRef
             });
 
             showToast('success', 'Payment Approved', `Club payment from ${clubName} has been settled.`);
@@ -483,6 +509,90 @@ export function renderDistrictEvents() {
             // Reject payment
             store.delete('clubPayments', payId);
             showToast('warning', 'Payment Rejected', `Dues from ${clubName} were rejected and must be re-submitted.`);
+            render(filterStatus);
+          }
+        });
+      });
+    });
+
+    // Create contextual event invoice click listener
+    document.querySelectorAll('.create-event-invoice-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const eventId = btn.dataset.eventId;
+        const clubId = btn.dataset.clubId;
+        const clubName = btn.dataset.clubName;
+        const eventName = btn.dataset.eventName;
+        const amount = parseFloat(btn.dataset.amount);
+        const nextNum = 'INV-2026-' + String(store.getAll('invoices').length + 1).padStart(3, '0');
+
+        const bodyHtml = `
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Invoice Number</label>
+              <input type="text" class="form-input" id="inv-number" value="${nextNum}" readonly />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Leo Club</label>
+              <input type="text" class="form-input" value="${clubName}" readonly />
+              <input type="hidden" id="inv-club" value="${clubId}" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Category</label>
+              <input type="text" class="form-input" id="inv-category" value="Conference Levy" readonly />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Amount (Rs.)</label>
+              <input type="number" class="form-input" id="inv-amount" value="${amount}" readonly />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Issue Date *</label>
+              <input type="date" class="form-input" id="inv-issue-date" value="${new Date().toISOString().split('T')[0]}" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Due Date *</label>
+              <input type="date" class="form-input" id="inv-due-date" value="${new Date(Date.now() + 30*24*60*60*1000).toISOString().split('T')[0]}" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Description *</label>
+            <textarea class="form-textarea" id="inv-description" rows="2" placeholder="Invoice description...">Event Registration Dues: ${eventName} - ${clubName}</textarea>
+          </div>
+        `;
+
+        showModal('Issue Contextual Event Invoice', bodyHtml, {
+          submitText: 'Issue Invoice',
+          onSubmit: (close) => {
+            const invoiceNumber = document.getElementById('inv-number').value;
+            const issueDate = document.getElementById('inv-issue-date').value;
+            const dueDate = document.getElementById('inv-due-date').value;
+            const description = document.getElementById('inv-description').value.trim();
+
+            if (!issueDate) { showToast('error', 'Validation Error', 'Please select an issue date.'); return; }
+            if (!dueDate) { showToast('error', 'Validation Error', 'Please select a due date.'); return; }
+            if (!description) { showToast('error', 'Validation Error', 'Please enter a description.'); return; }
+
+            store.create('invoices', {
+              invoiceNumber,
+              clubId,
+              clubName,
+              category: 'Conference Levy',
+              amount,
+              issueDate,
+              dueDate,
+              description,
+              status: 'unpaid',
+              receiptUrl: '',
+              reference: '',
+              remarks: '',
+              eventId: eventId
+            });
+
+            showToast('success', 'Invoice Issued', `Invoice ${invoiceNumber} issued for ${clubName}.`);
+            close();
             render(filterStatus);
           }
         });

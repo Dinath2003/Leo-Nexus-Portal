@@ -41,18 +41,18 @@ function getClubFormHtml(club = null) {
           <label class="form-label">Zone *</label>
           <select class="form-select" id="club-zone">
             <option value="">Select Zone</option>
-            <option value="Zone A" ${club?.zone === 'Zone A' ? 'selected' : ''}>Zone A</option>
-            <option value="Zone B" ${club?.zone === 'Zone B' ? 'selected' : ''}>Zone B</option>
-            <option value="Zone C" ${club?.zone === 'Zone C' ? 'selected' : ''}>Zone C</option>
+            <option value="A1" ${club?.zone === 'A1' ? 'selected' : ''}>A1</option>
+            <option value="A2" ${club?.zone === 'A2' ? 'selected' : ''}>A2</option>
+            <option value="B1" ${club?.zone === 'B1' ? 'selected' : ''}>B1</option>
+            <option value="B2" ${club?.zone === 'B2' ? 'selected' : ''}>B2</option>
           </select>
         </div>
         <div class="form-group">
           <label class="form-label">Region *</label>
           <select class="form-select" id="club-region">
             <option value="">Select Region</option>
-            <option value="Region 1" ${club?.region === 'Region 1' ? 'selected' : ''}>Region 1</option>
-            <option value="Region 2" ${club?.region === 'Region 2' ? 'selected' : ''}>Region 2</option>
-            <option value="Region 3" ${club?.region === 'Region 3' ? 'selected' : ''}>Region 3</option>
+            <option value="A" ${club?.region === 'A' ? 'selected' : ''}>A</option>
+            <option value="B" ${club?.region === 'B' ? 'selected' : ''}>B</option>
           </select>
         </div>
       </div>

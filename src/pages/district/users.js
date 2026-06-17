@@ -12,6 +12,28 @@ import { renderTable } from '../../components/table.js';
 
 function getUserFormHtml(user = null) {
   const clubs = store.getAll('clubs');
+  
+  const availableOptions = [
+    { id: 'Dashboard', label: 'Dashboard' },
+    { id: 'Clubs', label: 'Clubs (District)' },
+    { id: 'Users', label: 'Users (District)' },
+    { id: 'Finance (District)', label: 'Finance (District)' },
+    { id: 'Announcements', label: 'Announcements' },
+    { id: 'Events', label: 'Events (District)' },
+    { id: 'Points & Criteria', label: 'Points & Criteria' },
+    { id: 'Reports', label: 'Reports' },
+    { id: 'Club Profile', label: 'Club Profile' },
+    { id: 'Finance', label: 'Finance (Club)' },
+    { id: 'Members', label: 'Members (Club)' },
+    { id: 'Projects', label: 'Projects' },
+    { id: 'Events & Registrations', label: 'Events (Member)' },
+    { id: 'Points', label: 'Points (Club)' },
+    { id: 'District Profile', label: 'District Profile' },
+    { id: 'MD Profile', label: 'MD Profile' },
+  ];
+
+  const userVisible = user?.visibleOptions || availableOptions.map(o => o.id);
+
   return `
     <form id="user-form">
       <div class="form-row">
@@ -31,12 +53,23 @@ function getUserFormHtml(user = null) {
       </div>` : ''}
       <div class="form-row">
         <div class="form-group">
-          <label class="form-label">Role *</label>
+          <label class="form-label">Role Preference *</label>
           <select class="form-select" id="user-role">
             <option value="">Select Role</option>
+            <option value="admin" ${user?.role === 'admin' ? 'selected' : ''}>Super Admin</option>
+            <option value="district_president" ${user?.role === 'district_president' ? 'selected' : ''}>District President</option>
+            <option value="district_vp" ${user?.role === 'district_vp' ? 'selected' : ''}>District Vice President</option>
+            <option value="district_secretary" ${user?.role === 'district_secretary' ? 'selected' : ''}>District Secretary</option>
+            <option value="district_membership" ${user?.role === 'district_membership' ? 'selected' : ''}>District Membership Chair</option>
             <option value="district_admin" ${user?.role === 'district_admin' ? 'selected' : ''}>District Admin</option>
+            <option value="district_treasurer" ${user?.role === 'district_treasurer' ? 'selected' : ''}>District Treasurer</option>
+            <option value="club_president" ${user?.role === 'club_president' ? 'selected' : ''}>Club President</option>
+            <option value="club_secretary" ${user?.role === 'club_secretary' ? 'selected' : ''}>Club Secretary</option>
+            <option value="club_treasurer" ${user?.role === 'club_treasurer' ? 'selected' : ''}>Club Treasurer</option>
+            <option value="club_membership" ${user?.role === 'club_membership' ? 'selected' : ''}>Club Membership Chair</option>
             <option value="club_admin" ${user?.role === 'club_admin' ? 'selected' : ''}>Club Admin</option>
             <option value="club_viewer" ${user?.role === 'club_viewer' ? 'selected' : ''}>Club Viewer</option>
+            <option value="club_member" ${user?.role === 'club_member' ? 'selected' : ''}>Club Member</option>
           </select>
         </div>
         <div class="form-group">
@@ -47,16 +80,38 @@ function getUserFormHtml(user = null) {
           </select>
         </div>
       </div>
+
+      <!-- Account Visible Options -->
+      <div class="form-group" style="margin-top:1.25rem; padding-top:1.25rem; border-top:1px dashed rgba(255,255,255,0.08);">
+        <label class="form-label" style="font-weight:600; margin-bottom:0.5rem; display:flex; align-items:center; gap:6px;">
+          <i data-lucide="eye" style="width:16px;height:16px;color:var(--color-primary);"></i> Sidebar Visible Options
+        </label>
+        <div style="display:grid; grid-template-columns: repeat(2, 1fr); gap:0.5rem; padding:0.75rem; border:1px solid rgba(255,255,255,0.06); border-radius:var(--radius-md); background:var(--color-navy);">
+          ${availableOptions.map(opt => {
+            const checked = userVisible.includes(opt.id);
+            return `
+              <label style="display:flex; align-items:center; gap:0.35rem; cursor:pointer; font-size:0.82rem; color:var(--color-text-secondary); padding:0.25rem 0.5rem; border-radius:var(--radius-sm); border:1px solid rgba(255,255,255,0.06); background:var(--color-bg-primary);">
+                <input type="checkbox" class="visibility-checkbox" value="${opt.id}" ${checked ? 'checked' : ''} />
+                ${opt.label}
+              </label>
+            `;
+          }).join('')}
+        </div>
+      </div>
     </form>
   `;
 }
 
 function getUserFormValues(isEdit = false) {
+  const checkedVisibility = document.querySelectorAll('.visibility-checkbox:checked');
+  const visibleOptions = Array.from(checkedVisibility).map(cb => cb.value);
+
   const vals = {
     name: document.getElementById('user-name')?.value?.trim(),
     email: document.getElementById('user-email')?.value?.trim(),
     role: document.getElementById('user-role')?.value,
     clubId: document.getElementById('user-club')?.value || null,
+    visibleOptions
   };
   if (!isEdit) {
     vals.password = document.getElementById('user-password')?.value?.trim();
@@ -81,9 +136,20 @@ function validateUserForm(vals, isEdit = false) {
 }
 
 const roleBadgeMap = {
+  'admin': { label: 'Super Admin', class: 'badge-danger' },
+  'district_president': { label: 'District President', class: 'badge-primary' },
+  'district_vp': { label: 'District VP', class: 'badge-primary' },
+  'district_secretary': { label: 'District Sec', class: 'badge-primary' },
+  'district_membership': { label: 'District Mem', class: 'badge-primary' },
   'district_admin': { label: 'District Admin', class: 'badge-primary' },
+  'district_treasurer': { label: 'District Treasurer', class: 'badge-primary' },
+  'club_president': { label: 'Club President', class: 'badge-cyan' },
+  'club_secretary': { label: 'Club Sec', class: 'badge-cyan' },
+  'club_treasurer': { label: 'Club Treas', class: 'badge-cyan' },
+  'club_membership': { label: 'Club Mem', class: 'badge-cyan' },
   'club_admin': { label: 'Club Admin', class: 'badge-cyan' },
-  'club_viewer': { label: 'Viewer', class: 'badge-warning' }
+  'club_viewer': { label: 'Club Viewer', class: 'badge-warning' },
+  'club_member': { label: 'Club Member', class: 'badge-secondary' }
 };
 
 export function renderDistrictUsers() {
@@ -202,9 +268,20 @@ export function renderDistrictUsers() {
               <div class="toolbar-right">
                 <select class="form-select" id="filter-role" style="min-width:150px;">
                   <option value="">All Roles</option>
+                  <option value="admin" ${filterRole==='admin' ? 'selected' : ''}>Super Admin</option>
+                  <option value="district_president" ${filterRole==='district_president' ? 'selected' : ''}>District President</option>
+                  <option value="district_vp" ${filterRole==='district_vp' ? 'selected' : ''}>District Vice President</option>
+                  <option value="district_secretary" ${filterRole==='district_secretary' ? 'selected' : ''}>District Secretary</option>
+                  <option value="district_membership" ${filterRole==='district_membership' ? 'selected' : ''}>District Membership Chair</option>
                   <option value="district_admin" ${filterRole==='district_admin' ? 'selected' : ''}>District Admin</option>
+                  <option value="district_treasurer" ${filterRole==='district_treasurer' ? 'selected' : ''}>District Treasurer</option>
+                  <option value="club_president" ${filterRole==='club_president' ? 'selected' : ''}>Club President</option>
+                  <option value="club_secretary" ${filterRole==='club_secretary' ? 'selected' : ''}>Club Secretary</option>
+                  <option value="club_treasurer" ${filterRole==='club_treasurer' ? 'selected' : ''}>Club Treasurer</option>
+                  <option value="club_membership" ${filterRole==='club_membership' ? 'selected' : ''}>Club Membership Chair</option>
                   <option value="club_admin" ${filterRole==='club_admin' ? 'selected' : ''}>Club Admin</option>
                   <option value="club_viewer" ${filterRole==='club_viewer' ? 'selected' : ''}>Club Viewer</option>
+                  <option value="club_member" ${filterRole==='club_member' ? 'selected' : ''}>Club Member</option>
                 </select>
               </div>
             </div>

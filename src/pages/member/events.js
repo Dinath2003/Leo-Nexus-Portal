@@ -133,6 +133,12 @@ export function renderMemberEvents() {
                         ` : ''}
 
                         ${isRegistered && !isPaid ? `
+                          <button class="btn btn-secondary btn-sm edit-my-reg-btn" data-reg-id="${reg.id}" data-event-id="${event.id}">
+                            <i data-lucide="pencil" style="width:14px;height:14px;vertical-align:-2px;margin-right:4px;"></i> Edit Details
+                          </button>
+                          <button class="btn btn-ghost btn-sm delete-my-reg-btn" data-reg-id="${reg.id}" style="color:var(--color-danger); border:1px solid rgba(239,68,68,0.2);">
+                            <i data-lucide="trash-2" style="width:14px;height:14px;vertical-align:-2px;margin-right:4px;"></i> Cancel Registration
+                          </button>
                           <button class="btn btn-success btn-sm pay-club-btn" data-event-id="${event.id}" data-reg-id="${reg.id}" data-amount="${event.fee || 1000}">
                             <i data-lucide="credit-card" style="width:14px;height:14px;vertical-align:-2px;margin-right:4px;"></i> Submit Payment to Club
                           </button>
@@ -315,6 +321,69 @@ export function renderMemberEvents() {
             close();
             render();
           }
+        });
+      });
+    });
+
+    // Edit My Registration Details
+    document.querySelectorAll('.edit-my-reg-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const regId = btn.dataset.regId;
+        const reg = store.getById('memberPayments', regId);
+        if (!reg) return;
+        const event = store.getById('events', reg.eventId);
+
+        const editFormHtml = `
+          <form id="edit-my-reg-form">
+            <div class="form-row" style="margin-bottom:12px;">
+              <div class="form-group">
+                <label class="form-label">Full Name</label>
+                <input type="text" class="form-input" value="${member.name}" disabled />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Event Category *</label>
+                <select class="form-select" id="edit-my-reg-category">
+                  ${(event?.category || 'General').split(',').map(c => `<option value="${c.trim()}" ${reg.category === c.trim() ? 'selected' : ''}>${c.trim()}</option>`).join('')}
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Transaction Reference (if paid directly or via cash)</label>
+              <input type="text" class="form-input" id="edit-my-reg-ref" value="${reg.reference || ''}" placeholder="e.g. Bank transfer reference" />
+            </div>
+          </form>
+        `;
+
+        showModal('Edit Registration Details', editFormHtml, {
+          submitText: 'Save Changes',
+          onSubmit: (close) => {
+            const category = document.getElementById('edit-my-reg-category').value;
+            const ref = document.getElementById('edit-my-reg-ref').value.trim();
+
+            store.update('memberPayments', regId, {
+              category,
+              reference: ref
+            });
+
+            showToast('success', 'Changes Saved', 'Your registration details have been updated.');
+            close();
+            render();
+          }
+        });
+      });
+    });
+
+    // Delete My Registration
+    document.querySelectorAll('.delete-my-reg-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const regId = btn.dataset.regId;
+        const reg = store.getById('memberPayments', regId);
+        if (!reg) return;
+
+        showConfirm('Cancel Registration', 'Are you sure you want to cancel your registration for this event? This will remove your record.', () => {
+          store.delete('memberPayments', regId);
+          showToast('success', 'Registration Cancelled', 'Your registration has been removed.');
+          render();
         });
       });
     });

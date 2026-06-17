@@ -134,6 +134,17 @@ class Auth {
         members: ['read'],
         reports: ['read'],
       },
+      district_treasurer: {
+        clubs: ['read'],
+        users: ['read'],
+        announcements: ['read'],
+        events: ['read'],
+        points: ['read'],
+        reports: ['read'],
+        members: ['read'],
+        finances: ['create', 'read', 'update', 'delete'],
+        projects: ['read'],
+      },
       district_admin: {
         clubs: ['create', 'read', 'update', 'delete'],
         users: ['create', 'read', 'update', 'delete'],

@@ -4,6 +4,7 @@
 // ============================================
 
 import { auth } from './auth.js';
+import { isPathAllowed } from './components/sidebar.js';
 
 class Router {
   constructor() {
@@ -35,6 +36,15 @@ class Router {
     // Auth guards
     if (route.options.requireAuth && !auth.isLoggedIn) {
       this.navigate('/login');
+      return;
+    }
+
+    // Visibility guard based on admin configured visibleOptions
+    if (auth.isLoggedIn && !isPathAllowed(hash, auth.currentUser)) {
+      if (auth.isDistrictUser) this.navigate('/district/dashboard');
+      else if (auth.isClubUser) this.navigate('/club/dashboard');
+      else if (auth.isClubMember) this.navigate('/member/dashboard');
+      else this.navigate('/login');
       return;
     }
 

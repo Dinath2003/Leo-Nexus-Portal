@@ -166,6 +166,7 @@ export function renderDistrictPoints() {
                         <th>Club</th>
                         <th>Points</th>
                         <th style="width:120px">Progress</th>
+                        <th style="width:100px">Action</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -185,6 +186,11 @@ export function renderDistrictPoints() {
                                 <div style="height:100%; width:${pct}%; background:linear-gradient(90deg, var(--color-primary), var(--color-cyan)); border-radius:4px;"></div>
                               </div>
                               <div style="font-size:0.65rem; color:var(--color-text-muted); margin-top:2px;">${pct}%</div>
+                            </td>
+                            <td>
+                              <button class="btn btn-ghost btn-xs adjust-club-points-btn" data-club-id="${club.id}" data-club-name="${club.name}">
+                                <i data-lucide="sliders" style="width:12px;height:12px;margin-right:2px;vertical-align:-1px;"></i> Adjust
+                              </button>
                             </td>
                           </tr>`;
                       }).join('')}
@@ -281,6 +287,59 @@ export function renderDistrictPoints() {
         store.delete('pointCriteria', crit.id);
         showToast('success', 'Criteria Deleted', `${crit.category} has been removed.`);
         renderDistrictPoints();
+      });
+    });
+  });
+
+  // Adjust Club Points
+  document.querySelectorAll('.adjust-club-points-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const clubId = btn.dataset.clubId;
+      const clubName = btn.dataset.clubName;
+      const cp = store.getClubPoints(clubId);
+      const pointsObj = cp?.points || {};
+
+      const formHtml = `
+        <div style="display:flex; flex-direction:column; gap:12px; max-height:400px; overflow-y:auto; padding-right:6px;">
+          <p style="font-size:13px; color:var(--color-text-secondary); margin-bottom:8px;">Adjust points for <strong>${clubName}</strong> across criteria categories:</p>
+          ${criteria.map(crit => {
+            const currentPoints = pointsObj[crit.id] || 0;
+            return `
+              <div class="form-group" style="margin-bottom:12px;">
+                <label class="form-label" style="display:flex; justify-content:space-between;">
+                  <span>${crit.category}</span>
+                  <span style="color:var(--color-text-muted); font-weight:normal;">Max: ${crit.maxPoints}</span>
+                </label>
+                <input type="number" class="form-input club-crit-input" data-crit-id="${crit.id}" min="0" max="${crit.maxPoints}" value="${currentPoints}" />
+              </div>
+            `;
+          }).join('')}
+        </div>
+      `;
+
+      showModal('Adjust Club Performance Points', formHtml, {
+        submitText: 'Save Points',
+        onSubmit: (close) => {
+          const updatedPoints = {};
+          let isValid = true;
+          document.querySelectorAll('.club-crit-input').forEach(input => {
+            const val = parseInt(input.value) || 0;
+            const maxVal = parseInt(input.max) || 0;
+            if (val < 0 || val > maxVal) {
+              showToast('error', 'Validation Error', `Points must be between 0 and ${maxVal}.`);
+              isValid = false;
+              return;
+            }
+            updatedPoints[input.dataset.critId] = val;
+          });
+
+          if (!isValid) return;
+
+          store.updateClubPoints(clubId, updatedPoints);
+          showToast('success', 'Points Adjusted', `Performance points for ${clubName} updated successfully.`);
+          close();
+          renderDistrictPoints();
+        }
       });
     });
   });

@@ -47,6 +47,11 @@ export function renderHeader(pageTitle, breadcrumbs = []) {
           </button>
           ${unreadCount > 0 ? '<span class="notif-badge"></span>' : ''}
         </div>
+        <div class="header-settings">
+          <button class="btn btn-icon btn-ghost" id="theme-control-btn" aria-label="Theme Settings" title="Theme Settings">
+            <i data-lucide="settings" style="width:18px;height:18px"></i>
+          </button>
+        </div>
         <div class="avatar">${user?.avatar || 'U'}</div>
       </div>
     </header>

@@ -28,6 +28,7 @@ import { renderDistrictProfile, renderMDProfile } from './pages/profiles.js';
 import { renderMemberDashboard } from './pages/member/dashboard.js';
 import { renderMemberEvents } from './pages/member/events.js';
 import { initHeader } from './components/header.js';
+import { initTheme } from './components/theme.js';
 
 // Remove default Vite styles
 const defaultStyles = document.querySelector('link[href="/style.css"]');
@@ -82,6 +83,7 @@ if (!window.location.hash) {
 }
 
 // ---------- Initialize ----------
+initTheme();
 router.resolve();
 
 console.log('%c🌊 Leo Nexus Portal', 'font-size: 20px; color: #00d4ff; font-weight: bold;');

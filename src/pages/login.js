@@ -13,14 +13,6 @@ export function renderLogin() {
       <div class="login-bg">
         <div class="ocean-gradient"></div>
         <canvas id="particle-canvas"></canvas>
-        <div class="bubble bubble-1"></div>
-        <div class="bubble bubble-2"></div>
-        <div class="bubble bubble-3"></div>
-        <div class="bubble bubble-4"></div>
-        <div class="bubble bubble-5"></div>
-        <div class="bubble bubble-6"></div>
-        <div class="bubble bubble-7"></div>
-        <div class="bubble bubble-8"></div>
       </div>
       <div class="login-content">
         <div class="login-card">
@@ -78,9 +70,10 @@ export function renderLogin() {
               </optgroup>
               <optgroup label="District Officers" style="background:var(--color-bg);">
                 <option value="president.dist@leo.org|president123" style="background:var(--color-bg);">District President</option>
-                <option value="vp.dist@leo.org|vp123" style="background:var(--color-bg);">District VP</option>
+                 <option value="vp.dist@leo.org|vp123" style="background:var(--color-bg);">District VP</option>
                 <option value="secretary.dist@leo.org|secretary123" style="background:var(--color-bg);">District Secretary</option>
                 <option value="membership.dist@leo.org|membership123" style="background:var(--color-bg);">District Membership Chair</option>
+                <option value="treasurer.dist@leo.org|treasurer123" style="background:var(--color-bg);">District Treasurer</option>
               </optgroup>
               <optgroup label="Club Officers (Sapphire)" style="background:var(--color-bg);">
                 <option value="president.club@leo.org|president123" style="background:var(--color-bg);">Club President (Kasun)</option>
@@ -130,7 +123,7 @@ export function renderLogin() {
       emailInput.value = email;
       passInput.value = password;
       
-      if (email.startsWith('president.dist') || email.startsWith('vp.dist') || email.startsWith('secretary.dist') || email.startsWith('membership.dist') || email.startsWith('admin')) {
+      if (email.startsWith('president.dist') || email.startsWith('vp.dist') || email.startsWith('secretary.dist') || email.startsWith('membership.dist') || email.startsWith('treasurer.dist') || email.startsWith('admin')) {
         roleDistrict.classList.add('active');
         roleClub.classList.remove('active');
       } else {
@@ -174,8 +167,9 @@ function initParticles() {
 
   const ctx = canvas.getContext('2d');
   let animationId;
-  const particles = [];
-  const particleCount = 60;
+  const stars = [];
+  const starCount = 100;
+  const shootingStars = [];
 
   function resize() {
     canvas.width = window.innerWidth;
@@ -185,7 +179,7 @@ function initParticles() {
   resize();
   window.addEventListener('resize', resize);
 
-  class Particle {
+  class Star {
     constructor() {
       this.reset();
     }
@@ -193,57 +187,121 @@ function initParticles() {
     reset() {
       this.x = Math.random() * canvas.width;
       this.y = Math.random() * canvas.height;
-      this.size = Math.random() * 2 + 0.5;
-      this.speedX = (Math.random() - 0.5) * 0.3;
-      this.speedY = (Math.random() - 0.5) * 0.3;
-      this.opacity = Math.random() * 0.5 + 0.1;
-      this.hue = Math.random() * 40 + 200; // Blue range
+      this.radius = Math.random() * 1.2 + 0.3;
+      this.alpha = Math.random() * 0.8 + 0.2;
+      this.twinkleSpeed = Math.random() * 0.015 + 0.005;
+      this.direction = Math.random() > 0.5 ? 1 : -1;
+      
+      const colors = ['255, 255, 255', '224, 242, 254', '238, 242, 255'];
+      this.baseColor = colors[Math.floor(Math.random() * colors.length)];
+      
+      this.speedX = (Math.random() - 0.5) * 0.02;
+      this.speedY = (Math.random() - 0.5) * 0.02;
     }
 
     update() {
       this.x += this.speedX;
       this.y += this.speedY;
 
-      if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
-      if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+      if (this.x < 0) this.x = canvas.width;
+      if (this.x > canvas.width) this.x = 0;
+      if (this.y < 0) this.y = canvas.height;
+      if (this.y > canvas.height) this.y = 0;
+
+      this.alpha += this.twinkleSpeed * this.direction;
+      if (this.alpha >= 1) {
+        this.alpha = 1;
+        this.direction = -1;
+      } else if (this.alpha <= 0.15) {
+        this.alpha = 0.15;
+        this.direction = 1;
+      }
     }
 
     draw() {
       ctx.beginPath();
-      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-      ctx.fillStyle = `hsla(${this.hue}, 100%, 70%, ${this.opacity})`;
+      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${this.baseColor}, ${this.alpha})`;
       ctx.fill();
     }
   }
 
-  for (let i = 0; i < particleCount; i++) {
-    particles.push(new Particle());
+  class ShootingStar {
+    constructor() {
+      this.reset();
+    }
+
+    reset() {
+      this.x = Math.random() * canvas.width;
+      this.y = Math.random() * canvas.height * 0.4;
+      this.length = Math.random() * 50 + 25;
+      this.speed = Math.random() * 2.5 + 1.2;
+      this.angle = (Math.PI / 4) + (Math.random() - 0.5) * 0.05;
+      this.alpha = 1;
+      this.active = Math.random() < 0.005;
+    }
+
+    update() {
+      if (!this.active) {
+        if (Math.random() < 0.0005) {
+          this.reset();
+          this.active = true;
+        }
+        return;
+      }
+
+      this.x += Math.cos(this.angle) * this.speed;
+      this.y += Math.sin(this.angle) * this.speed;
+      this.alpha -= 0.02;
+
+      if (this.alpha <= 0 || this.x > canvas.width || this.y > canvas.height) {
+        this.active = false;
+      }
+    }
+
+    draw() {
+      if (!this.active) return;
+
+      ctx.beginPath();
+      const grad = ctx.createLinearGradient(
+        this.x, this.y,
+        this.x - Math.cos(this.angle) * this.length,
+        this.y - Math.sin(this.angle) * this.length
+      );
+      
+      grad.addColorStop(0, `rgba(0, 212, 255, ${this.alpha})`);
+      grad.addColorStop(1, `rgba(0, 212, 255, 0)`);
+
+      ctx.strokeStyle = grad;
+      ctx.lineWidth = 1.0;
+      ctx.moveTo(this.x, this.y);
+      ctx.lineTo(
+        this.x - Math.cos(this.angle) * this.length,
+        this.y - Math.sin(this.angle) * this.length
+      );
+      ctx.stroke();
+    }
+  }
+
+  for (let i = 0; i < starCount; i++) {
+    stars.push(new Star());
+  }
+  for (let i = 0; i < 2; i++) {
+    shootingStars.push(new ShootingStar());
   }
 
   function animate() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    particles.forEach(p => {
-      p.update();
-      p.draw();
+    stars.forEach(s => {
+      s.update();
+      s.draw();
     });
 
-    // Draw connections
-    for (let i = 0; i < particles.length; i++) {
-      for (let j = i + 1; j < particles.length; j++) {
-        const dx = particles[i].x - particles[j].x;
-        const dy = particles[i].y - particles[j].y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 120) {
-          ctx.beginPath();
-          ctx.moveTo(particles[i].x, particles[i].y);
-          ctx.lineTo(particles[j].x, particles[j].y);
-          ctx.strokeStyle = `rgba(0, 150, 255, ${0.08 * (1 - dist / 120)})`;
-          ctx.lineWidth = 0.5;
-          ctx.stroke();
-        }
-      }
-    }
+    shootingStars.forEach(ss => {
+      ss.update();
+      ss.draw();
+    });
 
     animationId = requestAnimationFrame(animate);
   }

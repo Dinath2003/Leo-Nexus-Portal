@@ -43,11 +43,40 @@
 .btn-primary {
   background: var(--gradient-primary);
   color: var(--color-text-white);
-  box-shadow: 0 2px 15px rgba(0, 102, 255, 0.3);
+  box-shadow: 0 4px 15px var(--color-primary-glow), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.25),
+    transparent
+  );
+  transform: skewX(-25deg);
+  transition: none;
+}
+
+.btn-primary:hover::before {
+  animation: buttonShimmer 0.75s ease-out forwards;
+}
+
+@keyframes buttonShimmer {
+  100% {
+    left: 150%;
+  }
 }
 
 .btn-primary:hover {
-  box-shadow: 0 4px 25px rgba(0, 102, 255, 0.5);
+  box-shadow: 0 6px 22px var(--color-primary-glow);
   transform: translateY(-1px);
 }
 
@@ -59,8 +88,9 @@
 }
 
 .btn-secondary:hover {
-  border-color: var(--color-electric-blue);
+  border-color: var(--color-primary);
   background: var(--color-glass-bg-hover);
+  box-shadow: 0 0 12px var(--color-primary-glow);
 }
 
 .btn-ghost {
@@ -139,8 +169,9 @@
 .form-input:focus,
 .form-select:focus,
 .form-textarea:focus {
-  border-color: var(--color-electric-blue);
-  box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.15), var(--glow-subtle);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-glow), 0 0 12px var(--color-primary-glow);
+  background: rgba(15, 21, 53, 0.85);
 }
 
 .form-input::placeholder {
@@ -206,10 +237,24 @@
   background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.2), transparent);
 }
 
+.card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top right, var(--color-primary-glow), transparent 60%);
+  opacity: 0;
+  transition: opacity var(--duration-normal) var(--ease-smooth);
+  pointer-events: none;
+}
+
+.card:hover::after {
+  opacity: 0.6;
+}
+
 .card:hover {
   border-color: var(--color-glass-border-hover);
-  transform: translateY(-2px);
-  box-shadow: var(--glow-card), 0 8px 40px rgba(0, 0, 0, 0.3);
+  transform: translateY(-4px);
+  box-shadow: var(--glow-card), 0 12px 40px rgba(0, 0, 0, 0.45);
 }
 
 .card-header {
@@ -468,8 +513,8 @@
 }
 
 .search-bar input:focus {
-  border-color: var(--color-electric-blue);
-  box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.1);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-glow);
 }
 
 .search-bar input::placeholder {
@@ -576,13 +621,15 @@
 
 .pagination button:hover {
   color: var(--color-text-white);
-  border-color: var(--color-electric-blue);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 8px var(--color-primary-glow);
 }
 
 .pagination button.active {
   background: var(--gradient-primary);
-  border-color: var(--color-electric-blue);
+  border-color: var(--color-primary);
   color: var(--color-text-white);
+  box-shadow: 0 0 12px var(--color-primary-glow);
 }
 
 /* ---------- Chart Container ---------- */

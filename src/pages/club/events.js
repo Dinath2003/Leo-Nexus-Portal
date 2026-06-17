@@ -126,37 +126,49 @@ export function renderClubEvents() {
                     </div>
 
                     <!-- Member Registration Detail List Toggle -->
-                    ${clubMemberRegs.length > 0 ? `
-                      <div style="margin-top:16px;">
-                        <details style="border: 1px solid var(--color-border); border-radius:8px; background:rgba(255,255,255,0.01);">
-                          <summary style="padding:10px 14px; font-size:12px; font-weight:600; cursor:pointer; color:var(--color-text-primary);">View Member Registrations & Receipts (${confirmedRegsCount})</summary>
-                          <div style="padding:0 14px 14px;">
-                            <table class="data-table" style="font-size:12px; margin-top:10px;">
-                              <thead>
-                                <tr>
-                                  <th>Member Name</th>
-                                  <th>Registered At</th>
-                                  <th>Amount Paid</th>
-                                  <th>Payment Status</th>
-                                  <th>Reference</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                ${clubMemberRegs.map(reg => `
-                                  <tr>
-                                    <td style="font-weight:600;">${reg.name}</td>
-                                    <td>${new Date(reg.date).toLocaleDateString()}</td>
-                                    <td>Rs. ${reg.amount.toLocaleString()}</td>
-                                    <td><span class="badge ${reg.status === 'paid' ? 'badge-success' : 'badge-danger'}">${reg.status === 'paid' ? 'Paid to Club' : 'Dues Pending'}</span></td>
-                                    <td>${reg.reference || '—'}</td>
-                                  </tr>
-                                `).join('')}
-                              </tbody>
-                            </table>
+                    <div style="margin-top:16px;">
+                      <details style="border: 1px solid var(--color-border); border-radius:8px; background:rgba(255,255,255,0.01);">
+                        <summary style="padding:10px 14px; font-size:12px; font-weight:600; cursor:pointer; color:var(--color-text-primary);">View Member Registrations & Receipts (${confirmedRegsCount})</summary>
+                        <div style="padding:14px;">
+                          <div style="display:flex; justify-content:flex-end; margin-bottom:10px;">
+                            <button class="btn btn-secondary btn-xs add-mem-reg-btn" data-event-id="${event.id}">
+                              <i data-lucide="user-plus" style="width:12px;height:12px;margin-right:2px;vertical-align:-1px;"></i> Add Registration
+                            </button>
                           </div>
-                        </details>
-                      </div>
-                    ` : ''}
+                          <table class="data-table" style="font-size:12px;">
+                            <thead>
+                              <tr>
+                                <th>Member Name</th>
+                                <th>Registered At</th>
+                                <th>Amount Paid</th>
+                                <th>Payment Status</th>
+                                <th>Reference</th>
+                                <th style="width:80px;">Action</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              ${clubMemberRegs.length === 0 ? `
+                                <tr><td colspan="6" style="text-align:center; color:var(--color-text-muted);">No registrations yet. Click "Add Registration" to sign up a member manually.</td></tr>
+                              ` : clubMemberRegs.map(reg => `
+                                <tr>
+                                  <td style="font-weight:600;">${reg.name}</td>
+                                  <td>${new Date(reg.date).toLocaleDateString()}</td>
+                                  <td>Rs. ${reg.amount.toLocaleString()}</td>
+                                  <td><span class="badge ${reg.status === 'paid' ? 'badge-success' : 'badge-danger'}">${reg.status === 'paid' ? 'Paid to Club' : 'Dues Pending'}</span></td>
+                                  <td>${reg.reference || '—'}</td>
+                                  <td>
+                                    <div style="display:flex; gap:4px;">
+                                      <button class="btn btn-ghost btn-xs btn-icon edit-mem-reg-btn" data-reg-id="${reg.id}" title="Edit"><i data-lucide="pencil" style="width:11px;height:11px;"></i></button>
+                                      <button class="btn btn-ghost btn-xs btn-icon delete-mem-reg-btn" data-reg-id="${reg.id}" style="color:var(--color-danger);" title="Delete"><i data-lucide="trash-2" style="width:11px;height:11px;"></i></button>
+                                    </div>
+                                  </td>
+                                </tr>
+                              `).join('')}
+                            </tbody>
+                          </table>
+                        </div>
+                      </details>
+                    </div>
 
                     <!-- Settle consolidated payment to district button -->
                     ${totalOwedToDistrict > 0 && !distPayment ? `
@@ -305,6 +317,182 @@ export function renderClubEvents() {
           });
           lucide.createIcons();
         }, 200);
+      });
+    });
+
+    // Add member registration manually
+    document.querySelectorAll('.add-mem-reg-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const eventId = btn.dataset.eventId;
+        const event = store.getById('events', eventId);
+        const members = store.getClubMembers(clubId);
+
+        // Filter out members who are already registered
+        const registeredMemberIds = store.getAll('memberPayments')
+          .filter(p => p.eventId === eventId)
+          .map(p => p.memberId);
+        
+        const eligibleMembers = members.filter(m => !registeredMemberIds.includes(m.id));
+
+        if (eligibleMembers.length === 0) {
+          showToast('warning', 'No Members Available', 'All active club members are already registered for this event.');
+          return;
+        }
+
+        const addFormHtml = `
+          <div class="form-group" style="margin-bottom:12px;">
+            <label class="form-label">Select Member *</label>
+            <select class="form-select" id="add-reg-member">
+              ${eligibleMembers.map(m => `<option value="${m.id}">${m.name} (${m.role})</option>`).join('')}
+            </select>
+          </div>
+          <div class="form-row" style="margin-bottom:12px;">
+            <div class="form-group">
+              <label class="form-label">Category *</label>
+              <select class="form-select" id="add-reg-category">
+                ${(event.category || 'General').split(',').map(c => `<option value="${c.trim()}">${c.trim()}</option>`).join('')}
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Amount (Rs.) *</label>
+              <input type="number" class="form-input" id="add-reg-amount" value="${event.fee || 1000}" min="0" required />
+            </div>
+          </div>
+          <div class="form-row" style="margin-bottom:12px;">
+            <div class="form-group">
+              <label class="form-label">Payment Status</label>
+              <select class="form-select" id="add-reg-status">
+                <option value="pending">Pending</option>
+                <option value="paid">Paid to Club</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Transaction Reference</label>
+              <input type="text" class="form-input" id="add-reg-ref" placeholder="e.g. CASH or bank reference" />
+            </div>
+          </div>
+        `;
+
+        showModal('Add Member Registration', addFormHtml, {
+          submitText: 'Register Member',
+          onSubmit: (close) => {
+            const memberId = document.getElementById('add-reg-member').value;
+            const category = document.getElementById('add-reg-category').value;
+            const amount = parseFloat(document.getElementById('add-reg-amount').value) || 0;
+            const status = document.getElementById('add-reg-status').value;
+            const ref = document.getElementById('add-reg-ref').value.trim();
+
+            const targetMem = store.getById('members', memberId);
+            if (!targetMem) return;
+
+            store.create('memberPayments', {
+              eventId,
+              clubId,
+              memberId,
+              name: targetMem.name,
+              amount,
+              status,
+              date: new Date().toISOString().split('T')[0],
+              method: status === 'paid' ? 'Admin Override' : '',
+              reference: ref
+            });
+
+            // If marked as paid, also record income in club finances
+            if (status === 'paid') {
+              store.create('finances', {
+                clubId,
+                type: 'income',
+                category: 'Events',
+                amount,
+                date: new Date().toISOString().split('T')[0],
+                description: `Event Registration: ${event.name} - Member ${targetMem.name}`,
+                reference: ref || 'Admin Override'
+              });
+            }
+
+            showToast('success', 'Member Registered', `${targetMem.name} has been registered for the event.`);
+            close();
+            render();
+          }
+        });
+      });
+    });
+
+    // Edit Member Registration
+    document.querySelectorAll('.edit-mem-reg-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const regId = btn.dataset.regId;
+        const reg = store.getById('memberPayments', regId);
+        if (!reg) return;
+        const event = store.getById('events', reg.eventId);
+
+        const editFormHtml = `
+          <div class="form-group" style="margin-bottom:12px;">
+            <label class="form-label">Member Name</label>
+            <input type="text" class="form-input" value="${reg.name}" disabled />
+          </div>
+          <div class="form-row" style="margin-bottom:12px;">
+            <div class="form-group">
+              <label class="form-label">Category *</label>
+              <select class="form-select" id="edit-reg-category">
+                ${(event?.category || 'General').split(',').map(c => `<option value="${c.trim()}" ${reg.category === c.trim() ? 'selected' : ''}>${c.trim()}</option>`).join('')}
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Amount (Rs.) *</label>
+              <input type="number" class="form-input" id="edit-reg-amount" value="${reg.amount}" min="0" required />
+            </div>
+          </div>
+          <div class="form-row" style="margin-bottom:12px;">
+            <div class="form-group">
+              <label class="form-label">Payment Status</label>
+              <select class="form-select" id="edit-reg-status">
+                <option value="pending" ${reg.status === 'pending' ? 'selected' : ''}>Pending</option>
+                <option value="paid" ${reg.status === 'paid' ? 'selected' : ''}>Paid to Club</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Transaction Reference</label>
+              <input type="text" class="form-input" id="edit-reg-ref" value="${reg.reference || ''}" placeholder="e.g. CASH or bank reference" />
+            </div>
+          </div>
+        `;
+
+        showModal('Edit Member Registration', editFormHtml, {
+          submitText: 'Save Changes',
+          onSubmit: (close) => {
+            const category = document.getElementById('edit-reg-category').value;
+            const amount = parseFloat(document.getElementById('edit-reg-amount').value) || 0;
+            const status = document.getElementById('edit-reg-status').value;
+            const ref = document.getElementById('edit-reg-ref').value.trim();
+
+            store.update('memberPayments', regId, {
+              amount,
+              status,
+              reference: ref,
+              category
+            });
+
+            showToast('success', 'Registration Updated', `Registration details for ${reg.name} updated.`);
+            close();
+            render();
+          }
+        });
+      });
+    });
+
+    // Delete Member Registration
+    document.querySelectorAll('.delete-mem-reg-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const regId = btn.dataset.regId;
+        const reg = store.getById('memberPayments', regId);
+        if (!reg) return;
+
+        showConfirm('Cancel Registration', `Are you sure you want to remove registration for <strong>${reg.name}</strong>? This will remove them from the event.`, () => {
+          store.delete('memberPayments', regId);
+          showToast('success', 'Registration Cancelled', `${reg.name}'s registration has been removed.`);
+          render();
+        });
       });
     });
   }

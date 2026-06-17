@@ -20,7 +20,8 @@ function getDefaultData() {
       { id: 'u9', email: 'membership.club@leo.org', password: 'membership123', name: 'Ishara Wickrama', role: 'club_membership', clubId: 'c1', avatar: 'IW', createdAt: '2026-01-15' },
       { id: 'u10', email: 'member.club@leo.org', password: 'member123', name: 'Tharushi Gamage', role: 'club_member', clubId: 'c1', avatar: 'TG', createdAt: '2026-02-01' },
       { id: 'u11', email: 'club@leo.org', password: 'club123', name: 'Kasun Perera (Legacy)', role: 'club_president', clubId: 'c1', avatar: 'KP', createdAt: '2026-01-15' },
-      { id: 'u12', email: 'district@leo.org', password: 'district123', name: 'District Governor (Legacy)', role: 'district_president', clubId: null, avatar: 'DG', createdAt: '2026-01-01' }
+      { id: 'u12', email: 'district@leo.org', password: 'district123', name: 'District Governor (Legacy)', role: 'district_president', clubId: null, avatar: 'DG', createdAt: '2026-01-01' },
+      { id: 'u13', email: 'treasurer.dist@leo.org', password: 'treasurer123', name: 'District Treasurer', role: 'district_treasurer', clubId: null, avatar: 'DT', createdAt: '2026-01-01' }
     ],
 
     clubs: [
@@ -30,8 +31,8 @@ function getDefaultData() {
         code: 'LC-SAP',
         president: 'Kasun Perera',
         charter_date: '2024-03-15',
-        zone: 'Zone A',
-        region: 'Region 1',
+        zone: 'A1',
+        region: 'A',
         status: 'active',
         memberCount: 32,
         email: 'sapphire@leo.org',
@@ -45,8 +46,8 @@ function getDefaultData() {
         code: 'LC-PHX',
         president: 'Amaya Silva',
         charter_date: '2023-08-20',
-        zone: 'Zone B',
-        region: 'Region 1',
+        zone: 'A2',
+        region: 'A',
         status: 'active',
         memberCount: 28,
         email: 'phoenix@leo.org',
@@ -60,8 +61,8 @@ function getDefaultData() {
         code: 'LC-HRZ',
         president: 'Nimal Fernando',
         charter_date: '2025-01-10',
-        zone: 'Zone A',
-        region: 'Region 2',
+        zone: 'B1',
+        region: 'B',
         status: 'active',
         memberCount: 20,
         email: 'horizon@leo.org',
@@ -75,8 +76,8 @@ function getDefaultData() {
         code: 'LC-AUR',
         president: 'Tharindu Jayawardena',
         charter_date: '2024-11-05',
-        zone: 'Zone C',
-        region: 'Region 2',
+        zone: 'B2',
+        region: 'B',
         status: 'active',
         memberCount: 25,
         email: 'aurora@leo.org',
@@ -90,8 +91,8 @@ function getDefaultData() {
         code: 'LC-NEB',
         president: 'Dilshan Bandara',
         charter_date: '2025-06-01',
-        zone: 'Zone B',
-        region: 'Region 3',
+        zone: 'B1',
+        region: 'B',
         status: 'inactive',
         memberCount: 15,
         email: 'nebula@leo.org',
@@ -189,8 +190,8 @@ function getDefaultData() {
       },
       {
         id: 'a4',
-        title: 'Zone A Joint Meeting Invitation',
-        content: 'All Zone A clubs are invited to attend the quarterly joint meeting on June 25, 2026 at 4:00 PM. Venue: Lions Hall, Galle. Agenda includes zone project planning and inter-club collaboration opportunities.',
+        title: 'Zone A1 Joint Meeting Invitation',
+        content: 'All Zone A1 clubs are invited to attend the quarterly joint meeting on June 25, 2026 at 4:00 PM. Venue: Lions Hall, Galle. Agenda includes zone project planning and inter-club collaboration opportunities.',
         priority: 'normal',
         targetClubs: ['c1', 'c3'],
         createdAt: '2026-06-14',
@@ -300,7 +301,61 @@ function getDefaultData() {
       { id: 'ces2', clubId: 'c1', eventId: 'e2', visibleToMembers: true },
       { id: 'ces3', clubId: 'c1', eventId: 'e3', visibleToMembers: false },
       { id: 'ces4', clubId: 'c1', eventId: 'e4', visibleToMembers: true }
-    ]
+    ],
+    invoices: [
+      {
+        id: 'inv1',
+        invoiceNumber: 'INV-2026-001',
+        clubId: 'c1',
+        clubName: 'Leo Club of Sapphire Coast',
+        amount: 15000,
+        issueDate: '2026-06-01',
+        dueDate: '2026-06-30',
+        description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+        category: 'Membership Fees',
+        status: 'unpaid',
+        receiptUrl: '',
+        reference: '',
+        remarks: '',
+        eventId: null
+      },
+      {
+        id: 'inv2',
+        invoiceNumber: 'INV-2026-002',
+        clubId: 'c2',
+        clubName: 'Leo Club of Phoenix Rising',
+        amount: 12000,
+        issueDate: '2026-06-01',
+        dueDate: '2026-06-30',
+        description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+        category: 'Membership Fees',
+        status: 'paid',
+        receiptUrl: 'receipt_c2_dues.png',
+        reference: 'DEP-90801',
+        remarks: 'Approved by District Treasurer',
+        eventId: null
+      },
+      {
+        id: 'inv3',
+        invoiceNumber: 'INV-2026-003',
+        clubId: 'c3',
+        clubName: 'Leo Club of Horizon',
+        amount: 10000,
+        issueDate: '2026-06-05',
+        dueDate: '2026-06-25',
+        description: 'District Conference Admin & Levy Fee',
+        category: 'Conference Levy',
+        status: 'pending',
+        receiptUrl: 'receipt_c3_levy.png',
+        reference: 'DEP-88923',
+        remarks: '',
+        eventId: 'e1'
+      }
+    ],
+    invoiceTemplate: {
+      fileName: 'default_district_invoice_template.html',
+      uploadedAt: '2026-06-01'
+    }
   };
 }
 
@@ -326,6 +381,69 @@ class Store {
           this._data.clubEventSettings = fresh.clubEventSettings;
           // also merge or overwrite finances to include district ones
           this._data.finances = fresh.finances;
+          this.save();
+        }
+        const hasTreasurer = (this._data.users || []).some(u => u.role === 'district_treasurer');
+        if (!hasTreasurer) {
+          this._data.users.push({
+            id: 'u13',
+            email: 'treasurer.dist@leo.org',
+            password: 'treasurer123',
+            name: 'District Treasurer',
+            role: 'district_treasurer',
+            clubId: null,
+            avatar: 'DT',
+            createdAt: '2026-01-01'
+          });
+          this.save();
+        }
+        if (!this._data.invoices) {
+          const fresh = getDefaultData();
+          this._data.invoices = fresh.invoices;
+          this.save();
+        }
+        if (!this._data.invoiceTemplate) {
+          this._data.invoiceTemplate = {
+            fileName: 'default_district_invoice_template.html',
+            uploadedAt: '2026-06-01'
+          };
+          this.save();
+        }
+        
+        // Migrate legacy club zones and regions in existing localStorage
+        let hasLegacyClub = false;
+        if (this._data.clubs) {
+          this._data.clubs.forEach(c => {
+            if (c.zone && c.zone.startsWith('Zone ')) {
+              hasLegacyClub = true;
+              if (c.id === 'c1') c.zone = 'A1';
+              else if (c.id === 'c2') c.zone = 'A2';
+              else if (c.id === 'c3') c.zone = 'B1';
+              else if (c.id === 'c4') c.zone = 'B2';
+              else if (c.id === 'c5') c.zone = 'B1';
+              else c.zone = c.zone.replace('Zone ', 'A');
+            }
+            if (c.region && c.region.startsWith('Region ')) {
+              hasLegacyClub = true;
+              if (c.id === 'c1' || c.id === 'c2') c.region = 'A';
+              else if (c.id === 'c3' || c.id === 'c4' || c.id === 'c5') c.region = 'B';
+              else c.region = c.region.replace('Region ', '');
+            }
+            if (c.region === 'C') {
+              c.region = 'B';
+              hasLegacyClub = true;
+            }
+          });
+        }
+        if (this._data.announcements) {
+          const a4 = this._data.announcements.find(a => a.id === 'a4');
+          if (a4 && a4.title.includes('Zone A ')) {
+            a4.title = a4.title.replace('Zone A ', 'Zone A1 ');
+            a4.content = a4.content.replace('Zone A ', 'Zone A1 ');
+            hasLegacyClub = true;
+          }
+        }
+        if (hasLegacyClub) {
           this.save();
         }
       } else {
@@ -440,6 +558,18 @@ class Store {
     return (this._data.clubPoints || []).find(cp => cp.clubId === clubId);
   }
 
+  updateClubPoints(clubId, points) {
+    if (!this._data.clubPoints) this._data.clubPoints = [];
+    const cp = this._data.clubPoints.find(item => item.clubId === clubId);
+    if (cp) {
+      cp.points = points;
+    } else {
+      this._data.clubPoints.push({ id: this.generateId(), clubId, points });
+    }
+    this.save();
+    this.emit('clubPoints:changed');
+  }
+
   getTotalClubPoints(clubId) {
     const cp = this.getClubPoints(clubId);
     if (!cp) return 0;
@@ -480,8 +610,21 @@ class Store {
     };
   }
 
+  getInvoiceTemplate() {
+    return this._data.invoiceTemplate || { fileName: 'default_district_invoice_template.html', uploadedAt: '2026-06-01' };
+  }
+
+  updateInvoiceTemplate(fileName) {
+    this._data.invoiceTemplate = {
+      fileName: fileName,
+      uploadedAt: new Date().toISOString()
+    };
+    this.save();
+    this.emit('invoiceTemplate:updated', this._data.invoiceTemplate);
+  }
+
   getLeaderboard() {
-    const clubs = this.getAll('clubs');
+    const clubs = store.getAll('clubs');
     return clubs
       .map(c => ({
         ...c,

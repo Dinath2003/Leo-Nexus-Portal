@@ -94,9 +94,9 @@ export function renderClubProfile(params = {}) {
                     <div style="font-size:14px; color:var(--color-text-secondary); margin-top:6px; display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
                       <span>District 306 B2</span>
                       <span style="width:4px; height:4px; border-radius:50%; background:var(--color-text-muted);"></span>
-                      <span>${club.zone || 'Zone A'}</span>
+                      <span>${club.zone || 'A1'}</span>
                       <span style="width:4px; height:4px; border-radius:50%; background:var(--color-text-muted);"></span>
-                      <span>${club.region || 'Region 1'}</span>
+                      <span>${club.region || 'A'}</span>
                     </div>
                   </div>
                 </div>
@@ -359,11 +359,11 @@ export function renderClubProfile(params = {}) {
           <div class="form-row">
             <div class="form-group">
               <label class="form-label">Zone *</label>
-              <input type="text" class="form-input" id="edit-club-zone" value="${club.zone || 'Zone A'}" required />
+              <input type="text" class="form-input" id="edit-club-zone" value="${club.zone || 'A1'}" required />
             </div>
             <div class="form-group">
               <label class="form-label">Region *</label>
-              <input type="text" class="form-input" id="edit-club-region" value="${club.region || 'Region 1'}" required />
+              <input type="text" class="form-input" id="edit-club-region" value="${club.region || 'A'}" required />
             </div>
           </div>
           <div class="form-row">

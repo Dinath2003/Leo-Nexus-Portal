@@ -47,7 +47,7 @@ export function renderMemberDashboard() {
               <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
                 <div>
                   <h1 style="margin:0; font-size:24px; font-weight:800; color:var(--color-text-primary);">Welcome back, ${user.name}!</h1>
-                  <p style="margin:6px 0 0; font-size:13px; color:var(--color-text-secondary);">Member of <strong>${club?.name || 'Leo Club'}</strong> | Region 1 - Zone A</p>
+                  <p style="margin:6px 0 0; font-size:13px; color:var(--color-text-secondary);">Member of <strong>${club?.name || 'Leo Club'}</strong> | Region ${club?.region || 'A'} - Zone ${club?.zone || 'A1'}</p>
                 </div>
                 <!-- Mock QR Code -->
                 <div style="display:flex; align-items:center; gap:12px; background:rgba(255,255,255,0.03); border:1px solid var(--color-border); padding:10px; border-radius:12px;">

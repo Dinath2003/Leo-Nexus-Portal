@@ -148,6 +148,7 @@ export function renderClubFinance() {
               <button class="btn tab-btn ${activeTab === 'ledger' ? 'btn-primary' : 'btn-ghost'}" data-tab="ledger">Payments & Receipts Ledger</button>
               <button class="btn tab-btn ${activeTab === 'receivables_payables' ? 'btn-primary' : 'btn-ghost'}" data-tab="receivables_payables">Receivables & Payables</button>
               <button class="btn tab-btn ${activeTab === 'projects' ? 'btn-primary' : 'btn-ghost'}" data-tab="projects">Project Finances</button>
+              <button class="btn tab-btn ${activeTab === 'district_invoices' ? 'btn-primary' : 'btn-ghost'}" data-tab="district_invoices">District Invoices</button>
             </div>
 
             <!-- Tab Content -->
@@ -405,6 +406,84 @@ export function renderClubFinance() {
                 </div>
               ` : ''}
 
+              ${activeTab === 'district_invoices' ? (() => {
+                const invoices = store.getAll('invoices').filter(inv => inv.clubId === clubId);
+                const totalInvoiced = invoices.reduce((sum, inv) => sum + inv.amount, 0);
+                const totalPaid = invoices.filter(inv => inv.status === 'paid').reduce((sum, inv) => sum + inv.amount, 0);
+                const totalOutstanding = invoices.filter(inv => inv.status !== 'paid').reduce((sum, inv) => sum + inv.amount, 0);
+
+                return `
+                  <!-- Summary Cards -->
+                  <div class="grid-3" style="margin-bottom: 20px;">
+                    <div style="padding: 16px; background: rgba(255,255,255,0.02); border: 1px solid var(--color-border); border-radius: 12px; display: flex; align-items: center; gap: 14px;">
+                      <div style="width:40px; height:40px; border-radius:10px; background:rgba(0,212,255,0.1); color:#00d4ff; display:flex; align-items:center; justify-content:center;">
+                        <i data-lucide="file-text"></i>
+                      </div>
+                      <div>
+                        <div style="font-size:12px; color:var(--color-text-muted);">Total Invoiced</div>
+                        <div style="font-size:18px; font-weight:700; color:var(--color-text-primary);">Rs. ${totalInvoiced.toLocaleString()}</div>
+                      </div>
+                    </div>
+                    <div style="padding: 16px; background: rgba(255,255,255,0.02); border: 1px solid var(--color-border); border-radius: 12px; display: flex; align-items: center; gap: 14px;">
+                      <div style="width:40px; height:40px; border-radius:10px; background:rgba(20,184,166,0.1); color:#14b8a6; display:flex; align-items:center; justify-content:center;">
+                        <i data-lucide="check-circle-2"></i>
+                      </div>
+                      <div>
+                        <div style="font-size:12px; color:var(--color-text-muted);">Total Settled</div>
+                        <div style="font-size:18px; font-weight:700; color:#14b8a6;">Rs. ${totalPaid.toLocaleString()}</div>
+                      </div>
+                    </div>
+                    <div style="padding: 16px; background: rgba(255,255,255,0.02); border: 1px solid var(--color-border); border-radius: 12px; display: flex; align-items: center; gap: 14px;">
+                      <div style="width:40px; height:40px; border-radius:10px; background:rgba(239,68,68,0.1); color:#ef4444; display:flex; align-items:center; justify-content:center;">
+                        <i data-lucide="alert-circle"></i>
+                      </div>
+                      <div>
+                        <div style="font-size:12px; color:var(--color-text-muted);">Outstanding Balance</div>
+                        <div style="font-size:18px; font-weight:700; color:#ef4444;">Rs. ${totalOutstanding.toLocaleString()}</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Invoices List -->
+                  <div class="card">
+                    <div class="card-header">
+                      <h3 class="card-title"><i data-lucide="landmark" style="color:var(--color-primary);"></i> Billed District Invoices</h3>
+                    </div>
+                    <div class="card-body" style="padding:0;">
+                      ${renderTable(
+                        [
+                          { label: 'Invoice No.', key: 'invoiceNumber', render: row => `<strong class="glow-text" style="color:var(--color-primary)">${row.invoiceNumber}</strong>` },
+                          { label: 'Category', key: 'category' },
+                          { label: 'Description', key: 'description' },
+                          { label: 'Amount Billed', key: 'amount', render: row => `<strong>Rs. ${row.amount.toLocaleString()}</strong>` },
+                          { label: 'Due Date', key: 'dueDate', render: row => {
+                            const isOverdue = row.status === 'unpaid' && new Date(row.dueDate) < new Date();
+                            return `<span style="${isOverdue ? 'color:#ef4444; font-weight:600;' : ''}">${new Date(row.dueDate).toLocaleDateString()} ${isOverdue ? '(Overdue)' : ''}</span>`;
+                          }},
+                          { label: 'Status', key: 'status', render: row => {
+                            let badgeClass = 'badge-secondary';
+                            let statusLabel = 'Unpaid';
+                            if (row.status === 'paid') { badgeClass = 'badge-success'; statusLabel = 'Paid'; }
+                            else if (row.status === 'pending') { badgeClass = 'badge-warning'; statusLabel = 'Pending Verification'; }
+                            return `<span class="badge ${badgeClass}">${statusLabel}</span>`;
+                          }},
+                          { label: 'Remarks / Verification note', key: 'remarks', render: row => row.remarks || '—' }
+                        ],
+                        invoices,
+                        {
+                          emptyMessage: 'No district invoices billed to your club.',
+                          actions: (row) => `
+                            ${row.status === 'unpaid' && (auth.currentUser?.role === 'club_treasurer' || auth.currentUser?.role === 'club_president' || auth.currentUser?.role === 'club_secretary' || auth.currentUser?.role === 'admin') ? `
+                              <button class="btn btn-primary btn-xs pay-invoice-btn" data-inv-id="${row.id}">Submit Payment</button>
+                            ` : ''}
+                          `
+                        }
+                      )}
+                    </div>
+                  </div>
+                `;
+              })() : ''}
+
             </div>
 
           </div>
@@ -531,6 +610,51 @@ export function renderClubFinance() {
     // Export Excel/PDF simulation
     document.getElementById('export-finance-btn')?.addEventListener('click', () => {
       showToast('success', 'Statement Exported', 'Financial Statement statement_2026.pdf generated successfully.');
+    });
+
+    // Pay invoice submit reference
+    document.querySelectorAll('.pay-invoice-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const invId = btn.dataset.invId;
+        const inv = store.getById('invoices', invId);
+        if (!inv) return;
+
+        const bodyHtml = `
+          <div style="font-size:13px; line-height:1.6; display:flex; flex-direction:column; gap:12px;">
+            <p style="color:var(--color-text-secondary);">Submit the bank deposit slip or transaction reference below to pay invoice <strong>${inv.invoiceNumber}</strong> (Amount: <strong>Rs. ${inv.amount.toLocaleString()}</strong>).</p>
+            <div class="form-group">
+              <label class="form-label">Bank Transaction Reference Code *</label>
+              <input type="text" class="form-input" id="pay-ref" placeholder="e.g. TXN-9988220" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Deposit Slip / Receipt File (Mock name) *</label>
+              <input type="text" class="form-input" id="pay-file" value="receipt_${inv.invoiceNumber.toLowerCase()}.png" />
+            </div>
+          </div>
+        `;
+
+        showModal(`Submit Payment for ${inv.invoiceNumber}`, bodyHtml, {
+          submitText: 'Submit Payment Reference',
+          onSubmit: (close) => {
+            const ref = document.getElementById('pay-ref').value.trim();
+            const file = document.getElementById('pay-file').value.trim();
+
+            if (!ref) { showToast('error', 'Validation Error', 'Please enter transaction reference.'); return; }
+            if (!file) { showToast('error', 'Validation Error', 'Please specify a receipt file.'); return; }
+
+            store.update('invoices', invId, {
+              status: 'pending',
+              reference: ref,
+              receiptUrl: file,
+              paymentDate: new Date().toISOString().split('T')[0]
+            });
+
+            showToast('success', 'Payment Submitted', `Payment reference for ${inv.invoiceNumber} submitted for verification.`);
+            close();
+            render(activeTab);
+          }
+        });
+      });
     });
   }
 
