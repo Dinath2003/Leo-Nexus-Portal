@@ -271,22 +271,245 @@ function getDefaultData() {
     ],
 
     pointCriteria: [
-      { id: 'pc1', category: 'Community Service Projects', maxPoints: 30, description: 'Points based on number and impact of community service projects completed', perUnit: 5, unit: 'project' },
-      { id: 'pc2', category: 'Membership Growth', maxPoints: 15, description: 'Points for net membership growth during the term', perUnit: 1, unit: 'new member' },
-      { id: 'pc3', category: 'District Event Participation', maxPoints: 15, description: 'Attendance and participation in district-organized events', perUnit: 3, unit: 'event' },
-      { id: 'pc4', category: 'Financial Reporting', maxPoints: 10, description: 'Timely and accurate financial report submissions', perUnit: 2, unit: 'report' },
-      { id: 'pc5', category: 'Meeting Regularity', maxPoints: 10, description: 'Regular club meetings held as per schedule', perUnit: 1, unit: 'meeting' },
-      { id: 'pc6', category: 'Activity Report Submissions', maxPoints: 10, description: 'Monthly activity reports submitted on time', perUnit: 2, unit: 'report' },
-      { id: 'pc7', category: 'Social Media & PR', maxPoints: 5, description: 'Active social media presence and public relations efforts', perUnit: 1, unit: 'post' },
-      { id: 'pc8', category: 'Inter-Club Collaboration', maxPoints: 5, description: 'Joint projects or activities with other Leo clubs', perUnit: 5, unit: 'collaboration' },
+      // 1.1. ACTIVITY AND MEMBERSHIP REPORTING (AD 1)
+      { id: 'ad1_1', category: '1.1. ACTIVITY AND MEMBERSHIP REPORTING (AD 1)', maxPoints: 10000, description: 'Submitting Monthly Activity Report (MAR) to the District Secretary on or before 10th day of the following month (11.59 PM) ex: July MAR on or before 10th Aug (11.59 PM)', perUnit: 10000, unit: 'submission' },
+      { id: 'ad1_2', category: '1.1. ACTIVITY AND MEMBERSHIP REPORTING (AD 1)', maxPoints: 100000, description: 'Updating every service activity on MYLCI and sending the evidence with the MAR Report', perUnit: 100000, unit: 'update' },
+      { id: 'ad1_3', category: '1.1. ACTIVITY AND MEMBERSHIP REPORTING (AD 1)', maxPoints: 10000, description: 'Submitting the Monthly Membership Report (MMR should be attached with the following month MAR)', perUnit: 10000, unit: 'submission' },
+      { id: 'ad1_4', category: '1.1. ACTIVITY AND MEMBERSHIP REPORTING (AD 1)', maxPoints: 100000, description: 'Implementing five (5) Newsletters throughout the Leostic year', perUnit: 20000, unit: 'newsletter' },
+      { id: 'ad1_5', category: '1.1. ACTIVITY AND MEMBERSHIP REPORTING (AD 1)', maxPoints: 20000, description: 'Induction of a new member via MYLCI (per new member) (except October)', perUnit: 20000, unit: 'member' },
+      { id: 'ad1_6', category: '1.1. ACTIVITY AND MEMBERSHIP REPORTING (AD 1)', maxPoints: 1000000, description: 'Timely submission of Leo72 form or reporting officers via MYLCI before 14th of July', perUnit: 1000000, unit: 'submission' },
+      { id: 'ad1_7', category: '1.1. ACTIVITY AND MEMBERSHIP REPORTING (AD 1)', maxPoints: 100000, description: 'MYLEO Leo Club profile updating before 31st of August', perUnit: 100000, unit: 'update' },
+      { id: 'ad1_8', category: '1.1. ACTIVITY AND MEMBERSHIP REPORTING (AD 1)', maxPoints: 100000, description: 'MYLEO Leo Club officer updating within the 1st quarter', perUnit: 100000, unit: 'update' },
+      { id: 'ad1_9', category: '1.1. ACTIVITY AND MEMBERSHIP REPORTING (AD 1)', maxPoints: 20000, description: 'Maintaining same membership count on both MYLCI & MYLEO platforms (per month)', perUnit: 20000, unit: 'month' },
+
+      // 1.2. BUDGETING & FINANCIAL PLANNING (AD 2)
+      { id: 'ad2_1', category: '1.2. BUDGETING & FINANCIAL PLANNING (AD 2)', maxPoints: 10000, description: 'Submission of Monthly Treasurer Report (MTR) with the activity report on or before the 10th day of the following month via MYLEO (11.59 PM)', perUnit: 10000, unit: 'submission' },
+      { id: 'ad2_2', category: '1.2. BUDGETING & FINANCIAL PLANNING (AD 2)', maxPoints: 10000, description: 'Manual submission of the Monthly Treasurer\'s Report before 10th of the following month', perUnit: 10000, unit: 'submission' },
+      { id: 'ad2_3', category: '1.2. BUDGETING & FINANCIAL PLANNING (AD 2)', maxPoints: 500000, description: 'Timely payment of Leo District Council dues (On or before 15th of January 2026)', perUnit: 500000, unit: 'payment' },
+      { id: 'ad2_4', category: '1.2. BUDGETING & FINANCIAL PLANNING (AD 2)', maxPoints: 1000000, description: 'Conducting an audit and submitting it to the district on the final reporting deadline of the year', perUnit: 1000000, unit: 'audit' },
+      { id: 'ad2_5', category: '1.2. BUDGETING & FINANCIAL PLANNING (AD 2)', maxPoints: 200000, description: 'Annual budget approved by the parent Lions club within the 1st quarter (A proof of email/letter confirmation must be attached)', perUnit: 200000, unit: 'approval' },
+
+      // 1.3. MEETINGS, ATTENDANCE & MEMBERSHIP DEVELOPMENT (AD 3) - 1.3.1 General Meetings
+      { id: 'ad3_1_1', category: '1.3.1. General Meetings (AD 3)', maxPoints: 100000, description: 'Attendance at Monthly General Meetings 75% or more (Exclusive of Member at Large)', perUnit: 100000, unit: 'achievement' },
+      { id: 'ad3_1_2', category: '1.3.1. General Meetings (AD 3)', maxPoints: 50000, description: 'Attendance at Monthly General Meetings 50% or more (Exclusive of Member at Large)', perUnit: 50000, unit: 'achievement' },
+      { id: 'ad3_1_3', category: '1.3.1. General Meetings (AD 3)', maxPoints: 50000, description: 'Presence of Leo Advisor or a Parent Lions Club Representative', perUnit: 50000, unit: 'achievement' },
+      { id: 'ad3_1_4', category: '1.3.1. General Meetings (AD 3)', maxPoints: 5000, description: 'Presence of Guests (per guest) (Special Guest should be Zone Director or Zone Director\'s representative(RD/ZD))', perUnit: 5000, unit: 'guest' },
+
+      // 1.3.2 Board Meetings
+      { id: 'ad3_2_1', category: '1.3.2. Board Meetings (AD 3)', maxPoints: 20000, description: 'Attendance at Board Meetings 75% or more', perUnit: 20000, unit: 'achievement' },
+      { id: 'ad3_2_2', category: '1.3.2. Board Meetings (AD 3)', maxPoints: 10000, description: 'Attendance at Board Meetings 50% or more', perUnit: 10000, unit: 'achievement' },
+      { id: 'ad3_2_3', category: '1.3.2. Board Meetings (AD 3)', maxPoints: 10000, description: 'Presence of Leo Advisor or a Parent Lions Club Representative', perUnit: 10000, unit: 'achievement' },
+
+      // 1.3.3 Special Points for the General meeting & Official Visits
+      { id: 'ad3_3_1', category: '1.3.3. Special Points for General Meetings & Official Visits (AD 3)', maxPoints: 50000, description: 'Conducting all the General meetings from July to April (Onsite 60% / Online 40%)', perUnit: 50000, unit: 'achievement' },
+      { id: 'ad3_3_2', category: '1.3.3. Special Points for General Meetings & Official Visits (AD 3)', maxPoints: 50000, description: 'Completing DP & DVP visits within the 2nd quarter (Only Onsite)', perUnit: 50000, unit: 'achievement' },
+      { id: 'ad3_3_3', category: '1.3.3. Special Points for General Meetings & Official Visits (AD 3)', maxPoints: 50000, description: 'Completing MDP visit (Only Onsite)', perUnit: 50000, unit: 'achievement' },
+      { id: 'ad3_3_4', category: '1.3.3. Special Points for General Meetings & Official Visits (AD 3)', maxPoints: 25000, description: 'Completing DS visit (Online/Onsite)', perUnit: 25000, unit: 'achievement' },
+      { id: 'ad3_3_5', category: '1.3.3. Special Points for General Meetings & Official Visits (AD 3)', maxPoints: 25000, description: 'Completing DT visit (Online/Onsite)', perUnit: 25000, unit: 'achievement' },
+      { id: 'ad3_3_6', category: '1.3.3. Special Points for General Meetings & Official Visits (AD 3)', maxPoints: 25000, description: 'Completing Regional Director visit (Online/Onsite)', perUnit: 25000, unit: 'achievement' },
+
+      // 1.3.4 Membership Development
+      { id: 'ad3_4_1', category: '1.3.4. Membership Development (AD 3)', maxPoints: 10000, description: 'A Member inducted during October (Leo Club Membership Growth Month) (Name and details should be certified by the Leo Advisor)', perUnit: 10000, unit: 'achievement' },
+      { id: 'ad3_4_2', category: '1.3.4. Membership Development (AD 3)', maxPoints: 10000, description: 'Received Membership Growth certificate (per each) (October Membership Growth Month)', perUnit: 10000, unit: 'certificate' },
+      { id: 'ad3_4_3', category: '1.3.4. Membership Development (AD 3)', maxPoints: 20000, description: 'Membership Development Publicity campaigns conducted during April (Leo Club Awareness Month) (Proofs of the campaign should be separately provided)', perUnit: 20000, unit: 'campaign' },
+      { id: 'ad3_4_4', category: '1.3.4. Membership Development (AD 3)', maxPoints: 10000, description: 'An Orientation program conducted within a quarter (At least 03 orientations must be conducted. Only one orientation can be online.) (per quarter)', perUnit: 10000, unit: 'orientation' },
+
+      // 1.3.5 General Club Administration
+      { id: 'ad3_5_1', category: '1.3.5. General Club Administration (AD 3)', maxPoints: 500000, description: 'Approval granted for the club officers and committees appointed, from the parent Lions club (should be done and informed to the district via email before 31st of July)', perUnit: 500000, unit: 'approval' },
+      { id: 'ad3_5_2', category: '1.3.5. General Club Administration (AD 3)', maxPoints: 500000, description: 'Club bank account created / access granted by 30th of September', perUnit: 500000, unit: 'achievement' },
+
+      // 1.3.6 Miscellaneous
+      { id: 'ad3_6_1', category: '1.3.6. Miscellaneous (AD 3)', maxPoints: 20000, description: 'Joint meeting with a Leo Club of District 306 D1', perUnit: 20000, unit: 'meeting' },
+      { id: 'ad3_6_2', category: '1.3.6. Miscellaneous (AD 3)', maxPoints: 30000, description: 'Joint meeting with a Parent Lions Club', perUnit: 30000, unit: 'meeting' },
+      { id: 'ad3_6_3', category: '1.3.6. Miscellaneous (AD 3)', maxPoints: 200000, description: 'Conducting the Installation Ceremony on or before 31st of August', perUnit: 200000, unit: 'ceremony' },
+      { id: 'ad3_6_4', category: '1.3.6. Miscellaneous (AD 3)', maxPoints: 100000, description: 'Conducting the nomination & Election meetings on or before 15th April 2025', perUnit: 100000, unit: 'meeting' },
+
+      // 1.4. PROJECT MONETARY VALUE (AC 1)
+      { id: 'ac1_2', category: '1.4. PROJECT MONETARY VALUE (AC 1)', maxPoints: 10000, description: 'Joint Project (per organization) Project with a Lions Club will receive an extra 1,000,000 points after providing proof of application of the "Serving Together" banner patch from International.', perUnit: 10000, unit: 'project' },
+      { id: 'ac1_3', category: '1.4. PROJECT MONETARY VALUE (AC 1)', maxPoints: 50000, description: 'Project on behalf of the Leo District Council', perUnit: 50000, unit: 'project' },
+      { id: 'ac1_4', category: '1.4. PROJECT MONETARY VALUE (AC 1)', maxPoints: 100000, description: 'Project on behalf of the Leo Multiple District 306', perUnit: 100000, unit: 'project' },
+
+      // 1.5. PR AND MARKETING POINTS (AC 2)
+      { id: 'ac2_1', category: '1.5. PR AND MARKETING POINTS (AC 2)', maxPoints: 200000, description: 'Maintain a website', perUnit: 200000, unit: 'website' },
+      { id: 'ac2_2', category: '1.5. PR AND MARKETING POINTS (AC 2)', maxPoints: 50000, description: 'Maintain a Social Media Platform (per platform)', perUnit: 50000, unit: 'platform' },
+      { id: 'ac2_3', category: '1.5. PR AND MARKETING POINTS (AC 2)', maxPoints: 100000, description: 'Publicity for the event using social media (Quality is important) Criteria: 2 minimum flyers, event photo album & promoting through 2 different social media (e.g., Facebook & Instagram or Facebook & WhatsApp, etc.)', perUnit: 100000, unit: 'campaign' },
+      { id: 'ac2_4', category: '1.5. PR AND MARKETING POINTS (AC 2)', maxPoints: 100000, description: 'Publicity for the event using other media such as newspaper advertisements, public billboards and electronic media (per tool and per display) [NOTE: These points can be claimed only per design basis]', perUnit: 100000, unit: 'display' },
+
+      // 1.6. SPECIAL POINTS FOR PROJECTS & PROJECT CATEGORIES (AC 3)
+      { id: 'ac3_1', category: '1.6. SPECIAL POINTS FOR PROJECTS & PROJECT CATEGORIES (AC 3)', maxPoints: 1000000, description: 'Completing all project categories', perUnit: 1000000, unit: 'achievement' },
+      { id: 'ac3_2', category: '1.6. SPECIAL POINTS FOR PROJECTS & PROJECT CATEGORIES (AC 3)', maxPoints: 100000, description: 'Completing all Lions Global Challenges categories', perUnit: 100000, unit: 'achievement' },
+      { id: 'ac3_3', category: '1.6. SPECIAL POINTS FOR PROJECTS & PROJECT CATEGORIES (AC 3)', maxPoints: 500000, description: 'Completing 3 fundraising projects', perUnit: 500000, unit: 'achievement' },
+
+      // 2.1. PARTICIPATION AT CLUB PROJECTS - ONSITE (INT 1)
+      { id: 'int1_1', category: '2.1. PARTICIPATION AT CLUB PROJECTS - ONSITE (INT 1)', maxPoints: 1000, description: 'Presence of a club member (per head)', perUnit: 1000, unit: 'head' },
+      { id: 'int1_2', category: '2.1. PARTICIPATION AT CLUB PROJECTS - ONSITE (INT 1)', maxPoints: 5000, description: 'Presence of the Leo Advisor/ Lion from a parent Lions Club (per head)', perUnit: 5000, unit: 'head' },
+      { id: 'int1_3', category: '2.1. PARTICIPATION AT CLUB PROJECTS - ONSITE (INT 1)', maxPoints: 1000, description: 'Presence of the Lions (per head)', perUnit: 1000, unit: 'head' },
+      { id: 'int1_4', category: '2.1. PARTICIPATION AT CLUB PROJECTS - ONSITE (INT 1)', maxPoints: 1000, description: 'General participants (per head)', perUnit: 1000, unit: 'head' },
+      { id: 'int1_5', category: '2.1. PARTICIPATION AT CLUB PROJECTS - ONSITE (INT 1)', maxPoints: 5000, description: 'Presence of a Visiting Leos, Leo District Council Officers & Multiple Council Officers at the capacity of an invitee (per head)', perUnit: 5000, unit: 'head' },
+      { id: 'int1_6', category: '2.1. PARTICIPATION AT CLUB PROJECTS - ONSITE (INT 1)', maxPoints: 10000, description: 'Inviting Guests (Chief Guest & Guests of Honor) for the event (if claimed, omit 1.4 for the Chief Guest if re-applies) [Invitation Emails should be attached in Project Report]', perUnit: 10000, unit: 'guest' },
+
+      // 2.2. PARTICIPATION AT CLUB PROJECTS - ONLINE (INT 2)
+      { id: 'int2_1', category: '2.2. PARTICIPATION AT CLUB PROJECTS - ONLINE (INT 2)', maxPoints: 500, description: 'Presence of a club member (per head)', perUnit: 500, unit: 'head' },
+      { id: 'int2_2', category: '2.2. PARTICIPATION AT CLUB PROJECTS - ONLINE (INT 2)', maxPoints: 2000, description: 'Presence of the Leo Advisor/ Lion from a parent Lions Club (per head)', perUnit: 2000, unit: 'head' },
+      { id: 'int2_3', category: '2.2. PARTICIPATION AT CLUB PROJECTS - ONLINE (INT 2)', maxPoints: 500, description: 'Presence of the Lions (per head)', perUnit: 500, unit: 'head' },
+      { id: 'int2_4', category: '2.2. PARTICIPATION AT CLUB PROJECTS - ONLINE (INT 2)', maxPoints: 200, description: 'General participants (per head)', perUnit: 200, unit: 'head' },
+      { id: 'int2_5', category: '2.2. PARTICIPATION AT CLUB PROJECTS - ONLINE (INT 2)', maxPoints: 300, description: 'Presence of a Visiting Leos, Leo District Council Officers & Multiple Council Officers at the capacity of an invitee (per head)', perUnit: 300, unit: 'head' },
+      { id: 'int2_6', category: '2.2. PARTICIPATION AT CLUB PROJECTS - ONLINE (INT 2)', maxPoints: 1000, description: 'Inviting Guests (Chief Guest & Guests of Honor) for the event (if claimed, omit 1.4 for the Chief Guest if re-applies) [Invitation Emails should be attached in Project Report]', perUnit: 1000, unit: 'guest' },
+
+      // 2.3. PARTICIPATION AT OTHER LEO CLUB ACTIVITIES - ONSITE (INT 3)
+      { id: 'int3_1', category: '2.3. PARTICIPATION AT OTHER LEO CLUB ACTIVITIES - ONSITE (INT 3)', maxPoints: 10000, description: 'Club President', perUnit: 10000, unit: 'achievement' },
+      { id: 'int3_2', category: '2.3. PARTICIPATION AT OTHER LEO CLUB ACTIVITIES - ONSITE (INT 3)', maxPoints: 8000, description: 'Club Vice President', perUnit: 8000, unit: 'achievement' },
+      { id: 'int3_3', category: '2.3. PARTICIPATION AT OTHER LEO CLUB ACTIVITIES - ONSITE (INT 3)', maxPoints: 5000, description: 'Club Secretary/Club Treasurer/Asst.Secretary/Asst.Treasurer', perUnit: 5000, unit: 'achievement' },
+      { id: 'int3_4', category: '2.3. PARTICIPATION AT OTHER LEO CLUB ACTIVITIES - ONSITE (INT 3)', maxPoints: 3000, description: 'Club Board of Directors', perUnit: 3000, unit: 'achievement' },
+      { id: 'int3_5', category: '2.3. PARTICIPATION AT OTHER LEO CLUB ACTIVITIES - ONSITE (INT 3)', maxPoints: 1000, description: 'Club Member', perUnit: 1000, unit: 'achievement' },
+      { id: 'int3_6', category: '2.3. PARTICIPATION AT OTHER LEO CLUB ACTIVITIES - ONSITE (INT 3)', maxPoints: 10000, description: 'Club Leo Advisor', perUnit: 10000, unit: 'achievement' },
+
+      // 2.4. PARTICIPATION AT OTHER LEO CLUB ACTIVITIES - ONLINE (INT 4)
+      { id: 'int4_1', category: '2.4. PARTICIPATION AT OTHER LEO CLUB ACTIVITIES - ONLINE (INT 4)', maxPoints: 5000, description: 'Club President', perUnit: 5000, unit: 'achievement' },
+      { id: 'int4_2', category: '2.4. PARTICIPATION AT OTHER LEO CLUB ACTIVITIES - ONLINE (INT 4)', maxPoints: 3000, description: 'Club Vice President', perUnit: 3000, unit: 'achievement' },
+      { id: 'int4_3', category: '2.4. PARTICIPATION AT OTHER LEO CLUB ACTIVITIES - ONLINE (INT 4)', maxPoints: 3000, description: 'Club Secretary/Club Treasurer/Asst.Secretary/Asst.Treasurer', perUnit: 3000, unit: 'achievement' },
+      { id: 'int4_4', category: '2.4. PARTICIPATION AT OTHER LEO CLUB ACTIVITIES - ONLINE (INT 4)', maxPoints: 2000, description: 'Club Board of Directors', perUnit: 2000, unit: 'achievement' },
+      { id: 'int4_5', category: '2.4. PARTICIPATION AT OTHER LEO CLUB ACTIVITIES - ONLINE (INT 4)', maxPoints: 500, description: 'Club Member', perUnit: 500, unit: 'achievement' },
+      { id: 'int4_6', category: '2.4. PARTICIPATION AT OTHER LEO CLUB ACTIVITIES - ONLINE (INT 4)', maxPoints: 5000, description: 'Club Leo Advisor', perUnit: 5000, unit: 'achievement' },
+
+      // 2.5. SPECIAL PARTICIPATION POINTS FOR LEO COUNCIL 306 D1 & MD ACTIVITIES - ONSITE (INT 5)
+      { id: 'int5_1', category: '2.5. SPECIAL PARTICIPATION POINTS FOR LEO COUNCIL 306 D1 & MD ACTIVITIES - ONSITE (INT 5)', maxPoints: 20000, description: 'Club President', perUnit: 20000, unit: 'achievement' },
+      { id: 'int5_2', category: '2.5. SPECIAL PARTICIPATION POINTS FOR LEO COUNCIL 306 D1 & MD ACTIVITIES - ONSITE (INT 5)', maxPoints: 10000, description: 'Club Vice President', perUnit: 10000, unit: 'achievement' },
+      { id: 'int5_3', category: '2.5. SPECIAL PARTICIPATION POINTS FOR LEO COUNCIL 306 D1 & MD ACTIVITIES - ONSITE (INT 5)', maxPoints: 8000, description: 'Club Secretary/Club Treasurer/Asst.Secretary/Asst.Treasurer', perUnit: 8000, unit: 'achievement' },
+      { id: 'int5_4', category: '2.5. SPECIAL PARTICIPATION POINTS FOR LEO COUNCIL 306 D1 & MD ACTIVITIES - ONSITE (INT 5)', maxPoints: 8000, description: 'Club Board of Directors', perUnit: 8000, unit: 'achievement' },
+      { id: 'int5_5', category: '2.5. SPECIAL PARTICIPATION POINTS FOR LEO COUNCIL 306 D1 & MD ACTIVITIES - ONSITE (INT 5)', maxPoints: 4000, description: 'Club Member', perUnit: 4000, unit: 'achievement' },
+      { id: 'int5_6', category: '2.5. SPECIAL PARTICIPATION POINTS FOR LEO COUNCIL 306 D1 & MD ACTIVITIES - ONSITE (INT 5)', maxPoints: 20000, description: 'Club Leo Advisor', perUnit: 20000, unit: 'achievement' },
+
+      // 2.6. SPECIAL PARTICIPATION POINTS FOR LEO COUNCIL 306 D1 & MD ACTIVITIES - ONLINE (INT 6)
+      { id: 'int6_1', category: '2.6. SPECIAL PARTICIPATION POINTS FOR LEO COUNCIL 306 D1 & MD ACTIVITIES - ONLINE (INT 6)', maxPoints: 10000, description: 'Club President', perUnit: 10000, unit: 'achievement' },
+      { id: 'int6_2', category: '2.6. SPECIAL PARTICIPATION POINTS FOR LEO COUNCIL 306 D1 & MD ACTIVITIES - ONLINE (INT 6)', maxPoints: 5000, description: 'Club Vice President', perUnit: 5000, unit: 'achievement' },
+      { id: 'int6_3', category: '2.6. SPECIAL PARTICIPATION POINTS FOR LEO COUNCIL 306 D1 & MD ACTIVITIES - ONLINE (INT 6)', maxPoints: 5000, description: 'Club Secretary/Club Treasurer/Asst.Secretary/Asst.Treasurer', perUnit: 5000, unit: 'achievement' },
+      { id: 'int6_4', category: '2.6. SPECIAL PARTICIPATION POINTS FOR LEO COUNCIL 306 D1 & MD ACTIVITIES - ONLINE (INT 6)', maxPoints: 3000, description: 'Club Board of Directors', perUnit: 3000, unit: 'achievement' },
+      { id: 'int6_5', category: '2.6. SPECIAL PARTICIPATION POINTS FOR LEO COUNCIL 306 D1 & MD ACTIVITIES - ONLINE (INT 6)', maxPoints: 1000, description: 'Club Member', perUnit: 1000, unit: 'achievement' },
+      { id: 'int6_6', category: '2.6. SPECIAL PARTICIPATION POINTS FOR LEO COUNCIL 306 D1 & MD ACTIVITIES - ONLINE (INT 6)', maxPoints: 10000, description: 'Club Leo Advisor', perUnit: 10000, unit: 'achievement' },
+
+      // 2.7. SPECIAL PARTICIPATION POINTS FOR LIONS CLUB ACTIVITIES - ONSITE (INT 7)
+      { id: 'int7_1', category: '2.7. SPECIAL PARTICIPATION POINTS FOR LIONS CLUB ACTIVITIES - ONSITE (INT 7)', maxPoints: 20000, description: 'Club President', perUnit: 20000, unit: 'achievement' },
+      { id: 'int7_2', category: '2.7. SPECIAL PARTICIPATION POINTS FOR LIONS CLUB ACTIVITIES - ONSITE (INT 7)', maxPoints: 10000, description: 'Club Vice President', perUnit: 10000, unit: 'achievement' },
+      { id: 'int7_3', category: '2.7. SPECIAL PARTICIPATION POINTS FOR LIONS CLUB ACTIVITIES - ONSITE (INT 7)', maxPoints: 8000, description: 'Club Secretary/Club Treasurer/Asst.Secretary/Asst.Treasurer', perUnit: 8000, unit: 'achievement' },
+      { id: 'int7_4', category: '2.7. SPECIAL PARTICIPATION POINTS FOR LIONS CLUB ACTIVITIES - ONSITE (INT 7)', maxPoints: 8000, description: 'Club Board of Directors', perUnit: 8000, unit: 'achievement' },
+      { id: 'int7_5', category: '2.7. SPECIAL PARTICIPATION POINTS FOR LIONS CLUB ACTIVITIES - ONSITE (INT 7)', maxPoints: 4000, description: 'Club Member', perUnit: 4000, unit: 'achievement' },
+
+      // 2.8. SPECIAL PARTICIPATION POINTS FOR LIONS CLUB ACTIVITIES - ONLINE (INT 8)
+      { id: 'int8_1', category: '2.8. SPECIAL PARTICIPATION POINTS FOR LIONS CLUB ACTIVITIES - ONLINE (INT 8)', maxPoints: 10000, description: 'Club President', perUnit: 10000, unit: 'achievement' },
+      { id: 'int8_2', category: '2.8. SPECIAL PARTICIPATION POINTS FOR LIONS CLUB ACTIVITIES - ONLINE (INT 8)', maxPoints: 5000, description: 'Club Vice President', perUnit: 5000, unit: 'achievement' },
+      { id: 'int8_3', category: '2.8. SPECIAL PARTICIPATION POINTS FOR LIONS CLUB ACTIVITIES - ONLINE (INT 8)', maxPoints: 5000, description: 'Club Secretary/Club Treasurer/Asst.Secretary/Asst.Treasurer', perUnit: 5000, unit: 'achievement' },
+      { id: 'int8_4', category: '2.8. SPECIAL PARTICIPATION POINTS FOR LIONS CLUB ACTIVITIES - ONLINE (INT 8)', maxPoints: 3000, description: 'Club Board of Directors', perUnit: 3000, unit: 'achievement' },
+      { id: 'int8_5', category: '2.8. SPECIAL PARTICIPATION POINTS FOR LIONS CLUB ACTIVITIES - ONLINE (INT 8)', maxPoints: 1000, description: 'Club Member', perUnit: 1000, unit: 'achievement' },
+
+      // 2.9. SPECIAL PARTICIPATION POINTS LEO DISTRICT COUNCIL MEETINGS - ONSITE (INT 9)
+      { id: 'int9_1', category: '2.9. SPECIAL PARTICIPATION POINTS LEO DISTRICT COUNCIL MEETINGS - ONSITE (INT 9)', maxPoints: 20000, description: 'Club President', perUnit: 20000, unit: 'achievement' },
+      { id: 'int9_2', category: '2.9. SPECIAL PARTICIPATION POINTS LEO DISTRICT COUNCIL MEETINGS - ONSITE (INT 9)', maxPoints: 10000, description: 'Club Vice President', perUnit: 10000, unit: 'achievement' },
+      { id: 'int9_3', category: '2.9. SPECIAL PARTICIPATION POINTS LEO DISTRICT COUNCIL MEETINGS - ONSITE (INT 9)', maxPoints: 8000, description: 'Club Secretary/Club Treasurer/Asst.Secretary/Asst.Treasurer', perUnit: 8000, unit: 'achievement' },
+      { id: 'int9_4', category: '2.9. SPECIAL PARTICIPATION POINTS LEO DISTRICT COUNCIL MEETINGS - ONSITE (INT 9)', maxPoints: 8000, description: 'Club Board of Directors', perUnit: 8000, unit: 'achievement' },
+      { id: 'int9_5', category: '2.9. SPECIAL PARTICIPATION POINTS LEO DISTRICT COUNCIL MEETINGS - ONSITE (INT 9)', maxPoints: 4000, description: 'Club Member', perUnit: 4000, unit: 'achievement' },
+      { id: 'int9_6', category: '2.9. SPECIAL PARTICIPATION POINTS LEO DISTRICT COUNCIL MEETINGS - ONSITE (INT 9)', maxPoints: 20000, description: 'Club Leo Advisor', perUnit: 20000, unit: 'achievement' },
+      { id: 'int9_7', category: '2.9. SPECIAL PARTICIPATION POINTS LEO DISTRICT COUNCIL MEETINGS - ONSITE (INT 9)', maxPoints: -100000, description: 'If anyone from the Leo club not representing at the Council Meeting (Negative points will be calculated)', perUnit: -100000, unit: 'penalty' },
+
+      // 2.10. SPECIAL PARTICIPATION POINTS LEO DISTRICT COUNCIL MEETINGS - ONLINE (INT 10)
+      { id: 'int10_1', category: '2.10. SPECIAL PARTICIPATION POINTS LEO DISTRICT COUNCIL MEETINGS - ONLINE (INT 10)', maxPoints: 10000, description: 'Club President', perUnit: 10000, unit: 'achievement' },
+      { id: 'int10_2', category: '2.10. SPECIAL PARTICIPATION POINTS LEO DISTRICT COUNCIL MEETINGS - ONLINE (INT 10)', maxPoints: 5000, description: 'Club Vice President', perUnit: 5000, unit: 'achievement' },
+      { id: 'int10_3', category: '2.10. SPECIAL PARTICIPATION POINTS LEO DISTRICT COUNCIL MEETINGS - ONLINE (INT 10)', maxPoints: 5000, description: 'Club Secretary/Club Treasurer/Asst.Secretary/Asst.Treasurer', perUnit: 5000, unit: 'achievement' },
+      { id: 'int10_4', category: '2.10. SPECIAL PARTICIPATION POINTS LEO DISTRICT COUNCIL MEETINGS - ONLINE (INT 10)', maxPoints: 3000, description: 'Club Board of Directors', perUnit: 3000, unit: 'achievement' },
+      { id: 'int10_5', category: '2.10. SPECIAL PARTICIPATION POINTS LEO DISTRICT COUNCIL MEETINGS - ONLINE (INT 10)', maxPoints: 1000, description: 'Club Member', perUnit: 1000, unit: 'achievement' },
+      { id: 'int10_6', category: '2.10. SPECIAL PARTICIPATION POINTS LEO DISTRICT COUNCIL MEETINGS - ONLINE (INT 10)', maxPoints: 10000, description: 'Club Leo Advisor', perUnit: 10000, unit: 'achievement' },
+      { id: 'int10_7', category: '2.10. SPECIAL PARTICIPATION POINTS LEO DISTRICT COUNCIL MEETINGS - ONLINE (INT 10)', maxPoints: -100000, description: 'If anyone from the Leo club not representing at the Council Meeting (Negative points will be calculated)', perUnit: -100000, unit: 'penalty' },
+
+      // 3.1. LEO DISTRICT EVENTS POINTS (SP 1)
+      { id: 'sp1_1', category: '3.1. LEO DISTRICT EVENTS POINTS (SP 1)', maxPoints: 100000, description: 'Highest participation for the District Events (per event)', perUnit: 100000, unit: 'event' },
+      { id: 'sp1_2', category: '3.1. LEO DISTRICT EVENTS POINTS (SP 1)', maxPoints: 150000, description: 'Participated more than 50 members for district event (per event)', perUnit: 150000, unit: 'event' },
+      { id: 'sp1_3', category: '3.1. LEO DISTRICT EVENTS POINTS (SP 1)', maxPoints: 100000, description: 'Participated more than 30 members for district event (per event)', perUnit: 100000, unit: 'event' },
+      { id: 'sp1_4', category: '3.1. LEO DISTRICT EVENTS POINTS (SP 1)', maxPoints: 75000, description: 'Participated more than 20 members for district event (per event)', perUnit: 75000, unit: 'event' },
+      { id: 'sp1_5', category: '3.1. LEO DISTRICT EVENTS POINTS (SP 1)', maxPoints: 50000, description: 'Participated more than 10 members for district event (per event)', perUnit: 50000, unit: 'event' },
+
+      // 3.2. LEO MULTIPLE DISTRICT EVENTS POINTS (SP 2)
+      { id: 'sp2_1', category: '3.2. LEO MULTIPLE DISTRICT EVENTS POINTS (SP 2)', maxPoints: 100000, description: 'Highest participation for the District Events (per event)', perUnit: 100000, unit: 'event' },
+      { id: 'sp2_2', category: '3.2. LEO MULTIPLE DISTRICT EVENTS POINTS (SP 2)', maxPoints: 150000, description: 'Participated more than 50 members for district event (per event)', perUnit: 150000, unit: 'event' },
+      { id: 'sp2_3', category: '3.2. LEO MULTIPLE DISTRICT EVENTS POINTS (SP 2)', maxPoints: 100000, description: 'Participated more than 30 members for district event (per event)', perUnit: 100000, unit: 'event' },
+      { id: 'sp2_4', category: '3.2. LEO MULTIPLE DISTRICT EVENTS POINTS (SP 2)', maxPoints: 75000, description: 'Participated more than 20 members for district event (per event)', perUnit: 75000, unit: 'event' },
+      { id: 'sp2_5', category: '3.2. LEO MULTIPLE DISTRICT EVENTS POINTS (SP 2)', maxPoints: 50000, description: 'Participated more than 10 members for district event (per event)', perUnit: 50000, unit: 'event' },
+      { id: 'sp2_6', category: '3.2. LEO MULTIPLE DISTRICT EVENTS POINTS (SP 2)', maxPoints: 30000, description: 'Join as the organizing club for Multiple District Events (per event)', perUnit: 30000, unit: 'event' },
+
+      // 3.3. SPECIAL RECOGNITION FOR COMPLETING SERVICE HOURS (SP 3)
+      { id: 'sp3_1', category: '3.3. SPECIAL RECOGNITION FOR COMPLETING SERVICE HOURS (SP 3)', maxPoints: 50000, description: 'Completing 200+ Service hours (per member)', perUnit: 50000, unit: 'member' },
+      { id: 'sp3_2', category: '3.3. SPECIAL RECOGNITION FOR COMPLETING SERVICE HOURS (SP 3)', maxPoints: 25000, description: 'Completing 100+ Service hours (per member)', perUnit: 25000, unit: 'member' },
+      { id: 'sp3_3', category: '3.3. SPECIAL RECOGNITION FOR COMPLETING SERVICE HOURS (SP 3)', maxPoints: 15000, description: 'Completing 50+ Service hours (per member)', perUnit: 15000, unit: 'member' },
+
+      // 3.4. DEDUCTIONS (SP 4)
+      { id: 'sp4_1', category: '3.4. DEDUCTIONS (SP 4)', maxPoints: -100000, description: 'Failure on submission of Monthly Activity Report (per month)', perUnit: -100000, unit: 'month' },
+      { id: 'sp4_2', category: '3.4. DEDUCTIONS (SP 4)', maxPoints: -100000, description: 'Failure on timely submission of Monthly Membership Report (per month)', perUnit: -100000, unit: 'month' },
+      { id: 'sp4_3', category: '3.4. DEDUCTIONS (SP 4)', maxPoints: -100000, description: 'Failure on timely submission of Monthly Treasurer Report (per month)', perUnit: -100000, unit: 'month' },
+      { id: 'sp4_4', category: '3.4. DEDUCTIONS (SP 4)', maxPoints: -20000, description: 'Failure on timely submission of Project Reports', perUnit: -20000, unit: 'report' },
+      { id: 'sp4_5', category: '3.4. DEDUCTIONS (SP 4)', maxPoints: -100000, description: 'Failure on timely submission of Monthly Treasurer Report', perUnit: -100000, unit: 'submission' },
+      { id: 'sp4_6', category: '3.4. DEDUCTIONS (SP 4)', maxPoints: -1000000, description: 'Consumption of Alcohol or any illegal drug during a Leo Events', perUnit: -1000000, unit: 'occurrence' }
     ],
 
     clubPoints: [
-      { clubId: 'c1', points: { pc1: 25, pc2: 8, pc3: 12, pc4: 8, pc5: 9, pc6: 8, pc7: 4, pc8: 5 } },
-      { clubId: 'c2', points: { pc1: 20, pc2: 5, pc3: 9, pc4: 6, pc5: 8, pc6: 6, pc7: 3, pc8: 0 } },
-      { clubId: 'c3', points: { pc1: 10, pc2: 10, pc3: 6, pc4: 4, pc5: 7, pc6: 4, pc7: 2, pc8: 5 } },
-      { clubId: 'c4', points: { pc1: 15, pc2: 7, pc3: 9, pc4: 8, pc5: 8, pc6: 6, pc7: 3, pc8: 0 } },
-      { clubId: 'c5', points: { pc1: 5, pc2: 3, pc3: 3, pc4: 2, pc5: 4, pc6: 2, pc7: 1, pc8: 0 } },
+      {
+        clubId: 'c1',
+        points: {
+          ad1_1: 10000, ad1_2: 100000, ad1_3: 10000, ad1_6: 1000000,
+          ad2_3: 500000, ad2_4: 1000000,
+          ad3_1_1: 100000, ad3_5_1: 500000,
+          ac1_3: 50000, ac2_1: 200000, ac3_1: 1000000,
+          int1_1: 15000, int3_1: 10000,
+          sp1_1: 100000, sp2_1: 100000,
+          sp4_1: -100000
+        }
+      },
+      {
+        clubId: 'c2',
+        points: {
+          ad1_1: 10000, ad1_2: 100000, ad1_6: 1000000,
+          ad2_3: 500000,
+          ad3_1_2: 50000, ad3_5_2: 500000,
+          ac1_2: 10000, ac2_2: 50000, ac3_2: 100000,
+          int1_1: 10000, int3_2: 8000,
+          sp1_2: 150000,
+          sp4_2: -100000
+        }
+      },
+      {
+        clubId: 'c3',
+        points: {
+          ad1_1: 10000, ad1_3: 10000,
+          ad2_1: 10000, ad2_5: 200000,
+          ad3_2_1: 20000, ad3_6_3: 200000,
+          ac1_3: 50000, ac2_3: 100000, ac3_3: 500000,
+          int2_1: 5000, int4_1: 5000,
+          sp2_2: 150000,
+          sp4_3: -100000
+        }
+      },
+      {
+        clubId: 'c4',
+        points: {
+          ad1_1: 10000, ad1_2: 100000,
+          ad2_3: 500000,
+          ad3_3_1: 50000, ad3_4_1: 10000,
+          ac1_4: 100000, ac2_4: 100000,
+          int1_2: 5000, int5_1: 20000,
+          sp1_3: 100000,
+          sp4_4: -20000
+        }
+      },
+      {
+        clubId: 'c5',
+        points: {
+          ad1_3: 10000,
+          ad2_2: 10000,
+          ad3_1_3: 50000,
+          ac2_2: 50000,
+          int2_2: 2000,
+          sp2_3: 100000,
+          sp4_5: -100000
+        }
+      }
     ],
     memberPayments: [
       { id: 'mp1', eventId: 'e1', clubId: 'c1', memberId: 'm1', name: 'Kasun Perera', amount: 1000, status: 'paid', date: '2026-06-05', method: 'Bank Transfer', reference: 'REF-M-101' },
@@ -355,6 +578,41 @@ function getDefaultData() {
     invoiceTemplate: {
       fileName: 'default_district_invoice_template.html',
       uploadedAt: '2026-06-01'
+    },
+    districtProfile: {
+      title: 'Leo District 306 B2',
+      tagline: 'Serve with Passion, Lead with Integrity',
+      description: 'Leo District 306 B2 Sri Lanka spans over a wide network of active Leo clubs in Colombo, Gampaha, and the North-Western province. We guide and empower young leaders to execute sustainable service projects that make a difference.',
+      dg: 'Lion Samantha Perera PMJF',
+      dp: 'Leo Rahul De Silva',
+      dvp: 'Leo Kavinda Wijetunga',
+      ds: 'Leo Mithila Gunawardena',
+      dt: 'Leo Shehan Kuruppu',
+      goals: [
+        { title: '1. Membership Growth & Retention', desc: 'Targeting 15% net membership growth and introducing leadership training modules to reduce drop-out rates.' },
+        { title: '2. Environmental Stewardship', desc: 'Planting 5,000 trees district-wide and organizing coordinated beach cleanups in coastal areas.' },
+        { title: '3. Joint Service Collaborations', desc: 'Encouraging clubs to partner on large-scale medical camps, computer literacy workshops, and library donation projects.' }
+      ],
+      council: {
+        ipdp: 'Leo Dilshan Fernando',
+        advisor: 'Lion Johnathan Silva',
+        coordinators: '8 District Coordinators',
+        regions: '4 Region Chairpersons',
+        zones: '8 Zone Chairpersons'
+      }
+    },
+    mdProfile: {
+      title: 'Leo Multiple District 306',
+      subtitle: 'National administrative structure and Multiple District Council coordinates',
+      description: 'Leo Multiple District 306 Sri Lanka unites six individual sub-districts under one unified council. It is led by the Multiple District Council Chairperson and coordinates nationwide community campaigns.',
+      councilChairperson: 'Leo Senath Jayawickrama',
+      sponsoringLionChairperson: 'Lion Dr. Lasantha Goonewardene',
+      activeDistricts: '6 Districts (A1, A2, B1, B2, C1, C2)',
+      totalMembers: '8,500+ Leos',
+      secretariat: 'Lions Activity Center, No 41, Albert Crescent, Colombo 07.',
+      email: 'md306@leosrilanka.org',
+      web: 'www.leosrilanka.org',
+      publications: '"The Sri Lankan Leo" Magazine — published quarterly celebrating club service achievements nationwide.'
     }
   };
 }
@@ -407,6 +665,42 @@ class Store {
             fileName: 'default_district_invoice_template.html',
             uploadedAt: '2026-06-01'
           };
+          this.save();
+        }
+        if (!this._data.districtProfile) {
+          const fresh = getDefaultData();
+          this._data.districtProfile = fresh.districtProfile;
+          this.save();
+        } else {
+          let updated = false;
+          if (!this._data.districtProfile.dvp) {
+            this._data.districtProfile.dvp = 'Leo Kavinda Wijetunga';
+            updated = true;
+          }
+          if (!this._data.districtProfile.council) {
+            this._data.districtProfile.council = {
+              ipdp: 'Leo Dilshan Fernando',
+              advisor: 'Lion Johnathan Silva',
+              coordinators: '8 District Coordinators',
+              regions: '4 Region Chairpersons',
+              zones: '8 Zone Chairpersons'
+            };
+            updated = true;
+          }
+          if (updated) {
+            this.save();
+          }
+        }
+        if (!this._data.mdProfile) {
+          const fresh = getDefaultData();
+          this._data.mdProfile = fresh.mdProfile;
+          this.save();
+        }
+        
+        if (!this._data.pointCriteria || this._data.pointCriteria.some(c => c.id === 'pc1')) {
+          const fresh = getDefaultData();
+          this._data.pointCriteria = fresh.pointCriteria;
+          this._data.clubPoints = fresh.clubPoints;
           this.save();
         }
         
@@ -621,6 +915,26 @@ class Store {
     };
     this.save();
     this.emit('invoiceTemplate:updated', this._data.invoiceTemplate);
+  }
+
+  getDistrictProfile() {
+    return this._data.districtProfile || getDefaultData().districtProfile;
+  }
+
+  updateDistrictProfile(updates) {
+    this._data.districtProfile = { ...this.getDistrictProfile(), ...updates };
+    this.save();
+    this.emit('districtProfile:updated', this._data.districtProfile);
+  }
+
+  getMDProfile() {
+    return this._data.mdProfile || getDefaultData().mdProfile;
+  }
+
+  updateMDProfile(updates) {
+    this._data.mdProfile = { ...this.getMDProfile(), ...updates };
+    this.save();
+    this.emit('mdProfile:updated', this._data.mdProfile);
   }
 
   getLeaderboard() {

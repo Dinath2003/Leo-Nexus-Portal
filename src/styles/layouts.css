@@ -548,6 +548,10 @@
   animation: modalSlideIn var(--duration-slow) var(--ease-bounce);
 }
 
+.modal.modal-lg {
+  max-width: 800px;
+}
+
 .modal::before {
   content: '';
   position: absolute;
