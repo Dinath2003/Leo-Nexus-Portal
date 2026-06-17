@@ -9,6 +9,9 @@ const districtMenuItems = [
   { section: 'Overview', items: [
     { icon: 'layout-dashboard', label: 'Dashboard', path: '/district/dashboard' },
   ]},
+  { section: 'Calendar', items: [
+    { icon: 'calendar', label: 'Calendar', path: '/calendar' },
+  ]},
   { section: 'Management', items: [
     { icon: 'building-2', label: 'Clubs', path: '/district/clubs' },
     { icon: 'users', label: 'Users', path: '/district/users' },
@@ -29,6 +32,9 @@ const districtMenuItems = [
 const clubMenuItems = [
   { section: 'Overview', items: [
     { icon: 'layout-dashboard', label: 'Dashboard', path: '/club/dashboard' },
+  ]},
+  { section: 'Calendar', items: [
+    { icon: 'calendar', label: 'Calendar', path: '/calendar' },
   ]},
   { section: 'Club Management', items: [
     { icon: 'user', label: 'Club Profile', path: '/club/profile' },
@@ -53,6 +59,9 @@ const clubMenuItems = [
 const memberMenuItems = [
   { section: 'Overview', items: [
     { icon: 'layout-dashboard', label: 'Dashboard', path: '/member/dashboard' },
+  ]},
+  { section: 'Calendar', items: [
+    { icon: 'calendar', label: 'Calendar', path: '/calendar' },
   ]},
   { section: 'Activities', items: [
     { icon: 'megaphone', label: 'Announcements', path: '/member/announcements', badge: () => {
@@ -178,8 +187,8 @@ export function isPathAllowed(path, user) {
   if (!user) return false;
   if (!user.visibleOptions) return true;
 
-  // Always allow home/dashboard routes and login to prevent redirect loops
-  if (['/district/dashboard', '/club/dashboard', '/member/dashboard', '/login'].includes(path)) {
+  // Always allow home/dashboard routes, calendar, and login to prevent redirect loops
+  if (['/district/dashboard', '/club/dashboard', '/member/dashboard', '/calendar', '/login'].includes(path)) {
     return true;
   }
 

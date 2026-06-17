@@ -1492,9 +1492,35 @@ function getDefaultData() {
         checkedCriteria: ["ad1_1", "ad1_3"],
         pointsClaimed: { ad1_1: 10000, ad1_3: 10000 },
         totalPoints: 20000,
-        reviewedBy: "",
-        reviewedAt: "",
-        comment: ""
+      }
+    ],
+    districtSchedules: [
+      {
+        id: 'ds1',
+        title: 'District President Official Visit — Leo Club of Informatics Institute of Technology',
+        date: '2026-06-20',
+        time: '10:00 AM',
+        executive: 'District President',
+        description: 'Official club visit, meeting with the board of directors, and project review.',
+        type: 'visit'
+      },
+      {
+        id: 'ds2',
+        title: 'District Council Meeting & Leadership Workshop',
+        date: '2026-06-25',
+        time: '09:00 AM',
+        executive: 'District Executive Committee',
+        description: 'First district council meeting followed by a leadership seminar for club officers.',
+        type: 'meeting'
+      },
+      {
+        id: 'ds3',
+        title: 'Charter Ceremony — Leo Club of Moratuwa 2020',
+        date: '2026-07-02',
+        time: '06:00 PM',
+        executive: 'District President & Vice President',
+        description: 'Inaugural charter ceremony and induction of new members.',
+        type: 'ceremony'
       }
     ]
   };
@@ -1631,6 +1657,12 @@ class Store {
           const fresh = getDefaultData();
           this._data.pointCriteria = fresh.pointCriteria;
           this._data.clubPoints = fresh.clubPoints;
+          this.save();
+        }
+
+        if (!this._data.districtSchedules) {
+          const fresh = getDefaultData();
+          this._data.districtSchedules = fresh.districtSchedules;
           this.save();
         }
         

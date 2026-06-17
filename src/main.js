@@ -27,6 +27,7 @@ import { renderDistrictFinance } from './pages/district/finance.js';
 import { renderDistrictProfile, renderMDProfile } from './pages/profiles.js';
 import { renderMemberDashboard } from './pages/member/dashboard.js';
 import { renderMemberEvents } from './pages/member/events.js';
+import { renderCalendar } from './pages/calendar.js';
 import { initHeader } from './components/header.js';
 import { initTheme } from './components/theme.js';
 
@@ -66,6 +67,9 @@ router.register('/club/md-profile', { handler: renderMDProfile, requireAuth: tru
 router.register('/member/dashboard', { handler: renderMemberDashboard, requireAuth: true, requireMember: true });
 router.register('/member/events', { handler: renderMemberEvents, requireAuth: true, requireMember: true });
 router.register('/member/announcements', { handler: renderClubAnnouncements, requireAuth: true, requireMember: true });
+
+// Shared routes
+router.register('/calendar', { handler: renderCalendar, requireAuth: true });
 
 // ---------- Default route ----------
 if (!window.location.hash) {

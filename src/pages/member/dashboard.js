@@ -6,6 +6,7 @@ import { store } from '../../store.js';
 import { auth } from '../../auth.js';
 import { renderSidebar, initSidebar } from '../../components/sidebar.js';
 import { renderHeader, initHeader } from '../../components/header.js';
+import { renderCalendarWidget } from '../../components/calendar-widget.js';
 
 export function renderMemberDashboard() {
   const app = document.getElementById('app');
@@ -127,6 +128,11 @@ export function renderMemberDashboard() {
                   <a href="#/member/events" style="font-size:13px; font-weight:600; color:var(--color-primary); text-decoration:none; margin-top:8px; display:inline-block;">Register or Pay for Events →</a>
                 </div>
               </div>
+            </div>
+
+            <!-- Calendar Widget -->
+            <div class="stagger-enter" style="margin-top:24px; animation-delay:0.2s;">
+              ${renderCalendarWidget()}
             </div>
 
           </div>

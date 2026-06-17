@@ -8,6 +8,7 @@ import { router } from '../../router.js';
 import { renderSidebar, initSidebar } from '../../components/sidebar.js';
 import { renderHeader, initHeader } from '../../components/header.js';
 import { createChart, destroyAllCharts } from '../../components/charts.js';
+import { renderCalendarWidget } from '../../components/calendar-widget.js';
 
 export function renderDistrictDashboard() {
   const app = document.getElementById('app');
@@ -252,6 +253,11 @@ export function renderDistrictDashboard() {
                 ${events.length === 0 ? '<div style="padding:2rem; text-align:center; color:var(--color-text-muted);">No upcoming events</div>' : ''}
               </div>
             </div>
+          </div>
+
+          <!-- Calendar Widget -->
+          <div class="stagger-enter" style="margin-top:1.5rem; animation-delay:0.3s;">
+            ${renderCalendarWidget()}
           </div>
 
           <!-- Top Clubs Table -->

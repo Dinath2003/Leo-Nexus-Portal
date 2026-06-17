@@ -10,6 +10,7 @@ import { renderHeader, initHeader } from '../../components/header.js';
 import { createChart, destroyAllCharts } from '../../components/charts.js';
 import { showToast } from '../../components/toast.js';
 import { setPointsActiveTab } from './points.js';
+import { renderCalendarWidget } from '../../components/calendar-widget.js';
 
 export function renderClubDashboard() {
   const app = document.getElementById('app');
@@ -234,6 +235,11 @@ export function renderClubDashboard() {
                 </div>
               </div>
             </div>
+          </div>
+
+          <!-- Calendar Widget -->
+          <div class="stagger-enter" style="animation-delay:0.25s;margin-top:24px;">
+            ${renderCalendarWidget()}
           </div>
 
           <!-- Quick Links -->
