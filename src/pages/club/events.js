@@ -19,6 +19,7 @@ export function renderClubEvents() {
     const allSettings = store.getAll('clubEventSettings');
     const memberPayments = store.getAll('memberPayments');
     const clubPayments = store.getAll('clubPayments');
+    const canApprove = auth.currentUser?.role === 'club_president' || auth.currentUser?.role === 'club_treasurer' || auth.currentUser?.role === 'admin';
 
     app.innerHTML = `
       <div class="dashboard-layout">
@@ -60,16 +61,18 @@ export function renderClubEvents() {
                   });
                 }
                 const isVisible = setting.visibleToMembers;
-
+                
                 // Member registrations for this club and event
                 const clubMemberRegs = memberPayments.filter(p => p.clubId === clubId && p.eventId === event.id);
-                const confirmedRegsCount = clubMemberRegs.length;
-                const paidToClubCount = clubMemberRegs.filter(r => r.status === 'paid').length;
+                // Only registrations approved by club count for dashboard metrics and district payments
+                const approvedRegs = clubMemberRegs.filter(r => r.registrationStatus === 'approved');
+                const confirmedRegsCount = approvedRegs.length;
+                const paidToClubCount = approvedRegs.filter(r => r.paymentStatus === 'paid').length;
                 
                 // Owed calculations
                 const feePerMember = event.fee || 0;
                 const totalOwedToDistrict = confirmedRegsCount * feePerMember;
-                const totalReceivedFromMembers = clubMemberRegs.filter(r => r.status === 'paid').reduce((sum, r) => sum + r.amount, 0);
+                const totalReceivedFromMembers = approvedRegs.filter(r => r.paymentStatus === 'paid').reduce((sum, r) => sum + r.amount, 0);
 
                 // Consolidated payment status
                 const distPayment = clubPayments.find(p => p.clubId === clubId && p.eventId === event.id);
@@ -128,7 +131,7 @@ export function renderClubEvents() {
                     <!-- Member Registration Detail List Toggle -->
                     <div style="margin-top:16px;">
                       <details style="border: 1px solid var(--color-border); border-radius:8px; background:rgba(255,255,255,0.01);">
-                        <summary style="padding:10px 14px; font-size:12px; font-weight:600; cursor:pointer; color:var(--color-text-primary);">View Member Registrations & Receipts (${confirmedRegsCount})</summary>
+                        <summary style="padding:10px 14px; font-size:12px; font-weight:600; cursor:pointer; color:var(--color-text-primary);">View Member Registrations & Receipts (${clubMemberRegs.length})</summary>
                         <div style="padding:14px;">
                           <div style="display:flex; justify-content:flex-end; margin-bottom:10px;">
                             <button class="btn btn-secondary btn-xs add-mem-reg-btn" data-event-id="${event.id}">
@@ -140,30 +143,77 @@ export function renderClubEvents() {
                               <tr>
                                 <th>Member Name</th>
                                 <th>Registered At</th>
-                                <th>Amount Paid</th>
+                                <th>Amount</th>
+                                <th>Reg Status</th>
                                 <th>Payment Status</th>
                                 <th>Reference</th>
-                                <th style="width:80px;">Action</th>
+                                <th style="width:180px;">Action</th>
                               </tr>
                             </thead>
                             <tbody>
                               ${clubMemberRegs.length === 0 ? `
-                                <tr><td colspan="6" style="text-align:center; color:var(--color-text-muted);">No registrations yet. Click "Add Registration" to sign up a member manually.</td></tr>
-                              ` : clubMemberRegs.map(reg => `
+                                <tr><td colspan="7" style="text-align:center; color:var(--color-text-muted);">No registrations yet. Click "Add Registration" to sign up a member manually.</td></tr>
+                              ` : clubMemberRegs.map(reg => {
+                                let regBadge = '';
+                                if (reg.registrationStatus === 'pending') {
+                                  regBadge = '<span class="badge badge-warning">Pending Approval</span>';
+                                } else if (reg.registrationStatus === 'approved') {
+                                  regBadge = '<span class="badge badge-success">Approved</span>';
+                                } else {
+                                  regBadge = '<span class="badge badge-danger">Rejected</span>';
+                                }
+
+                                let payBadge = '';
+                                if (reg.paymentStatus === 'paid') {
+                                  payBadge = '<span class="badge badge-success">Paid</span>';
+                                } else if (reg.paymentStatus === 'pending_approval') {
+                                  payBadge = '<span class="badge badge-warning">Pending Verification</span>';
+                                } else {
+                                  payBadge = '<span class="badge badge-danger">Unpaid</span>';
+                                }
+
+                                return `
                                 <tr>
                                   <td style="font-weight:600;">${reg.name}</td>
                                   <td>${new Date(reg.date).toLocaleDateString()}</td>
                                   <td>Rs. ${reg.amount.toLocaleString()}</td>
-                                  <td><span class="badge ${reg.status === 'paid' ? 'badge-success' : 'badge-danger'}">${reg.status === 'paid' ? 'Paid to Club' : 'Dues Pending'}</span></td>
-                                  <td>${reg.reference || '—'}</td>
+                                  <td>${regBadge}</td>
+                                  <td>${payBadge}</td>
                                   <td>
-                                    <div style="display:flex; gap:4px;">
+                                    ${reg.reference ? `
+                                      <div style="font-size:11px;">
+                                        <strong>${reg.method || 'Method'}</strong><br/>
+                                        <span style="color:var(--color-text-muted)">${reg.reference}</span>
+                                      </div>
+                                    ` : '—'}
+                                  </td>
+                                  <td>
+                                    <div style="display:flex; gap:4px; flex-wrap:wrap; align-items:center;">
+                                      ${canApprove && reg.registrationStatus === 'pending' ? `
+                                        <button class="btn btn-success btn-xs approve-reg-btn" data-reg-id="${reg.id}" title="Approve Registration" style="padding:2px 6px; font-size:10px;">
+                                          <i data-lucide="check" style="width:10px;height:10px;margin-right:2px;"></i> Approve
+                                        </button>
+                                        <button class="btn btn-danger btn-xs reject-reg-btn" data-reg-id="${reg.id}" title="Reject Registration" style="padding:2px 6px; font-size:10px;">
+                                          <i data-lucide="x" style="width:10px;height:10px;margin-right:2px;"></i> Reject
+                                        </button>
+                                      ` : ''}
+
+                                      ${canApprove && reg.registrationStatus === 'approved' && reg.paymentStatus === 'pending_approval' ? `
+                                        <button class="btn btn-success btn-xs approve-pay-btn" data-reg-id="${reg.id}" title="Verify Payment" style="padding:2px 6px; font-size:10px;">
+                                          <i data-lucide="check-circle" style="width:10px;height:10px;margin-right:2px;"></i> Verify Pay
+                                        </button>
+                                        <button class="btn btn-danger btn-xs reject-pay-btn" data-reg-id="${reg.id}" title="Reject Payment" style="padding:2px 6px; font-size:10px;">
+                                          <i data-lucide="x-circle" style="width:10px;height:10px;margin-right:2px;"></i> Reject Pay
+                                        </button>
+                                      ` : ''}
+
                                       <button class="btn btn-ghost btn-xs btn-icon edit-mem-reg-btn" data-reg-id="${reg.id}" title="Edit"><i data-lucide="pencil" style="width:11px;height:11px;"></i></button>
                                       <button class="btn btn-ghost btn-xs btn-icon delete-mem-reg-btn" data-reg-id="${reg.id}" style="color:var(--color-danger);" title="Delete"><i data-lucide="trash-2" style="width:11px;height:11px;"></i></button>
                                     </div>
                                   </td>
                                 </tr>
-                              `).join('')}
+                                `;
+                              }).join('')}
                             </tbody>
                           </table>
                         </div>
@@ -215,6 +265,84 @@ export function renderClubEvents() {
         store.update('clubEventSettings', settingId, { visibleToMembers: !current });
         showToast('success', 'Visibility Updated', `Event visibility changed to ${!current ? 'Visible' : 'Hidden'}.`);
         render();
+      });
+    });
+
+    // Approve Registration
+    document.querySelectorAll('.approve-reg-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const regId = btn.dataset.regId;
+        const reg = store.getById('memberPayments', regId);
+        if (!reg) return;
+        showConfirm('Approve Registration', `Are you sure you want to approve registration for <strong>${reg.name}</strong>?`, () => {
+          store.update('memberPayments', regId, {
+            registrationStatus: 'approved'
+          });
+          showToast('success', 'Registration Approved', `Registration for ${reg.name} has been approved.`);
+          render();
+        });
+      });
+    });
+
+    // Reject Registration
+    document.querySelectorAll('.reject-reg-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const regId = btn.dataset.regId;
+        const reg = store.getById('memberPayments', regId);
+        if (!reg) return;
+        showConfirm('Reject Registration', `Are you sure you want to reject registration for <strong>${reg.name}</strong>?`, () => {
+          store.update('memberPayments', regId, {
+            registrationStatus: 'rejected'
+          });
+          showToast('success', 'Registration Rejected', `Registration for ${reg.name} has been rejected.`);
+          render();
+        });
+      });
+    });
+
+    // Approve Payment
+    document.querySelectorAll('.approve-pay-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const regId = btn.dataset.regId;
+        const reg = store.getById('memberPayments', regId);
+        if (!reg) return;
+        const event = store.getById('events', reg.eventId);
+        showConfirm('Approve Payment', `Verify and approve payment of Rs. ${reg.amount.toLocaleString()} for <strong>${reg.name}</strong>?`, () => {
+          store.update('memberPayments', regId, {
+            paymentStatus: 'paid',
+            status: 'paid'
+          });
+          // Log this income inside the club's ledger!
+          store.create('finances', {
+            clubId,
+            type: 'income',
+            category: 'Events',
+            amount: reg.amount,
+            date: new Date().toISOString().split('T')[0],
+            description: `Event Registration Payment Approved: ${event?.name} - Member ${reg.name}`,
+            reference: reg.reference || 'Approved Payment'
+          });
+          showToast('success', 'Payment Approved', `Payment for ${reg.name} verified and logged to club finances.`);
+          render();
+        });
+      });
+    });
+
+    // Reject Payment
+    document.querySelectorAll('.reject-pay-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const regId = btn.dataset.regId;
+        const reg = store.getById('memberPayments', regId);
+        if (!reg) return;
+        showConfirm('Reject Payment', `Are you sure you want to reject the payment receipt for <strong>${reg.name}</strong>? This will reset their status to Unpaid.`, () => {
+          store.update('memberPayments', regId, {
+            paymentStatus: 'unpaid',
+            method: '',
+            reference: ''
+          });
+          showToast('success', 'Payment Rejected', `Payment receipt for ${reg.name} has been rejected.`);
+          render();
+        });
       });
     });
 
@@ -394,7 +522,9 @@ export function renderClubEvents() {
               status,
               date: new Date().toISOString().split('T')[0],
               method: status === 'paid' ? 'Admin Override' : '',
-              reference: ref
+              reference: ref,
+              registrationStatus: 'approved',
+              paymentStatus: status === 'paid' ? 'paid' : 'unpaid'
             });
 
             // If marked as paid, also record income in club finances
@@ -466,12 +596,30 @@ export function renderClubEvents() {
             const status = document.getElementById('edit-reg-status').value;
             const ref = document.getElementById('edit-reg-ref').value.trim();
 
+            const wasPaid = reg.paymentStatus === 'paid' || reg.status === 'paid';
+            const currentRegStatus = reg.registrationStatus === 'rejected' ? 'rejected' : (reg.registrationStatus || 'approved');
+
             store.update('memberPayments', regId, {
               amount,
               status,
               reference: ref,
-              category
+              category,
+              registrationStatus: currentRegStatus,
+              paymentStatus: status === 'paid' ? 'paid' : (status === 'pending' && wasPaid ? 'unpaid' : (reg.paymentStatus || 'unpaid'))
             });
+
+            // If marked as paid, also record income in club finances
+            if (status === 'paid' && !wasPaid && currentRegStatus === 'approved') {
+              store.create('finances', {
+                clubId,
+                type: 'income',
+                category: 'Events',
+                amount,
+                date: new Date().toISOString().split('T')[0],
+                description: `Event Registration: ${event?.name} - Member ${reg.name}`,
+                reference: ref || 'Admin Override'
+              });
+            }
 
             showToast('success', 'Registration Updated', `Registration details for ${reg.name} updated.`);
             close();

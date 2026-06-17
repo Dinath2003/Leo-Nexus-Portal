@@ -9,6 +9,7 @@ import { renderSidebar, initSidebar } from '../../components/sidebar.js';
 import { renderHeader, initHeader } from '../../components/header.js';
 import { createChart, destroyAllCharts } from '../../components/charts.js';
 import { showToast } from '../../components/toast.js';
+import { setPointsActiveTab } from './points.js';
 
 export function renderClubDashboard() {
   const app = document.getElementById('app');
@@ -27,6 +28,9 @@ export function renderClubDashboard() {
   const eventRegs = store.getClubEventRegistrations(clubId);
   const financeSummary = store.getClubFinanceSummary(clubId);
   const totalPoints = store.getTotalClubPoints(clubId);
+  const submissions = store.getAll('pointsSubmissions').filter(s => s.clubId === clubId);
+  const currentMonth = '2026-06';
+  const currentSubmission = submissions.find(s => s.month === currentMonth && s.status !== 'rejected');
 
   const activeMembers = members.filter(m => m.status === 'active').length;
   const activeProjects = projects.filter(p => p.status === 'in_progress').length;
@@ -113,7 +117,7 @@ export function renderClubDashboard() {
             </div>
           </div>
 
-          <div class="grid-2 stagger-enter" style="animation-delay:0.2s">
+          <div class="grid-3 stagger-enter" style="animation-delay:0.2s">
             <!-- Recent Announcements -->
             <div class="card hover-lift">
               <div class="card-header">
@@ -170,6 +174,66 @@ export function renderClubDashboard() {
                 </div>
               </div>
             </div>
+
+            <!-- Club Performance Points Status -->
+            <div class="card hover-lift">
+              <div class="card-header">
+                <h3 class="card-title" style="display:flex; align-items:center; gap:6px;">
+                  <i data-lucide="trophy" style="width:18px;height:18px;color:#fbbf24;"></i> Points & Standing
+                </h3>
+                <a href="#/club/points" id="dash-points-details-link" class="btn btn-ghost btn-sm">Details</a>
+              </div>
+              <div class="card-body" style="display:flex; flex-direction:column; gap:16px;">
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+                  <div style="padding:12px; background:rgba(251,191,36,0.08); border-radius:10px; border:1px solid rgba(251,191,36,0.15); text-align:center;">
+                    <div style="font-size:11px; color:var(--color-text-muted); margin-bottom:2px;">District Rank</div>
+                    <div style="font-size:18px; font-weight:700; color:#fbbf24;">Rank #${clubRank}</div>
+                  </div>
+                  <div style="padding:12px; background:rgba(0,102,255,0.08); border-radius:10px; border:1px solid rgba(0,102,255,0.15); text-align:center;">
+                    <div style="font-size:11px; color:var(--color-text-muted); margin-bottom:2px;">Total Score</div>
+                    <div style="font-size:18px; font-weight:700; color:var(--color-primary);">${totalPoints.toLocaleString()}</div>
+                  </div>
+                </div>
+
+                <div style="border-top:1px solid var(--color-glass-border); padding-top:14px;">
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                    <span style="font-size:12.5px; font-weight:600; color:var(--color-text-secondary);">June 2026 Status</span>
+                    ${currentSubmission ? `
+                      <span class="badge badge-${currentSubmission.status === 'approved' ? 'success' : 'warning'}" style="font-size:10px;">
+                        ${currentSubmission.status.toUpperCase()}
+                      </span>
+                    ` : `
+                      <span class="badge badge-danger" style="font-size:10px; background:#ef444430; border:1px solid #ef444450; color:#f87171;">
+                        MISSING
+                      </span>
+                    `}
+                  </div>
+
+                  ${currentSubmission ? `
+                    <div style="background:rgba(255,255,255,0.02); padding:10px; border-radius:8px; border:1px solid var(--color-glass-border); font-size:12px;">
+                      <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                        <span style="color:var(--color-text-muted);">Claimed:</span>
+                        <strong style="color:var(--color-text-primary);">${currentSubmission.totalPoints.toLocaleString()} pts</strong>
+                      </div>
+                      <div style="display:flex; justify-content:space-between;">
+                        <span style="color:var(--color-text-muted);">Checked Items:</span>
+                        <strong style="color:var(--color-text-primary);">${currentSubmission.checkedCriteria.length} items</strong>
+                      </div>
+                    </div>
+                    <button id="dash-points-history-btn" class="btn btn-ghost btn-sm" style="width:100%; margin-top:12px; height:34px; font-size:12px; display:flex; align-items:center; justify-content:center; gap:6px;">
+                      <i data-lucide="eye" style="width:14px; height:14px;"></i> View Submission Details
+                    </button>
+                  ` : `
+                    <div style="background:rgba(239,68,68,0.05); padding:10px; border-radius:8px; border:1px solid rgba(239,68,68,0.15); font-size:12px; color:var(--color-text-secondary); line-height:1.4;">
+                      No checklist submitted for June 2026. Submit now to accumulate points.
+                    </div>
+                    <button id="dash-points-submit-btn" class="btn btn-primary btn-sm" style="width:100%; margin-top:12px; height:34px; font-size:12px; display:flex; align-items:center; justify-content:center; gap:6px;">
+                      <i data-lucide="clipboard-check" style="width:14px; height:14px;"></i> Submit Checklist
+                    </button>
+                  `}
+                </div>
+              </div>
+            </div>
           </div>
 
           <!-- Quick Links -->
@@ -209,6 +273,21 @@ export function renderClubDashboard() {
   lucide.createIcons();
   initSidebar();
   initHeader();
+
+  // Navigation handlers for points tab redirection
+  document.getElementById('dash-points-details-link')?.addEventListener('click', (e) => {
+    setPointsActiveTab('overview');
+  });
+
+  document.getElementById('dash-points-submit-btn')?.addEventListener('click', (e) => {
+    setPointsActiveTab('submit');
+    router.navigate('/club/points');
+  });
+
+  document.getElementById('dash-points-history-btn')?.addEventListener('click', (e) => {
+    setPointsActiveTab('history');
+    router.navigate('/club/points');
+  });
 
   // Finance mini chart
   const monthlyData = {};

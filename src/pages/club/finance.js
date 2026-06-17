@@ -80,7 +80,7 @@ export function renderClubFinance() {
     
     // Member registrations dues as receivables
     const memberPayments = store.getAll('memberPayments').filter(p => p.clubId === clubId);
-    const totalReceivablesAmt = memberPayments.filter(p => p.status === 'pending').reduce((sum, p) => sum + p.amount, 0);
+    const totalReceivablesAmt = memberPayments.filter(p => p.registrationStatus === 'approved' && p.paymentStatus !== 'paid').reduce((sum, p) => sum + p.amount, 0);
 
     // Club consolidated event dues as payables
     const clubPayments = store.getAll('clubPayments').filter(cp => cp.clubId === clubId);
@@ -341,11 +341,11 @@ export function renderClubFinance() {
                       ${renderTable(
                         [
                           { label: 'Member', key: 'name', render: row => `<span style="font-weight:600;">${row.name}</span>` },
-                          { label: 'Reference', key: 'id', render: row => `Event Reg: ${row.eventId}` },
+                          { label: 'Reference', render: row => `Event: ${store.getById('events', row.eventId)?.name || row.eventId}` },
                           { label: 'Due Date', key: 'date', render: row => new Date(row.date).toLocaleDateString() },
                           { label: 'Amount', key: 'amount', render: row => `<span style="font-weight:700; color:#14b8a6;">Rs. ${row.amount.toLocaleString()}</span>` }
                         ],
-                        memberPayments.filter(p => p.status === 'pending'),
+                        memberPayments.filter(p => p.registrationStatus === 'approved' && p.paymentStatus !== 'paid'),
                         { emptyMessage: 'No outstanding receivables' }
                       )}
                     </div>

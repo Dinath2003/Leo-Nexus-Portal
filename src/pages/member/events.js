@@ -66,13 +66,23 @@ export function renderMemberEvents() {
                 // Check if this member is registered
                 const reg = memberPayments.find(p => p.eventId === event.id && p.memberId === member.id);
                 const isRegistered = !!reg;
-                const isPaid = reg?.status === 'paid';
+                const isPaid = reg?.paymentStatus === 'paid';
 
                 let statusBadge = `<span class="badge badge-danger">Not Registered</span>`;
                 if (isRegistered) {
-                  statusBadge = isPaid
-                    ? `<span class="badge badge-success"><i data-lucide="check-circle" style="width:12px;height:12px;display:inline-block;vertical-align:-1px;margin-right:2px"></i> Registered & Paid</span>`
-                    : `<span class="badge badge-warning"><i data-lucide="clock" style="width:12px;height:12px;display:inline-block;vertical-align:-1px;margin-right:2px"></i> Registered (Unpaid)</span>`;
+                  if (reg.registrationStatus === 'pending') {
+                    statusBadge = `<span class="badge badge-warning"><i data-lucide="clock" style="width:12px;height:12px;display:inline-block;vertical-align:-1px;margin-right:2px"></i> Registration Pending Approval</span>`;
+                  } else if (reg.registrationStatus === 'approved') {
+                    if (reg.paymentStatus === 'paid') {
+                      statusBadge = `<span class="badge badge-success"><i data-lucide="check-circle" style="width:12px;height:12px;display:inline-block;vertical-align:-1px;margin-right:2px"></i> Registered & Paid</span>`;
+                    } else if (reg.paymentStatus === 'pending_approval') {
+                      statusBadge = `<span class="badge badge-warning"><i data-lucide="clock" style="width:12px;height:12px;display:inline-block;vertical-align:-1px;margin-right:2px"></i> Payment Pending Verification</span>`;
+                    } else {
+                      statusBadge = `<span class="badge badge-info"><i data-lucide="alert-circle" style="width:12px;height:12px;display:inline-block;vertical-align:-1px;margin-right:2px"></i> Approved (Unpaid)</span>`;
+                    }
+                  } else if (reg.registrationStatus === 'rejected') {
+                    statusBadge = `<span class="badge badge-danger"><i data-lucide="x-circle" style="width:12px;height:12px;display:inline-block;vertical-align:-1px;margin-right:2px"></i> Registration Rejected</span>`;
+                  }
                 }
 
                 return `
@@ -132,7 +142,16 @@ export function renderMemberEvents() {
                           </button>
                         ` : ''}
 
-                        ${isRegistered && !isPaid ? `
+                        ${isRegistered && reg.registrationStatus === 'pending' ? `
+                          <button class="btn btn-secondary btn-sm edit-my-reg-btn" data-reg-id="${reg.id}" data-event-id="${event.id}">
+                            <i data-lucide="pencil" style="width:14px;height:14px;vertical-align:-2px;margin-right:4px;"></i> Edit Details
+                          </button>
+                          <button class="btn btn-ghost btn-sm delete-my-reg-btn" data-reg-id="${reg.id}" style="color:var(--color-danger); border:1px solid rgba(239,68,68,0.2);">
+                            <i data-lucide="trash-2" style="width:14px;height:14px;vertical-align:-2px;margin-right:4px;"></i> Cancel Registration
+                          </button>
+                        ` : ''}
+
+                        ${isRegistered && reg.registrationStatus === 'approved' && reg.paymentStatus === 'unpaid' ? `
                           <button class="btn btn-secondary btn-sm edit-my-reg-btn" data-reg-id="${reg.id}" data-event-id="${event.id}">
                             <i data-lucide="pencil" style="width:14px;height:14px;vertical-align:-2px;margin-right:4px;"></i> Edit Details
                           </button>
@@ -140,11 +159,17 @@ export function renderMemberEvents() {
                             <i data-lucide="trash-2" style="width:14px;height:14px;vertical-align:-2px;margin-right:4px;"></i> Cancel Registration
                           </button>
                           <button class="btn btn-success btn-sm pay-club-btn" data-event-id="${event.id}" data-reg-id="${reg.id}" data-amount="${event.fee || 1000}">
-                            <i data-lucide="credit-card" style="width:14px;height:14px;vertical-align:-2px;margin-right:4px;"></i> Submit Payment to Club
+                            <i data-lucide="credit-card" style="width:14px;height:14px;vertical-align:-2px;margin-right:4px;"></i> Pay Now
                           </button>
                         ` : ''}
 
-                        ${isRegistered && isPaid ? `
+                        ${isRegistered && reg.registrationStatus === 'approved' && reg.paymentStatus === 'pending_approval' ? `
+                          <button class="btn btn-ghost btn-sm delete-my-reg-btn" data-reg-id="${reg.id}" style="color:var(--color-danger); border:1px solid rgba(239,68,68,0.2);">
+                            <i data-lucide="trash-2" style="width:14px;height:14px;vertical-align:-2px;margin-right:4px;"></i> Cancel Registration
+                          </button>
+                        ` : ''}
+
+                        ${isRegistered && reg.registrationStatus === 'approved' && reg.paymentStatus === 'paid' ? `
                           <button class="btn btn-ghost btn-sm" disabled style="color:#14b8a6; background:rgba(20,184,166,0.05); border:1px solid rgba(20,184,166,0.2);">
                             <i data-lucide="check-check" style="width:14px;height:14px;vertical-align:-2px;margin-right:4px;"></i> Fully Confirmed
                           </button>
@@ -240,10 +265,12 @@ export function renderMemberEvents() {
               status: 'pending',
               date: new Date().toISOString().split('T')[0],
               method: '',
-              reference: ''
+              reference: '',
+              registrationStatus: 'pending',
+              paymentStatus: 'unpaid'
             });
 
-            showToast('success', 'Registration Submitted', 'You have successfully signed up. Please submit your payment next.');
+            showToast('success', 'Registration Submitted', 'Your registration has been submitted for club approval.');
             close();
             render();
           }
@@ -296,28 +323,15 @@ export function renderMemberEvents() {
               return;
             }
 
-            // Update member payment record to paid
+            // Update member payment record to pending payment approval
             store.update('memberPayments', regId, {
-              status: 'paid',
+              paymentStatus: 'pending_approval',
               method,
               reference: ref,
               date: new Date().toISOString().split('T')[0]
             });
 
-            // Log this income inside the club's ledger!
-            const reg = store.getById('memberPayments', regId);
-            const event = store.getById('events', reg.eventId);
-            store.create('finances', {
-              clubId,
-              type: 'income',
-              category: 'Events',
-              amount: amount,
-              date: new Date().toISOString().split('T')[0],
-              description: `Event Registration: ${event?.name} - Member ${member.name}`,
-              reference: ref
-            });
-
-            showToast('success', 'Payment Logged', 'Your payment reference has been recorded successfully.');
+            showToast('success', 'Payment Submitted', 'Your payment reference has been submitted for review.');
             close();
             render();
           }

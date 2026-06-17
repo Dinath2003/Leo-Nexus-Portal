@@ -10,7 +10,49 @@ import { showModal, showConfirm } from '../../components/modal.js';
 import { renderSidebar, initSidebar } from '../../components/sidebar.js';
 import { renderHeader, initHeader } from '../../components/header.js';
 
+function getNextClubCode() {
+  const clubs = store.getAll('clubs');
+  const codes = clubs
+    .map(c => c.code)
+    .filter(code => /^LC-\d+$/.test(code))
+    .map(code => parseInt(code.split('-')[1]));
+  
+  const maxNum = codes.length > 0 ? Math.max(...codes) : 0;
+  const nextNum = maxNum + 1;
+  return `LC-${String(nextNum).padStart(3, '0')}`;
+}
+
+function setupFormRegionZoneHandlers(initialZone = '') {
+  const regionSelect = document.getElementById('club-region');
+  const zoneSelect = document.getElementById('club-zone');
+  if (!regionSelect || !zoneSelect) return;
+
+  const updateZones = (regionVal, selectedZone = '') => {
+    let options = '<option value="">Select Zone</option>';
+    if (regionVal === 'A') {
+      options += `
+        <option value="A1" ${selectedZone === 'A1' ? 'selected' : ''}>A1</option>
+        <option value="A2" ${selectedZone === 'A2' ? 'selected' : ''}>A2</option>
+      `;
+    } else if (regionVal === 'B') {
+      options += `
+        <option value="B1" ${selectedZone === 'B1' ? 'selected' : ''}>B1</option>
+        <option value="B2" ${selectedZone === 'B2' ? 'selected' : ''}>B2</option>
+      `;
+    }
+    zoneSelect.innerHTML = options;
+  };
+
+  regionSelect.addEventListener('change', () => {
+    updateZones(regionSelect.value);
+  });
+
+  // Initial load
+  updateZones(regionSelect.value, initialZone);
+}
+
 function getClubFormHtml(club = null) {
+  const codeVal = club?.code || getNextClubCode();
   return `
     <form id="club-form">
       <div class="form-row">
@@ -20,7 +62,7 @@ function getClubFormHtml(club = null) {
         </div>
         <div class="form-group">
           <label class="form-label">Club Code *</label>
-          <input type="text" class="form-input" id="club-code" value="${club?.code || ''}" placeholder="LC-XXX" required />
+          <input type="text" class="form-input" id="club-code" value="${codeVal}" placeholder="LC-XXX" readonly style="background:rgba(255,255,255,0.05); color:var(--color-text-muted); cursor:not-allowed;" required />
         </div>
       </div>
       <div class="form-row">
@@ -38,21 +80,18 @@ function getClubFormHtml(club = null) {
       </div>
       <div class="form-row">
         <div class="form-group">
-          <label class="form-label">Zone *</label>
-          <select class="form-select" id="club-zone">
-            <option value="">Select Zone</option>
-            <option value="A1" ${club?.zone === 'A1' ? 'selected' : ''}>A1</option>
-            <option value="A2" ${club?.zone === 'A2' ? 'selected' : ''}>A2</option>
-            <option value="B1" ${club?.zone === 'B1' ? 'selected' : ''}>B1</option>
-            <option value="B2" ${club?.zone === 'B2' ? 'selected' : ''}>B2</option>
+          <label class="form-label">Region *</label>
+          <select class="form-select" id="club-region" required>
+            <option value="">Select Region</option>
+            <option value="A" ${club?.region === 'A' ? 'selected' : ''}>Region A</option>
+            <option value="B" ${club?.region === 'B' ? 'selected' : ''}>Region B</option>
           </select>
         </div>
         <div class="form-group">
-          <label class="form-label">Region *</label>
-          <select class="form-select" id="club-region">
-            <option value="">Select Region</option>
-            <option value="A" ${club?.region === 'A' ? 'selected' : ''}>A</option>
-            <option value="B" ${club?.region === 'B' ? 'selected' : ''}>B</option>
+          <label class="form-label">Zone *</label>
+          <select class="form-select" id="club-zone" required>
+            <option value="">Select Zone</option>
+            <!-- Zones populated dynamically -->
           </select>
         </div>
       </div>
@@ -297,6 +336,7 @@ export function renderDistrictClubs() {
           render();
         }
       });
+      setupFormRegionZoneHandlers();
     });
 
     // Club Card Click → Edit
@@ -317,6 +357,7 @@ export function renderDistrictClubs() {
             render();
           }
         });
+        setupFormRegionZoneHandlers(club?.zone || '');
       });
     });
 

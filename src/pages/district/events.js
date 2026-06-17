@@ -129,9 +129,9 @@ export function renderDistrictEvents() {
     const openEvents = allEvents.filter(e => e.status === 'open').length;
     
     // Total member registrations across all events
-    const allRegistrations = memberPayments.length;
+    const allRegistrations = memberPayments.filter(p => p.registrationStatus === 'approved').length;
     // Dues collected by clubs
-    const totalDuesCollected = memberPayments.filter(p => p.status === 'paid').reduce((sum, p) => sum + p.amount, 0);
+    const totalDuesCollected = memberPayments.filter(p => p.registrationStatus === 'approved' && p.paymentStatus === 'paid').reduce((sum, p) => sum + p.amount, 0);
 
     app.innerHTML = `
       <div class="dashboard-layout">
@@ -150,9 +150,12 @@ export function renderDistrictEvents() {
                 <h1 style="margin:0;">Events Management</h1>
                 <p style="margin:0.25rem 0 0; color:var(--color-text-secondary);">Manage district events and review club payments</p>
               </div>
-              <div class="page-header-actions">
+              <div class="page-header-actions" style="display:flex; gap:8px;">
+                <button class="btn btn-secondary" id="view-registrations-btn">
+                  <i data-lucide="users" style="width:16px;height:16px;margin-right:4px;vertical-align:-2px"></i> View Registrations
+                </button>
                 <button class="btn btn-primary" id="add-event-btn">
-                  <i data-lucide="calendar-plus" style="width:16px;height:16px"></i> Create Event
+                  <i data-lucide="calendar-plus" style="width:16px;height:16px;margin-right:4px;vertical-align:-2px"></i> Create Event
                 </button>
               </div>
             </div>
@@ -213,7 +216,7 @@ export function renderDistrictEvents() {
                 const isMultiDay = evt.date !== evt.endDate;
                 
                 // Get member registrations for this event
-                const eventRegs = memberPayments.filter(p => p.eventId === evt.id);
+                const eventRegs = memberPayments.filter(p => p.eventId === evt.id && p.registrationStatus === 'approved');
                 const totalParticipants = eventRegs.length;
                 const sConfig = statusConfig[evt.status] || statusConfig.upcoming;
                 const fillPercent = evt.capacity > 0 ? Math.round((totalParticipants / evt.capacity) * 100) : 0;
@@ -360,6 +363,60 @@ export function renderDistrictEvents() {
     // Filter change
     document.getElementById('filter-status')?.addEventListener('change', (e) => {
       render(e.target.value);
+    });
+
+    // View Registrations Modal
+    document.getElementById('view-registrations-btn')?.addEventListener('click', () => {
+      const memberPayments = store.getAll('memberPayments');
+      const approvedRegs = memberPayments.filter(p => p.registrationStatus === 'approved');
+
+      const modalHtml = `
+        <div style="max-height: 500px; overflow-y: auto;">
+          <table class="data-table" style="font-size: 13px; width: 100%;">
+            <thead>
+              <tr>
+                <th>Member Name</th>
+                <th>Club Name</th>
+                <th>Event Name</th>
+                <th>Date</th>
+                <th>Payment Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${approvedRegs.length === 0 ? `
+                <tr><td colspan="5" style="text-align:center; color:var(--color-text-muted); padding: 20px;">No approved member registrations found.</td></tr>
+              ` : approvedRegs.map(reg => {
+                const club = store.getById('clubs', reg.clubId);
+                const event = store.getById('events', reg.eventId);
+                let payBadge = '';
+                if (reg.paymentStatus === 'paid') {
+                  payBadge = '<span class="badge badge-success">Paid</span>';
+                } else if (reg.paymentStatus === 'pending_approval') {
+                  payBadge = '<span class="badge badge-warning">Pending Verification</span>';
+                } else {
+                  payBadge = '<span class="badge badge-danger">Unpaid</span>';
+                }
+                return `
+                  <tr>
+                    <td style="font-weight:600;">${reg.name}</td>
+                    <td>${club ? club.name : '—'}</td>
+                    <td>${event ? event.name : '—'}</td>
+                    <td>${new Date(reg.date).toLocaleDateString()}</td>
+                    <td>${payBadge}</td>
+                  </tr>
+                `;
+              }).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+
+      showModal('All Approved Event Registrations', modalHtml, {
+        submitText: 'Close',
+        onSubmit: (close) => {
+          close();
+        }
+      });
     });
 
     // Create Event

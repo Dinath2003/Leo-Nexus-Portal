@@ -7,7 +7,7 @@ const STORAGE_KEY = 'leo_nexus_portal';
 
 // ---------- Seed Data ----------
 function getDefaultData() {
-  return {
+  const data = {
     users: [
       { id: 'u1', email: 'admin@leo.org', password: 'admin123', name: 'Admin', role: 'admin', clubId: null, avatar: 'AD', createdAt: '2026-01-01' },
       { id: 'u2', email: 'president.dist@leo.org', password: 'president123', name: 'District President', role: 'district_president', clubId: null, avatar: 'DP', createdAt: '2026-01-01' },
@@ -21,14 +21,34 @@ function getDefaultData() {
       { id: 'u10', email: 'member.club@leo.org', password: 'member123', name: 'Tharushi Gamage', role: 'club_member', clubId: 'c1', avatar: 'TG', createdAt: '2026-02-01' },
       { id: 'u11', email: 'club@leo.org', password: 'club123', name: 'Kasun Perera (Legacy)', role: 'club_president', clubId: 'c1', avatar: 'KP', createdAt: '2026-01-15' },
       { id: 'u12', email: 'district@leo.org', password: 'district123', name: 'District Governor (Legacy)', role: 'district_president', clubId: null, avatar: 'DG', createdAt: '2026-01-01' },
-      { id: 'u13', email: 'treasurer.dist@leo.org', password: 'treasurer123', name: 'District Treasurer', role: 'district_treasurer', clubId: null, avatar: 'DT', createdAt: '2026-01-01' }
+      { id: 'u13', email: 'treasurer.dist@leo.org', password: 'treasurer123', name: 'District Treasurer', role: 'district_treasurer', clubId: null, avatar: 'DT', createdAt: '2026-01-01' },
+      { id: 'u14', email: 'president.iit@leo.org', password: 'president123', name: 'Sahan Fernando', role: 'club_president', clubId: 'c6', avatar: 'SF', createdAt: '2025-05-15' },
+      { id: 'u15', email: 'president.fos@leo.org', password: 'president123', name: 'Dulani Bandara', role: 'club_president', clubId: 'c7', avatar: 'DB', createdAt: '2025-02-20' },
+      { id: 'u16', email: 'president.foa@leo.org', password: 'president123', name: 'Heshan Perera', role: 'club_president', clubId: 'c8', avatar: 'HP', createdAt: '2025-03-25' },
+      { id: 'u17', email: 'president.colombohost@leo.org', password: 'president123', name: 'Amesh Silva', role: 'club_president', clubId: 'c9', avatar: 'AS', createdAt: '2026-05-15' },
+      { id: 'u18', email: 'president.millennium@leo.org', password: 'president123', name: 'Ruvini Perera', role: 'club_president', clubId: 'c10', avatar: 'RP', createdAt: '2026-05-15' },
+      { id: 'u19', email: 'president.sixstars@leo.org', password: 'president123', name: 'Kavindu Fernando', role: 'club_president', clubId: 'c11', avatar: 'KF', createdAt: '2026-05-15' },
+      { id: 'u20', email: 'president.uocalumni@leo.org', password: 'president123', name: 'Dulaj Senanayake', role: 'club_president', clubId: 'c12', avatar: 'DS', createdAt: '2026-05-15' },
+      { id: 'u21', email: 'president.foaalumni@leo.org', password: 'president123', name: 'Sanduni Jayawardena', role: 'club_president', clubId: 'c13', avatar: 'SJ', createdAt: '2026-05-15' },
+      { id: 'u22', email: 'president.princeofwales@leo.org', password: 'president123', name: 'Devinda Silva', role: 'club_president', clubId: 'c14', avatar: 'DS', createdAt: '2026-06-15' },
+      { id: 'u23', email: 'president.princessofwales@leo.org', password: 'president123', name: 'Shehani Fernando', role: 'club_president', clubId: 'c15', avatar: 'SF', createdAt: '2026-06-15' },
+      { id: 'u24', email: 'president.srisumangala@leo.org', password: 'president123', name: 'Kusal Mendis', role: 'club_president', clubId: 'c16', avatar: 'KM', createdAt: '2026-06-15' },
+      { id: 'u25', email: 'president.kalutaravidyalaya@leo.org', password: 'president123', name: 'Dilan Perera', role: 'club_president', clubId: 'c17', avatar: 'DP', createdAt: '2026-06-15' },
+      { id: 'u26', email: 'president.kalutarabalika@leo.org', password: 'president123', name: 'Nethmi Fernando', role: 'club_president', clubId: 'c18', avatar: 'NF', createdAt: '2026-06-15' },
+      { id: 'u27', email: 'president.moratuwa2020@leo.org', password: 'president123', name: 'Sahan Jayasuriya', role: 'club_president', clubId: 'c19', avatar: 'SJ', createdAt: '2026-06-15' },
+      { id: 'u28', email: 'president.royalachievers@leo.org', password: 'president123', name: 'Praveen Silva', role: 'club_president', clubId: 'c20', avatar: 'PS', createdAt: '2026-06-15' },
+      { id: 'u29', email: 'president.moratuwaratmalana@leo.org', password: 'president123', name: 'Ruwantha Fernando', role: 'club_president', clubId: 'c21', avatar: 'RF', createdAt: '2026-06-15' },
+      { id: 'u30', email: 'president.cosmopolitan@leo.org', password: 'president123', name: 'Dilini Cooray', role: 'club_president', clubId: 'c22', avatar: 'DC', createdAt: '2026-06-15' },
+      { id: 'u31', email: 'president.mtlavinia@leo.org', password: 'president123', name: 'Senura De Silva', role: 'club_president', clubId: 'c23', avatar: 'SS', createdAt: '2026-06-15' },
+      { id: 'u32', email: 'president.moratuwa@leo.org', password: 'president123', name: 'Thilina Perera', role: 'club_president', clubId: 'c24', avatar: 'TP', createdAt: '2026-06-15' },
+      { id: 'u33', email: 'president.kdu@leo.org', password: 'president123', name: 'Kasun Jayawardena', role: 'club_president', clubId: 'c25', avatar: 'KJ', createdAt: '2026-06-15' }
     ],
 
     clubs: [
       {
         id: 'c1',
         name: 'Leo Club of Sapphire Coast',
-        code: 'LC-SAP',
+        code: 'LC-024',
         president: 'Kasun Perera',
         charter_date: '2024-03-15',
         zone: 'A1',
@@ -43,7 +63,7 @@ function getDefaultData() {
       {
         id: 'c2',
         name: 'Leo Club of Phoenix Rising',
-        code: 'LC-PHX',
+        code: 'LC-025',
         president: 'Amaya Silva',
         charter_date: '2023-08-20',
         zone: 'A2',
@@ -56,9 +76,24 @@ function getDefaultData() {
         description: 'Committed to serving communities through innovative projects and teamwork.'
       },
       {
+        id: 'c7',
+        name: 'Leo Club of University of Colombo Faculty of Science',
+        code: 'LC-003',
+        president: 'Dulani Bandara',
+        charter_date: '2025-02-15',
+        zone: 'A1',
+        region: 'A',
+        status: 'active',
+        memberCount: 35,
+        email: 'fos@leo.org',
+        phone: '+94 77 111 2222',
+        meetingDay: 'Every Monday',
+        description: 'Empowering science students to lead and serve the community.'
+      },
+      {
         id: 'c3',
         name: 'Leo Club of Horizon',
-        code: 'LC-HRZ',
+        code: 'LC-021',
         president: 'Nimal Fernando',
         charter_date: '2025-01-10',
         zone: 'B1',
@@ -73,7 +108,7 @@ function getDefaultData() {
       {
         id: 'c4',
         name: 'Leo Club of Aurora',
-        code: 'LC-AUR',
+        code: 'LC-022',
         president: 'Tharindu Jayawardena',
         charter_date: '2024-11-05',
         zone: 'B2',
@@ -88,7 +123,7 @@ function getDefaultData() {
       {
         id: 'c5',
         name: 'Leo Club of Nebula',
-        code: 'LC-NEB',
+        code: 'LC-023',
         president: 'Dilshan Bandara',
         charter_date: '2025-06-01',
         zone: 'B1',
@@ -99,6 +134,291 @@ function getDefaultData() {
         phone: '+94 77 567 8901',
         meetingDay: 'Every Sunday',
         description: 'A newly chartered club aiming to expand outreach and membership.'
+      },
+      {
+        id: 'c6',
+        name: 'Leo Club of Informatics Institute of Technology',
+        code: 'LC-001',
+        president: 'Sahan Fernando',
+        charter_date: '2025-05-10',
+        zone: 'A1',
+        region: 'A',
+        status: 'active',
+        memberCount: 22,
+        email: 'iit@leo.org',
+        phone: '+94 77 987 6543',
+        meetingDay: 'Every Wednesday',
+        description: 'Fostering technology-driven service and leadership at Informatics Institute of Technology.'
+      },
+      {
+        id: 'c8',
+        name: 'Leo Club of University of Colombo Faculty of Arts',
+        code: 'LC-002',
+        president: 'Heshan Perera',
+        charter_date: '2025-03-20',
+        zone: 'A2',
+        region: 'A',
+        status: 'active',
+        memberCount: 40,
+        email: 'foa@leo.org',
+        phone: '+94 77 333 4444',
+        meetingDay: 'Every Tuesday',
+        description: 'Promoting social harmony and leadership development through creative service.'
+      },
+      {
+        id: 'c9',
+        name: 'Leo Club of Colombo (Host)',
+        code: 'LC-004',
+        president: 'Amesh Silva',
+        charter_date: '2020-05-10',
+        zone: 'A1',
+        region: 'A',
+        status: 'active',
+        memberCount: 25,
+        email: 'colombo.host@leo.org',
+        phone: '+94 77 123 0001',
+        meetingDay: 'Every Sunday',
+        description: 'The pioneering Colombo Host club dedicated to community services.'
+      },
+      {
+        id: 'c10',
+        name: 'Leo Club of Colombo Millennium',
+        code: 'LC-005',
+        president: 'Ruvini Perera',
+        charter_date: '2021-06-15',
+        zone: 'A2',
+        region: 'A',
+        status: 'active',
+        memberCount: 28,
+        email: 'millennium@leo.org',
+        phone: '+94 77 123 0002',
+        meetingDay: 'Every Saturday',
+        description: 'Fostering millennium leaders in youth community service.'
+      },
+      {
+        id: 'c11',
+        name: 'Leo Club of Colombo Six New Stars',
+        code: 'LC-006',
+        president: 'Kavindu Fernando',
+        charter_date: '2023-08-20',
+        zone: 'B1',
+        region: 'B',
+        status: 'active',
+        memberCount: 24,
+        email: 'sixstars@leo.org',
+        phone: '+94 77 123 0003',
+        meetingDay: 'Every Saturday',
+        description: 'Guiding young leaders towards astronomical service impacts.'
+      },
+      {
+        id: 'c12',
+        name: 'Leo Club of UOC Alumni',
+        code: 'LC-007',
+        president: 'Dulaj Senanayake',
+        charter_date: '2024-10-01',
+        zone: 'A1',
+        region: 'A',
+        status: 'active',
+        memberCount: 30,
+        email: 'uoc.alumni@leo.org',
+        phone: '+94 77 123 0004',
+        meetingDay: 'Every Sunday',
+        description: 'Alumni of UOC uniting to continue their Leostic journey.'
+      },
+      {
+        id: 'c13',
+        name: 'Leo Club of UOC FOA Alumni',
+        code: 'LC-008',
+        president: 'Sanduni Jayawardena',
+        charter_date: '2025-01-15',
+        zone: 'A2',
+        region: 'A',
+        status: 'active',
+        memberCount: 26,
+        email: 'uoc.foaalumni@leo.org',
+        phone: '+94 77 123 0005',
+        meetingDay: 'Every Saturday',
+        description: 'Arts Faculty alumni contributing to creative societal development.'
+      },
+      {
+        id: 'c14',
+        name: 'Leo Club of Prince of Wales’ College',
+        code: 'LC-009',
+        president: 'Devinda Silva',
+        charter_date: '2026-06-15',
+        zone: 'A1',
+        region: 'A',
+        status: 'active',
+        memberCount: 20,
+        email: 'princeofwales@leo.org',
+        phone: '+94 77 123 0014',
+        meetingDay: 'Every Saturday',
+        description: 'Dedicated to fostering leadership and school community service.'
+      },
+      {
+        id: 'c15',
+        name: 'Leo Club of Princess of Wales’ College',
+        code: 'LC-010',
+        president: 'Shehani Fernando',
+        charter_date: '2026-06-15',
+        zone: 'A2',
+        region: 'A',
+        status: 'active',
+        memberCount: 22,
+        email: 'princessofwales@leo.org',
+        phone: '+94 77 123 0015',
+        meetingDay: 'Every Sunday',
+        description: 'Empowering young women leaders through impact-driven service.'
+      },
+      {
+        id: 'c16',
+        name: 'Leo Club of Sri Sumangala College',
+        code: 'LC-011',
+        president: 'Kusal Mendis',
+        charter_date: '2026-06-15',
+        zone: 'B1',
+        region: 'B',
+        status: 'active',
+        memberCount: 20,
+        email: 'srisumangala@leo.org',
+        phone: '+94 77 123 0016',
+        meetingDay: 'Every Saturday',
+        description: 'Creating positive changes in the community through dedicated efforts.'
+      },
+      {
+        id: 'c17',
+        name: 'Leo Club of Kalutara Vidyalaya',
+        code: 'LC-012',
+        president: 'Dilan Perera',
+        charter_date: '2026-06-15',
+        zone: 'B2',
+        region: 'B',
+        status: 'active',
+        memberCount: 25,
+        email: 'kalutaravidyalaya@leo.org',
+        phone: '+94 77 123 0017',
+        meetingDay: 'Every Saturday',
+        description: 'Developing youth potentials and building active citizens.'
+      },
+      {
+        id: 'c18',
+        name: 'Leo Club of Kalutara Balika Vidyalaya',
+        code: 'LC-013',
+        president: 'Nethmi Fernando',
+        charter_date: '2026-06-15',
+        zone: 'B1',
+        region: 'B',
+        status: 'active',
+        memberCount: 24,
+        email: 'kalutarabalika@leo.org',
+        phone: '+94 77 123 0018',
+        meetingDay: 'Every Sunday',
+        description: 'Committed to humanitarian support and leadership excellence.'
+      },
+      {
+        id: 'c19',
+        name: 'Leo Club of Moratuwa 2020',
+        code: 'LC-014',
+        president: 'Sahan Jayasuriya',
+        charter_date: '2026-06-15',
+        zone: 'A1',
+        region: 'A',
+        status: 'active',
+        memberCount: 18,
+        email: 'moratuwa2020@leo.org',
+        phone: '+94 77 123 0019',
+        meetingDay: 'Every Saturday',
+        description: 'Promoting mutual cooperation and impactful social work.'
+      },
+      {
+        id: 'c20',
+        name: 'Leo Club of Royal Achievers',
+        code: 'LC-015',
+        president: 'Praveen Silva',
+        charter_date: '2026-06-15',
+        zone: 'A2',
+        region: 'A',
+        status: 'active',
+        memberCount: 20,
+        email: 'royalachievers@leo.org',
+        phone: '+94 77 123 0020',
+        meetingDay: 'Every Saturday',
+        description: 'Achieving milestones in community service and personal development.'
+      },
+      {
+        id: 'c21',
+        name: 'Leo Club of Moratuwa Ratmalana',
+        code: 'LC-016',
+        president: 'Ruwantha Fernando',
+        charter_date: '2026-06-15',
+        zone: 'A1',
+        region: 'A',
+        status: 'active',
+        memberCount: 22,
+        email: 'moratuwaratmalana@leo.org',
+        phone: '+94 77 123 0021',
+        meetingDay: 'Every Sunday',
+        description: 'Bridging communities together through sustainable development projects.'
+      },
+      {
+        id: 'c22',
+        name: 'Leo Club of Cosmopolitian Creators',
+        code: 'LC-017',
+        president: 'Dilini Cooray',
+        charter_date: '2026-06-15',
+        zone: 'B2',
+        region: 'B',
+        status: 'active',
+        memberCount: 19,
+        email: 'cosmopolitan@leo.org',
+        phone: '+94 77 123 0022',
+        meetingDay: 'Every Saturday',
+        description: 'Inspiring creative ideas and cosmopolitan unity in social services.'
+      },
+      {
+        id: 'c23',
+        name: 'Leo Club of Mount Lavinia Orient Centennial',
+        code: 'LC-018',
+        president: 'Senura De Silva',
+        charter_date: '2026-06-15',
+        zone: 'A2',
+        region: 'A',
+        status: 'active',
+        memberCount: 21,
+        email: 'mtlavinia@leo.org',
+        phone: '+94 77 123 0023',
+        meetingDay: 'Every Saturday',
+        description: 'Serving with pride and building future leaders since the centennial.'
+      },
+      {
+        id: 'c24',
+        name: 'Leo Club of Moratuwa',
+        code: 'LC-019',
+        president: 'Thilina Perera',
+        charter_date: '2026-06-15',
+        zone: 'A1',
+        region: 'A',
+        status: 'active',
+        memberCount: 23,
+        email: 'moratuwa@leo.org',
+        phone: '+94 77 123 0024',
+        meetingDay: 'Every Sunday',
+        description: 'A legacy of service and fellowship in the heart of Moratuwa.'
+      },
+      {
+        id: 'c25',
+        name: 'Leo Club of Kothalawala Defense University',
+        code: 'LC-020',
+        president: 'Kasun Jayawardena',
+        charter_date: '2026-06-15',
+        zone: 'B1',
+        region: 'B',
+        status: 'active',
+        memberCount: 30,
+        email: 'kdu@leo.org',
+        phone: '+94 77 123 0025',
+        meetingDay: 'Every Friday',
+        description: 'Disciplined leaders serving the nation through active volunteerism.'
       }
     ],
 
@@ -121,6 +441,86 @@ function getDefaultData() {
       { id: 'm13', clubId: 'c3', name: 'Nimal Fernando', role: 'President', status: 'active', joinDate: '2025-01-10', phone: '+94 77 300 0001', email: 'nimal@email.com' },
       { id: 'm14', clubId: 'c3', name: 'Rashika Mendis', role: 'Secretary', status: 'active', joinDate: '2025-01-10', phone: '+94 77 300 0002', email: 'rashika@email.com' },
       { id: 'm15', clubId: 'c3', name: 'Chamara Weerasinghe', role: 'Member', status: 'active', joinDate: '2025-02-20', phone: '+94 77 300 0003', email: 'chamara@email.com' },
+      // UOC Faculty of Science members
+      { id: 'm16', clubId: 'c7', name: 'Dulani Bandara', role: 'President', status: 'active', joinDate: '2025-02-15', phone: '+94 77 111 2222', email: 'dulani@email.com' },
+      { id: 'm17', clubId: 'c7', name: 'Kavinda Perera', role: 'Secretary', status: 'active', joinDate: '2025-02-20', phone: '+94 77 111 2223', email: 'kavinda@email.com' },
+      { id: 'm18', clubId: 'c7', name: 'Minoli Silva', role: 'Treasurer', status: 'active', joinDate: '2025-02-20', phone: '+94 77 111 2224', email: 'minoli@email.com' },
+      { id: 'm19', clubId: 'c7', name: 'Ruwan Kumara', role: 'VP', status: 'active', joinDate: '2025-03-01', phone: '+94 77 111 2225', email: 'ruwan@email.com' },
+      { id: 'm20', clubId: 'c7', name: 'Shalini Fernando', role: 'Member', status: 'active', joinDate: '2025-03-10', phone: '+94 77 111 2226', email: 'shalini@email.com' },
+      // UOC Faculty of Arts members
+      { id: 'm21', clubId: 'c8', name: 'Heshan Perera', role: 'President', status: 'active', joinDate: '2025-03-20', phone: '+94 77 333 4444', email: 'heshan@email.com' },
+      { id: 'm22', clubId: 'c8', name: 'Nipuni Jayasinghe', role: 'Secretary', status: 'active', joinDate: '2025-03-22', phone: '+94 77 333 4445', email: 'nipuni@email.com' },
+      { id: 'm23', clubId: 'c8', name: 'Sajith De Silva', role: 'Treasurer', status: 'active', joinDate: '2025-03-22', phone: '+94 77 333 4446', email: 'sajith@email.com' },
+      { id: 'm24', clubId: 'c8', name: 'Pooja Rajapakse', role: 'VP', status: 'active', joinDate: '2025-04-05', phone: '+94 77 333 4447', email: 'pooja@email.com' },
+      { id: 'm25', clubId: 'c8', name: 'Dilshan Perera', role: 'Member', status: 'active', joinDate: '2025-04-10', phone: '+94 77 333 4448', email: 'dilshan@email.com' },
+      // Colombo Host members
+      { id: 'm26', clubId: 'c9', name: 'Amesh Silva', role: 'President', status: 'active', joinDate: '2020-05-10', phone: '+94 77 123 0001', email: 'amesh@email.com' },
+      { id: 'm27', clubId: 'c9', name: 'Janaki Perera', role: 'Secretary', status: 'active', joinDate: '2020-05-15', phone: '+94 77 123 0011', email: 'janaki@email.com' },
+      { id: 'm28', clubId: 'c9', name: 'Tharindu Silva', role: 'Treasurer', status: 'active', joinDate: '2020-05-15', phone: '+94 77 123 0012', email: 'tharindu@email.com' },
+      // Colombo Millennium members
+      { id: 'm29', clubId: 'c10', name: 'Ruvini Perera', role: 'President', status: 'active', joinDate: '2021-06-15', phone: '+94 77 123 0002', email: 'ruvini@email.com' },
+      { id: 'm30', clubId: 'c10', name: 'Saman Kumara', role: 'Secretary', status: 'active', joinDate: '2021-06-20', phone: '+94 77 123 0021', email: 'saman@email.com' },
+      { id: 'm31', clubId: 'c10', name: 'Nipuni Jayasuriya', role: 'Treasurer', status: 'active', joinDate: '2021-06-20', phone: '+94 77 123 0022', email: 'nipuni.j@email.com' },
+      // Colombo Six New Stars members
+      { id: 'm32', clubId: 'c11', name: 'Kavindu Fernando', role: 'President', status: 'active', joinDate: '2023-08-20', phone: '+94 77 123 0003', email: 'kavindu.f@email.com' },
+      { id: 'm33', clubId: 'c11', name: 'Hashini Alwis', role: 'Secretary', status: 'active', joinDate: '2023-08-25', phone: '+94 77 123 0031', email: 'hashini@email.com' },
+      { id: 'm34', clubId: 'c11', name: 'Roshan De Silva', role: 'Treasurer', status: 'active', joinDate: '2023-08-25', phone: '+94 77 123 0032', email: 'roshan@email.com' },
+      // UOC Alumni members
+      { id: 'm35', clubId: 'c12', name: 'Dulaj Senanayake', role: 'President', status: 'active', joinDate: '2024-10-01', phone: '+94 77 123 0004', email: 'dulaj@email.com' },
+      { id: 'm36', clubId: 'c12', name: 'Menaka Jayawardena', role: 'Secretary', status: 'active', joinDate: '2024-10-05', phone: '+94 77 123 0041', email: 'menaka@email.com' },
+      { id: 'm37', clubId: 'c12', name: 'Piyumi Fernando', role: 'Treasurer', status: 'active', joinDate: '2024-10-05', phone: '+94 77 123 0042', email: 'piyumi@email.com' },
+      // UOC FOA Alumni members
+      { id: 'm38', clubId: 'c13', name: 'Sanduni Jayawardena', role: 'President', status: 'active', joinDate: '2025-01-15', phone: '+94 77 123 0005', email: 'sanduni.j@email.com' },
+      { id: 'm39', clubId: 'c13', name: 'Chathura Rajapakse', role: 'Secretary', status: 'active', joinDate: '2025-01-20', phone: '+94 77 123 0051', email: 'chathura@email.com' },
+      { id: 'm40', clubId: 'c13', name: 'Dilani Gamage', role: 'Treasurer', status: 'active', joinDate: '2025-01-20', phone: '+94 77 123 0052', email: 'dilani@email.com' },
+      // Prince of Wales members
+      { id: 'm41', clubId: 'c14', name: 'Devinda Silva', role: 'President', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0014', email: 'devinda@email.com' },
+      { id: 'm42', clubId: 'c14', name: 'Janith Perera', role: 'Secretary', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0114', email: 'janith@email.com' },
+      { id: 'm43', clubId: 'c14', name: 'Lahiru Fernando', role: 'Treasurer', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0214', email: 'lahiru@email.com' },
+      // Princess of Wales members
+      { id: 'm44', clubId: 'c15', name: 'Shehani Fernando', role: 'President', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0015', email: 'shehani@email.com' },
+      { id: 'm45', clubId: 'c15', name: 'Amanda Silva', role: 'Secretary', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0115', email: 'amanda@email.com' },
+      { id: 'm46', clubId: 'c15', name: 'Dilini Peiris', role: 'Treasurer', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0215', email: 'dilini.p@email.com' },
+      // Sri Sumangala members
+      { id: 'm47', clubId: 'c16', name: 'Kusal Mendis', role: 'President', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0016', email: 'kusal@email.com' },
+      { id: 'm48', clubId: 'c16', name: 'Tharindu Rajapakse', role: 'Secretary', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0116', email: 'tharindu.r@email.com' },
+      { id: 'm49', clubId: 'c16', name: 'Ruchira De Silva', role: 'Treasurer', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0216', email: 'ruchira@email.com' },
+      // Kalutara Vidyalaya members
+      { id: 'm50', clubId: 'c17', name: 'Dilan Perera', role: 'President', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0017', email: 'dilan@email.com' },
+      { id: 'm51', clubId: 'c17', name: 'Kavindu Jayasinghe', role: 'Secretary', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0117', email: 'kavindu.j@email.com' },
+      { id: 'm52', clubId: 'c17', name: 'Sajith Cooray', role: 'Treasurer', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0217', email: 'sajith.c@email.com' },
+      // Kalutara Balika members
+      { id: 'm53', clubId: 'c18', name: 'Nethmi Fernando', role: 'President', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0018', email: 'nethmi@email.com' },
+      { id: 'm54', clubId: 'c18', name: 'Piyumi Jayawardena', role: 'Secretary', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0118', email: 'piyumi.j@email.com' },
+      { id: 'm55', clubId: 'c18', name: 'Hansini Silva', role: 'Treasurer', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0218', email: 'hansini@email.com' },
+      // Moratuwa 2020 members
+      { id: 'm56', clubId: 'c19', name: 'Sahan Jayasuriya', role: 'President', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0019', email: 'sahan.j@email.com' },
+      { id: 'm57', clubId: 'c19', name: 'Asanka Fernando', role: 'Secretary', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0119', email: 'asanka@email.com' },
+      { id: 'm58', clubId: 'c19', name: 'Thilina Mendis', role: 'Treasurer', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0219', email: 'thilina.m@email.com' },
+      // Royal Achievers members
+      { id: 'm59', clubId: 'c20', name: 'Praveen Silva', role: 'President', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0020', email: 'praveen@email.com' },
+      { id: 'm60', clubId: 'c20', name: 'Gayan Perera', role: 'Secretary', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0120', email: 'gayan@email.com' },
+      { id: 'm61', clubId: 'c20', name: 'Harsha Fernando', role: 'Treasurer', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0220', email: 'harsha@email.com' },
+      // Moratuwa Ratmalana members
+      { id: 'm62', clubId: 'c21', name: 'Ruwantha Fernando', role: 'President', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0021', email: 'ruwantha@email.com' },
+      { id: 'm63', clubId: 'c21', name: 'Kasun Peiris', role: 'Secretary', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0121', email: 'kasun.p@email.com' },
+      { id: 'm64', clubId: 'c21', name: 'Mahesh Silva', role: 'Treasurer', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0221', email: 'mahesh@email.com' },
+      // Cosmopolitan Creators members
+      { id: 'm65', clubId: 'c22', name: 'Dilini Cooray', role: 'President', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0022', email: 'dilini.c@email.com' },
+      { id: 'm66', clubId: 'c22', name: 'Supun Fernando', role: 'Secretary', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0122', email: 'supun@email.com' },
+      { id: 'm67', clubId: 'c22', name: 'Ishara Perera', role: 'Treasurer', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0222', email: 'ishara.p@email.com' },
+      // Mount Lavinia Orient Centennial members
+      { id: 'm68', clubId: 'c23', name: 'Senura De Silva', role: 'President', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0023', email: 'senura@email.com' },
+      { id: 'm69', clubId: 'c23', name: 'Menaka Fernando', role: 'Secretary', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0123', email: 'menaka.f@email.com' },
+      { id: 'm70', clubId: 'c23', name: 'Ravindu Silva', role: 'Treasurer', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0223', email: 'ravindu.s@email.com' },
+      // Moratuwa members
+      { id: 'm71', clubId: 'c24', name: 'Thilina Perera', role: 'President', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0024', email: 'thilina@email.com' },
+      { id: 'm72', clubId: 'c24', name: 'Chamara Fernando', role: 'Secretary', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0124', email: 'chamara.f@email.com' },
+      { id: 'm73', clubId: 'c24', name: 'Sandun Peiris', role: 'Treasurer', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0224', email: 'sandun@email.com' },
+      // KDU members
+      { id: 'm74', clubId: 'c25', name: 'Kasun Jayawardena', role: 'President', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0025', email: 'kasun.j@email.com' },
+      { id: 'm75', clubId: 'c25', name: 'Nimna Perera', role: 'Secretary', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0125', email: 'nimna@email.com' },
+      { id: 'm76', clubId: 'c25', name: 'Dulaj Fernando', role: 'Treasurer', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0225', email: 'dulaj.f@email.com' }
     ],
 
     finances: [
@@ -144,7 +544,51 @@ function getDefaultData() {
       { id: 'f15', clubId: 'district', type: 'income', category: 'Membership Fees', amount: 150000, date: '2026-01-10', description: 'Consolidated district dues from clubs', reference: 'DIST-INC-001' },
       { id: 'f16', clubId: 'district', type: 'income', category: 'Sponsorship', amount: 200000, date: '2026-02-15', description: 'Main Sponsor - Dialog Axiata', reference: 'DIST-INC-002' },
       { id: 'f17', clubId: 'district', type: 'expense', category: 'Administration', amount: 45000, date: '2026-01-20', description: 'District office stationery and postage', reference: 'DIST-EXP-001' },
-      { id: 'f18', clubId: 'district', type: 'expense', category: 'Events', amount: 120000, date: '2026-03-05', description: 'Leadership seminar hall booking & catering', reference: 'DIST-EXP-002' }
+      { id: 'f18', clubId: 'district', type: 'expense', category: 'Events', amount: 120000, date: '2026-03-05', description: 'Leadership seminar hall booking & catering', reference: 'DIST-EXP-002' },
+      // UOC Faculty of Science finances
+      { id: 'f19', clubId: 'c7', type: 'income', category: 'Membership Fees', amount: 35000, date: '2026-02-20', description: 'Annual membership fees collection', reference: 'MF-FOS-001' },
+      { id: 'f20', clubId: 'c7', type: 'income', category: 'Sponsorship', amount: 40000, date: '2026-03-05', description: 'Corporate sponsor - SciTech Solutions', reference: 'SP-FOS-001' },
+      { id: 'f21', clubId: 'c7', type: 'expense', category: 'Projects', amount: 25000, date: '2026-03-10', description: 'Science Day Exhibition expenses', reference: 'EX-FOS-001' },
+      { id: 'f22', clubId: 'c7', type: 'expense', category: 'Administration', amount: 3000, date: '2026-02-25', description: 'Stationery and postage dues', reference: 'EX-FOS-002' },
+      // UOC Faculty of Arts finances
+      { id: 'f23', clubId: 'c8', type: 'income', category: 'Membership Fees', amount: 40000, date: '2026-03-25', description: 'Annual membership collection', reference: 'MF-FOA-001' },
+      { id: 'f24', clubId: 'c8', type: 'income', category: 'Fundraising', amount: 30000, date: '2026-04-10', description: 'Art exhibition ticket sales', reference: 'FR-FOA-001' },
+      { id: 'f25', clubId: 'c8', type: 'expense', category: 'Events', amount: 15000, date: '2026-04-10', description: 'Venue booking and logistics', reference: 'EX-FOA-001' },
+      { id: 'f26', clubId: 'c8', type: 'expense', category: 'Administration', amount: 4000, date: '2026-03-30', description: 'Meeting refreshments and flyers', reference: 'EX-FOA-002' },
+      // Colombo Host finances
+      { id: 'f27', clubId: 'c9', type: 'income', category: 'Membership Fees', amount: 25000, date: '2026-02-15', description: 'Annual membership fees collection', reference: 'MF-CH-001' },
+      // Colombo Millennium finances
+      { id: 'f28', clubId: 'c10', type: 'income', category: 'Membership Fees', amount: 30000, date: '2026-02-20', description: 'Annual membership collection', reference: 'MF-CM-001' },
+      // Colombo Six New Stars finances
+      { id: 'f29', clubId: 'c11', type: 'income', category: 'Membership Fees', amount: 20000, date: '2026-03-01', description: 'Annual membership collection', reference: 'MF-CSNS-001' },
+      // UOC Alumni finances
+      { id: 'f30', clubId: 'c12', type: 'income', category: 'Membership Fees', amount: 35000, date: '2026-03-05', description: 'Annual membership fees collection', reference: 'MF-UA-001' },
+      // UOC FOA Alumni finances
+      { id: 'f31', clubId: 'c13', type: 'income', category: 'Membership Fees', amount: 28000, date: '2026-03-10', description: 'Annual membership collection', reference: 'MF-UAA-001' },
+      // Prince of Wales finances
+      { id: 'f32', clubId: 'c14', type: 'income', category: 'Membership Fees', amount: 20000, date: '2026-06-15', description: 'Annual membership collection', reference: 'MF-PW-001' },
+      // Princess of Wales finances
+      { id: 'f33', clubId: 'c15', type: 'income', category: 'Membership Fees', amount: 22000, date: '2026-06-15', description: 'Annual membership collection', reference: 'MF-PRW-001' },
+      // Sri Sumangala finances
+      { id: 'f34', clubId: 'c16', type: 'income', category: 'Membership Fees', amount: 20000, date: '2026-06-15', description: 'Annual membership collection', reference: 'MF-SS-001' },
+      // Kalutara Vidyalaya finances
+      { id: 'f35', clubId: 'c17', type: 'income', category: 'Membership Fees', amount: 25000, date: '2026-06-15', description: 'Annual membership collection', reference: 'MF-KV-001' },
+      // Kalutara Balika finances
+      { id: 'f36', clubId: 'c18', type: 'income', category: 'Membership Fees', amount: 24000, date: '2026-06-15', description: 'Annual membership collection', reference: 'MF-KBV-001' },
+      // Moratuwa 2020 finances
+      { id: 'f37', clubId: 'c19', type: 'income', category: 'Membership Fees', amount: 18000, date: '2026-06-15', description: 'Annual membership collection', reference: 'MF-M20-001' },
+      // Royal Achievers finances
+      { id: 'f38', clubId: 'c20', type: 'income', category: 'Membership Fees', amount: 20000, date: '2026-06-15', description: 'Annual membership collection', reference: 'MF-RA-001' },
+      // Moratuwa Ratmalana finances
+      { id: 'f39', clubId: 'c21', type: 'income', category: 'Membership Fees', amount: 22000, date: '2026-06-15', description: 'Annual membership collection', reference: 'MF-MR-001' },
+      // Cosmopolitan Creators finances
+      { id: 'f40', clubId: 'c22', type: 'income', category: 'Membership Fees', amount: 19000, date: '2026-06-15', description: 'Annual membership collection', reference: 'MF-CC-001' },
+      // Mount Lavinia Orient Centennial finances
+      { id: 'f41', clubId: 'c23', type: 'income', category: 'Membership Fees', amount: 21000, date: '2026-06-15', description: 'Annual membership collection', reference: 'MF-ML-001' },
+      // Moratuwa finances
+      { id: 'f42', clubId: 'c24', type: 'income', category: 'Membership Fees', amount: 23000, date: '2026-06-15', description: 'Annual membership collection', reference: 'MF-M-001' },
+      // KDU finances
+      { id: 'f43', clubId: 'c25', type: 'income', category: 'Membership Fees', amount: 30000, date: '2026-06-15', description: 'Annual membership collection', reference: 'MF-KDU-001' }
     ],
 
     projects: [
@@ -155,6 +599,34 @@ function getDefaultData() {
       { id: 'p5', clubId: 'c2', name: 'Community Health Screening', category: 'Health', status: 'completed', startDate: '2026-03-10', endDate: '2026-03-10', participants: 22, budget: 40000, description: 'Free medical screening camp for underprivileged communities.', impact: '200+ people screened' },
       { id: 'p6', clubId: 'c2', name: 'Tree Planting Initiative', category: 'Environment', status: 'completed', startDate: '2026-04-22', endDate: '2026-04-22', participants: 28, budget: 10000, description: 'Earth Day tree planting across 3 locations.', impact: '500 trees planted' },
       { id: 'p7', clubId: 'c3', name: 'Digital Literacy Program', category: 'Education', status: 'in_progress', startDate: '2026-05-01', endDate: '2026-08-30', participants: 15, budget: 30000, description: 'Teaching basic computer skills to rural youth.', impact: 'Ongoing: 60 students enrolled' },
+      // UOC Faculty of Science projects
+      { id: 'p8', clubId: 'c7', name: 'Science Day Exhibition', category: 'Education', status: 'completed', startDate: '2026-03-10', endDate: '2026-03-10', participants: 25, budget: 25000, description: 'Organized science exhibition for school children.', impact: '150+ students attended' },
+      { id: 'p9', clubId: 'c7', name: 'Lab Safety Seminar', category: 'Health', status: 'in_progress', startDate: '2026-06-15', endDate: '2026-06-15', participants: 18, budget: 5000, description: 'Lab safety and first aid training for university students.', impact: 'Ongoing: 40 students enrolled' },
+      // UOC Faculty of Arts projects
+      { id: 'p10', clubId: 'c8', name: 'Art Therapy Workshop', category: 'Health', status: 'completed', startDate: '2026-03-05', endDate: '2026-03-05', participants: 20, budget: 15000, description: 'Conducted art therapy workshop for mental well-being.', impact: '30+ participants benefited' },
+      { id: 'p11', clubId: 'c8', name: 'Cultural Heritage Exhibition', category: 'Education', status: 'planned', startDate: '2026-07-25', endDate: '2026-07-26', participants: 0, budget: 20000, description: 'Exhibition showcasing traditional Sri Lankan arts and crafts.', impact: 'Expected: 200+ visitors' },
+      // Colombo Host projects
+      { id: 'p12', clubId: 'c9', name: 'Community Kitchen', category: 'Health', status: 'completed', startDate: '2026-04-10', endDate: '2026-04-10', participants: 15, budget: 18000, description: 'Provided meals to families in need.', impact: '100+ meals served' },
+      // Colombo Millennium projects
+      { id: 'p13', clubId: 'c10', name: 'Youth Career Fair', category: 'Education', status: 'completed', startDate: '2026-05-15', endDate: '2026-05-15', participants: 25, budget: 35000, description: 'Career fair for school leavers.', impact: '200+ youth participated' },
+      // Colombo Six New Stars projects
+      { id: 'p14', clubId: 'c11', name: 'Street Animal Welfare', category: 'Environment', status: 'completed', startDate: '2026-03-20', endDate: '2026-03-20', participants: 12, budget: 8000, description: 'Feeding and vaccination drive for stray dogs.', impact: '40 stray dogs treated' },
+      // UOC Alumni projects
+      { id: 'p15', clubId: 'c12', name: 'Scholar Mentorship', category: 'Education', status: 'in_progress', startDate: '2026-05-01', endDate: '2026-07-01', participants: 10, budget: 12000, description: 'Mentoring university freshmen.', impact: 'Ongoing: 25 mentees' },
+      // UOC FOA Alumni projects
+      { id: 'p16', clubId: 'c13', name: 'Heritage Preservation', category: 'Education', status: 'completed', startDate: '2026-04-05', endDate: '2026-04-05', participants: 14, budget: 15000, description: 'Preserving local folklore stories digital archive.', impact: '50 folktales archived' },
+      { id: 'p17', clubId: 'c14', name: 'Prince School Support', category: 'Education', status: 'completed', startDate: '2026-06-15', endDate: '2026-06-15', participants: 15, budget: 10000, description: 'Donated stationeries to students.', impact: '50 students supported' },
+      { id: 'p18', clubId: 'c15', name: 'Princess Health Camp', category: 'Health', status: 'completed', startDate: '2026-06-15', endDate: '2026-06-15', participants: 18, budget: 15000, description: 'Organized free health camp.', impact: '100+ citizens checked' },
+      { id: 'p19', clubId: 'c16', name: 'Sri Sumangala Library Book Donation', category: 'Education', status: 'completed', startDate: '2026-06-15', endDate: '2026-06-15', participants: 12, budget: 12000, description: 'Donated library books.', impact: '300 students benefited' },
+      { id: 'p20', clubId: 'c17', name: 'Kalutara Shramadana Campaign', category: 'Environment', status: 'completed', startDate: '2026-06-15', endDate: '2026-06-15', participants: 20, budget: 5000, description: 'Cleaned public bus stand.', impact: 'Enhanced public hygiene' },
+      { id: 'p21', clubId: 'c18', name: 'Kalutara Balika Child Care Seminar', category: 'Health', status: 'completed', startDate: '2026-06-15', endDate: '2026-06-15', participants: 14, budget: 8000, description: 'Seminar on early child development.', impact: '50 mothers participated' },
+      { id: 'p22', clubId: 'c19', name: 'Moratuwa Beach Cleanup', category: 'Environment', status: 'completed', startDate: '2026-06-15', endDate: '2026-06-15', participants: 16, budget: 6000, description: 'Beach cleaning campaign.', impact: 'Collected 100kg plastic waste' },
+      { id: 'p23', clubId: 'c20', name: 'Royal Achievers Elder Care Visit', category: 'Health', status: 'completed', startDate: '2026-06-15', endDate: '2026-06-15', participants: 10, budget: 10000, description: 'Visited elders home with lunch.', impact: '30 elders supported' },
+      { id: 'p24', clubId: 'c21', name: 'Ratmalana Tree Planting Initiative', category: 'Environment', status: 'completed', startDate: '2026-06-15', endDate: '2026-06-15', participants: 15, budget: 7000, description: 'Planted trees around railway station.', impact: '50 saplings planted' },
+      { id: 'p25', clubId: 'c22', name: 'Cosmopolitan Creators Creative Art Class', category: 'Education', status: 'completed', startDate: '2026-06-15', endDate: '2026-06-15', participants: 12, budget: 9000, description: 'Art lessons for orphan kids.', impact: '25 children participated' },
+      { id: 'p26', clubId: 'c23', name: 'Mount Lavinia Beach Safety Awareness', category: 'Health', status: 'completed', startDate: '2026-06-15', endDate: '2026-06-15', participants: 14, budget: 8000, description: 'Beach safety and lifesaving awareness.', impact: '120 public participants' },
+      { id: 'p27', clubId: 'c24', name: 'Moratuwa Community Food Drive', category: 'Health', status: 'completed', startDate: '2026-06-15', endDate: '2026-06-15', participants: 15, budget: 20000, description: 'Distribution of dry rations to needy.', impact: '80 families benefited' },
+      { id: 'p28', clubId: 'c25', name: 'KDU Disaster Management Awareness', category: 'Education', status: 'completed', startDate: '2026-06-15', endDate: '2026-06-15', participants: 25, budget: 15000, description: 'Disaster management simulation seminar.', impact: '200+ students trained' }
     ],
 
     announcements: [
@@ -509,12 +981,72 @@ function getDefaultData() {
           sp2_3: 100000,
           sp4_5: -100000
         }
-      }
+      },
+      {
+        clubId: 'c6',
+        points: {
+          ad1_1: 10000, ad1_3: 10000, ad2_1: 10000, sp1_1: 100000
+        }
+      },
+      {
+        clubId: 'c7',
+        points: {
+          ad1_1: 10000, ad1_3: 10000, ad2_1: 10000
+        }
+      },
+      {
+        clubId: 'c8',
+        points: {
+          ad1_1: 10000, ad1_3: 10000, ad2_1: 10000
+        }
+      },
+      {
+        clubId: 'c9',
+        points: {
+          ad1_1: 10000, ad1_3: 10000, ad2_1: 10000
+        }
+      },
+      {
+        clubId: 'c10',
+        points: {
+          ad1_1: 10000, ad1_3: 10000, ad2_1: 10000
+        }
+      },
+      {
+        clubId: 'c11',
+        points: {
+          ad1_1: 10000, ad1_3: 10000, ad2_1: 10000
+        }
+      },
+      {
+        clubId: 'c12',
+        points: {
+          ad1_1: 10000, ad1_3: 10000, ad2_1: 10000
+        }
+      },
+      {
+        clubId: 'c13',
+        points: {
+          ad1_1: 10000, ad1_3: 10000, ad2_1: 10000
+        }
+      },
+      { clubId: 'c14', points: { ad1_1: 10000, ad1_3: 10000, ad2_1: 10000 } },
+      { clubId: 'c15', points: { ad1_1: 10000, ad1_3: 10000, ad2_1: 10000 } },
+      { clubId: 'c16', points: { ad1_1: 10000, ad1_3: 10000, ad2_1: 10000 } },
+      { clubId: 'c17', points: { ad1_1: 10000, ad1_3: 10000, ad2_1: 10000 } },
+      { clubId: 'c18', points: { ad1_1: 10000, ad1_3: 10000, ad2_1: 10000 } },
+      { clubId: 'c19', points: { ad1_1: 10000, ad1_3: 10000, ad2_1: 10000 } },
+      { clubId: 'c20', points: { ad1_1: 10000, ad1_3: 10000, ad2_1: 10000 } },
+      { clubId: 'c21', points: { ad1_1: 10000, ad1_3: 10000, ad2_1: 10000 } },
+      { clubId: 'c22', points: { ad1_1: 10000, ad1_3: 10000, ad2_1: 10000 } },
+      { clubId: 'c23', points: { ad1_1: 10000, ad1_3: 10000, ad2_1: 10000 } },
+      { clubId: 'c24', points: { ad1_1: 10000, ad1_3: 10000, ad2_1: 10000 } },
+      { clubId: 'c25', points: { ad1_1: 10000, ad1_3: 10000, ad2_1: 10000 } }
     ],
     memberPayments: [
-      { id: 'mp1', eventId: 'e1', clubId: 'c1', memberId: 'm1', name: 'Kasun Perera', amount: 1000, status: 'paid', date: '2026-06-05', method: 'Bank Transfer', reference: 'REF-M-101' },
-      { id: 'mp2', eventId: 'e1', clubId: 'c1', memberId: 'm2', name: 'Sanduni Rajapaksa', amount: 1000, status: 'paid', date: '2026-06-06', method: 'Cash', reference: 'REF-M-102' },
-      { id: 'mp3', eventId: 'e1', clubId: 'c1', memberId: 'm6', name: 'Ravindu Seneviratne', amount: 1000, status: 'pending', date: '2026-06-12', method: 'Bank Transfer', reference: 'REF-M-103' }
+      { id: 'mp1', eventId: 'e1', clubId: 'c1', memberId: 'm1', name: 'Kasun Perera', amount: 1000, status: 'paid', date: '2026-06-05', method: 'Bank Transfer', reference: 'REF-M-101', registrationStatus: 'approved', paymentStatus: 'paid' },
+      { id: 'mp2', eventId: 'e1', clubId: 'c1', memberId: 'm2', name: 'Sanduni Rajapaksa', amount: 1000, status: 'paid', date: '2026-06-06', method: 'Cash', reference: 'REF-M-102', registrationStatus: 'approved', paymentStatus: 'paid' },
+      { id: 'mp3', eventId: 'e1', clubId: 'c1', memberId: 'm6', name: 'Ravindu Seneviratne', amount: 1000, status: 'pending', date: '2026-06-12', method: 'Bank Transfer', reference: 'REF-M-103', registrationStatus: 'pending', paymentStatus: 'unpaid' }
     ],
     clubPayments: [
       { id: 'cp1', eventId: 'e1', clubId: 'c1', amount: 3000, status: 'paid', date: '2026-06-12', method: 'Bank Deposit', reference: 'REF-DIST-101', receiptUrl: 'receipt_c1_e1.png', registeredCount: 3 }
@@ -573,6 +1105,310 @@ function getDefaultData() {
         reference: 'DEP-88923',
         remarks: '',
         eventId: 'e1'
+      },
+      {
+        id: 'inv4',
+        invoiceNumber: 'INV-2026-004',
+        clubId: 'c7',
+        clubName: 'Leo Club of University of Colombo Faculty of Science',
+        amount: 15000,
+        issueDate: '2026-06-01',
+        dueDate: '2026-06-30',
+        description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+        category: 'Membership Fees',
+        status: 'unpaid',
+        receiptUrl: '',
+        reference: '',
+        remarks: '',
+        eventId: null
+      },
+      {
+        id: 'inv5',
+        invoiceNumber: 'INV-2026-005',
+        clubId: 'c8',
+        clubName: 'Leo Club of University of Colombo Faculty of Arts',
+        amount: 15000,
+        issueDate: '2026-06-01',
+        dueDate: '2026-06-30',
+        description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+        category: 'Membership Fees',
+        status: 'paid',
+        receiptUrl: 'receipt_c8_dues.png',
+        reference: 'DEP-70701',
+        remarks: 'Approved by District Treasurer',
+        eventId: null
+      },
+      {
+        id: 'inv6',
+        invoiceNumber: 'INV-2026-006',
+        clubId: 'c9',
+        clubName: 'Leo Club of Colombo (Host)',
+        amount: 15000,
+        issueDate: '2026-06-01',
+        dueDate: '2026-06-30',
+        description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+        category: 'Membership Fees',
+        status: 'unpaid',
+        receiptUrl: '',
+        reference: '',
+        remarks: '',
+        eventId: null
+      },
+      {
+        id: 'inv7',
+        invoiceNumber: 'INV-2026-007',
+        clubId: 'c10',
+        clubName: 'Leo Club of Colombo Millennium',
+        amount: 15000,
+        issueDate: '2026-06-01',
+        dueDate: '2026-06-30',
+        description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+        category: 'Membership Fees',
+        status: 'paid',
+        receiptUrl: 'receipt_c10_dues.png',
+        reference: 'DEP-80801',
+        remarks: 'Approved by District Treasurer',
+        eventId: null
+      },
+      {
+        id: 'inv8',
+        invoiceNumber: 'INV-2026-008',
+        clubId: 'c11',
+        clubName: 'Leo Club of Colombo Six New Stars',
+        amount: 15000,
+        issueDate: '2026-06-01',
+        dueDate: '2026-06-30',
+        description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+        category: 'Membership Fees',
+        status: 'unpaid',
+        receiptUrl: '',
+        reference: '',
+        remarks: '',
+        eventId: null
+      },
+      {
+        id: 'inv9',
+        invoiceNumber: 'INV-2026-009',
+        clubId: 'c12',
+        clubName: 'Leo Club of UOC Alumni',
+        amount: 15000,
+        issueDate: '2026-06-01',
+        dueDate: '2026-06-30',
+        description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+        category: 'Membership Fees',
+        status: 'unpaid',
+        receiptUrl: '',
+        reference: '',
+        remarks: '',
+        eventId: null
+      },
+      {
+        id: 'inv10',
+        invoiceNumber: 'INV-2026-010',
+        clubId: 'c13',
+        clubName: 'Leo Club of UOC FOA Alumni',
+        amount: 15000,
+        issueDate: '2026-06-01',
+        dueDate: '2026-06-30',
+        description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+        category: 'Membership Fees',
+        status: 'paid',
+        receiptUrl: 'receipt_c13_dues.png',
+        reference: 'DEP-90901',
+        remarks: 'Approved by District Treasurer',
+        eventId: null
+      },
+      {
+        id: 'inv11',
+        invoiceNumber: 'INV-2026-011',
+        clubId: 'c14',
+        clubName: 'Leo Club of Prince of Wales’ College',
+        amount: 15000,
+        issueDate: '2026-06-15',
+        dueDate: '2026-07-15',
+        description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+        category: 'Membership Fees',
+        status: 'unpaid',
+        receiptUrl: '',
+        reference: '',
+        remarks: '',
+        eventId: null
+      },
+      {
+        id: 'inv12',
+        invoiceNumber: 'INV-2026-012',
+        clubId: 'c15',
+        clubName: 'Leo Club of Princess of Wales’ College',
+        amount: 15000,
+        issueDate: '2026-06-15',
+        dueDate: '2026-07-15',
+        description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+        category: 'Membership Fees',
+        status: 'unpaid',
+        receiptUrl: '',
+        reference: '',
+        remarks: '',
+        eventId: null
+      },
+      {
+        id: 'inv13',
+        invoiceNumber: 'INV-2026-013',
+        clubId: 'c16',
+        clubName: 'Leo Club of Sri Sumangala College',
+        amount: 15000,
+        issueDate: '2026-06-15',
+        dueDate: '2026-07-15',
+        description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+        category: 'Membership Fees',
+        status: 'unpaid',
+        receiptUrl: '',
+        reference: '',
+        remarks: '',
+        eventId: null
+      },
+      {
+        id: 'inv14',
+        invoiceNumber: 'INV-2026-014',
+        clubId: 'c17',
+        clubName: 'Leo Club of Kalutara Vidyalaya',
+        amount: 15000,
+        issueDate: '2026-06-15',
+        dueDate: '2026-07-15',
+        description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+        category: 'Membership Fees',
+        status: 'unpaid',
+        receiptUrl: '',
+        reference: '',
+        remarks: '',
+        eventId: null
+      },
+      {
+        id: 'inv15',
+        invoiceNumber: 'INV-2026-015',
+        clubId: 'c18',
+        clubName: 'Leo Club of Kalutara Balika Vidyalaya',
+        amount: 15000,
+        issueDate: '2026-06-15',
+        dueDate: '2026-07-15',
+        description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+        category: 'Membership Fees',
+        status: 'unpaid',
+        receiptUrl: '',
+        reference: '',
+        remarks: '',
+        eventId: null
+      },
+      {
+        id: 'inv16',
+        invoiceNumber: 'INV-2026-016',
+        clubId: 'c19',
+        clubName: 'Leo Club of Moratuwa 2020',
+        amount: 15000,
+        issueDate: '2026-06-15',
+        dueDate: '2026-07-15',
+        description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+        category: 'Membership Fees',
+        status: 'unpaid',
+        receiptUrl: '',
+        reference: '',
+        remarks: '',
+        eventId: null
+      },
+      {
+        id: 'inv17',
+        invoiceNumber: 'INV-2026-017',
+        clubId: 'c20',
+        clubName: 'Leo Club of Royal Achievers',
+        amount: 15000,
+        issueDate: '2026-06-15',
+        dueDate: '2026-07-15',
+        description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+        category: 'Membership Fees',
+        status: 'unpaid',
+        receiptUrl: '',
+        reference: '',
+        remarks: '',
+        eventId: null
+      },
+      {
+        id: 'inv18',
+        invoiceNumber: 'INV-2026-018',
+        clubId: 'c21',
+        clubName: 'Leo Club of Moratuwa Ratmalana',
+        amount: 15000,
+        issueDate: '2026-06-15',
+        dueDate: '2026-07-15',
+        description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+        category: 'Membership Fees',
+        status: 'unpaid',
+        receiptUrl: '',
+        reference: '',
+        remarks: '',
+        eventId: null
+      },
+      {
+        id: 'inv19',
+        invoiceNumber: 'INV-2026-019',
+        clubId: 'c22',
+        clubName: 'Leo Club of Cosmopolitian Creators',
+        amount: 15000,
+        issueDate: '2026-06-15',
+        dueDate: '2026-07-15',
+        description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+        category: 'Membership Fees',
+        status: 'unpaid',
+        receiptUrl: '',
+        reference: '',
+        remarks: '',
+        eventId: null
+      },
+      {
+        id: 'inv20',
+        invoiceNumber: 'INV-2026-020',
+        clubId: 'c23',
+        clubName: 'Leo Club of Mount Lavinia Orient Centennial',
+        amount: 15000,
+        issueDate: '2026-06-15',
+        dueDate: '2026-07-15',
+        description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+        category: 'Membership Fees',
+        status: 'unpaid',
+        receiptUrl: '',
+        reference: '',
+        remarks: '',
+        eventId: null
+      },
+      {
+        id: 'inv21',
+        invoiceNumber: 'INV-2026-021',
+        clubId: 'c24',
+        clubName: 'Leo Club of Moratuwa',
+        amount: 15000,
+        issueDate: '2026-06-15',
+        dueDate: '2026-07-15',
+        description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+        category: 'Membership Fees',
+        status: 'unpaid',
+        receiptUrl: '',
+        reference: '',
+        remarks: '',
+        eventId: null
+      },
+      {
+        id: 'inv22',
+        invoiceNumber: 'INV-2026-022',
+        clubId: 'c25',
+        clubName: 'Leo Club of Kothalawala Defense University',
+        amount: 15000,
+        issueDate: '2026-06-15',
+        dueDate: '2026-07-15',
+        description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+        category: 'Membership Fees',
+        status: 'unpaid',
+        receiptUrl: '',
+        reference: '',
+        remarks: '',
+        eventId: null
       }
     ],
     invoiceTemplate: {
@@ -613,8 +1449,78 @@ function getDefaultData() {
       email: 'md306@leosrilanka.org',
       web: 'www.leosrilanka.org',
       publications: '"The Sri Lankan Leo" Magazine — published quarterly celebrating club service achievements nationwide.'
-    }
+    },
+    pointsSubmissions: [
+      {
+        id: "ps_1",
+        clubId: "c1",
+        clubName: "Leo Club of Sapphire Coast",
+        month: "2026-05",
+        status: "approved",
+        submittedAt: "2026-05-08T14:30:00Z",
+        submittedBy: "Kasun Perera",
+        checkedCriteria: ["ad1_1", "ad1_3", "ad2_1", "sp1_1"],
+        pointsClaimed: { ad1_1: 10000, ad1_3: 10000, ad2_1: 10000, sp1_1: 100000 },
+        totalPoints: 130000,
+        reviewedBy: "District President",
+        reviewedAt: "2026-05-10T09:15:00Z",
+        comment: "All monthly reports submitted on time. Approved!"
+      },
+      {
+        id: "ps_2",
+        clubId: "c2",
+        clubName: "Leo Club of Phoenix Rising",
+        month: "2026-05",
+        status: "approved",
+        submittedAt: "2026-05-09T18:45:00Z",
+        submittedBy: "Amaya Silva",
+        checkedCriteria: ["ad1_1", "ad2_1", "sp1_2"],
+        pointsClaimed: { ad1_1: 10000, ad2_1: 10000, sp1_2: 150000 },
+        totalPoints: 170000,
+        reviewedBy: "District President",
+        reviewedAt: "2026-05-10T09:20:00Z",
+        comment: "MAR and MTR approved."
+      },
+      {
+        id: "ps_3",
+        clubId: "c3",
+        clubName: "Leo Club of Horizon",
+        month: "2026-05",
+        status: "pending",
+        submittedAt: "2026-06-05T10:15:00Z",
+        submittedBy: "Nimal Fernando",
+        checkedCriteria: ["ad1_1", "ad1_3"],
+        pointsClaimed: { ad1_1: 10000, ad1_3: 10000 },
+        totalPoints: 20000,
+        reviewedBy: "",
+        reviewedAt: "",
+        comment: ""
+      }
+    ]
   };
+
+  // Adjust default member counts to meet district requirements:
+  // Total members: 1312. IIT (c6) = 192. Arts (c8) = 175. Science (c7) = 157.
+  // The rest (22 clubs) share 788 members (18 clubs with 36, 4 clubs with 35).
+  if (data.clubs) {
+    const iitClub = data.clubs.find(c => c.id === 'c6');
+    const artsClub = data.clubs.find(c => c.id === 'c8');
+    const scienceClub = data.clubs.find(c => c.id === 'c7');
+    if (iitClub) iitClub.memberCount = 192;
+    if (artsClub) artsClub.memberCount = 175;
+    if (scienceClub) scienceClub.memberCount = 157;
+    
+    const otherClubs = data.clubs.filter(c => c.id !== 'c6' && c.id !== 'c8' && c.id !== 'c7');
+    otherClubs.forEach((c, idx) => {
+      if (idx < 18) {
+        c.memberCount = 36;
+      } else {
+        c.memberCount = 35;
+      }
+    });
+  }
+
+  return data;
 }
 
 // ---------- Store Class ----------
@@ -660,6 +1566,24 @@ class Store {
           this._data.invoices = fresh.invoices;
           this.save();
         }
+
+        // Migrate legacy member event payments to include registrationStatus and paymentStatus
+        if (this._data.memberPayments) {
+          let updated = false;
+          this._data.memberPayments.forEach(mp => {
+            if (!mp.registrationStatus) {
+              mp.registrationStatus = mp.status === 'paid' ? 'approved' : 'pending';
+              updated = true;
+            }
+            if (!mp.paymentStatus) {
+              mp.paymentStatus = mp.status === 'paid' ? 'paid' : 'unpaid';
+              updated = true;
+            }
+          });
+          if (updated) {
+            this.save();
+          }
+        }
         if (!this._data.invoiceTemplate) {
           this._data.invoiceTemplate = {
             fileName: 'default_district_invoice_template.html',
@@ -697,6 +1621,12 @@ class Store {
           this.save();
         }
         
+        if (!this._data.pointsSubmissions) {
+          const fresh = getDefaultData();
+          this._data.pointsSubmissions = fresh.pointsSubmissions;
+          this.save();
+        }
+        
         if (!this._data.pointCriteria || this._data.pointCriteria.some(c => c.id === 'pc1')) {
           const fresh = getDefaultData();
           this._data.pointCriteria = fresh.pointCriteria;
@@ -708,6 +1638,32 @@ class Store {
         let hasLegacyClub = false;
         if (this._data.clubs) {
           this._data.clubs.forEach(c => {
+            if (c.id === 'c1' && c.code !== 'LC-024') { c.code = 'LC-024'; hasLegacyClub = true; }
+            else if (c.id === 'c2' && c.code !== 'LC-025') { c.code = 'LC-025'; hasLegacyClub = true; }
+            else if (c.id === 'c3' && c.code !== 'LC-021') { c.code = 'LC-021'; hasLegacyClub = true; }
+            else if (c.id === 'c4' && c.code !== 'LC-022') { c.code = 'LC-022'; hasLegacyClub = true; }
+            else if (c.id === 'c5' && c.code !== 'LC-023') { c.code = 'LC-023'; hasLegacyClub = true; }
+            else if (c.id === 'c6' && c.code !== 'LC-001') { c.code = 'LC-001'; hasLegacyClub = true; }
+            else if (c.id === 'c7' && c.code !== 'LC-003') { c.code = 'LC-003'; hasLegacyClub = true; }
+            else if (c.id === 'c8' && c.code !== 'LC-002') { c.code = 'LC-002'; hasLegacyClub = true; }
+            else if (c.id === 'c9' && c.code !== 'LC-004') { c.code = 'LC-004'; hasLegacyClub = true; }
+            else if (c.id === 'c10' && c.code !== 'LC-005') { c.code = 'LC-005'; hasLegacyClub = true; }
+            else if (c.id === 'c11' && c.code !== 'LC-006') { c.code = 'LC-006'; hasLegacyClub = true; }
+            else if (c.id === 'c12' && c.code !== 'LC-007') { c.code = 'LC-007'; hasLegacyClub = true; }
+            else if (c.id === 'c13' && c.code !== 'LC-008') { c.code = 'LC-008'; hasLegacyClub = true; }
+            else if (c.id === 'c14' && c.code !== 'LC-009') { c.code = 'LC-009'; hasLegacyClub = true; }
+            else if (c.id === 'c15' && c.code !== 'LC-010') { c.code = 'LC-010'; hasLegacyClub = true; }
+            else if (c.id === 'c16' && c.code !== 'LC-011') { c.code = 'LC-011'; hasLegacyClub = true; }
+            else if (c.id === 'c17' && c.code !== 'LC-012') { c.code = 'LC-012'; hasLegacyClub = true; }
+            else if (c.id === 'c18' && c.code !== 'LC-013') { c.code = 'LC-013'; hasLegacyClub = true; }
+            else if (c.id === 'c19' && c.code !== 'LC-014') { c.code = 'LC-014'; hasLegacyClub = true; }
+            else if (c.id === 'c20' && c.code !== 'LC-015') { c.code = 'LC-015'; hasLegacyClub = true; }
+            else if (c.id === 'c21' && c.code !== 'LC-016') { c.code = 'LC-016'; hasLegacyClub = true; }
+            else if (c.id === 'c22' && c.code !== 'LC-017') { c.code = 'LC-017'; hasLegacyClub = true; }
+            else if (c.id === 'c23' && c.code !== 'LC-018') { c.code = 'LC-018'; hasLegacyClub = true; }
+            else if (c.id === 'c24' && c.code !== 'LC-019') { c.code = 'LC-019'; hasLegacyClub = true; }
+            else if (c.id === 'c25' && c.code !== 'LC-020') { c.code = 'LC-020'; hasLegacyClub = true; }
+
             if (c.zone && c.zone.startsWith('Zone ')) {
               hasLegacyClub = true;
               if (c.id === 'c1') c.zone = 'A1';
@@ -739,6 +1695,1132 @@ class Store {
         }
         if (hasLegacyClub) {
           this.save();
+        }
+
+        // Add Leo Club of Informatics Institute of Technology (c6) if missing from local storage
+        if (this._data.clubs && !this._data.clubs.some(c => c.id === 'c6')) {
+          this._data.clubs.push({
+            id: 'c6',
+            name: 'Leo Club of Informatics Institute of Technology',
+            code: 'LC-001',
+            president: 'Sahan Fernando',
+            charter_date: '2025-05-10',
+            zone: 'A1',
+            region: 'A',
+            status: 'active',
+            memberCount: 22,
+            email: 'iit@leo.org',
+            phone: '+94 77 987 6543',
+            meetingDay: 'Every Wednesday',
+            description: 'Fostering technology-driven service and leadership at Informatics Institute of Technology.'
+          });
+          this.save();
+        }
+
+        // Add Leo Club of University of Colombo Faculty of Science (c7) if missing from local storage
+        if (this._data.clubs && !this._data.clubs.some(c => c.id === 'c7')) {
+          this._data.clubs.push({
+            id: 'c7',
+            name: 'Leo Club of University of Colombo Faculty of Science',
+            code: 'LC-003',
+            president: 'Dulani Bandara',
+            charter_date: '2025-02-15',
+            zone: 'A1',
+            region: 'A',
+            status: 'active',
+            memberCount: 35,
+            email: 'fos@leo.org',
+            phone: '+94 77 111 2222',
+            meetingDay: 'Every Monday',
+            description: 'Empowering science students to lead and serve the community.'
+          });
+          this.save();
+        }
+
+        // Add Leo Club of University of Colombo Faculty of Arts (c8) if missing from local storage
+        if (this._data.clubs && !this._data.clubs.some(c => c.id === 'c8')) {
+          this._data.clubs.push({
+            id: 'c8',
+            name: 'Leo Club of University of Colombo Faculty of Arts',
+            code: 'LC-002',
+            president: 'Heshan Perera',
+            charter_date: '2025-03-20',
+            zone: 'A2',
+            region: 'A',
+            status: 'active',
+            memberCount: 40,
+            email: 'foa@leo.org',
+            phone: '+94 77 333 4444',
+            meetingDay: 'Every Tuesday',
+            description: 'Promoting social harmony and leadership development through creative service.'
+          });
+          this.save();
+        }
+
+        // Add Sahan Fernando (u14) if missing from local storage
+        if (this._data.users && !this._data.users.some(u => u.id === 'u14')) {
+          this._data.users.push({
+            id: 'u14',
+            email: 'president.iit@leo.org',
+            password: 'president123',
+            name: 'Sahan Fernando',
+            role: 'club_president',
+            clubId: 'c6',
+            avatar: 'SF',
+            createdAt: '2025-05-15'
+          });
+          this.save();
+        }
+
+        // Add Dulani Bandara (u15) if missing from local storage
+        if (this._data.users && !this._data.users.some(u => u.id === 'u15')) {
+          this._data.users.push({
+            id: 'u15',
+            email: 'president.fos@leo.org',
+            password: 'president123',
+            name: 'Dulani Bandara',
+            role: 'club_president',
+            clubId: 'c7',
+            avatar: 'DB',
+            createdAt: '2025-02-20'
+          });
+          this.save();
+        }
+
+        // Add Heshan Perera (u16) if missing from local storage
+        if (this._data.users && !this._data.users.some(u => u.id === 'u16')) {
+          this._data.users.push({
+            id: 'u16',
+            email: 'president.foa@leo.org',
+            password: 'president123',
+            name: 'Heshan Perera',
+            role: 'club_president',
+            clubId: 'c8',
+            avatar: 'HP',
+            createdAt: '2025-03-25'
+          });
+          this.save();
+        }
+
+        // Add points data for IIT if missing from local storage
+        if (this._data.clubPoints && !this._data.clubPoints.some(cp => cp.clubId === 'c6')) {
+          this._data.clubPoints.push({
+            clubId: 'c6',
+            points: {
+              ad1_1: 10000,
+              ad1_3: 10000,
+              ad2_1: 10000,
+              sp1_1: 100000
+            }
+          });
+          this.save();
+        }
+
+        // Add points data for UOC Faculty of Science if missing from local storage
+        if (this._data.clubPoints && !this._data.clubPoints.some(cp => cp.clubId === 'c7')) {
+          this._data.clubPoints.push({
+            clubId: 'c7',
+            points: {
+              ad1_1: 10000,
+              ad1_3: 10000,
+              ad2_1: 10000
+            }
+          });
+          this.save();
+        }
+
+        // Add points data for UOC Faculty of Arts if missing from local storage
+        if (this._data.clubPoints && !this._data.clubPoints.some(cp => cp.clubId === 'c8')) {
+          this._data.clubPoints.push({
+            clubId: 'c8',
+            points: {
+              ad1_1: 10000,
+              ad1_3: 10000,
+              ad2_1: 10000
+            }
+          });
+          this.save();
+        }
+
+        // Add members for c7 if missing from local storage
+        if (this._data.members && !this._data.members.some(m => m.clubId === 'c7')) {
+          this._data.members.push(
+            { id: 'm16', clubId: 'c7', name: 'Dulani Bandara', role: 'President', status: 'active', joinDate: '2025-02-15', phone: '+94 77 111 2222', email: 'dulani@email.com' },
+            { id: 'm17', clubId: 'c7', name: 'Kavinda Perera', role: 'Secretary', status: 'active', joinDate: '2025-02-20', phone: '+94 77 111 2223', email: 'kavinda@email.com' },
+            { id: 'm18', clubId: 'c7', name: 'Minoli Silva', role: 'Treasurer', status: 'active', joinDate: '2025-02-20', phone: '+94 77 111 2224', email: 'minoli@email.com' },
+            { id: 'm19', clubId: 'c7', name: 'Ruwan Kumara', role: 'VP', status: 'active', joinDate: '2025-03-01', phone: '+94 77 111 2225', email: 'ruwan@email.com' },
+            { id: 'm20', clubId: 'c7', name: 'Shalini Fernando', role: 'Member', status: 'active', joinDate: '2025-03-10', phone: '+94 77 111 2226', email: 'shalini@email.com' }
+          );
+          this.save();
+        }
+
+        // Add members for c8 if missing from local storage
+        if (this._data.members && !this._data.members.some(m => m.clubId === 'c8')) {
+          this._data.members.push(
+            { id: 'm21', clubId: 'c8', name: 'Heshan Perera', role: 'President', status: 'active', joinDate: '2025-03-20', phone: '+94 77 333 4444', email: 'heshan@email.com' },
+            { id: 'm22', clubId: 'c8', name: 'Nipuni Jayasinghe', role: 'Secretary', status: 'active', joinDate: '2025-03-22', phone: '+94 77 333 4445', email: 'nipuni@email.com' },
+            { id: 'm23', clubId: 'c8', name: 'Sajith De Silva', role: 'Treasurer', status: 'active', joinDate: '2025-03-22', phone: '+94 77 333 4446', email: 'sajith@email.com' },
+            { id: 'm24', clubId: 'c8', name: 'Pooja Rajapakse', role: 'VP', status: 'active', joinDate: '2025-04-05', phone: '+94 77 333 4447', email: 'pooja@email.com' },
+            { id: 'm25', clubId: 'c8', name: 'Dilshan Perera', role: 'Member', status: 'active', joinDate: '2025-04-10', phone: '+94 77 333 4448', email: 'dilshan@email.com' }
+          );
+          this.save();
+        }
+
+        // Add projects for c7 if missing from local storage
+        if (this._data.projects && !this._data.projects.some(p => p.clubId === 'c7')) {
+          this._data.projects.push(
+            { id: 'p8', clubId: 'c7', name: 'Science Day Exhibition', category: 'Education', status: 'completed', startDate: '2026-03-10', endDate: '2026-03-10', participants: 25, budget: 25000, description: 'Organized science exhibition for school children.', impact: '150+ students attended' },
+            { id: 'p9', clubId: 'c7', name: 'Lab Safety Seminar', category: 'Health', status: 'in_progress', startDate: '2026-06-15', endDate: '2026-06-15', participants: 18, budget: 5000, description: 'Lab safety and first aid training for university students.', impact: 'Ongoing: 40 students enrolled' }
+          );
+          this.save();
+        }
+
+        // Add projects for c8 if missing from local storage
+        if (this._data.projects && !this._data.projects.some(p => p.clubId === 'c8')) {
+          this._data.projects.push(
+            { id: 'p10', clubId: 'c8', name: 'Art Therapy Workshop', category: 'Health', status: 'completed', startDate: '2026-03-05', endDate: '2026-03-05', participants: 20, budget: 15000, description: 'Conducted art therapy workshop for mental well-being.', impact: '30+ participants benefited' },
+            { id: 'p11', clubId: 'c8', name: 'Cultural Heritage Exhibition', category: 'Education', status: 'planned', startDate: '2026-07-25', endDate: '2026-07-26', participants: 0, budget: 20000, description: 'Exhibition showcasing traditional Sri Lankan arts and crafts.', impact: 'Expected: 200+ visitors' }
+          );
+          this.save();
+        }
+
+        // Add finances for c7 if missing from local storage
+        if (this._data.finances && !this._data.finances.some(f => f.clubId === 'c7')) {
+          this._data.finances.push(
+            { id: 'f19', clubId: 'c7', type: 'income', category: 'Membership Fees', amount: 35000, date: '2026-02-20', description: 'Annual membership fees collection', reference: 'MF-FOS-001' },
+            { id: 'f20', clubId: 'c7', type: 'income', category: 'Sponsorship', amount: 40000, date: '2026-03-05', description: 'Corporate sponsor - SciTech Solutions', reference: 'SP-FOS-001' },
+            { id: 'f21', clubId: 'c7', type: 'expense', category: 'Projects', amount: 25000, date: '2026-03-10', description: 'Science Day Exhibition expenses', reference: 'EX-FOS-001' },
+            { id: 'f22', clubId: 'c7', type: 'expense', category: 'Administration', amount: 3000, date: '2026-02-25', description: 'Stationery and postage dues', reference: 'EX-FOS-002' }
+          );
+          this.save();
+        }
+
+        // Add finances for c8 if missing from local storage
+        if (this._data.finances && !this._data.finances.some(f => f.clubId === 'c8')) {
+          this._data.finances.push(
+            { id: 'f23', clubId: 'c8', type: 'income', category: 'Membership Fees', amount: 40000, date: '2026-03-25', description: 'Annual membership collection', reference: 'MF-FOA-001' },
+            { id: 'f24', clubId: 'c8', type: 'income', category: 'Fundraising', amount: 30000, date: '2026-04-10', description: 'Art exhibition ticket sales', reference: 'FR-FOA-001' },
+            { id: 'f25', clubId: 'c8', type: 'expense', category: 'Events', amount: 15000, date: '2026-04-10', description: 'Venue booking and logistics', reference: 'EX-FOA-001' },
+            { id: 'f26', clubId: 'c8', type: 'expense', category: 'Administration', amount: 4000, date: '2026-03-30', description: 'Meeting refreshments and flyers', reference: 'EX-FOA-002' }
+          );
+          this.save();
+        }
+
+        // Add invoices for c7 if missing from local storage
+        if (this._data.invoices && !this._data.invoices.some(inv => inv.clubId === 'c7')) {
+          this._data.invoices.push({
+            id: 'inv4',
+            invoiceNumber: 'INV-2026-004',
+            clubId: 'c7',
+            clubName: 'Leo Club of University of Colombo Faculty of Science',
+            amount: 15000,
+            issueDate: '2026-06-01',
+            dueDate: '2026-06-30',
+            description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+            category: 'Membership Fees',
+            status: 'unpaid',
+            receiptUrl: '',
+            reference: '',
+            remarks: '',
+            eventId: null
+          });
+          this.save();
+        }
+
+        // Add invoices for c8 if missing from local storage
+        if (this._data.invoices && !this._data.invoices.some(inv => inv.clubId === 'c8')) {
+          this._data.invoices.push({
+            id: 'inv5',
+            invoiceNumber: 'INV-2026-005',
+            clubId: 'c8',
+            clubName: 'Leo Club of University of Colombo Faculty of Arts',
+            amount: 15000,
+            issueDate: '2026-06-01',
+            dueDate: '2026-06-30',
+            description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+            category: 'Membership Fees',
+            status: 'paid',
+            receiptUrl: 'receipt_c8_dues.png',
+            reference: 'DEP-70701',
+            remarks: 'Approved by District Treasurer',
+            eventId: null
+          });
+          this.save();
+        }
+
+        // Add Leo Club of Colombo (Host) (c9) if missing from local storage
+        if (this._data.clubs && !this._data.clubs.some(c => c.id === 'c9')) {
+          this._data.clubs.push({
+            id: 'c9',
+            name: 'Leo Club of Colombo (Host)',
+            code: 'LC-004',
+            president: 'Amesh Silva',
+            charter_date: '2020-05-10',
+            zone: 'A1',
+            region: 'A',
+            status: 'active',
+            memberCount: 25,
+            email: 'colombo.host@leo.org',
+            phone: '+94 77 123 0001',
+            meetingDay: 'Every Sunday',
+            description: 'The pioneering Colombo Host club dedicated to community services.'
+          });
+          this.save();
+        }
+
+        // Add Leo Club of Colombo Millennium (c10) if missing from local storage
+        if (this._data.clubs && !this._data.clubs.some(c => c.id === 'c10')) {
+          this._data.clubs.push({
+            id: 'c10',
+            name: 'Leo Club of Colombo Millennium',
+            code: 'LC-005',
+            president: 'Ruvini Perera',
+            charter_date: '2021-06-15',
+            zone: 'A2',
+            region: 'A',
+            status: 'active',
+            memberCount: 28,
+            email: 'millennium@leo.org',
+            phone: '+94 77 123 0002',
+            meetingDay: 'Every Saturday',
+            description: 'Fostering millennium leaders in youth community service.'
+          });
+          this.save();
+        }
+
+        // Add Leo Club of Colombo Six New Stars (c11) if missing from local storage
+        if (this._data.clubs && !this._data.clubs.some(c => c.id === 'c11')) {
+          this._data.clubs.push({
+            id: 'c11',
+            name: 'Leo Club of Colombo Six New Stars',
+            code: 'LC-006',
+            president: 'Kavindu Fernando',
+            charter_date: '2023-08-20',
+            zone: 'B1',
+            region: 'B',
+            status: 'active',
+            memberCount: 24,
+            email: 'sixstars@leo.org',
+            phone: '+94 77 123 0003',
+            meetingDay: 'Every Saturday',
+            description: 'Guiding young leaders towards astronomical service impacts.'
+          });
+          this.save();
+        }
+
+        // Add Leo Club of UOC Alumni (c12) if missing from local storage
+        if (this._data.clubs && !this._data.clubs.some(c => c.id === 'c12')) {
+          this._data.clubs.push({
+            id: 'c12',
+            name: 'Leo Club of UOC Alumni',
+            code: 'LC-007',
+            president: 'Dulaj Senanayake',
+            charter_date: '2024-10-01',
+            zone: 'A1',
+            region: 'A',
+            status: 'active',
+            memberCount: 30,
+            email: 'uoc.alumni@leo.org',
+            phone: '+94 77 123 0004',
+            meetingDay: 'Every Sunday',
+            description: 'Alumni of UOC uniting to continue their Leostic journey.'
+          });
+          this.save();
+        }
+
+        // Add Leo Club of UOC FOA Alumni (c13) if missing from local storage
+        if (this._data.clubs && !this._data.clubs.some(c => c.id === 'c13')) {
+          this._data.clubs.push({
+            id: 'c13',
+            name: 'Leo Club of UOC FOA Alumni',
+            code: 'LC-008',
+            president: 'Sanduni Jayawardena',
+            charter_date: '2025-01-15',
+            zone: 'A2',
+            region: 'A',
+            status: 'active',
+            memberCount: 26,
+            email: 'uoc.foaalumni@leo.org',
+            phone: '+94 77 123 0005',
+            meetingDay: 'Every Saturday',
+            description: 'Arts Faculty alumni contributing to creative societal development.'
+          });
+          this.save();
+        }
+
+        // Add president users for c9 to c13 if missing from local storage
+        const newUsers = [
+          { id: 'u17', email: 'president.colombohost@leo.org', password: 'president123', name: 'Amesh Silva', role: 'club_president', clubId: 'c9', avatar: 'AS', createdAt: '2026-05-15' },
+          { id: 'u18', email: 'president.millennium@leo.org', password: 'president123', name: 'Ruvini Perera', role: 'club_president', clubId: 'c10', avatar: 'RP', createdAt: '2026-05-15' },
+          { id: 'u19', email: 'president.sixstars@leo.org', password: 'president123', name: 'Kavindu Fernando', role: 'club_president', clubId: 'c11', avatar: 'KF', createdAt: '2026-05-15' },
+          { id: 'u20', email: 'president.uocalumni@leo.org', password: 'president123', name: 'Dulaj Senanayake', role: 'club_president', clubId: 'c12', avatar: 'DS', createdAt: '2026-05-15' },
+          { id: 'u21', email: 'president.foaalumni@leo.org', password: 'president123', name: 'Sanduni Jayawardena', role: 'club_president', clubId: 'c13', avatar: 'SJ', createdAt: '2026-05-15' }
+        ];
+        if (this._data.users) {
+          newUsers.forEach(u => {
+            if (!this._data.users.some(existingUser => existingUser.id === u.id)) {
+              this._data.users.push(u);
+              this.save();
+            }
+          });
+        }
+
+        // Add points data for c9 to c13 if missing from local storage
+        const newClubPoints = [
+          { clubId: 'c9', points: { ad1_1: 10000, ad1_3: 10000, ad2_1: 10000 } },
+          { clubId: 'c10', points: { ad1_1: 10000, ad1_3: 10000, ad2_1: 10000 } },
+          { clubId: 'c11', points: { ad1_1: 10000, ad1_3: 10000, ad2_1: 10000 } },
+          { clubId: 'c12', points: { ad1_1: 10000, ad1_3: 10000, ad2_1: 10000 } },
+          { clubId: 'c13', points: { ad1_1: 10000, ad1_3: 10000, ad2_1: 10000 } }
+        ];
+        if (this._data.clubPoints) {
+          newClubPoints.forEach(cp => {
+            if (!this._data.clubPoints.some(existingCp => existingCp.clubId === cp.clubId)) {
+              this._data.clubPoints.push(cp);
+              this.save();
+            }
+          });
+        }
+
+        // Add members for c9 to c13 if missing from local storage
+        const newMembers = [
+          { id: 'm26', clubId: 'c9', name: 'Amesh Silva', role: 'President', status: 'active', joinDate: '2020-05-10', phone: '+94 77 123 0001', email: 'amesh@email.com' },
+          { id: 'm27', clubId: 'c9', name: 'Janaki Perera', role: 'Secretary', status: 'active', joinDate: '2020-05-15', phone: '+94 77 123 0011', email: 'janaki@email.com' },
+          { id: 'm28', clubId: 'c9', name: 'Tharindu Silva', role: 'Treasurer', status: 'active', joinDate: '2020-05-15', phone: '+94 77 123 0012', email: 'tharindu@email.com' },
+          { id: 'm29', clubId: 'c10', name: 'Ruvini Perera', role: 'President', status: 'active', joinDate: '2021-06-15', phone: '+94 77 123 0002', email: 'ruvini@email.com' },
+          { id: 'm30', clubId: 'c10', name: 'Saman Kumara', role: 'Secretary', status: 'active', joinDate: '2021-06-20', phone: '+94 77 123 0021', email: 'saman@email.com' },
+          { id: 'm31', clubId: 'c10', name: 'Nipuni Jayasuriya', role: 'Treasurer', status: 'active', joinDate: '2021-06-20', phone: '+94 77 123 0022', email: 'nipuni.j@email.com' },
+          { id: 'm32', clubId: 'c11', name: 'Kavindu Fernando', role: 'President', status: 'active', joinDate: '2023-08-20', phone: '+94 77 123 0003', email: 'kavindu.f@email.com' },
+          { id: 'm33', clubId: 'c11', name: 'Hashini Alwis', role: 'Secretary', status: 'active', joinDate: '2023-08-25', phone: '+94 77 123 0031', email: 'hashini@email.com' },
+          { id: 'm34', clubId: 'c11', name: 'Roshan De Silva', role: 'Treasurer', status: 'active', joinDate: '2023-08-25', phone: '+94 77 123 0032', email: 'roshan@email.com' },
+          { id: 'm35', clubId: 'c12', name: 'Dulaj Senanayake', role: 'President', status: 'active', joinDate: '2024-10-01', phone: '+94 77 123 0004', email: 'dulaj@email.com' },
+          { id: 'm36', clubId: 'c12', name: 'Menaka Jayawardena', role: 'Secretary', status: 'active', joinDate: '2024-10-05', phone: '+94 77 123 0041', email: 'menaka@email.com' },
+          { id: 'm37', clubId: 'c12', name: 'Piyumi Fernando', role: 'Treasurer', status: 'active', joinDate: '2024-10-05', phone: '+94 77 123 0042', email: 'piyumi@email.com' },
+          { id: 'm38', clubId: 'c13', name: 'Sanduni Jayawardena', role: 'President', status: 'active', joinDate: '2025-01-15', phone: '+94 77 123 0005', email: 'sanduni.j@email.com' },
+          { id: 'm39', clubId: 'c13', name: 'Chathura Rajapakse', role: 'Secretary', status: 'active', joinDate: '2025-01-20', phone: '+94 77 123 0051', email: 'chathura@email.com' },
+          { id: 'm40', clubId: 'c13', name: 'Dilani Gamage', role: 'Treasurer', status: 'active', joinDate: '2025-01-20', phone: '+94 77 123 0052', email: 'dilani@email.com' }
+        ];
+        if (this._data.members) {
+          newMembers.forEach(m => {
+            if (!this._data.members.some(existingM => existingM.id === m.id)) {
+              this._data.members.push(m);
+              this.save();
+            }
+          });
+        }
+
+        // Add projects for c9 to c13 if missing from local storage
+        const newProjects = [
+          { id: 'p12', clubId: 'c9', name: 'Community Kitchen', category: 'Health', status: 'completed', startDate: '2026-04-10', endDate: '2026-04-10', participants: 15, budget: 18000, description: 'Provided meals to families in need.', impact: '100+ meals served' },
+          { id: 'p13', clubId: 'c10', name: 'Youth Career Fair', category: 'Education', status: 'completed', startDate: '2026-05-15', endDate: '2026-05-15', participants: 25, budget: 35000, description: 'Career fair for school leavers.', impact: '200+ youth participated' },
+          { id: 'p14', clubId: 'c11', name: 'Street Animal Welfare', category: 'Environment', status: 'completed', startDate: '2026-03-20', endDate: '2026-03-20', participants: 12, budget: 8000, description: 'Feeding and vaccination drive for stray dogs.', impact: '40 stray dogs treated' },
+          { id: 'p15', clubId: 'c12', name: 'Scholar Mentorship', category: 'Education', status: 'in_progress', startDate: '2026-05-01', endDate: '2026-07-01', participants: 10, budget: 12000, description: 'Mentoring university freshmen.', impact: 'Ongoing: 25 mentees' },
+          { id: 'p16', clubId: 'c13', name: 'Heritage Preservation', category: 'Education', status: 'completed', startDate: '2026-04-05', endDate: '2026-04-05', participants: 14, budget: 15000, description: 'Preserving local folklore stories digital archive.', impact: '50 folktales archived' }
+        ];
+        if (this._data.projects) {
+          newProjects.forEach(p => {
+            if (!this._data.projects.some(existingP => existingP.id === p.id)) {
+              this._data.projects.push(p);
+              this.save();
+            }
+          });
+        }
+
+        // Add finances for c9 to c13 if missing from local storage
+        const newFinances = [
+          { id: 'f27', clubId: 'c9', type: 'income', category: 'Membership Fees', amount: 25000, date: '2026-02-15', description: 'Annual membership fees collection', reference: 'MF-CH-001' },
+          { id: 'f28', clubId: 'c10', type: 'income', category: 'Membership Fees', amount: 30000, date: '2026-02-20', description: 'Annual membership collection', reference: 'MF-CM-001' },
+          { id: 'f29', clubId: 'c11', type: 'income', category: 'Membership Fees', amount: 20000, date: '2026-03-01', description: 'Annual membership collection', reference: 'MF-CSNS-001' },
+          { id: 'f30', clubId: 'c12', type: 'income', category: 'Membership Fees', amount: 35000, date: '2026-03-05', description: 'Annual membership fees collection', reference: 'MF-UA-001' },
+          { id: 'f31', clubId: 'c13', type: 'income', category: 'Membership Fees', amount: 28000, date: '2026-03-10', description: 'Annual membership collection', reference: 'MF-UAA-001' }
+        ];
+        if (this._data.finances) {
+          newFinances.forEach(f => {
+            if (!this._data.finances.some(existingF => existingF.id === f.id)) {
+              this._data.finances.push(f);
+              this.save();
+            }
+          });
+        }
+
+        // Add invoices for c9 to c13 if missing from local storage
+        const newInvoices = [
+          {
+            id: 'inv6',
+            invoiceNumber: 'INV-2026-006',
+            clubId: 'c9',
+            clubName: 'Leo Club of Colombo (Host)',
+            amount: 15000,
+            issueDate: '2026-06-01',
+            dueDate: '2026-06-30',
+            description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+            category: 'Membership Fees',
+            status: 'unpaid',
+            receiptUrl: '',
+            reference: '',
+            remarks: '',
+            eventId: null
+          },
+          {
+            id: 'inv7',
+            invoiceNumber: 'INV-2026-007',
+            clubId: 'c10',
+            clubName: 'Leo Club of Colombo Millennium',
+            amount: 15000,
+            issueDate: '2026-06-01',
+            dueDate: '2026-06-30',
+            description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+            category: 'Membership Fees',
+            status: 'paid',
+            receiptUrl: 'receipt_c10_dues.png',
+            reference: 'DEP-80801',
+            remarks: 'Approved by District Treasurer',
+            eventId: null
+          },
+          {
+            id: 'inv8',
+            invoiceNumber: 'INV-2026-008',
+            clubId: 'c11',
+            clubName: 'Leo Club of Colombo Six New Stars',
+            amount: 15000,
+            issueDate: '2026-06-01',
+            dueDate: '2026-06-30',
+            description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+            category: 'Membership Fees',
+            status: 'unpaid',
+            receiptUrl: '',
+            reference: '',
+            remarks: '',
+            eventId: null
+          },
+          {
+            id: 'inv9',
+            invoiceNumber: 'INV-2026-009',
+            clubId: 'c12',
+            clubName: 'Leo Club of UOC Alumni',
+            amount: 15000,
+            issueDate: '2026-06-01',
+            dueDate: '2026-06-30',
+            description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+            category: 'Membership Fees',
+            status: 'unpaid',
+            receiptUrl: '',
+            reference: '',
+            remarks: '',
+            eventId: null
+          },
+          {
+            id: 'inv10',
+            invoiceNumber: 'INV-2026-010',
+            clubId: 'c13',
+            clubName: 'Leo Club of UOC FOA Alumni',
+            amount: 15000,
+            issueDate: '2026-06-01',
+            dueDate: '2026-06-30',
+            description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+            category: 'Membership Fees',
+            status: 'paid',
+            receiptUrl: 'receipt_c13_dues.png',
+            reference: 'DEP-90901',
+            remarks: 'Approved by District Treasurer',
+            eventId: null
+          }
+        ];
+        if (this._data.invoices) {
+          newInvoices.forEach(inv => {
+            if (!this._data.invoices.some(existingInv => existingInv.clubId === inv.clubId)) {
+              this._data.invoices.push(inv);
+              this.save();
+            }
+          });
+        }
+
+        // Add Leo Clubs c14 to c25 if missing from local storage
+        const newClubsC14toC25 = [
+          {
+            id: 'c14',
+            name: 'Leo Club of Prince of Wales’ College',
+            code: 'LC-009',
+            president: 'Devinda Silva',
+            charter_date: '2026-06-15',
+            zone: 'A1',
+            region: 'A',
+            status: 'active',
+            memberCount: 20,
+            email: 'princeofwales@leo.org',
+            phone: '+94 77 123 0014',
+            meetingDay: 'Every Saturday',
+            description: 'Dedicated to fostering leadership and school community service.'
+          },
+          {
+            id: 'c15',
+            name: 'Leo Club of Princess of Wales’ College',
+            code: 'LC-010',
+            president: 'Shehani Fernando',
+            charter_date: '2026-06-15',
+            zone: 'A2',
+            region: 'A',
+            status: 'active',
+            memberCount: 22,
+            email: 'princessofwales@leo.org',
+            phone: '+94 77 123 0015',
+            meetingDay: 'Every Sunday',
+            description: 'Empowering young women leaders through impact-driven service.'
+          },
+          {
+            id: 'c16',
+            name: 'Leo Club of Sri Sumangala College',
+            code: 'LC-011',
+            president: 'Kusal Mendis',
+            charter_date: '2026-06-15',
+            zone: 'B1',
+            region: 'B',
+            status: 'active',
+            memberCount: 20,
+            email: 'srisumangala@leo.org',
+            phone: '+94 77 123 0016',
+            meetingDay: 'Every Saturday',
+            description: 'Creating positive changes in the community through dedicated efforts.'
+          },
+          {
+            id: 'c17',
+            name: 'Leo Club of Kalutara Vidyalaya',
+            code: 'LC-012',
+            president: 'Dilan Perera',
+            charter_date: '2026-06-15',
+            zone: 'B2',
+            region: 'B',
+            status: 'active',
+            memberCount: 25,
+            email: 'kalutaravidyalaya@leo.org',
+            phone: '+94 77 123 0017',
+            meetingDay: 'Every Saturday',
+            description: 'Developing youth potentials and building active citizens.'
+          },
+          {
+            id: 'c18',
+            name: 'Leo Club of Kalutara Balika Vidyalaya',
+            code: 'LC-013',
+            president: 'Nethmi Fernando',
+            charter_date: '2026-06-15',
+            zone: 'B1',
+            region: 'B',
+            status: 'active',
+            memberCount: 24,
+            email: 'kalutarabalika@leo.org',
+            phone: '+94 77 123 0018',
+            meetingDay: 'Every Sunday',
+            description: 'Committed to humanitarian support and leadership excellence.'
+          },
+          {
+            id: 'c19',
+            name: 'Leo Club of Moratuwa 2020',
+            code: 'LC-014',
+            president: 'Sahan Jayasuriya',
+            charter_date: '2026-06-15',
+            zone: 'A1',
+            region: 'A',
+            status: 'active',
+            memberCount: 18,
+            email: 'moratuwa2020@leo.org',
+            phone: '+94 77 123 0019',
+            meetingDay: 'Every Saturday',
+            description: 'Promoting mutual cooperation and impactful social work.'
+          },
+          {
+            id: 'c20',
+            name: 'Leo Club of Royal Achievers',
+            code: 'LC-015',
+            president: 'Praveen Silva',
+            charter_date: '2026-06-15',
+            zone: 'A2',
+            region: 'A',
+            status: 'active',
+            memberCount: 20,
+            email: 'royalachievers@leo.org',
+            phone: '+94 77 123 0020',
+            meetingDay: 'Every Saturday',
+            description: 'Achieving milestones in community service and personal development.'
+          },
+          {
+            id: 'c21',
+            name: 'Leo Club of Moratuwa Ratmalana',
+            code: 'LC-016',
+            president: 'Ruwantha Fernando',
+            charter_date: '2026-06-15',
+            zone: 'A1',
+            region: 'A',
+            status: 'active',
+            memberCount: 22,
+            email: 'moratuwaratmalana@leo.org',
+            phone: '+94 77 123 0021',
+            meetingDay: 'Every Sunday',
+            description: 'Bridging communities together through sustainable development projects.'
+          },
+          {
+            id: 'c22',
+            name: 'Leo Club of Cosmopolitian Creators',
+            code: 'LC-017',
+            president: 'Dilini Cooray',
+            charter_date: '2026-06-15',
+            zone: 'B2',
+            region: 'B',
+            status: 'active',
+            memberCount: 19,
+            email: 'cosmopolitan@leo.org',
+            phone: '+94 77 123 0022',
+            meetingDay: 'Every Saturday',
+            description: 'Inspiring creative ideas and cosmopolitan unity in social services.'
+          },
+          {
+            id: 'c23',
+            name: 'Leo Club of Mount Lavinia Orient Centennial',
+            code: 'LC-018',
+            president: 'Senura De Silva',
+            charter_date: '2026-06-15',
+            zone: 'A2',
+            region: 'A',
+            status: 'active',
+            memberCount: 21,
+            email: 'mtlavinia@leo.org',
+            phone: '+94 77 123 0023',
+            meetingDay: 'Every Saturday',
+            description: 'Serving with pride and building future leaders since the centennial.'
+          },
+          {
+            id: 'c24',
+            name: 'Leo Club of Moratuwa',
+            code: 'LC-019',
+            president: 'Thilina Perera',
+            charter_date: '2026-06-15',
+            zone: 'A1',
+            region: 'A',
+            status: 'active',
+            memberCount: 23,
+            email: 'moratuwa@leo.org',
+            phone: '+94 77 123 0024',
+            meetingDay: 'Every Sunday',
+            description: 'A legacy of service and fellowship in the heart of Moratuwa.'
+          },
+          {
+            id: 'c25',
+            name: 'Leo Club of Kothalawala Defense University',
+            code: 'LC-020',
+            president: 'Kasun Jayawardena',
+            charter_date: '2026-06-15',
+            zone: 'B1',
+            region: 'B',
+            status: 'active',
+            memberCount: 30,
+            email: 'kdu@leo.org',
+            phone: '+94 77 123 0025',
+            meetingDay: 'Every Friday',
+            description: 'Disciplined leaders serving the nation through active volunteerism.'
+          }
+        ];
+        if (this._data.clubs) {
+          newClubsC14toC25.forEach(c => {
+            if (!this._data.clubs.some(existingClub => existingClub.id === c.id)) {
+              this._data.clubs.push(c);
+              this.save();
+            }
+          });
+        }
+
+        // Add president users for c14 to c25 if missing from local storage
+        const newUsersC14toC25 = [
+          { id: 'u22', email: 'president.princeofwales@leo.org', password: 'president123', name: 'Devinda Silva', role: 'club_president', clubId: 'c14', avatar: 'DS', createdAt: '2026-06-15' },
+          { id: 'u23', email: 'president.princessofwales@leo.org', password: 'president123', name: 'Shehani Fernando', role: 'club_president', clubId: 'c15', avatar: 'SF', createdAt: '2026-06-15' },
+          { id: 'u24', email: 'president.srisumangala@leo.org', password: 'president123', name: 'Kusal Mendis', role: 'club_president', clubId: 'c16', avatar: 'KM', createdAt: '2026-06-15' },
+          { id: 'u25', email: 'president.kalutaravidyalaya@leo.org', password: 'president123', name: 'Dilan Perera', role: 'club_president', clubId: 'c17', avatar: 'DP', createdAt: '2026-06-15' },
+          { id: 'u26', email: 'president.kalutarabalika@leo.org', password: 'president123', name: 'Nethmi Fernando', role: 'club_president', clubId: 'c18', avatar: 'NF', createdAt: '2026-06-15' },
+          { id: 'u27', email: 'president.moratuwa2020@leo.org', password: 'president123', name: 'Sahan Jayasuriya', role: 'club_president', clubId: 'c19', avatar: 'SJ', createdAt: '2026-06-15' },
+          { id: 'u28', email: 'president.royalachievers@leo.org', password: 'president123', name: 'Praveen Silva', role: 'club_president', clubId: 'c20', avatar: 'PS', createdAt: '2026-06-15' },
+          { id: 'u29', email: 'president.moratuwaratmalana@leo.org', password: 'president123', name: 'Ruwantha Fernando', role: 'club_president', clubId: 'c21', avatar: 'RF', createdAt: '2026-06-15' },
+          { id: 'u30', email: 'president.cosmopolitan@leo.org', password: 'president123', name: 'Dilini Cooray', role: 'club_president', clubId: 'c22', avatar: 'DC', createdAt: '2026-06-15' },
+          { id: 'u31', email: 'president.mtlavinia@leo.org', password: 'president123', name: 'Senura De Silva', role: 'club_president', clubId: 'c23', avatar: 'SS', createdAt: '2026-06-15' },
+          { id: 'u32', email: 'president.moratuwa@leo.org', password: 'president123', name: 'Thilina Perera', role: 'club_president', clubId: 'c24', avatar: 'TP', createdAt: '2026-06-15' },
+          { id: 'u33', email: 'president.kdu@leo.org', password: 'president123', name: 'Kasun Jayawardena', role: 'club_president', clubId: 'c25', avatar: 'KJ', createdAt: '2026-06-15' }
+        ];
+        if (this._data.users) {
+          newUsersC14toC25.forEach(u => {
+            if (!this._data.users.some(existingUser => existingUser.id === u.id)) {
+              this._data.users.push(u);
+              this.save();
+            }
+          });
+        }
+
+        // Add points data for c14 to c25 if missing from local storage
+        const newClubPointsC14toC25 = [
+          { clubId: 'c14', points: { ad1_1: 10000, ad1_3: 10000, ad2_1: 10000 } },
+          { clubId: 'c15', points: { ad1_1: 10000, ad1_3: 10000, ad2_1: 10000 } },
+          { clubId: 'c16', points: { ad1_1: 10000, ad1_3: 10000, ad2_1: 10000 } },
+          { clubId: 'c17', points: { ad1_1: 10000, ad1_3: 10000, ad2_1: 10000 } },
+          { clubId: 'c18', points: { ad1_1: 10000, ad1_3: 10000, ad2_1: 10000 } },
+          { clubId: 'c19', points: { ad1_1: 10000, ad1_3: 10000, ad2_1: 10000 } },
+          { clubId: 'c20', points: { ad1_1: 10000, ad1_3: 10000, ad2_1: 10000 } },
+          { clubId: 'c21', points: { ad1_1: 10000, ad1_3: 10000, ad2_1: 10000 } },
+          { clubId: 'c22', points: { ad1_1: 10000, ad1_3: 10000, ad2_1: 10000 } },
+          { clubId: 'c23', points: { ad1_1: 10000, ad1_3: 10000, ad2_1: 10000 } },
+          { clubId: 'c24', points: { ad1_1: 10000, ad1_3: 10000, ad2_1: 10000 } },
+          { clubId: 'c25', points: { ad1_1: 10000, ad1_3: 10000, ad2_1: 10000 } }
+        ];
+        if (this._data.clubPoints) {
+          newClubPointsC14toC25.forEach(cp => {
+            if (!this._data.clubPoints.some(existingCp => existingCp.clubId === cp.clubId)) {
+              this._data.clubPoints.push(cp);
+              this.save();
+            }
+          });
+        }
+
+        // Add members for c14 to c25 if missing from local storage
+        const newMembersC14toC25 = [
+          { id: 'm41', clubId: 'c14', name: 'Devinda Silva', role: 'President', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0014', email: 'devinda@email.com' },
+          { id: 'm42', clubId: 'c14', name: 'Janith Perera', role: 'Secretary', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0114', email: 'janith@email.com' },
+          { id: 'm43', clubId: 'c14', name: 'Lahiru Fernando', role: 'Treasurer', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0214', email: 'lahiru@email.com' },
+          { id: 'm44', clubId: 'c15', name: 'Shehani Fernando', role: 'President', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0015', email: 'shehani@email.com' },
+          { id: 'm45', clubId: 'c15', name: 'Amanda Silva', role: 'Secretary', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0115', email: 'amanda@email.com' },
+          { id: 'm46', clubId: 'c15', name: 'Dilini Peiris', role: 'Treasurer', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0215', email: 'dilini.p@email.com' },
+          { id: 'm47', clubId: 'c16', name: 'Kusal Mendis', role: 'President', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0016', email: 'kusal@email.com' },
+          { id: 'm48', clubId: 'c16', name: 'Tharindu Rajapakse', role: 'Secretary', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0116', email: 'tharindu.r@email.com' },
+          { id: 'm49', clubId: 'c16', name: 'Ruchira De Silva', role: 'Treasurer', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0216', email: 'ruchira@email.com' },
+          { id: 'm50', clubId: 'c17', name: 'Dilan Perera', role: 'President', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0017', email: 'dilan@email.com' },
+          { id: 'm51', clubId: 'c17', name: 'Kavindu Jayasinghe', role: 'Secretary', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0117', email: 'kavindu.j@email.com' },
+          { id: 'm52', clubId: 'c17', name: 'Sajith Cooray', role: 'Treasurer', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0217', email: 'sajith.c@email.com' },
+          { id: 'm53', clubId: 'c18', name: 'Nethmi Fernando', role: 'President', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0018', email: 'nethmi@email.com' },
+          { id: 'm54', clubId: 'c18', name: 'Piyumi Jayawardena', role: 'Secretary', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0118', email: 'piyumi.j@email.com' },
+          { id: 'm55', clubId: 'c18', name: 'Hansini Silva', role: 'Treasurer', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0218', email: 'hansini@email.com' },
+          { id: 'm56', clubId: 'c19', name: 'Sahan Jayasuriya', role: 'President', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0019', email: 'sahan.j@email.com' },
+          { id: 'm57', clubId: 'c19', name: 'Asanka Fernando', role: 'Secretary', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0119', email: 'asanka@email.com' },
+          { id: 'm58', clubId: 'c19', name: 'Thilina Mendis', role: 'Treasurer', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0219', email: 'thilina.m@email.com' },
+          { id: 'm59', clubId: 'c20', name: 'Praveen Silva', role: 'President', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0020', email: 'praveen@email.com' },
+          { id: 'm60', clubId: 'c20', name: 'Gayan Perera', role: 'Secretary', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0120', email: 'gayan@email.com' },
+          { id: 'm61', clubId: 'c20', name: 'Harsha Fernando', role: 'Treasurer', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0220', email: 'harsha@email.com' },
+          { id: 'm62', clubId: 'c21', name: 'Ruwantha Fernando', role: 'President', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0021', email: 'ruwantha@email.com' },
+          { id: 'm63', clubId: 'c21', name: 'Kasun Peiris', role: 'Secretary', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0121', email: 'kasun.p@email.com' },
+          { id: 'm64', clubId: 'c21', name: 'Mahesh Silva', role: 'Treasurer', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0221', email: 'mahesh@email.com' },
+          { id: 'm65', clubId: 'c22', name: 'Dilini Cooray', role: 'President', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0022', email: 'dilini.c@email.com' },
+          { id: 'm66', clubId: 'c22', name: 'Supun Fernando', role: 'Secretary', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0122', email: 'supun@email.com' },
+          { id: 'm67', clubId: 'c22', name: 'Ishara Perera', role: 'Treasurer', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0222', email: 'ishara.p@email.com' },
+          { id: 'm68', clubId: 'c23', name: 'Senura De Silva', role: 'President', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0023', email: 'senura@email.com' },
+          { id: 'm69', clubId: 'c23', name: 'Menaka Fernando', role: 'Secretary', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0123', email: 'menaka.f@email.com' },
+          { id: 'm70', clubId: 'c23', name: 'Ravindu Silva', role: 'Treasurer', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0223', email: 'ravindu.s@email.com' },
+          { id: 'm71', clubId: 'c24', name: 'Thilina Perera', role: 'President', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0024', email: 'thilina@email.com' },
+          { id: 'm72', clubId: 'c24', name: 'Chamara Fernando', role: 'Secretary', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0124', email: 'chamara.f@email.com' },
+          { id: 'm73', clubId: 'c24', name: 'Sandun Peiris', role: 'Treasurer', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0224', email: 'sandun@email.com' },
+          { id: 'm74', clubId: 'c25', name: 'Kasun Jayawardena', role: 'President', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0025', email: 'kasun.j@email.com' },
+          { id: 'm75', clubId: 'c25', name: 'Nimna Perera', role: 'Secretary', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0125', email: 'nimna@email.com' },
+          { id: 'm76', clubId: 'c25', name: 'Dulaj Fernando', role: 'Treasurer', status: 'active', joinDate: '2026-06-15', phone: '+94 77 123 0225', email: 'dulaj.f@email.com' }
+        ];
+        if (this._data.members) {
+          newMembersC14toC25.forEach(m => {
+            if (!this._data.members.some(existingM => existingM.id === m.id)) {
+              this._data.members.push(m);
+              this.save();
+            }
+          });
+        }
+
+        // Add projects for c14 to c25 if missing from local storage
+        const newProjectsC14toC25 = [
+          { id: 'p17', clubId: 'c14', name: 'Prince School Support', category: 'Education', status: 'completed', startDate: '2026-06-15', endDate: '2026-06-15', participants: 15, budget: 10000, description: 'Donated stationeries to students.', impact: '50 students supported' },
+          { id: 'p18', clubId: 'c15', name: 'Princess Health Camp', category: 'Health', status: 'completed', startDate: '2026-06-15', endDate: '2026-06-15', participants: 18, budget: 15000, description: 'Organized free health camp.', impact: '100+ citizens checked' },
+          { id: 'p19', clubId: 'c16', name: 'Sri Sumangala Library Book Donation', category: 'Education', status: 'completed', startDate: '2026-06-15', endDate: '2026-06-15', participants: 12, budget: 12000, description: 'Donated library books.', impact: '300 students benefited' },
+          { id: 'p20', clubId: 'c17', name: 'Kalutara Shramadana Campaign', category: 'Environment', status: 'completed', startDate: '2026-06-15', endDate: '2026-06-15', participants: 20, budget: 5000, description: 'Cleaned public bus stand.', impact: 'Enhanced public hygiene' },
+          { id: 'p21', clubId: 'c18', name: 'Kalutara Balika Child Care Seminar', category: 'Health', status: 'completed', startDate: '2026-06-15', endDate: '2026-06-15', participants: 14, budget: 8000, description: 'Seminar on early child development.', impact: '50 mothers participated' },
+          { id: 'p22', clubId: 'c19', name: 'Moratuwa Beach Cleanup', category: 'Environment', status: 'completed', startDate: '2026-06-15', endDate: '2026-06-15', participants: 16, budget: 6000, description: 'Beach cleaning campaign.', impact: 'Collected 100kg plastic waste' },
+          { id: 'p23', clubId: 'c20', name: 'Royal Achievers Elder Care Visit', category: 'Health', status: 'completed', startDate: '2026-06-15', endDate: '2026-06-15', participants: 10, budget: 10000, description: 'Visited elders home with lunch.', impact: '30 elders supported' },
+          { id: 'p24', clubId: 'c21', name: 'Ratmalana Tree Planting Initiative', category: 'Environment', status: 'completed', startDate: '2026-06-15', endDate: '2026-06-15', participants: 15, budget: 7000, description: 'Planted trees around railway station.', impact: '50 saplings planted' },
+          { id: 'p25', clubId: 'c22', name: 'Cosmopolitan Creators Creative Art Class', category: 'Education', status: 'completed', startDate: '2026-06-15', endDate: '2026-06-15', participants: 12, budget: 9000, description: 'Art lessons for orphan kids.', impact: '25 children participated' },
+          { id: 'p26', clubId: 'c23', name: 'Mount Lavinia Beach Safety Awareness', category: 'Health', status: 'completed', startDate: '2026-06-15', endDate: '2026-06-15', participants: 14, budget: 8000, description: 'Beach safety and lifesaving awareness.', impact: '120 public participants' },
+          { id: 'p27', clubId: 'c24', name: 'Moratuwa Community Food Drive', category: 'Health', status: 'completed', startDate: '2026-06-15', endDate: '2026-06-15', participants: 15, budget: 20000, description: 'Distribution of dry rations to needy.', impact: '80 families benefited' },
+          { id: 'p28', clubId: 'c25', name: 'KDU Disaster Management Awareness', category: 'Education', status: 'completed', startDate: '2026-06-15', endDate: '2026-06-15', participants: 25, budget: 15000, description: 'Disaster management simulation seminar.', impact: '200+ students trained' }
+        ];
+        if (this._data.projects) {
+          newProjectsC14toC25.forEach(p => {
+            if (!this._data.projects.some(existingP => existingP.id === p.id)) {
+              this._data.projects.push(p);
+              this.save();
+            }
+          });
+        }
+
+        // Add finances for c14 to c25 if missing from local storage
+        const newFinancesC14toC25 = [
+          { id: 'f32', clubId: 'c14', type: 'income', category: 'Membership Fees', amount: 20000, date: '2026-06-15', description: 'Annual membership collection', reference: 'MF-PW-001' },
+          { id: 'f33', clubId: 'c15', type: 'income', category: 'Membership Fees', amount: 22000, date: '2026-06-15', description: 'Annual membership collection', reference: 'MF-PRW-001' },
+          { id: 'f34', clubId: 'c16', type: 'income', category: 'Membership Fees', amount: 20000, date: '2026-06-15', description: 'Annual membership collection', reference: 'MF-SS-001' },
+          { id: 'f35', clubId: 'c17', type: 'income', category: 'Membership Fees', amount: 25000, date: '2026-06-15', description: 'Annual membership collection', reference: 'MF-KV-001' },
+          { id: 'f36', clubId: 'c18', type: 'income', category: 'Membership Fees', amount: 24000, date: '2026-06-15', description: 'Annual membership collection', reference: 'MF-KBV-001' },
+          { id: 'f37', clubId: 'c19', type: 'income', category: 'Membership Fees', amount: 18000, date: '2026-06-15', description: 'Annual membership collection', reference: 'MF-M20-001' },
+          { id: 'f38', clubId: 'c20', type: 'income', category: 'Membership Fees', amount: 20000, date: '2026-06-15', description: 'Annual membership collection', reference: 'MF-RA-001' },
+          { id: 'f39', clubId: 'c21', type: 'income', category: 'Membership Fees', amount: 22000, date: '2026-06-15', description: 'Annual membership collection', reference: 'MF-MR-001' },
+          { id: 'f40', clubId: 'c22', type: 'income', category: 'Membership Fees', amount: 19000, date: '2026-06-15', description: 'Annual membership collection', reference: 'MF-CC-001' },
+          { id: 'f41', clubId: 'c23', type: 'income', category: 'Membership Fees', amount: 21000, date: '2026-06-15', description: 'Annual membership collection', reference: 'MF-ML-001' },
+          { id: 'f42', clubId: 'c24', type: 'income', category: 'Membership Fees', amount: 23000, date: '2026-06-15', description: 'Annual membership collection', reference: 'MF-M-001' },
+          { id: 'f43', clubId: 'c25', type: 'income', category: 'Membership Fees', amount: 30000, date: '2026-06-15', description: 'Annual membership collection', reference: 'MF-KDU-001' }
+        ];
+        if (this._data.finances) {
+          newFinancesC14toC25.forEach(f => {
+            if (!this._data.finances.some(existingF => existingF.id === f.id)) {
+              this._data.finances.push(f);
+              this.save();
+            }
+          });
+        }
+
+        // Add invoices for c14 to c25 if missing from local storage
+        const newInvoicesC14toC25 = [
+          {
+            id: 'inv11',
+            invoiceNumber: 'INV-2026-011',
+            clubId: 'c14',
+            clubName: 'Leo Club of Prince of Wales’ College',
+            amount: 15000,
+            issueDate: '2026-06-15',
+            dueDate: '2026-07-15',
+            description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+            category: 'Membership Fees',
+            status: 'unpaid',
+            receiptUrl: '',
+            reference: '',
+            remarks: '',
+            eventId: null
+          },
+          {
+            id: 'inv12',
+            invoiceNumber: 'INV-2026-012',
+            clubId: 'c15',
+            clubName: 'Leo Club of Princess of Wales’ College',
+            amount: 15000,
+            issueDate: '2026-06-15',
+            dueDate: '2026-07-15',
+            description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+            category: 'Membership Fees',
+            status: 'unpaid',
+            receiptUrl: '',
+            reference: '',
+            remarks: '',
+            eventId: null
+          },
+          {
+            id: 'inv13',
+            invoiceNumber: 'INV-2026-013',
+            clubId: 'c16',
+            clubName: 'Leo Club of Sri Sumangala College',
+            amount: 15000,
+            issueDate: '2026-06-15',
+            dueDate: '2026-07-15',
+            description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+            category: 'Membership Fees',
+            status: 'unpaid',
+            receiptUrl: '',
+            reference: '',
+            remarks: '',
+            eventId: null
+          },
+          {
+            id: 'inv14',
+            invoiceNumber: 'INV-2026-014',
+            clubId: 'c17',
+            clubName: 'Leo Club of Kalutara Vidyalaya',
+            amount: 15000,
+            issueDate: '2026-06-15',
+            dueDate: '2026-07-15',
+            description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+            category: 'Membership Fees',
+            status: 'unpaid',
+            receiptUrl: '',
+            reference: '',
+            remarks: '',
+            eventId: null
+          },
+          {
+            id: 'inv15',
+            invoiceNumber: 'INV-2026-015',
+            clubId: 'c18',
+            clubName: 'Leo Club of Kalutara Balika Vidyalaya',
+            amount: 15000,
+            issueDate: '2026-06-15',
+            dueDate: '2026-07-15',
+            description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+            category: 'Membership Fees',
+            status: 'unpaid',
+            receiptUrl: '',
+            reference: '',
+            remarks: '',
+            eventId: null
+          },
+          {
+            id: 'inv16',
+            invoiceNumber: 'INV-2026-016',
+            clubId: 'c19',
+            clubName: 'Leo Club of Moratuwa 2020',
+            amount: 15000,
+            issueDate: '2026-06-15',
+            dueDate: '2026-07-15',
+            description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+            category: 'Membership Fees',
+            status: 'unpaid',
+            receiptUrl: '',
+            reference: '',
+            remarks: '',
+            eventId: null
+          },
+          {
+            id: 'inv17',
+            invoiceNumber: 'INV-2026-017',
+            clubId: 'c20',
+            clubName: 'Leo Club of Royal Achievers',
+            amount: 15000,
+            issueDate: '2026-06-15',
+            dueDate: '2026-07-15',
+            description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+            category: 'Membership Fees',
+            status: 'unpaid',
+            receiptUrl: '',
+            reference: '',
+            remarks: '',
+            eventId: null
+          },
+          {
+            id: 'inv18',
+            invoiceNumber: 'INV-2026-018',
+            clubId: 'c21',
+            clubName: 'Leo Club of Moratuwa Ratmalana',
+            amount: 15000,
+            issueDate: '2026-06-15',
+            dueDate: '2026-07-15',
+            description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+            category: 'Membership Fees',
+            status: 'unpaid',
+            receiptUrl: '',
+            reference: '',
+            remarks: '',
+            eventId: null
+          },
+          {
+            id: 'inv19',
+            invoiceNumber: 'INV-2026-019',
+            clubId: 'c22',
+            clubName: 'Leo Club of Cosmopolitian Creators',
+            amount: 15000,
+            issueDate: '2026-06-15',
+            dueDate: '2026-07-15',
+            description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+            category: 'Membership Fees',
+            status: 'unpaid',
+            receiptUrl: '',
+            reference: '',
+            remarks: '',
+            eventId: null
+          },
+          {
+            id: 'inv20',
+            invoiceNumber: 'INV-2026-020',
+            clubId: 'c23',
+            clubName: 'Leo Club of Mount Lavinia Orient Centennial',
+            amount: 15000,
+            issueDate: '2026-06-15',
+            dueDate: '2026-07-15',
+            description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+            category: 'Membership Fees',
+            status: 'unpaid',
+            receiptUrl: '',
+            reference: '',
+            remarks: '',
+            eventId: null
+          },
+          {
+            id: 'inv21',
+            invoiceNumber: 'INV-2026-021',
+            clubId: 'c24',
+            clubName: 'Leo Club of Moratuwa',
+            amount: 15000,
+            issueDate: '2026-06-15',
+            dueDate: '2026-07-15',
+            description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+            category: 'Membership Fees',
+            status: 'unpaid',
+            receiptUrl: '',
+            reference: '',
+            remarks: '',
+            eventId: null
+          },
+          {
+            id: 'inv22',
+            invoiceNumber: 'INV-2026-022',
+            clubId: 'c25',
+            clubName: 'Leo Club of Kothalawala Defense University',
+            amount: 15000,
+            issueDate: '2026-06-15',
+            dueDate: '2026-07-15',
+            description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+            category: 'Membership Fees',
+            status: 'unpaid',
+            receiptUrl: '',
+            reference: '',
+            remarks: '',
+            eventId: null
+          }
+        ];
+        if (this._data.invoices) {
+          newInvoicesC14toC25.forEach(inv => {
+            if (!this._data.invoices.some(existingInv => existingInv.clubId === inv.clubId)) {
+              this._data.invoices.push(inv);
+              this.save();
+            }
+          });
+        }
+
+        // Migrate club member counts to align with district total of 1312 members
+        if (this._data.clubs) {
+          let updatedCounts = false;
+          const iitClub = this._data.clubs.find(c => c.id === 'c6');
+          const artsClub = this._data.clubs.find(c => c.id === 'c8');
+          const scienceClub = this._data.clubs.find(c => c.id === 'c7');
+          const otherClubs = this._data.clubs.filter(c => c.id !== 'c6' && c.id !== 'c8' && c.id !== 'c7');
+
+          if (iitClub && iitClub.memberCount !== 192) {
+            iitClub.memberCount = 192;
+            updatedCounts = true;
+          }
+          if (artsClub && artsClub.memberCount !== 175) {
+            artsClub.memberCount = 175;
+            updatedCounts = true;
+          }
+          if (scienceClub && scienceClub.memberCount !== 157) {
+            scienceClub.memberCount = 157;
+            updatedCounts = true;
+          }
+
+          // Check if others are distributed correctly (18 clubs with 36, 4 clubs with 35)
+          let othersCorrect = true;
+          let count36 = 0;
+          let count35 = 0;
+          otherClubs.forEach(c => {
+            if (c.memberCount === 36) count36++;
+            else if (c.memberCount === 35) count35++;
+            else othersCorrect = false;
+          });
+          if (count36 !== 18 || count35 !== 4) othersCorrect = false;
+
+          if (!othersCorrect) {
+            otherClubs.forEach((c, idx) => {
+              if (idx < 18) {
+                c.memberCount = 36;
+              } else {
+                c.memberCount = 35;
+              }
+            });
+            updatedCounts = true;
+          }
+
+          if (updatedCounts) {
+            this.save();
+          }
         }
       } else {
         this._data = getDefaultData();
@@ -783,7 +2865,11 @@ class Store {
 
   // ---------- Generic CRUD ----------
   getAll(collection) {
-    return this._data[collection] || [];
+    const list = this._data[collection] || [];
+    if (collection === 'clubs') {
+      return [...list].sort((a, b) => (a.code || '').localeCompare(b.code || ''));
+    }
+    return list;
   }
 
   getById(collection, id) {
@@ -946,6 +3032,137 @@ class Store {
         pointBreakdown: this.getClubPoints(c.id)
       }))
       .sort((a, b) => b.totalPoints - a.totalPoints);
+  }
+
+  submitMonthlyPoints(clubId, clubName, month, checkedCriteria, pointsClaimed, submittedBy) {
+    if (!this._data.pointsSubmissions) this._data.pointsSubmissions = [];
+    
+    // Check if there's already a submission for this month (pending or approved)
+    const existing = this._data.pointsSubmissions.find(s => s.clubId === clubId && s.month === month && s.status !== 'rejected');
+    if (existing) {
+      throw new Error(`A submission for ${month} is already ${existing.status}.`);
+    }
+
+    const totalPoints = Object.values(pointsClaimed).reduce((sum, v) => sum + v, 0);
+
+    const submission = {
+      id: 'ps_' + this.generateId(),
+      clubId,
+      clubName,
+      month,
+      status: 'pending',
+      submittedAt: new Date().toISOString(),
+      submittedBy,
+      checkedCriteria,
+      pointsClaimed,
+      totalPoints,
+      reviewedBy: '',
+      reviewedAt: '',
+      comment: ''
+    };
+
+    this._data.pointsSubmissions.push(submission);
+    this.save();
+    this.emit('pointsSubmissions:created', submission);
+    this.emit('pointsSubmissions:changed');
+    return submission;
+  }
+
+  approvePointsSubmission(submissionId, reviewedBy, comment, adjustedPoints = null) {
+    if (!this._data.pointsSubmissions) return null;
+    const sub = this._data.pointsSubmissions.find(s => s.id === submissionId);
+    if (!sub) return null;
+
+    if (sub.status !== 'pending') {
+      throw new Error(`Submission is already ${sub.status}.`);
+    }
+
+    if (adjustedPoints) {
+      sub.pointsClaimed = adjustedPoints;
+      sub.totalPoints = Object.values(adjustedPoints).reduce((sum, v) => sum + v, 0);
+      sub.checkedCriteria = Object.entries(adjustedPoints)
+        .filter(([_, v]) => v !== 0)
+        .map(([k, _]) => k);
+    }
+
+    sub.status = 'approved';
+    sub.reviewedBy = reviewedBy;
+    sub.reviewedAt = new Date().toISOString();
+    sub.comment = comment;
+
+    if (!this._data.clubPoints) this._data.clubPoints = [];
+    let cp = this._data.clubPoints.find(item => item.clubId === sub.clubId);
+    if (!cp) {
+      cp = { id: this.generateId(), clubId: sub.clubId, points: {} };
+      this._data.clubPoints.push(cp);
+    }
+
+    for (const [critId, points] of Object.entries(sub.pointsClaimed)) {
+      cp.points[critId] = (cp.points[critId] || 0) + points;
+    }
+
+    this.save();
+    this.emit('pointsSubmissions:updated', sub);
+    this.emit('pointsSubmissions:changed');
+    this.emit('clubPoints:changed');
+    return sub;
+  }
+
+  rejectPointsSubmission(submissionId, reviewedBy, comment) {
+    if (!this._data.pointsSubmissions) return null;
+    const sub = this._data.pointsSubmissions.find(s => s.id === submissionId);
+    if (!sub) return null;
+
+    if (sub.status !== 'pending') {
+      throw new Error(`Submission is already ${sub.status}.`);
+    }
+
+    sub.status = 'rejected';
+    sub.reviewedBy = reviewedBy;
+    sub.reviewedAt = new Date().toISOString();
+    sub.comment = comment;
+
+    this.save();
+    this.emit('pointsSubmissions:updated', sub);
+    this.emit('pointsSubmissions:changed');
+    return sub;
+  }
+
+  getClubPointsLedger(clubId) {
+    const totalPoints = this.getTotalClubPoints(clubId);
+    
+    const approvedSubs = (this._data.pointsSubmissions || [])
+      .filter(s => s.clubId === clubId && s.status === 'approved')
+      .sort((a, b) => a.month.localeCompare(b.month));
+    
+    const sumApproved = approvedSubs.reduce((sum, s) => sum + s.totalPoints, 0);
+    const basePoints = Math.max(0, totalPoints - sumApproved);
+    
+    const ledger = [];
+    
+    ledger.push({
+      month: 'Base Points',
+      description: 'Points carried forward from legacy data',
+      addedPoints: basePoints,
+      cumulativePoints: basePoints,
+      status: 'approved',
+      date: '2026-05-01'
+    });
+    
+    let runningTotal = basePoints;
+    approvedSubs.forEach(sub => {
+      runningTotal += sub.totalPoints;
+      ledger.push({
+        month: sub.month,
+        description: `Monthly Points Submission`,
+        addedPoints: sub.totalPoints,
+        cumulativePoints: runningTotal,
+        status: 'approved',
+        date: sub.submittedAt
+      });
+    });
+    
+    return ledger;
   }
 }
 
