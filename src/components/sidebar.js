@@ -4,6 +4,7 @@
 
 import { auth } from '../auth.js';
 import { store } from '../store.js';
+import { showAccountSettingsModal } from './modal.js';
 
 const districtMenuItems = [
   { section: 'Overview', items: [
@@ -171,6 +172,10 @@ export function initSidebar() {
       e.stopPropagation();
       auth.logout();
       window.location.hash = '/login';
+    });
+
+    logoutBtn.addEventListener('click', () => {
+      showAccountSettingsModal();
     });
   }
 

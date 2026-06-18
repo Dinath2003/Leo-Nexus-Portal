@@ -270,31 +270,78 @@ body.glass-effect-enabled {
 }
 
 body.glass-effect-enabled .card {
-  background: rgba(10, 10, 30, 0.55) !important;
-  backdrop-filter: blur(20px) !important;
-  -webkit-backdrop-filter: blur(20px) !important;
-  border: 1px solid var(--color-glass-border) !important;
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.45), 0 0 15px rgba(189, 0, 255, 0.05) !important;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease !important;
+  background: rgba(7, 10, 28, 0.45) !important;
+  backdrop-filter: blur(25px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(25px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 
+    0 8px 32px 0 rgba(0, 0, 0, 0.4),
+    inset 0 0 1px 1px rgba(255, 255, 255, 0.08),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.2) !important;
+  transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1) !important;
+  transform-style: preserve-3d;
+  perspective: 1000px;
 }
 
 body.glass-effect-enabled .card:hover {
-  border-color: var(--color-glass-border-hover) !important;
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.55), 0 0 20px rgba(0, 240, 255, 0.08) !important;
+  border-color: rgba(0, 212, 255, 0.45) !important;
+  box-shadow: 
+    0 15px 45px rgba(0, 0, 0, 0.6), 
+    0 0 25px rgba(0, 212, 255, 0.2),
+    inset 0 0 2px 2px rgba(255, 255, 255, 0.12),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.3) !important;
+  transform: translateY(-8px) scale(1.025) rotateX(1.5deg) rotateY(-0.8deg) !important;
 }
 
 body.glass-effect-enabled .sidebar {
-  background: rgba(4, 4, 18, 0.75) !important;
-  backdrop-filter: blur(25px) !important;
-  -webkit-backdrop-filter: blur(25px) !important;
-  border-right: 1px solid var(--color-glass-border) !important;
+  background: rgba(5, 7, 20, 0.65) !important;
+  backdrop-filter: blur(35px) saturate(160%) !important;
+  -webkit-backdrop-filter: blur(35px) saturate(160%) !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.06) !important;
+  box-shadow: inset -1px 0 0 0 rgba(255, 255, 255, 0.03), 4px 0 24px rgba(0, 0, 0, 0.2) !important;
 }
 
 body.glass-effect-enabled .top-header {
-  background: rgba(5, 5, 22, 0.6) !important;
-  backdrop-filter: blur(20px) !important;
-  -webkit-backdrop-filter: blur(20px) !important;
-  border-bottom: 1px solid var(--color-glass-border) !important;
+  background: rgba(5, 7, 20, 0.5) !important;
+  backdrop-filter: blur(25px) saturate(150%) !important;
+  -webkit-backdrop-filter: blur(25px) saturate(150%) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+  box-shadow: inset 0 -1px 0 0 rgba(255, 255, 255, 0.03), 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Glassmorphic inputs */
+body.glass-effect-enabled .form-input,
+body.glass-effect-enabled .form-select,
+body.glass-effect-enabled .form-textarea {
+  background: rgba(7, 10, 28, 0.3) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+  transition: all 0.3s ease !important;
+}
+
+body.glass-effect-enabled .form-input:focus,
+body.glass-effect-enabled .form-select:focus,
+body.glass-effect-enabled .form-textarea:focus {
+  background: rgba(10, 14, 39, 0.6) !important;
+  border-color: var(--color-primary) !important;
+}
+
+/* Glassmorphic tables */
+body.glass-effect-enabled .data-table-wrapper {
+  background: rgba(7, 10, 28, 0.2) !important;
+  backdrop-filter: blur(15px) !important;
+  -webkit-backdrop-filter: blur(15px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.06) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+}
+
+body.glass-effect-enabled .data-table thead {
+  background: rgba(5, 8, 22, 0.45) !important;
+}
+
+body.glass-effect-enabled .data-table tbody tr:hover {
+  background: rgba(0, 102, 255, 0.08) !important;
 }
 
 body.glass-effect-disabled {

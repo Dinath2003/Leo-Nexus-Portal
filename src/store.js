@@ -9,39 +9,7 @@ const STORAGE_KEY = 'leo_nexus_portal';
 function getDefaultData() {
   const data = {
     users: [
-      { id: 'u1', email: 'admin@leo.org', password: 'admin123', name: 'Admin', role: 'admin', clubId: null, avatar: 'AD', createdAt: '2026-01-01' },
-      { id: 'u2', email: 'president.dist@leo.org', password: 'president123', name: 'District President', role: 'district_president', clubId: null, avatar: 'DP', createdAt: '2026-01-01' },
-      { id: 'u3', email: 'vp.dist@leo.org', password: 'vp123', name: 'District Vice President', role: 'district_vp', clubId: null, avatar: 'DV', createdAt: '2026-01-01' },
-      { id: 'u4', email: 'secretary.dist@leo.org', password: 'secretary123', name: 'District Secretary', role: 'district_secretary', clubId: null, avatar: 'DS', createdAt: '2026-01-01' },
-      { id: 'u5', email: 'membership.dist@leo.org', password: 'membership123', name: 'District Membership Chair', role: 'district_membership', clubId: null, avatar: 'DM', createdAt: '2026-01-01' },
-      { id: 'u6', email: 'president.club@leo.org', password: 'president123', name: 'Kasun Perera', role: 'club_president', clubId: 'c1', avatar: 'KP', createdAt: '2026-01-15' },
-      { id: 'u7', email: 'secretary.club@leo.org', password: 'secretary123', name: 'Sanduni Rajapaksa', role: 'club_secretary', clubId: 'c1', avatar: 'SR', createdAt: '2026-01-15' },
-      { id: 'u8', email: 'treasurer.club@leo.org', password: 'treasurer123', name: 'Dinesh Kumara', role: 'club_treasurer', clubId: 'c1', avatar: 'DK', createdAt: '2026-01-15' },
-      { id: 'u9', email: 'membership.club@leo.org', password: 'membership123', name: 'Ishara Wickrama', role: 'club_membership', clubId: 'c1', avatar: 'IW', createdAt: '2026-01-15' },
-      { id: 'u10', email: 'member.club@leo.org', password: 'member123', name: 'Tharushi Gamage', role: 'club_member', clubId: 'c1', avatar: 'TG', createdAt: '2026-02-01' },
-      { id: 'u11', email: 'club@leo.org', password: 'club123', name: 'Kasun Perera (Legacy)', role: 'club_president', clubId: 'c1', avatar: 'KP', createdAt: '2026-01-15' },
-      { id: 'u12', email: 'district@leo.org', password: 'district123', name: 'District Governor (Legacy)', role: 'district_president', clubId: null, avatar: 'DG', createdAt: '2026-01-01' },
-      { id: 'u13', email: 'treasurer.dist@leo.org', password: 'treasurer123', name: 'District Treasurer', role: 'district_treasurer', clubId: null, avatar: 'DT', createdAt: '2026-01-01' },
-      { id: 'u14', email: 'president.iit@leo.org', password: 'president123', name: 'Sahan Fernando', role: 'club_president', clubId: 'c6', avatar: 'SF', createdAt: '2025-05-15' },
-      { id: 'u15', email: 'president.fos@leo.org', password: 'president123', name: 'Dulani Bandara', role: 'club_president', clubId: 'c7', avatar: 'DB', createdAt: '2025-02-20' },
-      { id: 'u16', email: 'president.foa@leo.org', password: 'president123', name: 'Heshan Perera', role: 'club_president', clubId: 'c8', avatar: 'HP', createdAt: '2025-03-25' },
-      { id: 'u17', email: 'president.colombohost@leo.org', password: 'president123', name: 'Amesh Silva', role: 'club_president', clubId: 'c9', avatar: 'AS', createdAt: '2026-05-15' },
-      { id: 'u18', email: 'president.millennium@leo.org', password: 'president123', name: 'Ruvini Perera', role: 'club_president', clubId: 'c10', avatar: 'RP', createdAt: '2026-05-15' },
-      { id: 'u19', email: 'president.sixstars@leo.org', password: 'president123', name: 'Kavindu Fernando', role: 'club_president', clubId: 'c11', avatar: 'KF', createdAt: '2026-05-15' },
-      { id: 'u20', email: 'president.uocalumni@leo.org', password: 'president123', name: 'Dulaj Senanayake', role: 'club_president', clubId: 'c12', avatar: 'DS', createdAt: '2026-05-15' },
-      { id: 'u21', email: 'president.foaalumni@leo.org', password: 'president123', name: 'Sanduni Jayawardena', role: 'club_president', clubId: 'c13', avatar: 'SJ', createdAt: '2026-05-15' },
-      { id: 'u22', email: 'president.princeofwales@leo.org', password: 'president123', name: 'Devinda Silva', role: 'club_president', clubId: 'c14', avatar: 'DS', createdAt: '2026-06-15' },
-      { id: 'u23', email: 'president.princessofwales@leo.org', password: 'president123', name: 'Shehani Fernando', role: 'club_president', clubId: 'c15', avatar: 'SF', createdAt: '2026-06-15' },
-      { id: 'u24', email: 'president.srisumangala@leo.org', password: 'president123', name: 'Kusal Mendis', role: 'club_president', clubId: 'c16', avatar: 'KM', createdAt: '2026-06-15' },
-      { id: 'u25', email: 'president.kalutaravidyalaya@leo.org', password: 'president123', name: 'Dilan Perera', role: 'club_president', clubId: 'c17', avatar: 'DP', createdAt: '2026-06-15' },
-      { id: 'u26', email: 'president.kalutarabalika@leo.org', password: 'president123', name: 'Nethmi Fernando', role: 'club_president', clubId: 'c18', avatar: 'NF', createdAt: '2026-06-15' },
-      { id: 'u27', email: 'president.moratuwa2020@leo.org', password: 'president123', name: 'Sahan Jayasuriya', role: 'club_president', clubId: 'c19', avatar: 'SJ', createdAt: '2026-06-15' },
-      { id: 'u28', email: 'president.royalachievers@leo.org', password: 'president123', name: 'Praveen Silva', role: 'club_president', clubId: 'c20', avatar: 'PS', createdAt: '2026-06-15' },
-      { id: 'u29', email: 'president.moratuwaratmalana@leo.org', password: 'president123', name: 'Ruwantha Fernando', role: 'club_president', clubId: 'c21', avatar: 'RF', createdAt: '2026-06-15' },
-      { id: 'u30', email: 'president.cosmopolitan@leo.org', password: 'president123', name: 'Dilini Cooray', role: 'club_president', clubId: 'c22', avatar: 'DC', createdAt: '2026-06-15' },
-      { id: 'u31', email: 'president.mtlavinia@leo.org', password: 'president123', name: 'Senura De Silva', role: 'club_president', clubId: 'c23', avatar: 'SS', createdAt: '2026-06-15' },
-      { id: 'u32', email: 'president.moratuwa@leo.org', password: 'president123', name: 'Thilina Perera', role: 'club_president', clubId: 'c24', avatar: 'TP', createdAt: '2026-06-15' },
-      { id: 'u33', email: 'president.kdu@leo.org', password: 'president123', name: 'Kasun Jayawardena', role: 'club_president', clubId: 'c25', avatar: 'KJ', createdAt: '2026-06-15' }
+      { id: 'u1', email: 'admin@leo.org', password: 'admin123', name: 'Leo Lion Dinath Wijesooriya', role: 'admin', clubId: null, avatar: 'LD', createdAt: '2026-01-01' }
     ],
 
     clubs: [
@@ -1563,9 +1531,8 @@ class Store {
       if (raw) {
         this._data = JSON.parse(raw);
         // Ensure new collections exist in case of upgrade
-        if (!this._data.memberPayments || this._data.users.length < 10) {
+        if (!this._data.memberPayments) {
           const fresh = getDefaultData();
-          this._data.users = fresh.users;
           this._data.memberPayments = fresh.memberPayments;
           this._data.clubPayments = fresh.clubPayments;
           this._data.clubEventSettings = fresh.clubEventSettings;
@@ -1573,18 +1540,17 @@ class Store {
           this._data.finances = fresh.finances;
           this.save();
         }
-        const hasTreasurer = (this._data.users || []).some(u => u.role === 'district_treasurer');
-        if (!hasTreasurer) {
-          this._data.users.push({
-            id: 'u13',
-            email: 'treasurer.dist@leo.org',
-            password: 'treasurer123',
-            name: 'District Treasurer',
-            role: 'district_treasurer',
-            clubId: null,
-            avatar: 'DT',
-            createdAt: '2026-01-01'
-          });
+        if (!this._data.usersRemovedExceptAdmin) {
+          const fresh = getDefaultData();
+          this._data.users = fresh.users;
+          this._data.usersRemovedExceptAdmin = true;
+          this.save();
+        }
+        // Update admin user to "Leo Lion Dinath Wijesooriya" and avatar to "LD"
+        const adminUser = (this._data.users || []).find(u => u.email === 'admin@leo.org');
+        if (adminUser && (adminUser.name === 'Admin' || adminUser.name !== 'Leo Lion Dinath Wijesooriya' || adminUser.avatar !== 'LD')) {
+          adminUser.name = 'Leo Lion Dinath Wijesooriya';
+          adminUser.avatar = 'LD';
           this.save();
         }
         if (!this._data.invoices) {
@@ -1789,50 +1755,7 @@ class Store {
           this.save();
         }
 
-        // Add Sahan Fernando (u14) if missing from local storage
-        if (this._data.users && !this._data.users.some(u => u.id === 'u14')) {
-          this._data.users.push({
-            id: 'u14',
-            email: 'president.iit@leo.org',
-            password: 'president123',
-            name: 'Sahan Fernando',
-            role: 'club_president',
-            clubId: 'c6',
-            avatar: 'SF',
-            createdAt: '2025-05-15'
-          });
-          this.save();
-        }
 
-        // Add Dulani Bandara (u15) if missing from local storage
-        if (this._data.users && !this._data.users.some(u => u.id === 'u15')) {
-          this._data.users.push({
-            id: 'u15',
-            email: 'president.fos@leo.org',
-            password: 'president123',
-            name: 'Dulani Bandara',
-            role: 'club_president',
-            clubId: 'c7',
-            avatar: 'DB',
-            createdAt: '2025-02-20'
-          });
-          this.save();
-        }
-
-        // Add Heshan Perera (u16) if missing from local storage
-        if (this._data.users && !this._data.users.some(u => u.id === 'u16')) {
-          this._data.users.push({
-            id: 'u16',
-            email: 'president.foa@leo.org',
-            password: 'president123',
-            name: 'Heshan Perera',
-            role: 'club_president',
-            clubId: 'c8',
-            avatar: 'HP',
-            createdAt: '2025-03-25'
-          });
-          this.save();
-        }
 
         // Add points data for IIT if missing from local storage
         if (this._data.clubPoints && !this._data.clubPoints.some(cp => cp.clubId === 'c6')) {
@@ -2080,22 +2003,7 @@ class Store {
           this.save();
         }
 
-        // Add president users for c9 to c13 if missing from local storage
-        const newUsers = [
-          { id: 'u17', email: 'president.colombohost@leo.org', password: 'president123', name: 'Amesh Silva', role: 'club_president', clubId: 'c9', avatar: 'AS', createdAt: '2026-05-15' },
-          { id: 'u18', email: 'president.millennium@leo.org', password: 'president123', name: 'Ruvini Perera', role: 'club_president', clubId: 'c10', avatar: 'RP', createdAt: '2026-05-15' },
-          { id: 'u19', email: 'president.sixstars@leo.org', password: 'president123', name: 'Kavindu Fernando', role: 'club_president', clubId: 'c11', avatar: 'KF', createdAt: '2026-05-15' },
-          { id: 'u20', email: 'president.uocalumni@leo.org', password: 'president123', name: 'Dulaj Senanayake', role: 'club_president', clubId: 'c12', avatar: 'DS', createdAt: '2026-05-15' },
-          { id: 'u21', email: 'president.foaalumni@leo.org', password: 'president123', name: 'Sanduni Jayawardena', role: 'club_president', clubId: 'c13', avatar: 'SJ', createdAt: '2026-05-15' }
-        ];
-        if (this._data.users) {
-          newUsers.forEach(u => {
-            if (!this._data.users.some(existingUser => existingUser.id === u.id)) {
-              this._data.users.push(u);
-              this.save();
-            }
-          });
-        }
+
 
         // Add points data for c9 to c13 if missing from local storage
         const newClubPoints = [
@@ -2459,29 +2367,7 @@ class Store {
           });
         }
 
-        // Add president users for c14 to c25 if missing from local storage
-        const newUsersC14toC25 = [
-          { id: 'u22', email: 'president.princeofwales@leo.org', password: 'president123', name: 'Devinda Silva', role: 'club_president', clubId: 'c14', avatar: 'DS', createdAt: '2026-06-15' },
-          { id: 'u23', email: 'president.princessofwales@leo.org', password: 'president123', name: 'Shehani Fernando', role: 'club_president', clubId: 'c15', avatar: 'SF', createdAt: '2026-06-15' },
-          { id: 'u24', email: 'president.srisumangala@leo.org', password: 'president123', name: 'Kusal Mendis', role: 'club_president', clubId: 'c16', avatar: 'KM', createdAt: '2026-06-15' },
-          { id: 'u25', email: 'president.kalutaravidyalaya@leo.org', password: 'president123', name: 'Dilan Perera', role: 'club_president', clubId: 'c17', avatar: 'DP', createdAt: '2026-06-15' },
-          { id: 'u26', email: 'president.kalutarabalika@leo.org', password: 'president123', name: 'Nethmi Fernando', role: 'club_president', clubId: 'c18', avatar: 'NF', createdAt: '2026-06-15' },
-          { id: 'u27', email: 'president.moratuwa2020@leo.org', password: 'president123', name: 'Sahan Jayasuriya', role: 'club_president', clubId: 'c19', avatar: 'SJ', createdAt: '2026-06-15' },
-          { id: 'u28', email: 'president.royalachievers@leo.org', password: 'president123', name: 'Praveen Silva', role: 'club_president', clubId: 'c20', avatar: 'PS', createdAt: '2026-06-15' },
-          { id: 'u29', email: 'president.moratuwaratmalana@leo.org', password: 'president123', name: 'Ruwantha Fernando', role: 'club_president', clubId: 'c21', avatar: 'RF', createdAt: '2026-06-15' },
-          { id: 'u30', email: 'president.cosmopolitan@leo.org', password: 'president123', name: 'Dilini Cooray', role: 'club_president', clubId: 'c22', avatar: 'DC', createdAt: '2026-06-15' },
-          { id: 'u31', email: 'president.mtlavinia@leo.org', password: 'president123', name: 'Senura De Silva', role: 'club_president', clubId: 'c23', avatar: 'SS', createdAt: '2026-06-15' },
-          { id: 'u32', email: 'president.moratuwa@leo.org', password: 'president123', name: 'Thilina Perera', role: 'club_president', clubId: 'c24', avatar: 'TP', createdAt: '2026-06-15' },
-          { id: 'u33', email: 'president.kdu@leo.org', password: 'president123', name: 'Kasun Jayawardena', role: 'club_president', clubId: 'c25', avatar: 'KJ', createdAt: '2026-06-15' }
-        ];
-        if (this._data.users) {
-          newUsersC14toC25.forEach(u => {
-            if (!this._data.users.some(existingUser => existingUser.id === u.id)) {
-              this._data.users.push(u);
-              this.save();
-            }
-          });
-        }
+
 
         // Add points data for c14 to c25 if missing from local storage
         const newClubPointsC14toC25 = [

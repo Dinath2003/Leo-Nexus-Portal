@@ -52,11 +52,18 @@ export function renderHeader(pageTitle, breadcrumbs = []) {
             <i data-lucide="settings" style="width:18px;height:18px"></i>
           </button>
         </div>
-        <div class="avatar">${user?.avatar || 'U'}</div>
+        <div class="avatar" id="header-user-avatar" style="cursor:pointer;" title="My Account">${user?.avatar || 'U'}</div>
+        <div class="header-logout">
+          <button class="btn btn-icon btn-ghost" id="header-logout-btn" aria-label="Log Out" title="Log Out">
+            <i data-lucide="log-out" style="width:18px;height:18px;color:var(--color-danger)"></i>
+          </button>
+        </div>
       </div>
     </header>
   `;
 }
+
+import { showAccountSettingsModal } from './modal.js';
 
 export function initHeader() {
   const mobileBtn = document.getElementById('mobile-menu-btn');
@@ -66,6 +73,21 @@ export function initHeader() {
       const backdrop = document.getElementById('sidebar-backdrop');
       sidebar?.classList.toggle('open');
       backdrop?.classList.toggle('show');
+    });
+  }
+
+  const avatarBtn = document.getElementById('header-user-avatar');
+  if (avatarBtn) {
+    avatarBtn.addEventListener('click', () => {
+      showAccountSettingsModal();
+    });
+  }
+
+  const logoutBtn = document.getElementById('header-logout-btn');
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', () => {
+      auth.logout();
+      window.location.hash = '/login';
     });
   }
 

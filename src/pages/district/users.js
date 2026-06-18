@@ -46,11 +46,10 @@ function getUserFormHtml(user = null) {
           <input type="email" class="form-input" id="user-email" value="${user?.email || ''}" placeholder="email@example.com" required />
         </div>
       </div>
-      ${!user ? `
       <div class="form-group">
-        <label class="form-label">Password *</label>
-        <input type="password" class="form-input" id="user-password" placeholder="Minimum 6 characters" required />
-      </div>` : ''}
+        <label class="form-label">Password ${!user ? '*' : '(Leave empty to keep current)'}</label>
+        <input type="password" class="form-input" id="user-password" placeholder="${!user ? 'Minimum 6 characters' : 'Enter new password to change'}" ${!user ? 'required' : ''} />
+      </div>
       <div class="form-row">
         <div class="form-group">
           <label class="form-label">Role Preference *</label>
@@ -113,8 +112,9 @@ function getUserFormValues(isEdit = false) {
     clubId: document.getElementById('user-club')?.value || null,
     visibleOptions
   };
-  if (!isEdit) {
-    vals.password = document.getElementById('user-password')?.value?.trim();
+  const passwordVal = document.getElementById('user-password')?.value?.trim();
+  if (passwordVal) {
+    vals.password = passwordVal;
   }
   return vals;
 }
@@ -128,7 +128,11 @@ function validateUserForm(vals, isEdit = false) {
     showToast('error', 'Validation Error', 'Please select a role.');
     return false;
   }
-  if (!isEdit && (!vals.password || vals.password.length < 6)) {
+  if (!isEdit && !vals.password) {
+    showToast('error', 'Validation Error', 'Password is required.');
+    return false;
+  }
+  if (vals.password && vals.password.length < 6) {
     showToast('error', 'Validation Error', 'Password must be at least 6 characters.');
     return false;
   }
