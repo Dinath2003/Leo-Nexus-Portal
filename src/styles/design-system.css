@@ -26,11 +26,14 @@
   --color-teal: #14b8a6;
 
   /* Glass Surfaces */
-  --color-glass-bg: rgba(15, 21, 53, 0.65);
-  --color-glass-bg-hover: rgba(26, 33, 80, 0.75);
-  --color-glass-border: rgba(0, 212, 255, 0.12);
-  --color-glass-border-hover: rgba(0, 212, 255, 0.25);
-  --color-glass-highlight: rgba(255, 255, 255, 0.03);
+  --color-glass-bg: rgba(6, 9, 28, 0.52);
+  --color-glass-bg-hover: rgba(10, 15, 45, 0.70);
+  --color-glass-border: rgba(0, 200, 255, 0.12);
+  --color-glass-border-hover: rgba(0, 200, 255, 0.30);
+  --color-glass-highlight: rgba(255, 255, 255, 0.05);
+  --color-primary: #00d4ff;
+  --color-primary-glow: rgba(0, 212, 255, 0.18);
+  --color-border: rgba(0, 200, 255, 0.12);
 
   /* Text */
   --color-text-primary: #e8eaf6;
@@ -239,23 +242,59 @@ a:hover {
 /* ---------- Glass Surfaces ---------- */
 .glass {
   background: var(--color-glass-bg);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(40px) saturate(180%);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
   border: 1px solid var(--color-glass-border);
   border-radius: var(--radius-lg);
+  box-shadow:
+    0 4px 30px rgba(0, 0, 0, 0.35),
+    0 0 0 1px rgba(255, 255, 255, 0.03) inset,
+    0 1px 0 rgba(255, 255, 255, 0.07) inset;
 }
 
 .glass-elevated {
   background: var(--color-glass-bg);
-  backdrop-filter: blur(30px);
-  -webkit-backdrop-filter: blur(30px);
+  backdrop-filter: blur(50px) saturate(200%);
+  -webkit-backdrop-filter: blur(50px) saturate(200%);
   border: 1px solid var(--color-glass-border);
   border-radius: var(--radius-lg);
-  box-shadow: var(--glow-card);
+  box-shadow:
+    0 8px 50px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.04) inset,
+    0 1px 0 rgba(255, 255, 255, 0.10) inset,
+    0 0 40px rgba(0, 120, 255, 0.05);
 }
 
 .glass:hover, .glass-elevated:hover {
   border-color: var(--color-glass-border-hover);
+}
+
+/* Utility: apply full premium glass to any element */
+.glass-premium {
+  background: rgba(6, 9, 28, 0.55);
+  backdrop-filter: blur(40px) saturate(200%) brightness(1.08);
+  -webkit-backdrop-filter: blur(40px) saturate(200%) brightness(1.08);
+  border: 1px solid rgba(0, 200, 255, 0.15);
+  border-radius: var(--radius-lg);
+  box-shadow:
+    0 8px 60px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(255, 255, 255, 0.04) inset,
+    0 1px 0 rgba(255, 255, 255, 0.10) inset;
+  position: relative;
+  overflow: hidden;
+}
+.glass-premium::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(0, 220, 255, 0.50) 35%,
+    rgba(255, 255, 255, 0.65) 50%,
+    rgba(0, 220, 255, 0.50) 65%,
+    transparent 100%);
+  z-index: 1;
 }
 
 /* ---------- Cosmic Premium UI Customizations ---------- */
@@ -270,43 +309,50 @@ body.glass-effect-enabled {
 }
 
 body.glass-effect-enabled .card {
-  background: rgba(7, 10, 28, 0.45) !important;
-  backdrop-filter: blur(25px) saturate(180%) !important;
-  -webkit-backdrop-filter: blur(25px) saturate(180%) !important;
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
-  box-shadow: 
-    0 8px 32px 0 rgba(0, 0, 0, 0.4),
-    inset 0 0 1px 1px rgba(255, 255, 255, 0.08),
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.2) !important;
-  transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1) !important;
+  background: rgba(6, 9, 28, 0.50) !important;
+  backdrop-filter: blur(40px) saturate(200%) !important;
+  -webkit-backdrop-filter: blur(40px) saturate(200%) !important;
+  border: 1px solid rgba(0, 200, 255, 0.12) !important;
+  box-shadow:
+    0 8px 40px rgba(0, 0, 0, 0.5),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.10) !important;
+  transition:
+    border-color 0.35s ease,
+    box-shadow 0.35s ease,
+    transform 0.35s cubic-bezier(0.165, 0.84, 0.44, 1) !important;
   transform-style: preserve-3d;
-  perspective: 1000px;
 }
 
 body.glass-effect-enabled .card:hover {
-  border-color: rgba(0, 212, 255, 0.45) !important;
-  box-shadow: 
-    0 15px 45px rgba(0, 0, 0, 0.6), 
-    0 0 25px rgba(0, 212, 255, 0.2),
-    inset 0 0 2px 2px rgba(255, 255, 255, 0.12),
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.3) !important;
-  transform: translateY(-8px) scale(1.025) rotateX(1.5deg) rotateY(-0.8deg) !important;
+  border-color: rgba(0, 212, 255, 0.35) !important;
+  box-shadow:
+    0 18px 55px rgba(0, 0, 0, 0.65),
+    0 0 30px rgba(0, 180, 255, 0.12),
+    inset 0 0 0 1px rgba(0, 212, 255, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18) !important;
+  transform: translateY(-8px) rotateX(1.8deg) rotateY(-1deg) scale(1.02) !important;
 }
 
 body.glass-effect-enabled .sidebar {
-  background: rgba(5, 7, 20, 0.65) !important;
-  backdrop-filter: blur(35px) saturate(160%) !important;
-  -webkit-backdrop-filter: blur(35px) saturate(160%) !important;
-  border-right: 1px solid rgba(255, 255, 255, 0.06) !important;
-  box-shadow: inset -1px 0 0 0 rgba(255, 255, 255, 0.03), 4px 0 24px rgba(0, 0, 0, 0.2) !important;
+  background: rgba(4, 6, 18, 0.58) !important;
+  backdrop-filter: blur(50px) saturate(200%) brightness(1.06) !important;
+  -webkit-backdrop-filter: blur(50px) saturate(200%) brightness(1.06) !important;
+  border-right: 1px solid rgba(0, 200, 255, 0.10) !important;
+  box-shadow:
+    inset -1px 0 0 rgba(255, 255, 255, 0.04),
+    4px 0 50px rgba(0, 0, 0, 0.4),
+    0 0 80px rgba(0, 100, 255, 0.05) !important;
 }
 
 body.glass-effect-enabled .top-header {
-  background: rgba(5, 7, 20, 0.5) !important;
-  backdrop-filter: blur(25px) saturate(150%) !important;
-  -webkit-backdrop-filter: blur(25px) saturate(150%) !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
-  box-shadow: inset 0 -1px 0 0 rgba(255, 255, 255, 0.03), 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+  background: rgba(4, 5, 18, 0.48) !important;
+  backdrop-filter: blur(50px) saturate(200%) brightness(1.08) !important;
+  -webkit-backdrop-filter: blur(50px) saturate(200%) brightness(1.08) !important;
+  border-bottom: 1px solid rgba(0, 200, 255, 0.09) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    0 4px 30px rgba(0, 0, 0, 0.25) !important;
 }
 
 /* Glassmorphic inputs */

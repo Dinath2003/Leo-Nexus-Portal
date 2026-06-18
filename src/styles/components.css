@@ -215,16 +215,25 @@
 
 /* ---------- Cards ---------- */
 .card {
-  background: var(--gradient-card);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid var(--color-glass-border);
+  background: rgba(8, 12, 32, 0.50);
+  backdrop-filter: blur(30px) saturate(180%);
+  -webkit-backdrop-filter: blur(30px) saturate(180%);
+  border: 1px solid rgba(0, 200, 255, 0.10);
   border-radius: var(--radius-lg);
   padding: var(--space-6);
-  box-shadow: var(--glow-card);
-  transition: all var(--duration-normal) var(--ease-smooth);
+  box-shadow:
+    0 4px 30px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.03) inset,
+    0 1px 0 rgba(255, 255, 255, 0.08) inset;
+  transition:
+    border-color var(--duration-normal) var(--ease-smooth),
+    box-shadow var(--duration-normal) var(--ease-smooth),
+    transform 0.35s cubic-bezier(0.165, 0.84, 0.44, 1);
   position: relative;
   overflow: hidden;
+  /* Allow JS-driven 3D tilt if added */
+  transform-style: preserve-3d;
+  will-change: transform;
 }
 
 .card::before {
@@ -234,9 +243,16 @@
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.2), transparent);
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(0, 212, 255, 0.30) 40%,
+    rgba(255, 255, 255, 0.50) 50%,
+    rgba(0, 212, 255, 0.30) 60%,
+    transparent 100%);
+  transition: opacity var(--duration-normal);
 }
 
+/* Specular inner glow revealed on hover */
 .card::after {
   content: '';
   position: absolute;
@@ -248,13 +264,16 @@
 }
 
 .card:hover::after {
-  opacity: 0.6;
+  opacity: 0.5;
 }
 
 .card:hover {
-  border-color: var(--color-glass-border-hover);
-  transform: translateY(-4px);
-  box-shadow: var(--glow-card), 0 12px 40px rgba(0, 0, 0, 0.45);
+  border-color: rgba(0, 212, 255, 0.28);
+  transform: translateY(-6px) rotateX(1.5deg) rotateY(-0.8deg) scale(1.015);
+  box-shadow:
+    0 16px 50px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(0, 212, 255, 0.20) inset,
+    0 0 30px rgba(0, 130, 255, 0.10);
 }
 
 .card-header {

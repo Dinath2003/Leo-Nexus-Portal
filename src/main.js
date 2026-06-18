@@ -29,7 +29,7 @@ import { renderMemberDashboard } from './pages/member/dashboard.js';
 import { renderMemberEvents } from './pages/member/events.js';
 import { renderCalendar } from './pages/calendar.js';
 import { initHeader } from './components/header.js';
-import { initTheme } from './components/theme.js';
+import { initTheme, initCardTilt } from './components/theme.js';
 
 // Remove default Vite styles
 const defaultStyles = document.querySelector('link[href="/style.css"]');
@@ -89,6 +89,9 @@ if (!window.location.hash) {
 // ---------- Initialize ----------
 initTheme();
 router.resolve();
+
+// Global 3D card tilt — attaches to all .card elements (current + future)
+initCardTilt();
 
 console.log('%c🌊 Leo Nexus Portal', 'font-size: 20px; color: #00d4ff; font-weight: bold;');
 console.log('%cDistrict & Club Management System', 'font-size: 12px; color: #9aa5ce;');

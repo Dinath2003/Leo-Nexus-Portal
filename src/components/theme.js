@@ -20,6 +20,19 @@ let flames = [];
 let targetWind = 0;
 let wind       = 0;
 
+// ─── Moving Gravity Point ─────────────────────────────────────────────────────
+// Orbits the screen in a slow Lissajous figure and blends toward the cursor.
+const grav = {
+  x: 0, y: 0,            // current rendered position
+  tx: 0, ty: 0,          // spring target
+  cx: 0, cy: 0,          // cursor influence (updated on mousemove)
+  t: 0,                  // orbit clock
+  strength: 0.011,       // pull on particles
+  orbitRX: 0,            // set after first resize
+  orbitRY: 0,
+  cursorWeight: 0.22,    // 0 = pure orbit, 1 = pure cursor
+};
+
 // ─── Theme config ─────────────────────────────────────────────────────────────
 const config = {
   liveBg:      true,
@@ -27,13 +40,18 @@ const config = {
   accent:      'cyan'
 };
 
-// ─── Wind tracking (attached once at module load) ────────────────────────────
+// ─── Wind + cursor tracking ───────────────────────────────────────────────────
 window.addEventListener('mousemove', (e) => {
   if (!canvas) return;
-  // Identical formula to Leo Calendar ocean.js
   targetWind = ((e.clientX / window.innerWidth) - 0.5) * 2.5;
+  grav.cx = e.clientX;
+  grav.cy = e.clientY;
 });
-window.addEventListener('mouseleave', () => { targetWind = 0; });
+window.addEventListener('mouseleave', () => {
+  targetWind = 0;
+  // Reset cursor to screen centre so orbit takes over smoothly
+  if (canvas) { grav.cx = canvas.width / 2; grav.cy = canvas.height / 2; }
+});
 
 // ─── Public API ───────────────────────────────────────────────────────────────
 export function initTheme() {
@@ -43,6 +61,104 @@ export function initTheme() {
 
   applyThemeSettings();
   setupSettingsBtn();
+}
+
+// ─── Global 3D Card Tilt ──────────────────────────────────────────────────────
+// Auto-attaches spring-physics perspective tilt to every .card in the DOM.
+// Uses a MutationObserver so dynamically-rendered cards are caught too.
+// Call once from main.js after initial render.
+
+let cardTiltObserver = null;
+const tiltedCards    = new WeakSet();
+
+export function initCardTilt() {
+  // Attach to all existing cards
+  document.querySelectorAll('.card').forEach(attachTilt);
+
+  // Watch for new cards rendered by the router
+  cardTiltObserver = new MutationObserver((mutations) => {
+    for (const mut of mutations) {
+      mut.addedNodes.forEach((node) => {
+        if (node.nodeType !== 1) return;
+        if (node.matches?.('.card'))          attachTilt(node);
+        node.querySelectorAll?.('.card').forEach(attachTilt);
+      });
+    }
+  });
+  cardTiltObserver.observe(document.body, { childList: true, subtree: true });
+}
+
+export function destroyCardTilt() {
+  cardTiltObserver?.disconnect();
+  cardTiltObserver = null;
+}
+
+function attachTilt(card) {
+  if (tiltedCards.has(card)) return;
+  tiltedCards.add(card);
+
+  // Ensure the card has a wrapper perspective
+  card.style.transformStyle = 'preserve-3d';
+  card.style.willChange     = 'transform';
+
+  // Per-card spring state
+  let tRX = 0, tRY = 0;   // targets
+  let cRX = 0, cRY = 0;   // current
+  let hovering = false;
+  let rafId    = null;
+
+  // Add a shimmer overlay div inside each card
+  let shimmer = card.querySelector('.card-tilt-shimmer');
+  if (!shimmer) {
+    shimmer = document.createElement('div');
+    shimmer.className = 'card-tilt-shimmer';
+    Object.assign(shimmer.style, {
+      position:      'absolute',
+      inset:         '0',
+      borderRadius:  'inherit',
+      pointerEvents: 'none',
+      zIndex:        '1',
+      transition:    'background 0.08s',
+      background:    'radial-gradient(ellipse 80% 60% at 50% 50%, rgba(255,255,255,0.05) 0%, transparent 70%)',
+    });
+    card.appendChild(shimmer);
+  }
+
+  function onMove(e) {
+    const rect = card.getBoundingClientRect();
+    const cx   = rect.left + rect.width  / 2;
+    const cy   = rect.top  + rect.height / 2;
+    const dx   = (e.clientX - cx) / (rect.width  / 2);  // –1…+1
+    const dy   = (e.clientY - cy) / (rect.height / 2);
+
+    tRY =  dx * 12;   // max ±12° left/right
+    tRX = -dy *  8;   // max  ±8° up/down
+    hovering = true;
+  }
+
+  function onLeave() {
+    tRX = 0; tRY = 0;
+    hovering = false;
+  }
+
+  function loop() {
+    cRX += (tRX - cRX) * 0.12;
+    cRY += (tRY - cRY) * 0.12;
+
+    const scale = hovering ? 1.025 : 1.0;
+    card.style.transform = `perspective(900px) rotateX(${cRX}deg) rotateY(${cRY}deg) scale(${scale})`;
+
+    // Specular shimmer — moves counter-tilt so it looks like light catching glass
+    const shiftX = -cRY * 2.5;
+    const shiftY =  cRX * 2.5;
+    shimmer.style.background = `radial-gradient(ellipse 75% 55% at ${50 + shiftX}% ${50 + shiftY}%, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.02) 40%, transparent 70%)`;
+
+    rafId = requestAnimationFrame(loop);
+  }
+
+  card.addEventListener('mousemove', onMove);
+  card.addEventListener('mouseleave', onLeave);
+  loop();
 }
 
 function applyThemeSettings() {
@@ -72,10 +188,14 @@ function startLiveBg() {
   document.body.appendChild(canvas);
   ctx = canvas.getContext('2d');
 
-  // Size + re-seed on resize (same as Leo Calendar)
+  // Size + re-seed on resize
   const resize = () => {
     canvas.width  = window.innerWidth;
     canvas.height = window.innerHeight;
+    grav.orbitRX = canvas.width  * 0.30;
+    grav.orbitRY = canvas.height * 0.20;
+    grav.cx = canvas.width  / 2;
+    grav.cy = canvas.height / 2;
     seedParticles();
   };
   resize();
@@ -149,10 +269,17 @@ class Ember {
     this.y    += this.vy;
     this.phase += this.frequency;
 
-    // Leo Calendar formula exactly:
     const sway     = Math.sin(this.phase) * 12;
     const windPush = wind * (H - this.y) * 0.45;
     this.x = this.baseX + sway + windPush;
+
+    // Gravity pull toward moving gravity point
+    const dx   = grav.x - this.x;
+    const dy   = grav.y - this.y;
+    const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+    const pull = (grav.strength * 280) / Math.max(dist, 55);
+    this.baseX += (dx / dist) * pull * 1.6;
+    this.y     += (dy / dist) * pull * 0.5;
 
     this.alpha = 1 - (this.life / this.maxLife);
 
@@ -209,10 +336,17 @@ class FlameBody {
     this.y    += this.vy;
     this.phase += this.frequency;
 
-    // Leo Calendar formula exactly:
     const sway     = Math.sin(this.phase) * 18;
     const windPush = wind * (H - this.y) * 0.5;
     this.x = this.baseX + sway + windPush;
+
+    // Gravity pull toward moving gravity point (gentler for blobs)
+    const dx   = grav.x - this.x;
+    const dy   = grav.y - this.y;
+    const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+    const pull = (grav.strength * 180) / Math.max(dist, 75);
+    this.baseX += (dx / dist) * pull * 1.1;
+    this.y     += (dy / dist) * pull * 0.35;
 
     const progress    = this.life / this.maxLife;
     this.currentR     = this.r * (1 - progress * 0.78);
@@ -280,25 +414,75 @@ function drawGroundGlow() {
   ctx.fillRect(0, H - baseGlowH, W, baseGlowH);
 }
 
-// ─── Main render loop (mirrors Leo Calendar render() exactly) ─────────────────
+// ─── Update gravity point position ───────────────────────────────────────────
+function updateGravityPoint() {
+  const W = canvas.width, H = canvas.height;
+  grav.t += 0.005;
+  // Lissajous autonomous orbit
+  const orbitX = W / 2 + Math.cos(grav.t * 1.0) * grav.orbitRX;
+  const orbitY = H / 2 + Math.sin(grav.t * 1.3) * grav.orbitRY;
+  // Blend orbit with cursor
+  grav.tx = orbitX * (1 - grav.cursorWeight) + grav.cx * grav.cursorWeight;
+  grav.ty = orbitY * (1 - grav.cursorWeight) + grav.cy * grav.cursorWeight;
+  // Spring toward target
+  grav.x += (grav.tx - grav.x) * 0.04;
+  grav.y += (grav.ty - grav.y) * 0.04;
+}
+
+// ─── Draw pulsing gravity orb ─────────────────────────────────────────────────
+function drawGravityOrb() {
+  const pulse = 0.6 + Math.sin(Date.now() * 0.004) * 0.4;
+  const r     = 24 + Math.sin(Date.now() * 0.007) * 8;
+
+  // Outer diffuse halo
+  const outer = ctx.createRadialGradient(grav.x, grav.y, 0, grav.x, grav.y, r * 3.8);
+  outer.addColorStop(0,   `rgba(0, 200, 255, ${0.15 * pulse})`);
+  outer.addColorStop(0.5, `rgba(0, 100, 200, ${0.06 * pulse})`);
+  outer.addColorStop(1,   `rgba(0,  50, 150, 0)`);
+  ctx.beginPath();
+  ctx.arc(grav.x, grav.y, r * 3.8, 0, Math.PI * 2);
+  ctx.fillStyle = outer;
+  ctx.fill();
+
+  // Bright core
+  const core = ctx.createRadialGradient(grav.x, grav.y, 0, grav.x, grav.y, r);
+  core.addColorStop(0,   `rgba(200, 240, 255, ${0.88 * pulse})`);
+  core.addColorStop(0.35,`rgba( 80, 180, 255, ${0.65 * pulse})`);
+  core.addColorStop(0.75,`rgba(  0, 100, 220, ${0.30 * pulse})`);
+  core.addColorStop(1,   `rgba(  0,  50, 160, 0)`);
+  ctx.beginPath();
+  ctx.arc(grav.x, grav.y, r, 0, Math.PI * 2);
+  ctx.fillStyle = core;
+  ctx.fill();
+
+  // Nucleus spark
+  ctx.beginPath();
+  ctx.arc(grav.x, grav.y, 3.5, 0, Math.PI * 2);
+  ctx.fillStyle = `rgba(255, 255, 255, ${0.95 * pulse})`;
+  ctx.shadowBlur  = 12;
+  ctx.shadowColor = 'rgba(100, 220, 255, 0.9)';
+  ctx.fill();
+  ctx.shadowBlur = 0;
+}
+
+// ─── Main render loop ─────────────────────────────────────────────────────────
 function render() {
   if (!canvas || !ctx) return;
 
-  // Leo Calendar wind interpolation formula:
   wind += (targetWind - wind) * 0.065;
 
+  updateGravityPoint();
   drawBackground();
 
-  // Leo Calendar's key technique: 'screen' blend for glowing overlap
+  // Draw gravity orb before 'screen' pass so fire blooms over it
+  drawGravityOrb();
+
   ctx.save();
   ctx.globalCompositeOperation = 'screen';
-
   flames.forEach(f => { f.update(); f.draw(); });
   embers.forEach(e => { e.update(); e.draw(); });
-
   ctx.restore();
 
-  // Ground glow drawn after 'screen' pass, in normal mode
   drawGroundGlow();
 
   animationFrameId = requestAnimationFrame(render);

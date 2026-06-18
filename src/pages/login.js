@@ -292,10 +292,12 @@ function initParticles() {
   // ── Particle pools ────────────────────────────────────────────────────────
   let embers = [];
   let flames = [];
+  let comets = [];
 
   function seed() {
     embers = Array.from({ length: 120 }, () => new Ember(true));
     flames = Array.from({ length: 45  }, () => new FlameBody(true));
+    comets = Array.from({ length: 8   }, () => new Comet(true));
   }
 
   // ── Ember (Leo Calendar Ember, blue palette + gravity pull) ───────────────
@@ -432,6 +434,101 @@ function initParticles() {
     ctx.fillRect(0, H - glowH, W, glowH);
   }
 
+  // ── Comet / Meteor class ─────────────────────────────────────────────────
+  // Comets fall from top to bottom at a slight diagonal angle,
+  // leaving a long glowing gradient tail behind them.
+  class Comet {
+    constructor(init = false) { this.reset(init); }
+
+    reset(init = false) {
+      const W = canvas.width, H = canvas.height;
+
+      // Spawn off the top edge (or random height when seeding initially)
+      this.x    = rand(W * 0.05, W * 0.95);
+      this.y    = init ? rand(-H, 0) : rand(-120, -20);
+
+      // Downward velocity with a slight rightward or leftward drift
+      const angle  = rand(-0.22, 0.22);   // radians from vertical
+      const speed  = rand(4.5, 10);       // px per frame
+      this.vx      = Math.sin(angle) * speed;
+      this.vy      = Math.cos(angle) * speed;
+
+      // Visual properties
+      this.tailLen = rand(120, 280);      // gradient tail length in px
+      this.size    = rand(1.5, 3.2);      // nucleus radius
+      this.alpha   = rand(0.55, 0.95);    // max opacity
+      this.life    = 0;
+      this.maxLife = randI(60, 140);      // frames alive after entering screen
+      this.hue     = rand(185, 220);      // cyan → blue range
+    }
+
+    update() {
+      this.x += this.vx;
+      this.y += this.vy;
+      this.life++;
+
+      const H = canvas.height, W = canvas.width;
+      // Remove once far below screen or life expired
+      if (this.y > H + this.tailLen || this.x < -this.tailLen || this.x > W + this.tailLen
+          || this.life > this.maxLife) {
+        this.reset(false);
+      }
+    }
+
+    draw() {
+      // Fade in over first 20 frames, fade out at end of life
+      const lifeFrac = this.life / this.maxLife;
+      const fadeIn   = Math.min(this.life / 20, 1);
+      const fadeOut  = lifeFrac > 0.75 ? 1 - (lifeFrac - 0.75) / 0.25 : 1;
+      const opacity  = this.alpha * fadeIn * fadeOut;
+      if (opacity <= 0.01) return;
+
+      // Direction vector reversed (tail points opposite to motion)
+      const len  = Math.sqrt(this.vx * this.vx + this.vy * this.vy);
+      const nx   = -this.vx / len;  // unit normal along tail
+      const ny   = -this.vy / len;
+
+      // Tail endpoint
+      const tx = this.x + nx * this.tailLen;
+      const ty = this.y + ny * this.tailLen;
+
+      // Gradient from bright nucleus → transparent tail
+      const grad = ctx.createLinearGradient(this.x, this.y, tx, ty);
+      grad.addColorStop(0,    `hsla(${this.hue},  100%, 90%, ${opacity})`);
+      grad.addColorStop(0.05, `hsla(${this.hue},  100%, 70%, ${opacity * 0.85})`);
+      grad.addColorStop(0.25, `hsla(${this.hue},   95%, 55%, ${opacity * 0.40})`);
+      grad.addColorStop(0.6,  `hsla(${this.hue + 15}, 80%, 35%, ${opacity * 0.12})`);
+      grad.addColorStop(1,    `hsla(${this.hue + 25}, 60%, 20%, 0)`);
+
+      // Draw tail as a tapered stroke
+      ctx.save();
+      ctx.strokeStyle  = grad;
+      ctx.lineWidth    = this.size * 2;
+      ctx.lineCap      = 'round';
+      ctx.shadowBlur   = 14;
+      ctx.shadowColor  = `hsla(${this.hue}, 100%, 80%, ${opacity * 0.7})`;
+      ctx.beginPath();
+      ctx.moveTo(this.x, this.y);
+      ctx.lineTo(tx, ty);
+      ctx.stroke();
+      ctx.restore();
+
+      // Bright nucleus dot
+      ctx.save();
+      ctx.shadowBlur  = 20;
+      ctx.shadowColor = `hsla(${this.hue}, 100%, 90%, ${opacity})`;
+      const nGrad = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size * 2.5);
+      nGrad.addColorStop(0,   `hsla(0, 0%, 100%, ${opacity})`);
+      nGrad.addColorStop(0.4, `hsla(${this.hue}, 100%, 85%, ${opacity * 0.75})`);
+      nGrad.addColorStop(1,   `hsla(${this.hue}, 100%, 60%, 0)`);
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size * 2.5, 0, Math.PI * 2);
+      ctx.fillStyle = nGrad;
+      ctx.fill();
+      ctx.restore();
+    }
+  }
+
   // ── Gravity Point Orb visual ──────────────────────────────────────────────
   function drawGravityOrb() {
     const pulse = 0.65 + Math.sin(Date.now() * 0.004) * 0.35;
@@ -485,7 +582,7 @@ function initParticles() {
     grav.y += (grav.ty - grav.y) * 0.04;
   }
 
-  // ── Render loop (Leo Calendar structure, + gravity orb) ───────────────────
+  // ── Render loop (Leo Calendar structure, + gravity orb + comets) ──────────
   function render() {
     wind += (targetWind - wind) * 0.065;
 
@@ -493,7 +590,13 @@ function initParticles() {
 
     drawBg();
 
-    // Gravity orb drawn before 'screen' pass so fire blooms over it
+    // Comets drawn first in normal blend so they appear behind fire
+    ctx.save();
+    ctx.globalCompositeOperation = 'screen';
+    comets.forEach(c => { c.update(); c.draw(); });
+    ctx.restore();
+
+    // Gravity orb drawn before fire 'screen' pass
     drawGravityOrb();
 
     ctx.save();
