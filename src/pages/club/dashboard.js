@@ -151,9 +151,14 @@ export function renderClubDashboard() {
 
             <!-- Club Balance Summary -->
             <div class="card hover-lift">
-              <div class="card-header">
-                <h3 class="card-title"><i data-lucide="wallet" style="width:18px;height:18px"></i> Financial Summary</h3>
-                <a href="#/club/finance" class="btn btn-ghost btn-sm">Details</a>
+              <div class="card-header" style="display:flex; align-items:center;">
+                <h3 class="card-title" style="margin:0;"><i data-lucide="wallet" style="width:18px;height:18px"></i> Club Wallet Summary</h3>
+                ${auth.can('create', 'finances') ? `
+                  <a href="#/club/finance" class="btn btn-primary btn-xs" style="margin-left:auto; margin-right:8px;"><i data-lucide="plus" style="width:12px;height:12px;margin-right:2px;vertical-align:-1px;"></i> Quick Entry</a>
+                  <a href="#/club/finance" class="btn btn-ghost btn-sm" style="margin-left:0;">Details</a>
+                ` : `
+                  <a href="#/club/finance" class="btn btn-ghost btn-sm" style="margin-left:auto;">Details</a>
+                `}
               </div>
               <div class="card-body">
                 <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:20px;">
@@ -166,7 +171,7 @@ export function renderClubDashboard() {
                     <div style="font-size:18px;font-weight:700;color:#ef4444;">Rs. ${financeSummary.expenses.toLocaleString()}</div>
                   </div>
                   <div style="text-align:center;padding:16px;background:rgba(0,102,255,0.08);border-radius:12px;">
-                    <div style="font-size:12px;color:var(--color-text-muted);margin-bottom:4px;">Balance</div>
+                    <div style="font-size:12px;color:var(--color-text-muted);margin-bottom:4px;">Wallet Balance</div>
                     <div style="font-size:18px;font-weight:700;color:${financeSummary.balance >= 0 ? '#14b8a6' : '#ef4444'};">Rs. ${financeSummary.balance.toLocaleString()}</div>
                   </div>
                 </div>

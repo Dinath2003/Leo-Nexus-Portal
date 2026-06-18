@@ -398,7 +398,7 @@ export function renderDistrictFinance() {
     const totalReceivablesAmt = clubPayments.filter(cp => cp.status === 'pending').reduce((sum, cp) => sum + cp.amount, 0);
 
     // Balance Sheet custom items
-    const bsItems = store.getAll('balanceSheetItems');
+    const bsItems = store.getAll('balanceSheetItems').filter(i => i.clubId === 'district');
     const customAssets = bsItems.filter(i => i.type === 'asset');
     const customLiabilities = bsItems.filter(i => i.type === 'liability');
     const sumCustomAssets = customAssets.reduce((sum, i) => sum + i.amount, 0);
@@ -444,7 +444,7 @@ export function renderDistrictFinance() {
                     return `<button class="btn btn-primary" id="add-bs-item-btn"><i data-lucide="plus" style="width:16px;height:16px"></i> Add Balance Sheet Item</button>`;
                   } else if (activeTab === 'club_dues') {
                     return `<button class="btn btn-primary" id="add-club-due-btn"><i data-lucide="plus" style="width:16px;height:16px"></i> Record Manual Club Dues</button>`;
-                  } else if (activeTab !== 'invoices') {
+                  } else if (activeTab !== 'invoices' && activeTab !== 'club_wallets') {
                     return `<button class="btn btn-primary" id="add-txn-btn"><i data-lucide="plus" style="width:16px;height:16px"></i> Add Transaction</button>`;
                   }
                   return '';
@@ -479,6 +479,7 @@ export function renderDistrictFinance() {
               <button class="btn tab-btn ${activeTab === 'ledger' ? 'btn-primary' : 'btn-ghost'}" data-tab="ledger">Payments & Receipts Ledger</button>
               <button class="btn tab-btn ${activeTab === 'club_dues' ? 'btn-primary' : 'btn-ghost'}" data-tab="club_dues">Club Dues Review</button>
               <button class="btn tab-btn ${activeTab === 'invoices' ? 'btn-primary' : 'btn-ghost'}" data-tab="invoices">Invoices Management</button>
+              <button class="btn tab-btn ${activeTab === 'club_wallets' ? 'btn-primary' : 'btn-ghost'}" data-tab="club_wallets">Club Wallets</button>
             </div>
 
             <!-- Tab Content -->
@@ -870,6 +871,64 @@ export function renderDistrictFinance() {
                 `;
               })() : ''}
 
+              ${activeTab === 'club_wallets' ? (() => {
+                const clubs = store.getAll('clubs');
+                
+                // Filter clubs by search if any
+                let filteredClubs = [...clubs];
+                if (searchFilter) {
+                  const q = searchFilter.toLowerCase();
+                  filteredClubs = filteredClubs.filter(c => 
+                    c.name.toLowerCase().includes(q) || 
+                    c.code.toLowerCase().includes(q)
+                  );
+                }
+
+                return `
+                  <!-- Search/Filter Toolbar -->
+                  <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:12px;">
+                    <div class="search-bar" style="max-width:300px; flex:1;">
+                      <i data-lucide="search" class="search-icon"></i>
+                      <input type="text" placeholder="Search clubs..." id="club-search-input" value="${searchFilter}" />
+                    </div>
+                    <div style="font-size:13px; color:var(--color-text-muted);">${filteredClubs.length} club(s) found</div>
+                  </div>
+
+                  <!-- Club Wallets Table -->
+                  <div class="card">
+                    <div class="card-body" style="padding:0;">
+                      ${renderTable(
+                        [
+                          { label: 'Club Name', key: 'name', render: row => `<strong>${row.name}</strong>` },
+                          { label: 'Code', key: 'code', render: row => `<code style="color:var(--color-cyan-glow);">${row.code}</code>` },
+                          { label: 'Zone/Region', render: row => `Zone ${row.zone} (Region ${row.region})` },
+                          { label: 'Wallet Balance', render: row => {
+                            const summary = store.getClubFinanceSummary(row.id);
+                            return `<span style="font-weight:700; color:${summary.balance >= 0 ? '#14b8a6' : '#ef4444'};">Rs. ${summary.balance.toLocaleString()}</span>`;
+                          }},
+                          { label: 'Revenue (In)', render: row => {
+                            const summary = store.getClubFinanceSummary(row.id);
+                            return `<span style="color:#14b8a6;">Rs. ${summary.income.toLocaleString()}</span>`;
+                          }},
+                          { label: 'Expenses (Out)', render: row => {
+                            const summary = store.getClubFinanceSummary(row.id);
+                            return `<span style="color:#ef4444;">Rs. ${summary.expenses.toLocaleString()}</span>`;
+                          }},
+                          { label: 'Status', key: 'status', render: row => `<span class="badge ${row.status === 'active' ? 'badge-success' : 'badge-warning'}">${row.status}</span>` }
+                        ],
+                        filteredClubs,
+                        {
+                          emptyMessage: 'No clubs found',
+                          actions: (row) => `
+                            <button class="btn btn-primary btn-xs view-club-wallet-btn" data-club-id="${row.id}" title="View Ledger"><i data-lucide="book-open" style="width:12px;height:12px;margin-right:2px;vertical-align:-1px;"></i> View Ledger</button>
+                          `
+                        }
+                      )}
+                    </div>
+                  </div>
+                `;
+              })() : ''}
+
             </div>
 
           </div>
@@ -1034,6 +1093,7 @@ export function renderDistrictFinance() {
         onSubmit: (close) => {
           const data = getBSItemFormData();
           if (!data) return;
+          data.clubId = 'district';
           store.create('balanceSheetItems', data);
           showToast('success', 'Item Added', `Custom ${data.type} item "${data.name}" added successfully.`);
           close();
@@ -1260,6 +1320,51 @@ export function renderDistrictFinance() {
       store.updateInvoiceTemplate(file.name);
       showToast('success', 'Template Updated', `Invoice layout template has been updated to ${file.name}.`);
       render(activeTab, searchFilter, clubFilter, statusFilter);
+    });
+
+    // Search club wallets listener
+    document.getElementById('club-search-input')?.addEventListener('input', (e) => {
+      render(activeTab, e.target.value, clubFilter, statusFilter);
+    });
+
+    // View Club Wallet action
+    document.querySelectorAll('.view-club-wallet-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const targetClubId = btn.dataset.clubId;
+        const targetClub = store.getById('clubs', targetClubId);
+        if (!targetClub) return;
+
+        const clubFinances = store.getClubFinances(targetClubId);
+        const sortedClubFinances = [...clubFinances].sort((a, b) => new Date(b.date) - new Date(a.date));
+
+        const bodyHtml = `
+          <div style="font-size:13px; line-height:1.6; display:flex; flex-direction:column; gap:12px;">
+            <p style="color:var(--color-text-secondary); margin:0;">
+              Viewing transaction history and ledger statements for <strong>${targetClub.name}</strong>.
+            </p>
+            <div style="max-height:350px; overflow-y:auto; border:1px solid var(--color-border); border-radius:8px;">
+              ${renderTable(
+                [
+                  { label: 'Date', key: 'date', render: row => new Date(row.date).toLocaleDateString() },
+                  { label: 'Type', key: 'type', render: row => `<span class="badge ${row.type === 'income' ? 'badge-success' : 'badge-danger'}">${row.type}</span>` },
+                  { label: 'Category', key: 'category' },
+                  { label: 'Description', key: 'description' },
+                  { label: 'Amount', key: 'amount', render: row => `<span style="font-weight:600; color:${row.type === 'income' ? '#14b8a6' : '#ef4444'};">${row.type === 'income' ? '+' : '-'} Rs. ${row.amount.toLocaleString()}</span>` }
+                ],
+                sortedClubFinances,
+                { emptyMessage: 'This club wallet has no transaction logs.' }
+              )}
+            </div>
+          </div>
+        `;
+
+        showModal(`${targetClub.name} — Club Wallet Ledger`, bodyHtml, {
+          submitText: 'Close',
+          showFooter: true,
+          size: 'lg',
+          onSubmit: (close) => close()
+        });
+      });
     });
   }
 

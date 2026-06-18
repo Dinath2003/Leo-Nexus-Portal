@@ -159,7 +159,7 @@ class Auth {
       club_president: {
         clubs: ['read', 'update'],
         members: ['create', 'read', 'update', 'delete'],
-        finances: ['read', 'update'],
+        finances: ['create', 'read', 'update', 'delete'],
         projects: ['create', 'read', 'update', 'delete'],
         announcements: ['read'],
         events: ['read', 'register'],

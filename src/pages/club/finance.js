@@ -66,6 +66,82 @@ function getFormData() {
   return { type, category, amount, date, description, reference, clubId: auth.userClubId };
 }
 
+function getBSItemFormHtml(item = {}) {
+  return `
+    <div class="form-group">
+      <label class="form-label">Item Name *</label>
+      <input type="text" class="form-input" id="bs-name" placeholder="e.g. Club Laptop" value="${item.name || ''}" required />
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Classification Type *</label>
+        <select class="form-select" id="bs-type">
+          <option value="asset" ${item.type === 'asset' ? 'selected' : ''}>Asset (Property/Claims)</option>
+          <option value="liability" ${item.type === 'liability' ? 'selected' : ''}>Liability (Obligation/Debt)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Valuation Amount (Rs.) *</label>
+        <input type="number" class="form-input" id="bs-amount" placeholder="0.00" value="${item.amount || ''}" min="0" step="0.01" required />
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Effective Date *</label>
+        <input type="date" class="form-input" id="bs-date" value="${item.date || new Date().toISOString().split('T')[0]}" required />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Notes</label>
+        <input type="text" class="form-input" id="bs-notes" placeholder="e.g. Asset depreciation 10% annually" value="${item.notes || ''}" />
+      </div>
+    </div>
+  `;
+}
+
+function getBSItemFormData() {
+  const name = document.getElementById('bs-name').value.trim();
+  const type = document.getElementById('bs-type').value;
+  const amount = parseFloat(document.getElementById('bs-amount').value);
+  const date = document.getElementById('bs-date').value;
+  const notes = document.getElementById('bs-notes').value.trim();
+
+  if (!name) { showToast('error', 'Validation Error', 'Please enter a name.'); return null; }
+  if (!amount || amount <= 0) { showToast('error', 'Validation Error', 'Please enter a valid amount.'); return null; }
+  if (!date) { showToast('error', 'Validation Error', 'Please select a date.'); return null; }
+
+  return { name, type, amount, date, notes };
+}
+
+function getVerifyMemberPaymentModalHtml(reg, eventName) {
+  return `
+    <div style="font-size:13px; line-height:1.6; display:flex; flex-direction:column; gap:12px;">
+      <div style="display:grid; grid-template-columns:110px 1fr; gap:6px; align-items:center;">
+        <span style="color:var(--color-text-muted);">Member:</span>
+        <strong>${reg.name}</strong>
+        <span style="color:var(--color-text-muted);">Reference:</span>
+        <span>Event: ${eventName}</span>
+        <span style="color:var(--color-text-muted);">Amount (Rs.):</span>
+        <div class="form-group" style="margin:0;"><input type="number" class="form-input" id="verify-member-amount" value="${reg.amount}" style="padding:4px 8px; font-size:12px; height:28px;" /></div>
+        <span style="color:var(--color-text-muted);">Ref Code:</span>
+        <div class="form-group" style="margin:0;"><input type="text" class="form-input" id="verify-member-ref" value="${reg.reference || ''}" style="padding:4px 8px; font-size:12px; height:28px;" /></div>
+      </div>
+      <div style="padding:12px; border:1px solid var(--color-border); border-radius:8px; background:rgba(255,255,255,0.01); text-align:center;">
+        <span style="display:block; font-size:11px; color:var(--color-text-muted); margin-bottom:4px;">Submitted Reference / Method</span>
+        <span style="font-size:14px; font-weight:700; color:var(--color-cyan-glow);"><i data-lucide="file-text" style="vertical-align:middle; margin-right:6px; width:16px; height:16px;"></i> Method: ${reg.method || 'Bank Transfer'}</span>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Review Note / Remarks</label>
+        <input type="text" class="form-input" id="verify-member-remarks" placeholder="e.g. Received in bank account" value="Payment verified" />
+      </div>
+      
+      <div style="display:flex; justify-content:flex-end; gap:10px; border-top:1px solid var(--color-border); padding-top:12px; margin-top:8px;">
+        <button class="btn btn-danger" id="member-payment-reject-btn" style="padding: var(--space-2) var(--space-4); font-size: var(--text-sm);">Reject Payment</button>
+        <button class="btn btn-primary" id="member-payment-approve-btn" style="padding: var(--space-2) var(--space-4); font-size: var(--text-sm);">Approve Payment</button>
+      </div>
+    </div>
+  `;
+}
+
 export function renderClubFinance() {
   const app = document.getElementById('app');
   const clubId = auth.userClubId;
@@ -85,6 +161,17 @@ export function renderClubFinance() {
     // Club consolidated event dues as payables
     const clubPayments = store.getAll('clubPayments').filter(cp => cp.clubId === clubId);
     const totalPayablesAmt = clubPayments.filter(cp => cp.status === 'pending').reduce((sum, cp) => sum + cp.amount, 0);
+
+    // Custom balance sheet items
+    const bsItems = store.getAll('balanceSheetItems').filter(i => i.clubId === clubId);
+    const customAssets = bsItems.filter(i => i.type === 'asset');
+    const customLiabilities = bsItems.filter(i => i.type === 'liability');
+    const sumCustomAssets = customAssets.reduce((sum, i) => sum + i.amount, 0);
+    const sumCustomLiabilities = customLiabilities.reduce((sum, i) => sum + i.amount, 0);
+
+    const totalAssets = summary.balance + totalReceivablesAmt + sumCustomAssets;
+    const totalLiabilities = totalPayablesAmt + sumCustomLiabilities;
+    const netFunds = totalAssets - totalLiabilities;
 
     // Filter transaction list
     let filteredFinances = [...finances];
@@ -117,7 +204,16 @@ export function renderClubFinance() {
               </div>
               <div class="page-header-actions" style="display:flex; gap:10px;">
                 <button class="btn btn-secondary" id="export-finance-btn"><i data-lucide="download" style="width:16px;height:16px"></i> Export Statement</button>
-                ${canCreate ? '<button class="btn btn-primary" id="add-txn-btn"><i data-lucide="plus" style="width:16px;height:16px"></i> Add Transaction</button>' : ''}
+                ${canCreate ? (() => {
+                  if (activeTab === 'balance_sheet') {
+                    return `<button class="btn btn-primary" id="add-bs-item-btn"><i data-lucide="plus" style="width:16px;height:16px"></i> Add Balance Sheet Item</button>`;
+                  } else if (activeTab === 'receivables_payables') {
+                    return `<button class="btn btn-primary" id="add-manual-member-due-btn"><i data-lucide="plus" style="width:16px;height:16px"></i> Record Manual Member Payment</button>`;
+                  } else if (activeTab !== 'projects' && activeTab !== 'district_invoices') {
+                    return `<button class="btn btn-primary" id="add-txn-btn"><i data-lucide="plus" style="width:16px;height:16px"></i> Add Transaction</button>`;
+                  }
+                  return '';
+                })() : ''}
               </div>
             </div>
 
@@ -136,7 +232,7 @@ export function renderClubFinance() {
               <div class="card stat-card hover-lift water-effect">
                 <div class="stat-icon" style="background:rgba(0,102,255,0.12);color:var(--color-primary);"><i data-lucide="wallet"></i></div>
                 <div class="stat-value" style="color:${summary.balance >= 0 ? '#14b8a6' : '#ef4444'};">Rs. ${summary.balance.toLocaleString()}</div>
-                <div class="stat-label">Net Balance</div>
+                <div class="stat-label">Club Wallet Balance</div>
               </div>
             </div>
 
@@ -201,52 +297,85 @@ export function renderClubFinance() {
                 </div>
               ` : ''}
 
-              ${activeTab === 'balance_sheet' ? `
-                <!-- Balance Sheet -->
-                <div class="card hover-lift" style="max-width:700px; margin: 0 auto;">
-                  <div class="card-header" style="text-align:center;">
-                    <h2 style="margin:0; font-size:18px;">Balance Sheet</h2>
-                    <div style="font-size:12px; color:var(--color-text-muted); margin-top:2px;">Leo Club of Sapphire Coast | Leoistic Year 2026/2027</div>
-                  </div>
-                  <div class="card-body">
-                    <!-- ASSETS -->
-                    <div style="margin-bottom:24px;">
-                      <h4 style="margin:0 0 10px; font-size:14px; border-bottom:1px solid var(--color-border); padding-bottom:6px; color:var(--color-primary);">1. ASSETS</h4>
-                      <div style="display:flex; justify-content:space-between; padding:8px 0; font-size:13px; color:var(--color-text-secondary);">
-                        <span>Cash & Bank Balances (Wallet)</span>
-                        <span style="font-weight:600; color:var(--color-text-primary);">Rs. ${summary.balance.toLocaleString()}</span>
-                      </div>
-                      <div style="display:flex; justify-content:space-between; padding:8px 0; font-size:13px; color:var(--color-text-secondary); border-bottom: 1px dashed var(--color-border);">
-                        <span>Receivables (Dues from Members)</span>
-                        <span style="font-weight:600; color:var(--color-text-primary);">Rs. ${totalReceivablesAmt.toLocaleString()}</span>
-                      </div>
-                      <div style="display:flex; justify-content:space-between; padding:10px 0; font-size:14px; font-weight:700; color:var(--color-text-primary);">
-                        <span>Total Assets</span>
-                        <span>Rs. ${(summary.balance + totalReceivablesAmt).toLocaleString()}</span>
-                      </div>
+              ${activeTab === 'balance_sheet' ? (() => {
+                const club = auth.userClub;
+                return `
+                  <!-- Balance Sheet -->
+                  <div class="card hover-lift" style="max-width:700px; margin: 0 auto;">
+                    <div class="card-header" style="text-align:center;">
+                      <h2 style="margin:0; font-size:18px;">Balance Sheet</h2>
+                      <div style="font-size:12px; color:var(--color-text-muted); margin-top:2px;">${club?.name || 'Leo Club'} | Leoistic Year 2026/2027</div>
                     </div>
+                    <div class="card-body">
+                      <!-- ASSETS -->
+                      <div style="margin-bottom:24px;">
+                        <h4 style="margin:0 0 10px; font-size:14px; border-bottom:1px solid var(--color-border); padding-bottom:6px; color:var(--color-primary);">1. ASSETS</h4>
+                        <div style="display:flex; justify-content:space-between; padding:8px 0; font-size:13px; color:var(--color-text-secondary);">
+                          <span>Cash & Bank Balances (Wallet)</span>
+                          <span style="font-weight:600; color:var(--color-text-primary);">Rs. ${summary.balance.toLocaleString()}</span>
+                        </div>
+                        <div style="display:flex; justify-content:space-between; padding:8px 0; font-size:13px; color:var(--color-text-secondary);">
+                          <span>Receivables (Dues from Members)</span>
+                          <span style="font-weight:600; color:var(--color-text-primary);">Rs. ${totalReceivablesAmt.toLocaleString()}</span>
+                        </div>
+                        
+                        <!-- Custom Assets -->
+                        ${customAssets.map(item => `
+                          <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; font-size:13px; color:var(--color-text-secondary);">
+                            <span>${item.name} (${new Date(item.date).toLocaleDateString()})</span>
+                            <div style="display:flex; align-items:center; gap:8px;">
+                              <span style="font-weight:600; color:var(--color-text-primary);">Rs. ${item.amount.toLocaleString()}</span>
+                              ${canEdit ? `
+                                <button class="btn btn-ghost btn-xs btn-icon edit-bs-item" data-id="${item.id}" style="padding:2px; height:auto; width:auto;" title="Edit"><i data-lucide="pencil" style="width:12px;height:12px"></i></button>
+                                <button class="btn btn-ghost btn-xs btn-icon delete-bs-item" data-id="${item.id}" style="padding:2px; height:auto; width:auto;" title="Delete"><i data-lucide="trash-2" style="width:12px;height:12px;color:var(--color-danger)"></i></button>
+                              ` : ''}
+                            </div>
+                          </div>
+                        `).join('')}
 
-                    <!-- LIABILITIES -->
-                    <div style="margin-bottom:24px;">
-                      <h4 style="margin:0 0 10px; font-size:14px; border-bottom:1px solid var(--color-border); padding-bottom:6px; color:#ef4444;">2. LIABILITIES</h4>
-                      <div style="display:flex; justify-content:space-between; padding:8px 0; font-size:13px; color:var(--color-text-secondary); border-bottom: 1px dashed var(--color-border);">
-                        <span>Payables (Owed to District)</span>
-                        <span style="font-weight:600; color:var(--color-text-primary);">Rs. ${totalPayablesAmt.toLocaleString()}</span>
+                        <div style="display:flex; justify-content:space-between; padding:10px 0; font-size:14px; font-weight:700; color:var(--color-text-primary); border-top: 1px dashed var(--color-border); margin-top:8px;">
+                          <span>Total Assets</span>
+                          <span>Rs. ${totalAssets.toLocaleString()}</span>
+                        </div>
                       </div>
-                      <div style="display:flex; justify-content:space-between; padding:10px 0; font-size:14px; font-weight:700; color:var(--color-text-primary);">
-                        <span>Total Liabilities</span>
-                        <span>Rs. ${totalPayablesAmt.toLocaleString()}</span>
-                      </div>
-                    </div>
 
-                    <!-- ACCUMULATED FUNDS -->
-                    <div style="border-top:2px solid var(--color-border); padding-top:14px; display:flex; justify-content:space-between; font-size:16px; font-weight:800; color:var(--color-text-primary);">
-                      <span>Total Net Standing (Accumulated Funds)</span>
-                      <span style="color:#14b8a6;">Rs. ${(summary.balance + totalReceivablesAmt - totalPayablesAmt).toLocaleString()}</span>
+                      <!-- LIABILITIES -->
+                      <div style="margin-bottom:24px;">
+                        <h4 style="margin:0 0 10px; font-size:14px; border-bottom:1px solid var(--color-border); padding-bottom:6px; color:#ef4444;">2. LIABILITIES</h4>
+                        <div style="display:flex; justify-content:space-between; padding:8px 0; font-size:13px; color:var(--color-text-secondary);">
+                          <span>Payables (Owed to District)</span>
+                          <span style="font-weight:600; color:var(--color-text-primary);">Rs. ${totalPayablesAmt.toLocaleString()}</span>
+                        </div>
+                        
+                        <!-- Custom Liabilities -->
+                        ${customLiabilities.map(item => `
+                          <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; font-size:13px; color:var(--color-text-secondary);">
+                            <span>${item.name} (${new Date(item.date).toLocaleDateString()})</span>
+                            <div style="display:flex; align-items:center; gap:8px;">
+                              <span style="font-weight:600; color:var(--color-text-primary);">Rs. ${item.amount.toLocaleString()}</span>
+                              ${canEdit ? `
+                                <button class="btn btn-ghost btn-xs btn-icon edit-bs-item" data-id="${item.id}" style="padding:2px; height:auto; width:auto;" title="Edit"><i data-lucide="pencil" style="width:12px;height:12px"></i></button>
+                                <button class="btn btn-ghost btn-xs btn-icon delete-bs-item" data-id="${item.id}" style="padding:2px; height:auto; width:auto;" title="Delete"><i data-lucide="trash-2" style="width:12px;height:12px;color:var(--color-danger)"></i></button>
+                              ` : ''}
+                            </div>
+                          </div>
+                        `).join('')}
+
+                        <div style="display:flex; justify-content:space-between; padding:10px 0; font-size:14px; font-weight:700; color:var(--color-text-primary); border-top: 1px dashed var(--color-border); margin-top:8px;">
+                          <span>Total Liabilities</span>
+                          <span>Rs. ${totalLiabilities.toLocaleString()}</span>
+                        </div>
+                      </div>
+
+                      <!-- ACCUMULATED FUNDS -->
+                      <div style="border-top:2px solid var(--color-border); padding-top:14px; display:flex; justify-content:space-between; font-size:16px; font-weight:800; color:var(--color-text-primary);">
+                        <span>Total Net Standing (Accumulated Funds)</span>
+                        <span style="color:#14b8a6;">Rs. ${netFunds.toLocaleString()}</span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ` : ''}
+                `;
+              })() : ''}
 
               ${activeTab === 'income_exp' ? `
                 <!-- Income & Expenditure Sheet -->
@@ -334,20 +463,50 @@ export function renderClubFinance() {
               ${activeTab === 'receivables_payables' ? `
                 <!-- Receivables & Payables -->
                 <div class="grid-2">
-                  <!-- Receivables -->
-                  <div class="card hover-lift">
-                    <div class="card-header"><h3 class="card-title" style="color:#14b8a6;"><i data-lucide="arrow-down-left"></i> Receivables (Due from Members)</h3></div>
-                    <div class="card-body" style="padding:0;">
-                      ${renderTable(
-                        [
-                          { label: 'Member', key: 'name', render: row => `<span style="font-weight:600;">${row.name}</span>` },
-                          { label: 'Reference', render: row => `Event: ${store.getById('events', row.eventId)?.name || row.eventId}` },
-                          { label: 'Due Date', key: 'date', render: row => new Date(row.date).toLocaleDateString() },
-                          { label: 'Amount', key: 'amount', render: row => `<span style="font-weight:700; color:#14b8a6;">Rs. ${row.amount.toLocaleString()}</span>` }
-                        ],
-                        memberPayments.filter(p => p.registrationStatus === 'approved' && p.paymentStatus !== 'paid'),
-                        { emptyMessage: 'No outstanding receivables' }
-                      )}
+                  <!-- Receivables & Verification Column -->
+                  <div style="display:flex; flex-direction:column; gap:20px;">
+                    <!-- Pending Verification Card -->
+                    <div class="card hover-lift">
+                      <div class="card-header"><h3 class="card-title" style="color:#f59e0b;"><i data-lucide="clock"></i> Member Payments Pending Verification</h3></div>
+                      <div class="card-body" style="padding:0;">
+                        ${renderTable(
+                          [
+                            { label: 'Member', key: 'name', render: row => `<strong>${row.name}</strong>` },
+                            { label: 'Ref/Event', render: row => `Event: ${store.getById('events', row.eventId)?.name || row.eventId}` },
+                            { label: 'Reference', key: 'reference', render: row => row.reference || '—' },
+                            { label: 'Amount', key: 'amount', render: row => `<span style="font-weight:700; color:#f59e0b;">Rs. ${row.amount.toLocaleString()}</span>` }
+                          ],
+                          memberPayments.filter(p => p.paymentStatus === 'pending_approval'),
+                          {
+                            emptyMessage: 'No member payments pending verification',
+                            actions: canEdit ? (row) => `
+                              <button class="btn btn-primary btn-xs verify-member-payment-btn" data-pay-id="${row.id}">Verify Receipt</button>
+                            ` : undefined
+                          }
+                        )}
+                      </div>
+                    </div>
+
+                    <!-- Receivables Card -->
+                    <div class="card hover-lift">
+                      <div class="card-header"><h3 class="card-title" style="color:#14b8a6;"><i data-lucide="arrow-down-left"></i> Receivables (Due from Members)</h3></div>
+                      <div class="card-body" style="padding:0;">
+                        ${renderTable(
+                          [
+                            { label: 'Member', key: 'name', render: row => `<span style="font-weight:600;">${row.name}</span>` },
+                            { label: 'Reference', render: row => `Event: ${store.getById('events', row.eventId)?.name || row.eventId}` },
+                            { label: 'Due Date', key: 'date', render: row => new Date(row.date).toLocaleDateString() },
+                            { label: 'Amount', key: 'amount', render: row => `<span style="font-weight:700; color:#14b8a6;">Rs. ${row.amount.toLocaleString()}</span>` }
+                          ],
+                          memberPayments.filter(p => p.registrationStatus === 'approved' && p.paymentStatus === 'unpaid'),
+                          {
+                            emptyMessage: 'No outstanding receivables',
+                            actions: canEdit ? (row) => `
+                              <button class="btn btn-secondary btn-xs record-member-payment-btn" data-pay-id="${row.id}">Record Payment</button>
+                            ` : undefined
+                          }
+                        )}
+                      </div>
                     </div>
                   </div>
 
@@ -548,6 +707,114 @@ export function renderClubFinance() {
     }
   }
 
+  function openRecordPaymentModal(prefilledPayId = null) {
+    const members = store.getClubMembers(clubId);
+    const events = store.getAll('events');
+    let prefilledReg = null;
+    if (prefilledPayId) {
+      prefilledReg = store.getById('memberPayments', prefilledPayId);
+    }
+
+    const formHtml = `
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Club Member *</label>
+          <select class="form-select" id="manual-member-id" ${prefilledReg ? 'disabled' : ''}>
+            ${members.map(m => `<option value="${m.id}" ${prefilledReg?.memberId === m.id ? 'selected' : ''}>${m.name} (${m.role})</option>`).join('')}
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Payment Category / Event *</label>
+          <select class="form-select" id="manual-payment-event" ${prefilledReg ? 'disabled' : ''}>
+            <option value="membership" ${prefilledReg?.eventId === 'membership' ? 'selected' : ''}>Membership Fees</option>
+            ${events.map(e => `<option value="${e.id}" ${prefilledReg?.eventId === e.id ? 'selected' : ''}>Event: ${e.name} (Rs. ${e.fee || 0})</option>`).join('')}
+            <option value="other" ${prefilledReg && prefilledReg.eventId !== 'membership' && !events.some(e => e.id === prefilledReg.eventId) ? 'selected' : ''}>Other Payment</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Amount Paid (Rs.) *</label>
+          <input type="number" class="form-input" id="manual-payment-amount" placeholder="0.00" min="0" step="0.01" value="${prefilledReg ? prefilledReg.amount : ''}" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Payment Date *</label>
+          <input type="date" class="form-input" id="manual-payment-date" value="${new Date().toISOString().split('T')[0]}" required />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Bank Reference / TXN ID / Receipt *</label>
+        <input type="text" class="form-input" id="manual-payment-ref" placeholder="e.g. TXN-12345" value="${prefilledReg?.reference || ''}" required />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Remarks / Description *</label>
+        <textarea class="form-textarea" id="manual-payment-desc" rows="2" placeholder="e.g. Paid cash at regular meeting" required>${prefilledReg ? `Payment for Event: ${events.find(e => e.id === prefilledReg.eventId)?.name || prefilledReg.eventId}` : ''}</textarea>
+      </div>
+    `;
+
+    showModal(prefilledReg ? `Record Payment for ${prefilledReg.name}` : 'Record Manual Member Payment', formHtml, {
+      submitText: 'Record Payment',
+      onSubmit: (close) => {
+        const memberId = prefilledReg ? prefilledReg.memberId : document.getElementById('manual-member-id').value;
+        const eventVal = prefilledReg ? prefilledReg.eventId : document.getElementById('manual-payment-event').value;
+        const amount = parseFloat(document.getElementById('manual-payment-amount').value);
+        const date = document.getElementById('manual-payment-date').value;
+        const reference = document.getElementById('manual-payment-ref').value.trim();
+        const description = document.getElementById('manual-payment-desc').value.trim();
+
+        if (!amount || amount <= 0) { showToast('error', 'Validation Error', 'Please enter a valid amount.'); return; }
+        if (!date) { showToast('error', 'Validation Error', 'Please select a date.'); return; }
+        if (!reference) { showToast('error', 'Validation Error', 'Please enter a reference code.'); return; }
+        if (!description) { showToast('error', 'Validation Error', 'Please enter a description.'); return; }
+
+        const member = members.find(m => m.id === memberId);
+        const eventObj = events.find(e => e.id === eventVal);
+        const eventName = eventObj ? eventObj.name : (eventVal === 'membership' ? 'Membership Fees' : 'Other Fees');
+
+        if (prefilledReg) {
+          // Update existing payment status
+          store.update('memberPayments', prefilledReg.id, {
+            paymentStatus: 'paid',
+            status: 'paid',
+            date: date,
+            reference: reference,
+            method: 'Manual Entry'
+          });
+        } else {
+          // Create new record
+          store.create('memberPayments', {
+            clubId: clubId,
+            memberId: memberId,
+            name: member?.name || 'Unknown Member',
+            eventId: eventVal,
+            amount: amount,
+            date: date,
+            method: 'Manual Entry',
+            reference: reference,
+            registrationStatus: 'approved',
+            paymentStatus: 'paid',
+            status: 'paid'
+          });
+        }
+
+        // Log this income inside the club's ledger!
+        store.create('finances', {
+          clubId: clubId,
+          type: 'income',
+          category: eventVal === 'membership' ? 'Membership Fees' : 'Events',
+          amount: amount,
+          date: date,
+          description: `Manual Member Payment: ${eventName} - ${member?.name || 'Unknown Member'} (${description})`,
+          reference: reference
+        });
+
+        showToast('success', 'Payment Recorded', `Payment of Rs. ${amount.toLocaleString()} for ${member?.name} recorded.`);
+        close();
+        render(activeTab);
+      }
+    });
+  }
+
   function setupEventListeners(activeTab) {
     // Tab switching
     document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -654,6 +921,128 @@ export function renderClubFinance() {
             render(activeTab);
           }
         });
+      });
+    });
+
+    // Add Balance Sheet Item
+    document.getElementById('add-bs-item-btn')?.addEventListener('click', () => {
+      showModal('Add Balance Sheet Item', getBSItemFormHtml(), {
+        submitText: 'Add Item',
+        onSubmit: (close) => {
+          const data = getBSItemFormData();
+          if (!data) return;
+          data.clubId = clubId;
+          store.create('balanceSheetItems', data);
+          showToast('success', 'Item Added', `Custom ${data.type} item "${data.name}" added successfully.`);
+          close();
+          render(activeTab);
+        }
+      });
+    });
+
+    // Edit Balance Sheet Item
+    document.querySelectorAll('.edit-bs-item').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const itemId = btn.dataset.id;
+        const item = store.getById('balanceSheetItems', itemId);
+        if (!item) return;
+        showModal('Edit Balance Sheet Item', getBSItemFormHtml(item), {
+          submitText: 'Save Changes',
+          onSubmit: (close) => {
+            const data = getBSItemFormData();
+            if (!data) return;
+            data.clubId = clubId;
+            store.update('balanceSheetItems', itemId, data);
+            showToast('success', 'Item Updated', `Balance sheet item "${data.name}" updated successfully.`);
+            close();
+            render(activeTab);
+          }
+        });
+      });
+    });
+
+    // Delete Balance Sheet Item
+    document.querySelectorAll('.delete-bs-item').forEach(btn => {
+      btn.addEventListener('click', () => {
+        showConfirm('Delete Balance Sheet Item', 'Are you sure you want to delete this custom Balance Sheet item? This cannot be undone.', () => {
+          store.delete('balanceSheetItems', btn.dataset.id);
+          showToast('success', 'Item Deleted', 'Balance sheet item has been removed.');
+          render(activeTab);
+        });
+      });
+    });
+
+    // Verify member payment
+    document.querySelectorAll('.verify-member-payment-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const payId = btn.dataset.payId;
+        const reg = store.getById('memberPayments', payId);
+        if (!reg) return;
+        const eventObj = store.getById('events', reg.eventId);
+        const eventName = eventObj?.name || reg.eventId;
+
+        const bodyHtml = getVerifyMemberPaymentModalHtml(reg, eventName);
+        const closeModal = showModal('Verify Member Event Payment', bodyHtml, {
+          showFooter: false,
+          size: 'md'
+        });
+
+        setTimeout(() => {
+          document.getElementById('member-payment-approve-btn')?.addEventListener('click', () => {
+            const remarks = document.getElementById('verify-member-remarks').value.trim() || 'Payment approved';
+            const updatedAmount = parseFloat(document.getElementById('verify-member-amount').value) || reg.amount;
+            const updatedRef = document.getElementById('verify-member-ref').value.trim() || reg.reference || reg.id;
+            
+            // 1. Update status
+            store.update('memberPayments', payId, {
+              paymentStatus: 'paid',
+              status: 'paid',
+              amount: updatedAmount,
+              reference: updatedRef
+            });
+
+            // 2. Add ledger entry to club finances
+            store.create('finances', {
+              clubId: clubId,
+              type: 'income',
+              category: 'Events',
+              amount: updatedAmount,
+              date: new Date().toISOString().split('T')[0],
+              description: `Event Registration Payment Approved: ${eventName} - Member ${reg.name} (${remarks})`,
+              reference: updatedRef
+            });
+
+            showToast('success', 'Payment Approved', `Payment for ${reg.name} verified and logged to club finances.`);
+            closeModal();
+            render(activeTab);
+          });
+
+          document.getElementById('member-payment-reject-btn')?.addEventListener('click', () => {
+            const remarks = document.getElementById('verify-member-remarks').value.trim() || 'Payment rejected';
+            
+            store.update('memberPayments', payId, {
+              paymentStatus: 'unpaid',
+              method: '',
+              reference: ''
+            });
+
+            showToast('warning', 'Payment Rejected', `Payment receipt for ${reg.name} has been rejected.`);
+            closeModal();
+            render(activeTab);
+          });
+        }, 100);
+      });
+    });
+
+    // Record manual member payment (top button)
+    document.getElementById('add-manual-member-due-btn')?.addEventListener('click', () => {
+      openRecordPaymentModal();
+    });
+
+    // Record manual member payment (row button)
+    document.querySelectorAll('.record-member-payment-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        openRecordPaymentModal(btn.dataset.payId);
       });
     });
   }
