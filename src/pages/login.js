@@ -67,15 +67,7 @@ export function renderLogin() {
             </button>
           </form>
 
-          <div style="margin-top:var(--space-4);border-top:1px solid var(--color-border);padding-top:var(--space-4);">
-            <label class="form-label" for="demo-account-select" style="text-align:left;display:block;margin-bottom:6px;font-size:var(--text-xs);color:var(--color-text-muted);">Quick-Login Selector (Demo Roles):</label>
-            <select class="form-select" id="demo-account-select" style="font-size:12px;padding:8px 12px;background:rgba(255,255,255,0.03);color:var(--color-text-primary);border-color:var(--color-border);border-radius:8px;width:100%;">
-              <option value="" style="background:var(--color-bg);">-- Choose Demo Role --</option>
-              <optgroup label="Super Admin" style="background:var(--color-bg);">
-                <option value="admin@leo.org|admin123" style="background:var(--color-bg);">Super Admin (Leo Lion Dinath Wijesooriya)</option>
-              </optgroup>
-            </select>
-          </div>
+
         </div>
       </div>
     </div>
@@ -88,14 +80,11 @@ export function renderLogin() {
   const roleClub     = document.getElementById('role-club');
   const emailInput   = document.getElementById('login-email');
   const passInput    = document.getElementById('login-password');
-  const demoSelect   = document.getElementById('demo-account-select');
-
   roleDistrict.addEventListener('click', () => {
     roleDistrict.classList.add('active');
     roleClub.classList.remove('active');
     emailInput.value = 'admin@leo.org';
     passInput.value  = 'admin123';
-    if (demoSelect) demoSelect.value = '';
   });
 
   roleClub.addEventListener('click', () => {
@@ -103,25 +92,6 @@ export function renderLogin() {
     roleDistrict.classList.remove('active');
     emailInput.value = '';
     passInput.value  = '';
-    if (demoSelect) demoSelect.value = '';
-  });
-
-  demoSelect?.addEventListener('change', (e) => {
-    const val = e.target.value;
-    if (val) {
-      const [email, password] = val.split('|');
-      emailInput.value = email;
-      passInput.value  = password;
-      if (email.startsWith('president.dist') || email.startsWith('vp.dist') ||
-          email.startsWith('secretary.dist') || email.startsWith('membership.dist') ||
-          email.startsWith('treasurer.dist')  || email.startsWith('admin')) {
-        roleDistrict.classList.add('active');
-        roleClub.classList.remove('active');
-      } else {
-        roleClub.classList.add('active');
-        roleDistrict.classList.remove('active');
-      }
-    }
   });
 
   // ── Form submission ────────────────────────────────────────────────────────
