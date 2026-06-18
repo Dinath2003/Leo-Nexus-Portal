@@ -9,7 +9,13 @@ const STORAGE_KEY = 'leo_nexus_portal';
 function getDefaultData() {
   const data = {
     users: [
-      { id: 'u1', email: 'admin@leo.org', password: 'admin123', name: 'Leo Lion Dinath Wijesooriya', role: 'admin', clubId: null, avatar: 'LD', createdAt: '2026-01-01' }
+      { id: 'u1', email: 'admin@leo.org', password: 'admin123', name: 'Leo Lion Dinath Wijesooriya', role: 'admin', clubId: null, avatar: 'LD', createdAt: '2026-01-01' },
+      { id: 'u2', email: 'president.d1@leo.org', password: 'vinuk123', name: 'Leo Lion Vinuk Thismalpola', role: 'district_president', clubId: null, avatar: 'VT', createdAt: '2026-06-18' },
+      { id: 'u3', email: 'vicepresident.d1@leo.org', password: 'manish123', name: 'Leo Lion Manish Perera', role: 'district_vp', clubId: null, avatar: 'MP', createdAt: '2026-06-18' },
+      { id: 'u4', email: 'sec.d1@leo.org', password: 'hashini123', name: 'Leo Hashini Nethmika', role: 'district_secretary', clubId: null, avatar: 'HN', createdAt: '2026-06-18' },
+      { id: 'u5', email: 'treasurer.d1@leo.org', password: 'bathisha123', name: 'Leo Bathisha Kavinda', role: 'district_treasurer', clubId: null, avatar: 'BK', createdAt: '2026-06-18' },
+      { id: 'u6', email: 'admin.d1@leo.org', password: 'senuth123', name: 'Leo Lion Senuth Dilnada', role: 'district_admin', clubId: null, avatar: 'SD', createdAt: '2026-06-18' },
+      { id: 'u7', email: 'president.iit@leo.org', password: 'sithuli123', name: 'Leo Lion Sithuli Amunuthuduwa', role: 'club_president', clubId: 'c6', avatar: 'SA', createdAt: '2026-06-18' }
     ],
 
     clubs: [
@@ -1553,6 +1559,57 @@ class Store {
           adminUser.avatar = 'LD';
           this.save();
         }
+
+        // Ensure new seed logins exist in local storage users collection
+        const requiredUsers = [
+          { id: 'u2', email: 'president.d1@leo.org', password: 'vinuk123', name: 'Leo Lion Vinuk Thismalpola', role: 'district_president', clubId: null, avatar: 'VT', createdAt: '2026-06-18' },
+          { id: 'u3', email: 'vicepresident.d1@leo.org', password: 'manish123', name: 'Leo Lion Manish Perera', role: 'district_vp', clubId: null, avatar: 'MP', createdAt: '2026-06-18' },
+          { id: 'u4', email: 'sec.d1@leo.org', password: 'hashini123', name: 'Leo Hashini Nethmika', role: 'district_secretary', clubId: null, avatar: 'HN', createdAt: '2026-06-18' },
+          { id: 'u5', email: 'treasurer.d1@leo.org', password: 'bathisha123', name: 'Leo Bathisha Kavinda', role: 'district_treasurer', clubId: null, avatar: 'BK', createdAt: '2026-06-18' },
+          { id: 'u6', email: 'admin.d1@leo.org', password: 'senuth123', name: 'Leo Lion Senuth Dilnada', role: 'district_admin', clubId: null, avatar: 'SD', createdAt: '2026-06-18' },
+          { id: 'u7', email: 'president.iit@leo.org', password: 'sithuli123', name: 'Leo Lion Sithuli Amunuthuduwa', role: 'club_president', clubId: 'c6', avatar: 'SA', createdAt: '2026-06-18' }
+        ];
+        let usersUpdated = false;
+        if (!this._data.users) this._data.users = [];
+        requiredUsers.forEach(ru => {
+          if (!this._data.users.some(u => u.email === ru.email)) {
+            this._data.users.push(ru);
+            usersUpdated = true;
+          } else {
+            // Also ensure password/name/role/clubId/avatar matches just in case they changed or need update
+            const existingUser = this._data.users.find(u => u.email === ru.email);
+            if (existingUser) {
+              let updated = false;
+              if (existingUser.password !== ru.password) {
+                existingUser.password = ru.password;
+                updated = true;
+              }
+              if (existingUser.name !== ru.name) {
+                existingUser.name = ru.name;
+                updated = true;
+              }
+              if (existingUser.role !== ru.role) {
+                existingUser.role = ru.role;
+                updated = true;
+              }
+              if (existingUser.clubId !== ru.clubId) {
+                existingUser.clubId = ru.clubId;
+                updated = true;
+              }
+              if (existingUser.avatar !== ru.avatar) {
+                existingUser.avatar = ru.avatar;
+                updated = true;
+              }
+              if (updated) {
+                usersUpdated = true;
+              }
+            }
+          }
+        });
+        if (usersUpdated) {
+          this.save();
+        }
+
         if (!this._data.invoices) {
           const fresh = getDefaultData();
           this._data.invoices = fresh.invoices;
