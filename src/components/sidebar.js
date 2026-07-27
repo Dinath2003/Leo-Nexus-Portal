@@ -19,6 +19,7 @@ const districtMenuItems = [
     { icon: 'wallet', label: 'Finance (District)', path: '/district/finance' },
     { icon: 'megaphone', label: 'Announcements', path: '/district/announcements', badge: () => store.getAll('announcements').length },
     { icon: 'calendar-days', label: 'Events', path: '/district/events' },
+    { icon: 'folder-kanban', label: 'Projects (District)', path: '/district/projects' },
   ]},
   { section: 'Performance', items: [
     { icon: 'trophy', label: 'Points & Criteria', path: '/district/points' },

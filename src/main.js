@@ -13,6 +13,7 @@ import { renderDistrictAnnouncements } from './pages/district/announcements.js';
 import { renderDistrictEvents } from './pages/district/events.js';
 import { renderDistrictPoints } from './pages/district/points.js';
 import { renderDistrictReports } from './pages/district/reports.js';
+import { renderDistrictProjects } from './pages/district/projects.js';
 import { renderClubDashboard } from './pages/club/dashboard.js';
 import { renderClubFinance } from './pages/club/finance.js';
 import { renderClubMembers } from './pages/club/members.js';
@@ -45,6 +46,7 @@ router.register('/district/clubs', { handler: renderDistrictClubs, requireAuth: 
 router.register('/district/users', { handler: renderDistrictUsers, requireAuth: true, requireDistrict: true });
 router.register('/district/announcements', { handler: renderDistrictAnnouncements, requireAuth: true, requireDistrict: true });
 router.register('/district/events', { handler: renderDistrictEvents, requireAuth: true, requireDistrict: true });
+router.register('/district/projects', { handler: renderDistrictProjects, requireAuth: true, requireDistrict: true });
 router.register('/district/points', { handler: renderDistrictPoints, requireAuth: true, requireDistrict: true });
 router.register('/district/reports', { handler: renderDistrictReports, requireAuth: true, requireDistrict: true });
 router.register('/district/finance', { handler: renderDistrictFinance, requireAuth: true, requireDistrict: true });

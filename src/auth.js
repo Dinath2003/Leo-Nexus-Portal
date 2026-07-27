@@ -111,7 +111,7 @@ class Auth {
         reports: ['read', 'approve'],
         members: ['read'],
         finances: ['read'],
-        projects: ['read', 'approve'],
+        projects: ['create', 'read', 'update', 'delete', 'approve'],
       },
       district_vp: {
         clubs: ['read'],
@@ -127,7 +127,7 @@ class Auth {
         announcements: ['create', 'read', 'update', 'delete'],
         events: ['create', 'read', 'update', 'delete'],
         reports: ['read'],
-        projects: ['read'],
+        projects: ['create', 'read', 'update', 'delete'],
       },
       district_membership: {
         clubs: ['read'],
@@ -143,7 +143,7 @@ class Auth {
         reports: ['read'],
         members: ['read'],
         finances: ['create', 'read', 'update', 'delete'],
-        projects: ['read'],
+        projects: ['create', 'read', 'update', 'delete'],
       },
       district_admin: {
         clubs: ['create', 'read', 'update', 'delete'],
@@ -154,7 +154,7 @@ class Auth {
         reports: ['read'],
         members: ['read'],
         finances: ['read'],
-        projects: ['read'],
+        projects: ['create', 'read', 'update', 'delete'],
       },
       club_president: {
         clubs: ['read', 'update'],

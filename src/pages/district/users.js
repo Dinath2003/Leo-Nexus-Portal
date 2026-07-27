@@ -22,6 +22,7 @@ function getUserFormHtml(user = null) {
     { id: 'Events', label: 'Events (District)' },
     { id: 'Points & Criteria', label: 'Points & Criteria' },
     { id: 'Reports', label: 'Reports' },
+    { id: 'Projects (District)', label: 'Projects (District)' },
     { id: 'Club Profile', label: 'Club Profile' },
     { id: 'Finance', label: 'Finance (Club)' },
     { id: 'Members', label: 'Members (Club)' },

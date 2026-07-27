@@ -519,6 +519,9 @@ function getDefaultData() {
       { id: 'f16', clubId: 'district', type: 'income', category: 'Sponsorship', amount: 200000, date: '2026-02-15', description: 'Main Sponsor - Dialog Axiata', reference: 'DIST-INC-002' },
       { id: 'f17', clubId: 'district', type: 'expense', category: 'Administration', amount: 45000, date: '2026-01-20', description: 'District office stationery and postage', reference: 'DIST-EXP-001' },
       { id: 'f18', clubId: 'district', type: 'expense', category: 'Events', amount: 120000, date: '2026-03-05', description: 'Leadership seminar hall booking & catering', reference: 'DIST-EXP-002' },
+      // District project seed transactions (linked to p-dist-1)
+      { id: 'f-proj-p-dist-1-0', clubId: 'district', type: 'expense', category: 'Projects', amount: 35000, date: '2026-06-12', description: 'Project: District Officers School of Instruction - Hall Rental & Catering', reference: 'PROJ-p-dist-1', projectId: 'p-dist-1' },
+      { id: 'f-proj-p-dist-1-1', clubId: 'district', type: 'expense', category: 'Projects', amount: 15000, date: '2026-06-12', description: 'Project: District Officers School of Instruction - Training Materials & Printing', reference: 'PROJ-p-dist-1', projectId: 'p-dist-1' },
       // UOC Faculty of Science finances
       { id: 'f19', clubId: 'c7', type: 'income', category: 'Membership Fees', amount: 35000, date: '2026-02-20', description: 'Annual membership fees collection', reference: 'MF-FOS-001' },
       { id: 'f20', clubId: 'c7', type: 'income', category: 'Sponsorship', amount: 40000, date: '2026-03-05', description: 'Corporate sponsor - SciTech Solutions', reference: 'SP-FOS-001' },
@@ -566,6 +569,50 @@ function getDefaultData() {
     ],
 
     projects: [
+      {
+        id: 'p-dist-1',
+        clubId: 'district',
+        name: 'District Officers School of Instruction',
+        category: 'Leadership',
+        status: 'completed',
+        startDate: '2026-06-10',
+        endDate: '2026-06-12',
+        participants: 120,
+        budget: 50000,
+        description: 'Comprehensive school of instruction for all club presidents, secretaries, and treasurers in District 306 B2.',
+        impact: '120 officers trained across 30 clubs',
+        report: {
+          summary: 'The training sessions were successfully conducted over two days with external professional trainers. All participants received official certificates.',
+          outcomes: 'Officer competency levels improved, compliance reporting guidelines aligned.',
+          submittedAt: '2026-06-13'
+        },
+        budgetDetails: [
+          { description: 'Hall Rental & Catering', type: 'expense', amount: 35000 },
+          { description: 'Training Materials & Printing', type: 'expense', amount: 15000 }
+        ]
+      },
+      {
+        id: 'p-dist-2',
+        clubId: 'district',
+        name: 'District Environment Day Tree Plantation',
+        category: 'Environment',
+        status: 'planned',
+        startDate: '2026-08-15',
+        endDate: '2026-08-15',
+        participants: 0,
+        budget: 20000,
+        description: 'Unified project across all zones to plant 1000 trees on Environment Day.',
+        impact: 'Target: 1000 trees planted',
+        report: {
+          summary: '',
+          outcomes: '',
+          submittedAt: ''
+        },
+        budgetDetails: [
+          { description: 'Saplings purchase', type: 'expense', amount: 15000 },
+          { description: 'Publicity materials', type: 'expense', amount: 5000 }
+        ]
+      },
       { id: 'p1', clubId: 'c1', name: 'School Renovation Drive', category: 'Education', status: 'completed', startDate: '2026-02-01', endDate: '2026-03-15', participants: 24, budget: 35000, description: 'Renovated classrooms and library at Gamini Maha Vidyalaya.', impact: '350 students benefited' },
       { id: 'p2', clubId: 'c1', name: 'Beach Cleanup Campaign', category: 'Environment', status: 'completed', startDate: '2026-04-05', endDate: '2026-04-05', participants: 30, budget: 5000, description: 'Organized coastal cleanup along 2km stretch.', impact: '500kg waste collected' },
       { id: 'p3', clubId: 'c1', name: 'Blood Donation Camp', category: 'Health', status: 'in_progress', startDate: '2026-06-20', endDate: '2026-06-20', participants: 20, budget: 15000, description: 'Annual blood donation campaign in partnership with National Blood Bank.', impact: 'Target: 100 pints' },
@@ -2862,6 +2909,12 @@ class Store {
     this.save();
     this.emit(`${collection}:created`, newItem);
     this.emit(`${collection}:changed`);
+
+    // Sync district project budgets to the district wallet
+    if (collection === 'projects' && newItem.clubId === 'district') {
+      this.syncProjectToDistrictWallet(newItem);
+    }
+
     return newItem;
   }
 
@@ -2872,6 +2925,15 @@ class Store {
     this.save();
     this.emit(`${collection}:updated`, this._data[collection][index]);
     this.emit(`${collection}:changed`);
+
+    // Sync district project budgets to the district wallet
+    if (collection === 'projects') {
+      const project = this._data[collection][index];
+      if (project.clubId === 'district') {
+        this.syncProjectToDistrictWallet(project);
+      }
+    }
+
     return this._data[collection][index];
   }
 
@@ -2882,7 +2944,68 @@ class Store {
     this.save();
     this.emit(`${collection}:deleted`, deleted);
     this.emit(`${collection}:changed`);
+
+    // Cleanup synced finances if a district project is deleted
+    if (collection === 'projects') {
+      if (this._data.finances) {
+        const originalLen = this._data.finances.length;
+        this._data.finances = this._data.finances.filter(f => f.projectId !== id);
+        if (this._data.finances.length !== originalLen) {
+          this.save();
+          this.emit('finances:changed');
+        }
+      }
+    }
+
     return true;
+  }
+
+  syncProjectToDistrictWallet(project) {
+    if (project.clubId !== 'district') return;
+
+    if (!this._data.finances) this._data.finances = [];
+    
+    // Purge any existing transactions synced to this project
+    this._data.finances = this._data.finances.filter(f => f.projectId !== project.id);
+
+    // If project is completed, synchronize its budget levels
+    if (project.status === 'completed') {
+      const budgetDetails = project.budgetDetails || [];
+      if (budgetDetails.length > 0) {
+        budgetDetails.forEach((item, index) => {
+          this._data.finances.push({
+            id: `f-proj-${project.id}-${index}-${this.generateId().substring(0, 4)}`,
+            clubId: 'district',
+            type: item.type || 'expense',
+            category: 'Projects',
+            amount: parseFloat(item.amount) || 0,
+            date: project.endDate || new Date().toISOString().split('T')[0],
+            description: `Project: ${project.name} - ${item.description}`,
+            reference: `PROJ-${project.id}`,
+            projectId: project.id
+          });
+        });
+      } else {
+        // Fallback to total budget
+        const totalAmt = parseFloat(project.budget) || 0;
+        if (totalAmt > 0) {
+          this._data.finances.push({
+            id: `f-proj-${project.id}-total`,
+            clubId: 'district',
+            type: 'expense',
+            category: 'Projects',
+            amount: totalAmt,
+            date: project.endDate || new Date().toISOString().split('T')[0],
+            description: `Project: ${project.name} (Total Budget)`,
+            reference: `PROJ-${project.id}`,
+            projectId: project.id
+          });
+        }
+      }
+    }
+
+    this.save();
+    this.emit('finances:changed');
   }
 
   // ---------- Helpers ----------

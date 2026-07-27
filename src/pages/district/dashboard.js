@@ -215,6 +215,10 @@ export function renderDistrictDashboard() {
                     <i data-lucide="file-text" style="width:18px;height:18px;color:#ef4444"></i>
                     <span>Generate Report</span>
                   </button>
+                  <button class="btn btn-secondary quick-action-btn" data-action="/district/projects" style="justify-content:flex-start; gap:0.5rem; padding:0.75rem 1rem;">
+                    <i data-lucide="folder-kanban" style="width:18px;height:18px;color:#00d4ff"></i>
+                    <span>Manage Projects</span>
+                  </button>
                 </div>
               </div>
             </div>
