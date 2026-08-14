@@ -1483,6 +1483,10 @@ function getDefaultData() {
         checkedCriteria: ["ad1_1", "ad1_3", "ad2_1", "sp1_1"],
         pointsClaimed: { ad1_1: 10000, ad1_3: 10000, ad2_1: 10000, sp1_1: 100000 },
         totalPoints: 130000,
+        proofAttachments: [
+          { name: "May_2026_MAR_Report.pdf", type: "application/pdf", size: "1.4 MB", url: "#" },
+          { name: "Event_Attendance_List.jpg", type: "image/jpeg", size: "850 KB", url: "#" }
+        ],
         reviewedBy: "District President",
         reviewedAt: "2026-05-10T09:15:00Z",
         comment: "All monthly reports submitted on time. Approved!"
@@ -1498,6 +1502,9 @@ function getDefaultData() {
         checkedCriteria: ["ad1_1", "ad2_1", "sp1_2"],
         pointsClaimed: { ad1_1: 10000, ad2_1: 10000, sp1_2: 150000 },
         totalPoints: 170000,
+        proofAttachments: [
+          { name: "MTR_Receipt_May.pdf", type: "application/pdf", size: "920 KB", url: "#" }
+        ],
         reviewedBy: "District President",
         reviewedAt: "2026-05-10T09:20:00Z",
         comment: "MAR and MTR approved."
@@ -1513,6 +1520,9 @@ function getDefaultData() {
         checkedCriteria: ["ad1_1", "ad1_3"],
         pointsClaimed: { ad1_1: 10000, ad1_3: 10000 },
         totalPoints: 20000,
+        proofAttachments: [
+          { name: "Horizon_Activity_Proof.pdf", type: "application/pdf", size: "2.1 MB", url: "#" }
+        ],
       }
     ],
     districtSchedules: [
@@ -3132,7 +3142,7 @@ class Store {
       .sort((a, b) => b.totalPoints - a.totalPoints);
   }
 
-  submitMonthlyPoints(clubId, clubName, month, checkedCriteria, pointsClaimed, submittedBy) {
+  submitMonthlyPoints(clubId, clubName, month, checkedCriteria, pointsClaimed, submittedBy, proofAttachments = []) {
     if (!this._data.pointsSubmissions) this._data.pointsSubmissions = [];
     
     // Check if there's already a submission for this month (pending or approved)
@@ -3154,6 +3164,7 @@ class Store {
       checkedCriteria,
       pointsClaimed,
       totalPoints,
+      proofAttachments: proofAttachments || [],
       reviewedBy: '',
       reviewedAt: '',
       comment: ''

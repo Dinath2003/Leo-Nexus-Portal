@@ -443,6 +443,25 @@ export function renderClubPoints() {
                 </select>
               </div>
 
+              <!-- Proof Attachments Section -->
+              <div class="form-group" style="margin:0; border-top:1px solid var(--color-glass-border); padding-top:14px;">
+                <label class="form-label" style="font-size:12px; margin-bottom:6px; display:flex; justify-content:space-between; align-items:center;">
+                  <span>Proof Attachments / Verification *</span>
+                </label>
+                <input type="file" id="submit-proof-input" multiple accept="image/*,.pdf,.doc,.docx" style="display:none;" />
+                <button type="button" class="btn btn-secondary btn-sm" id="upload-proof-btn" style="width:100%; height:34px; font-size:12px; display:flex; align-items:center; justify-content:center; gap:6px;">
+                  <i data-lucide="paperclip" style="width:14px;height:14px;"></i> Upload Proof (Images/PDFs)
+                </button>
+                
+                <div style="display:flex; gap:6px; margin-top:8px;">
+                  <input type="url" class="form-input" id="proof-link-input" placeholder="Or paste proof URL (Google Drive...)" style="height:32px; font-size:11px;" />
+                  <button type="button" class="btn btn-secondary btn-xs" id="add-proof-link-btn" style="height:32px; white-space:nowrap;">Add Link</button>
+                </div>
+
+                <!-- Staged Proofs Container -->
+                <div id="staged-proofs-container" style="display:flex; flex-direction:column; gap:6px; margin-top:10px;"></div>
+              </div>
+
               <div style="border-top:1px solid var(--color-glass-border); padding-top:16px; display:flex; justify-content:space-between; align-items:center;">
                 <span style="font-size:13px; color:var(--color-text-secondary);">Total Checked Items</span>
                 <span id="est-checked-count" style="font-weight:700; color:var(--color-text-primary); font-size:13px;">0 items</span>
@@ -641,7 +660,93 @@ export function renderClubPoints() {
   // Submit Tab Specifics
   if (activeTab === 'submit') {
     const monthSelect = document.getElementById('submit-month-select');
-    
+    const uploadProofBtn = document.getElementById('upload-proof-btn');
+    const proofFileInput = document.getElementById('submit-proof-input');
+    const addProofLinkBtn = document.getElementById('add-proof-link-btn');
+    const proofLinkInput = document.getElementById('proof-link-input');
+    const stagedProofsContainer = document.getElementById('staged-proofs-container');
+
+    let stagedAttachments = [];
+
+    function renderStagedProofs() {
+      if (!stagedProofsContainer) return;
+      if (stagedAttachments.length === 0) {
+        stagedProofsContainer.innerHTML = `<span style="font-size:11px; color:var(--color-text-muted); font-style:italic;">No proof attachments added yet.</span>`;
+        return;
+      }
+
+      stagedProofsContainer.innerHTML = stagedAttachments.map((att, idx) => `
+        <div style="display:flex; align-items:center; justify-content:space-between; padding:6px 8px; border-radius:6px; background:rgba(0,0,0,0.3); border:1px solid var(--color-glass-border); font-size:11px;">
+          <div style="display:flex; align-items:center; gap:6px; overflow:hidden; min-width:0;">
+            <i data-lucide="${att.isLink ? 'link' : (att.type.startsWith('image') ? 'image' : 'file-text')}" style="width:14px;height:14px;color:var(--color-primary);flex-shrink:0;"></i>
+            <span style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:var(--color-text-primary);">${att.name}</span>
+            <span style="color:var(--color-text-muted); flex-shrink:0;">(${att.size})</span>
+          </div>
+          <button type="button" class="btn btn-ghost btn-xs remove-proof-btn" data-idx="${idx}" style="color:var(--color-danger); padding:2px 4px;">
+            <i data-lucide="x" style="width:12px;height:12px;"></i>
+          </button>
+        </div>
+      `).join('');
+
+      if (window.lucide) lucide.createIcons({ nodes: [stagedProofsContainer] });
+
+      stagedProofsContainer.querySelectorAll('.remove-proof-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const i = parseInt(btn.dataset.idx);
+          stagedAttachments.splice(i, 1);
+          renderStagedProofs();
+        });
+      });
+    }
+
+    renderStagedProofs();
+
+    uploadProofBtn?.addEventListener('click', () => proofFileInput?.click());
+
+    proofFileInput?.addEventListener('change', (e) => {
+      const files = Array.from(e.target.files || []);
+      let pendingReads = files.length;
+      if (pendingReads === 0) return;
+
+      files.forEach(file => {
+        const reader = new FileReader();
+        reader.onload = (evt) => {
+          stagedAttachments.push({
+            id: 'file_' + Math.random().toString(36).substr(2, 9),
+            name: file.name,
+            type: file.type || 'document',
+            size: (file.size / 1024 > 1024) ? (file.size / (1024 * 1024)).toFixed(1) + ' MB' : Math.round(file.size / 1024) + ' KB',
+            url: evt.target.result,
+            isLink: false
+          });
+          pendingReads--;
+          if (pendingReads === 0) {
+            renderStagedProofs();
+          }
+        };
+        reader.readAsDataURL(file);
+      });
+      proofFileInput.value = '';
+    });
+
+    addProofLinkBtn?.addEventListener('click', () => {
+      const urlVal = proofLinkInput?.value?.trim();
+      if (!urlVal) {
+        showToast('error', 'Validation Error', 'Please enter a valid proof URL.');
+        return;
+      }
+      stagedAttachments.push({
+        id: 'link_' + Math.random().toString(36).substr(2, 9),
+        name: urlVal.length > 28 ? urlVal.substring(0, 28) + '...' : urlVal,
+        type: 'link',
+        size: 'External Link',
+        url: urlVal,
+        isLink: true
+      });
+      proofLinkInput.value = '';
+      renderStagedProofs();
+    });
+
     // Checklist checkbox changes
     document.querySelectorAll('.submit-crit-checkbox').forEach(cb => {
       cb.addEventListener('change', (e) => {
@@ -783,7 +888,7 @@ export function renderClubPoints() {
 
       try {
         const submittedBy = auth.currentUser?.name || 'Club President';
-        store.submitMonthlyPoints(clubId, club?.name || 'Club', month, checkedCriteria, pointsClaimed, submittedBy);
+        store.submitMonthlyPoints(clubId, club?.name || 'Club', month, checkedCriteria, pointsClaimed, submittedBy, stagedAttachments);
         showToast('success', 'Form Submitted', `Monthly points checklist for ${month} has been submitted successfully.`);
         activeTab = 'history';
         renderClubPoints();
@@ -834,6 +939,40 @@ export function renderClubPoints() {
             </table>
           </div>
         `;
+
+        // Proof Attachments section in history details modal
+        let proofsHtml = `
+          <div style="margin-top:14px; border-top:1px solid var(--color-glass-border); padding-top:12px;">
+            <h4 style="font-size:12px; font-weight:700; color:var(--color-primary); margin-bottom:8px; display:flex; align-items:center; gap:6px;">
+              <i data-lucide="paperclip" style="width:14px;height:14px;"></i>
+              Proof Attachments & Supporting Documents (${sub.proofAttachments?.length || 0})
+            </h4>
+        `;
+        if (sub.proofAttachments && sub.proofAttachments.length > 0) {
+          proofsHtml += `<div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap:6px;">`;
+          sub.proofAttachments.forEach(att => {
+            proofsHtml += `
+              <div style="display:flex; align-items:center; justify-content:space-between; padding:6px 8px; border-radius:6px; background:rgba(0,0,0,0.2); border:1px solid var(--color-glass-border); font-size:11px;">
+                <div style="display:flex; align-items:center; gap:6px; overflow:hidden;">
+                  <i data-lucide="${att.isLink ? 'link' : (att.type?.startsWith('image') ? 'image' : 'file-text')}" style="width:14px;height:14px;color:var(--color-primary);flex-shrink:0;"></i>
+                  <div style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+                    <div style="font-weight:600; color:var(--color-text-primary); text-overflow:ellipsis; overflow:hidden;">${att.name}</div>
+                    <div style="font-size:10px; color:var(--color-text-muted);">${att.size}</div>
+                  </div>
+                </div>
+                <a href="${att.url}" target="_blank" download="${att.name}" class="btn btn-ghost btn-xs" style="padding:2px 4px; color:var(--color-primary);" title="View / Download">
+                  <i data-lucide="${att.isLink ? 'external-link' : 'download'}" style="width:12px;height:12px;"></i>
+                </a>
+              </div>
+            `;
+          });
+          proofsHtml += `</div>`;
+        } else {
+          proofsHtml += `<div style="font-size:11px; color:var(--color-text-muted); font-style:italic;">No proof attachments uploaded for this submission.</div>`;
+        }
+        proofsHtml += `</div>`;
+
+        itemsHtml += proofsHtml;
 
         let approvalDetailsHtml = '';
         if (sub.status === 'approved') {
