@@ -798,13 +798,36 @@ export function renderDistrictPoints() {
         sub.checkedCriteria.forEach(critId => {
           const crit = criteria.find(c => c.id === critId);
           const pointsClaimed = sub.pointsClaimed[critId] || 0;
+          
+          const critProofs = Array.isArray(sub.proofAttachments) 
+            ? (sub.proofAttachments || [])
+            : (sub.proofAttachments?.[critId] || []);
+
+          let critProofsHtml = '';
+          if (critProofs.length > 0) {
+            critProofsHtml = `
+              <div style="margin-top:6px; display:flex; gap:6px; flex-wrap:wrap;">
+                ${critProofs.map(att => `
+                  <a href="${att.url}" target="_blank" download="${att.name}" style="display:inline-flex; align-items:center; gap:4px; padding:3px 8px; border-radius:4px; background:rgba(0,212,255,0.08); border:1px solid rgba(0,212,255,0.2); color:var(--color-primary); font-size:11px; text-decoration:none;" title="View / Download Proof">
+                    <i data-lucide="${att.isLink ? 'link' : 'paperclip'}" style="width:12px;height:12px;"></i>
+                    <span>${att.name}</span>
+                    <span style="font-size:10px; opacity:0.7;">(${att.size})</span>
+                  </a>
+                `).join('')}
+              </div>
+            `;
+          } else {
+            critProofsHtml = `<div style="font-size:11px; color:var(--color-text-muted); font-style:italic; margin-top:4px;">No proof attached for this claim item.</div>`;
+          }
+
           itemsHtml += `
             <tr>
-              <td>
+              <td style="vertical-align:top;">
                 <div style="font-size:0.75rem; color:var(--color-primary); font-weight:600;">${crit?.category || 'General'}</div>
                 <div style="font-size:0.85rem; color:var(--color-text-primary); margin-top:2px;">${crit?.description || critId}</div>
+                ${critProofsHtml}
               </td>
-              <td>
+              <td style="vertical-align:top;">
                 ${isPending ? `
                   <div style="display:flex; align-items:center; gap:8px;">
                     <input type="number" class="form-input review-crit-input" data-crit-id="${critId}" value="${pointsClaimed}" style="width:100px; height:28px; font-size:12px; font-weight:700; background:rgba(0,0,0,0.2); border:1px solid var(--color-glass-border);" />
@@ -823,41 +846,6 @@ export function renderDistrictPoints() {
             </table>
           </div>
         `;
-
-        let proofsSectionHtml = `
-          <div style="background:rgba(255,255,255,0.02); border:1px solid var(--color-glass-border); border-radius:8px; padding:12px;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-              <h4 style="font-size:13px; font-weight:700; color:var(--color-primary); margin:0; display:flex; align-items:center; gap:6px;">
-                <i data-lucide="paperclip" style="width:15px;height:15px;"></i>
-                Attached Proof Documents & Supporting Files (${sub.proofAttachments?.length || 0})
-              </h4>
-            </div>
-        `;
-
-        if (sub.proofAttachments && sub.proofAttachments.length > 0) {
-          proofsSectionHtml += `<div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap:8px;">`;
-          sub.proofAttachments.forEach(att => {
-            proofsSectionHtml += `
-              <div style="display:flex; align-items:center; justify-content:space-between; padding:8px 10px; border-radius:6px; background:rgba(0,0,0,0.25); border:1px solid rgba(255,255,255,0.08);">
-                <div style="display:flex; align-items:center; gap:8px; overflow:hidden;">
-                  <i data-lucide="${att.isLink ? 'link' : (att.type?.startsWith('image') ? 'image' : 'file-text')}" style="width:16px;height:16px;color:var(--color-primary);flex-shrink:0;"></i>
-                  <div style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
-                    <div style="font-size:12px; font-weight:600; color:var(--color-text-primary); text-overflow:ellipsis; overflow:hidden;">${att.name}</div>
-                    <div style="font-size:10px; color:var(--color-text-muted);">${att.size}</div>
-                  </div>
-                </div>
-                <a href="${att.url}" target="_blank" download="${att.name}" class="btn btn-ghost btn-xs" style="padding:4px 6px; color:var(--color-primary);" title="View / Download Proof">
-                  <i data-lucide="${att.isLink ? 'external-link' : 'download'}" style="width:13px;height:13px;"></i>
-                </a>
-              </div>
-            `;
-          });
-          proofsSectionHtml += `</div>`;
-        } else {
-          proofsSectionHtml += `<div style="font-size:12px; color:var(--color-text-muted); font-style:italic;">No proof attachments were uploaded for this submission.</div>`;
-        }
-
-        proofsSectionHtml += `</div>`;
 
         const reviewerName = auth.currentUser?.name || 'District Officer';
 
@@ -881,8 +869,6 @@ export function renderDistrictPoints() {
                 <span class="badge badge-warning" style="margin-top:4px;">${sub.status.toUpperCase()}</span>
               </div>
             </div>
-
-            ${proofsSectionHtml}
 
             <h4 style="font-size:13px; font-weight:700; color:var(--color-text-primary); margin:8px 0 0 0;">Verify & Adjust Points Claims</h4>
             ${itemsHtml}
@@ -924,8 +910,6 @@ export function renderDistrictPoints() {
                 <span class="badge ${sub.status === 'approved' ? 'badge-success' : 'badge-danger'}" style="margin-top:4px;">${sub.status.toUpperCase()}</span>
               </div>
             </div>
-
-            ${proofsSectionHtml}
 
             <h4 style="font-size:13px; font-weight:700; color:var(--color-text-primary); margin:8px 0 0 0;">Points Details</h4>
             ${itemsHtml}
