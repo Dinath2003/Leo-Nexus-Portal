@@ -939,7 +939,19 @@ function getDefaultData() {
       { id: 'sp4_3', category: '3.4. DEDUCTIONS (SP 4)', maxPoints: -100000, description: 'Failure on timely submission of Monthly Treasurer Report (per month)', perUnit: -100000, unit: 'month' },
       { id: 'sp4_4', category: '3.4. DEDUCTIONS (SP 4)', maxPoints: -20000, description: 'Failure on timely submission of Project Reports', perUnit: -20000, unit: 'report' },
       { id: 'sp4_5', category: '3.4. DEDUCTIONS (SP 4)', maxPoints: -100000, description: 'Failure on timely submission of Monthly Treasurer Report', perUnit: -100000, unit: 'submission' },
-      { id: 'sp4_6', category: '3.4. DEDUCTIONS (SP 4)', maxPoints: -1000000, description: 'Consumption of Alcohol or any illegal drug during a Leo Events', perUnit: -1000000, unit: 'occurrence' }
+      { id: 'sp4_6', category: '3.4. DEDUCTIONS (SP 4)', maxPoints: -1000000, description: 'Consumption of Alcohol or any illegal drug during a Leo Events', perUnit: -1000000, unit: 'occurrence' },
+
+      // 4.1. CULTURAL INITIATIVES & HERITAGE (CUL 1)
+      { id: 'cul1_1', category: '4.1. CULTURAL INITIATIVES & HERITAGE (CUL 1)', maxPoints: 50000, description: 'Organizing a District or Club Cultural Showcase, Traditional Arts & Drama Festival', perUnit: 50000, unit: 'event' },
+      { id: 'cul1_2', category: '4.1. CULTURAL INITIATIVES & HERITAGE (CUL 1)', maxPoints: 40000, description: 'Inter-Club Music, Dance, or Cultural Competition', perUnit: 40000, unit: 'competition' },
+      { id: 'cul1_3', category: '4.1. CULTURAL INITIATIVES & HERITAGE (CUL 1)', maxPoints: 30000, description: 'Cultural Heritage Preservation & Community Arts Workshop', perUnit: 30000, unit: 'workshop' },
+      { id: 'cul1_4', category: '4.1. CULTURAL INITIATIVES & HERITAGE (CUL 1)', maxPoints: 35000, description: 'International Cultural Exchange & Multilingual Youth Evening', perUnit: 35000, unit: 'exchange' },
+
+      // 4.2. TECHNICAL INNOVATION & STEM OUTREACH (TECH 1)
+      { id: 'tech1_1', category: '4.2. TECHNICAL INNOVATION & STEM OUTREACH (TECH 1)', maxPoints: 60000, description: 'Organizing a Hackathon, IT Innovation Challenge, or App Development Competition', perUnit: 60000, unit: 'hackathon' },
+      { id: 'tech1_2', category: '4.2. TECHNICAL INNOVATION & STEM OUTREACH (TECH 1)', maxPoints: 40000, description: 'Conducting Tech Literacy, AI, Coding, or STEM Education Workshops', perUnit: 40000, unit: 'workshop' },
+      { id: 'tech1_3', category: '4.2. TECHNICAL INNOVATION & STEM OUTREACH (TECH 1)', maxPoints: 50000, description: 'Technical Solution Deployment for Community Service (Website/App for NGO)', perUnit: 50000, unit: 'deployment' },
+      { id: 'tech1_4', category: '4.2. TECHNICAL INNOVATION & STEM OUTREACH (TECH 1)', maxPoints: 45000, description: 'Digital Transformation & Technical Infrastructure Upgrades for Leo Portal/Clubs', perUnit: 45000, unit: 'project' }
     ],
 
     clubPoints: [
@@ -952,6 +964,7 @@ function getDefaultData() {
           ac1_3: 50000, ac2_1: 200000, ac3_1: 1000000,
           int1_1: 15000, int3_1: 10000,
           sp1_1: 100000, sp2_1: 100000,
+          cul1_1: 50000, tech1_1: 60000,
           sp4_1: -100000
         }
       },
@@ -1433,7 +1446,7 @@ function getDefaultData() {
       }
     ],
     invoiceTemplate: {
-      fileName: 'default_district_invoice_template.html',
+      fileName: 'clear_cultural_technical_template.html',
       uploadedAt: '2026-06-01'
     },
     districtProfile: {

@@ -38,8 +38,8 @@ function getProjectFormHtml(data = {}) {
         <div class="form-group">
           <label class="form-label">Category *</label>
           <select class="form-select" id="proj-category">
-            ${['Education', 'Environment', 'Health', 'Leadership', 'Community', 'Sports', 'Culture', 'Other']
-              .map(c => `<option value="${c}" ${data.category === c ? 'selected' : ''}>${c}</option>`).join('')}
+            ${['Cultural', 'Technical', 'Education', 'Environment', 'Health', 'Leadership', 'Community', 'Sports', 'Other']
+            .map(c => `<option value="${c}" ${data.category === c ? 'selected' : ''}>${c}</option>`).join('')}
           </select>
         </div>
       </div>
@@ -284,9 +284,9 @@ export function renderDistrictProjects() {
   };
 
   const categoryIcons = {
-    Education: 'book-open', Environment: 'leaf', Health: 'heart-pulse',
-    Leadership: 'crown', Community: 'hand-heart', Sports: 'dumbbell',
-    Culture: 'palette', Other: 'sparkles'
+    Cultural: 'palette', Technical: 'code-2', Education: 'book-open',
+    Environment: 'leaf', Health: 'heart-pulse', Leadership: 'crown',
+    Community: 'hand-heart', Sports: 'dumbbell', Culture: 'palette', Other: 'sparkles'
   };
 
   function render() {

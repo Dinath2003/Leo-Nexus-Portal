@@ -355,10 +355,31 @@ export function renderClubPoints() {
     let checklistHtml = '';
     
     for (const [categoryName, items] of Object.entries(groupedCriteria)) {
+      const isCultural = categoryName.toUpperCase().includes('CULTURAL') || categoryName.includes('CUL');
+      const isTechnical = categoryName.toUpperCase().includes('TECHNICAL') || categoryName.includes('TECH');
+
+      let headerBg = 'rgba(0,102,255,0.08)';
+      let headerColor = 'var(--color-cyan-glow)';
+      let headerBorder = '1px solid var(--color-glass-border)';
+      let catIcon = 'folder';
+
+      if (isCultural) {
+        headerBg = 'rgba(245,158,11,0.12)';
+        headerColor = '#f59e0b';
+        headerBorder = '1px solid rgba(245,158,11,0.25)';
+        catIcon = 'palette';
+      } else if (isTechnical) {
+        headerBg = 'rgba(14,165,233,0.12)';
+        headerColor = '#0ea5e9';
+        headerBorder = '1px solid rgba(14,165,233,0.25)';
+        catIcon = 'code-2';
+      }
+
       checklistHtml += `
-        <div class="criteria-category-section" style="margin-bottom:24px; border:1px solid var(--color-glass-border); border-radius:10px; overflow:hidden;">
-          <div style="background:rgba(0,102,255,0.08); padding:12px var(--space-4); font-weight:700; color:var(--color-cyan-glow); font-size:0.9rem; border-bottom:1px solid var(--color-glass-border);">
-            ${categoryName}
+        <div class="criteria-category-section" style="margin-bottom:24px; border:${headerBorder}; border-radius:10px; overflow:hidden;">
+          <div style="background:${headerBg}; padding:12px var(--space-4); font-weight:700; color:${headerColor}; font-size:0.9rem; border-bottom:${headerBorder}; display:flex; align-items:center; gap:8px;">
+            <i data-lucide="${catIcon}" style="width:16px;height:16px;"></i>
+            <span>${categoryName}</span>
           </div>
           <div class="data-table-wrapper">
             <table class="data-table">

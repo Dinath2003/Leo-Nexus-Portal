@@ -97,9 +97,9 @@ export function renderClubProjects() {
   };
 
   const categoryIcons = {
-    Education: 'book-open', Environment: 'leaf', Health: 'heart-pulse',
-    Leadership: 'crown', Community: 'hand-heart', Sports: 'dumbbell',
-    Culture: 'palette', Other: 'sparkles'
+    Cultural: 'palette', Technical: 'code-2', Education: 'book-open',
+    Environment: 'leaf', Health: 'heart-pulse', Leadership: 'crown',
+    Community: 'hand-heart', Sports: 'dumbbell', Culture: 'palette', Other: 'sparkles'
   };
 
   function render() {
