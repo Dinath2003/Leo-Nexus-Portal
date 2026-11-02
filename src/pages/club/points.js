@@ -589,6 +589,7 @@ export function renderClubPoints() {
           <!-- Page Header -->
           <div class="page-header stagger-enter">
             <div>
+              <span class="section-badge" style="margin-bottom:0.5rem;display:inline-block;">PERFORMANCE & MERIT</span>
               <h1 style="margin:0;">Club Performance Points</h1>
               <p style="color:var(--color-text-muted);margin-top:4px;">Submit monthly point checklists and review standings</p>
             </div>

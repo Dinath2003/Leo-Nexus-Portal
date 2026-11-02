@@ -82,9 +82,9 @@ function getAnnouncementFormHtml(announcement = null) {
 
         <div class="form-group" id="email-club-select-group" style="display:none; margin-top:1rem;">
           <label class="form-label">Select Leo Clubs for Broadcast</label>
-          <div style="display:flex; flex-wrap:wrap; gap:0.5rem; padding:0.75rem; border:1px solid rgba(255,255,255,0.06); border-radius:var(--radius-md); background:var(--color-navy);">
+          <div style="display:flex; flex-wrap:wrap; gap:0.5rem; padding:0.75rem; border:1px solid var(--color-border); border-radius:var(--radius-md); background:var(--color-surface-muted);">
             ${clubs.map(c => `
-              <label style="display:flex; align-items:center; gap:0.35rem; cursor:pointer; font-size:0.82rem; color:var(--color-text-secondary); padding:0.25rem 0.5rem; border-radius:var(--radius-sm); border:1px solid rgba(255,255,255,0.06); background:var(--color-bg-primary);">
+              <label style="display:flex; align-items:center; gap:0.35rem; cursor:pointer; font-size:0.82rem; color:var(--color-text-secondary); padding:0.35rem 0.6rem; border-radius:var(--radius-pill); border:1px solid var(--color-border); background:var(--color-surface);">
                 <input type="checkbox" class="email-club-checkbox" value="${c.id}" />
                 ${c.name.replace('Leo Club of ', '')}
               </label>
@@ -396,6 +396,7 @@ export function renderDistrictAnnouncements() {
             <!-- Page Header -->
             <div class="page-header stagger-enter">
               <div>
+                <span class="section-badge" style="margin-bottom:0.5rem;display:inline-block;">COMMUNICATIONS</span>
                 <h1 style="margin:0;">Announcements</h1>
                 <p style="margin:0.25rem 0 0; color:var(--color-text-secondary);">Broadcast important messages to all clubs</p>
               </div>

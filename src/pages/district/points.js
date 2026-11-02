@@ -8,7 +8,7 @@ import { showToast } from '../../components/toast.js';
 import { showModal, showConfirm } from '../../components/modal.js';
 import { renderSidebar, initSidebar } from '../../components/sidebar.js';
 import { renderHeader, initHeader } from '../../components/header.js';
-import { createChart, destroyAllCharts } from '../../components/charts.js';
+import { destroyAllCharts } from '../../components/charts.js';
 
 let activeTab = 'leaderboard'; // leaderboard or submissions
 let filterClub = 'all';
@@ -282,85 +282,151 @@ export function renderDistrictPoints() {
         </div>
       </div>
 
-      <!-- Point Criteria Table -->
-      <div class="card stagger-enter hover-lift" style="margin-top:1.5rem;">
-        <div class="card-header">
-          <h3 class="card-title">
-            <i data-lucide="list-checks" style="width:18px;height:18px;color:var(--color-primary)"></i>
-            Point Criteria Reference List (Grouped)
-          </h3>
+      <!-- Top 3 Podium Showcase -->
+      ${leaderboard.length >= 3 ? `
+        <div class="grid-3 stagger-enter" style="margin-top:1.5rem; align-items:end;">
+          <!-- 2nd Place -->
+          <div class="card hover-lift" style="text-align:center; padding:24px 20px; border-top:4px solid #94a3b8; position:relative;">
+            <div style="width:48px; height:48px; border-radius:50%; background:linear-gradient(135deg, #f1f5f9, #94a3b8); color:#1e293b; font-weight:800; font-size:1.25rem; display:flex; align-items:center; justify-content:center; margin:0 auto 12px; box-shadow:0 4px 12px rgba(148,163,184,0.3);">
+              🥈
+            </div>
+            <span class="badge" style="background:rgba(148,163,184,0.15); color:#475569; font-size:11px; font-weight:700; margin-bottom:8px;">2nd Place</span>
+            <h4 style="margin:0 0 4px; font-size:15px; font-weight:700; color:var(--color-text-primary);">${leaderboard[1].name}</h4>
+            <div style="font-size:12px; color:var(--color-text-muted); margin-bottom:12px;">${leaderboard[1].zone} • ${leaderboard[1].region}</div>
+            <div style="font-size:1.5rem; font-weight:800; color:var(--color-primary);">${leaderboard[1].totalPoints.toLocaleString()} <span style="font-size:12px; font-weight:600; color:var(--color-text-muted);">pts</span></div>
+          </div>
+
+          <!-- 1st Place (Featured) -->
+          <div class="card hover-lift" style="text-align:center; padding:28px 20px; border-top:4px solid #f59e0b; background:linear-gradient(180deg, rgba(245,158,11,0.04) 0%, var(--color-surface) 100%); transform:translateY(-8px); position:relative; box-shadow:0 12px 28px rgba(245,158,11,0.12);">
+            <div style="width:56px; height:56px; border-radius:50%; background:linear-gradient(135deg, #fef08a, #f59e0b); color:#78350f; font-weight:800; font-size:1.5rem; display:flex; align-items:center; justify-content:center; margin:0 auto 12px; box-shadow:0 6px 16px rgba(245,158,11,0.35);">
+              🥇
+            </div>
+            <span class="badge badge-warning" style="font-size:11px; font-weight:700; margin-bottom:8px;">District Leader</span>
+            <h3 style="margin:0 0 4px; font-size:17px; font-weight:800; color:var(--color-text-primary);">${leaderboard[0].name}</h3>
+            <div style="font-size:12px; color:var(--color-text-muted); margin-bottom:12px;">${leaderboard[0].zone} • ${leaderboard[0].region}</div>
+            <div style="font-size:1.75rem; font-weight:900; color:#f59e0b;">${leaderboard[0].totalPoints.toLocaleString()} <span style="font-size:13px; font-weight:600; color:var(--color-text-muted);">pts</span></div>
+          </div>
+
+          <!-- 3rd Place -->
+          <div class="card hover-lift" style="text-align:center; padding:24px 20px; border-top:4px solid #ea580c; position:relative;">
+            <div style="width:48px; height:48px; border-radius:50%; background:linear-gradient(135deg, #fed7aa, #ea580c); color:#7c2d12; font-weight:800; font-size:1.25rem; display:flex; align-items:center; justify-content:center; margin:0 auto 12px; box-shadow:0 4px 12px rgba(234,88,12,0.3);">
+              🥉
+            </div>
+            <span class="badge" style="background:rgba(234,88,12,0.15); color:#9a3412; font-size:11px; font-weight:700; margin-bottom:8px;">3rd Place</span>
+            <h4 style="margin:0 0 4px; font-size:15px; font-weight:700; color:var(--color-text-primary);">${leaderboard[2].name}</h4>
+            <div style="font-size:12px; color:var(--color-text-muted); margin-bottom:12px;">${leaderboard[2].zone} • ${leaderboard[2].region}</div>
+            <div style="font-size:1.5rem; font-weight:800; color:var(--color-primary);">${leaderboard[2].totalPoints.toLocaleString()} <span style="font-size:12px; font-weight:600; color:var(--color-text-muted);">pts</span></div>
+          </div>
         </div>
-        <div class="card-body" style="padding:0; overflow-x:auto;">
-          ${criteriaTableHtml}
+      ` : ''}
+
+      <!-- Club Ranking Board -->
+      <div class="card hover-lift stagger-enter" style="margin-top:1.5rem;">
+        <div class="card-header" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+          <div>
+            <h3 class="card-title" style="display:flex; align-items:center; gap:8px; margin:0;">
+              <i data-lucide="trophy" style="width:20px;height:20px;color:#f59e0b"></i>
+              Official Club Ranking Board
+            </h3>
+            <div style="font-size:12px; color:var(--color-text-muted); margin-top:2px;">Complete district merit standings based on verified criteria</div>
+          </div>
+          <span class="badge badge-primary" style="font-size:11px; padding:4px 10px;">
+            ${leaderboard.length} Ranked Clubs
+          </span>
+        </div>
+        <div class="card-body" style="padding:0;">
+          <div class="data-table-wrapper" style="border:none; border-radius:0;">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th style="width:60px; text-align:center;">Rank</th>
+                  <th>Club Information</th>
+                  <th>Zone / Region</th>
+                  <th>Members</th>
+                  <th>Total Points</th>
+                  <th style="width:160px;">Progress</th>
+                  <th>Status</th>
+                  <th style="width:110px; text-align:center;">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${(() => {
+                  const topScore = Math.max(1, leaderboard[0]?.totalPoints || 1);
+                  return leaderboard.map((club, i) => {
+                    const rank = i + 1;
+                    const pct = Math.max(5, Math.min(100, Math.round((club.totalPoints / topScore) * 100)));
+                    let medalBadge = '';
+                    if (rank === 1) {
+                      medalBadge = `<span style="font-size:1.25rem;">🥇</span>`;
+                    } else if (rank === 2) {
+                      medalBadge = `<span style="font-size:1.25rem;">🥈</span>`;
+                    } else if (rank === 3) {
+                      medalBadge = `<span style="font-size:1.25rem;">🥉</span>`;
+                    } else {
+                      medalBadge = `<span class="badge" style="background:var(--color-surface-muted); color:var(--color-text-secondary); font-weight:700; font-size:12px;">#${rank}</span>`;
+                    }
+
+                    return `
+                      <tr>
+                        <td style="text-align:center; font-weight:800;">${medalBadge}</td>
+                        <td>
+                          <div style="font-weight:700; color:var(--color-text-primary); font-size:14px;">${club.name}</div>
+                          <div style="font-size:11px; color:var(--color-text-muted);">${club.code}</div>
+                        </td>
+                        <td>
+                          <div style="font-size:13px; font-weight:600;">${club.zone}</div>
+                          <div style="font-size:11px; color:var(--color-text-muted);">${club.region}</div>
+                        </td>
+                        <td>
+                          <span style="font-weight:700;">${club.memberCount}</span>
+                          <span style="font-size:11px; color:var(--color-text-muted);"> members</span>
+                        </td>
+                        <td>
+                          <span style="font-weight:800; color:var(--color-primary); font-size:1.05rem;">
+                            ${club.totalPoints.toLocaleString()}
+                          </span>
+                          <span style="font-size:11px; font-weight:600; color:var(--color-text-muted);"> pts</span>
+                        </td>
+                        <td>
+                          <div style="width:100%; height:7px; background:var(--color-surface-muted); border-radius:9999px; overflow:hidden;">
+                            <div style="height:100%; width:${pct}%; background:linear-gradient(90deg, var(--color-primary), #38bdf8); border-radius:9999px;"></div>
+                          </div>
+                          <div style="font-size:11px; color:var(--color-text-muted); margin-top:3px; display:flex; justify-content:space-between;">
+                            <span>Score Index</span>
+                            <span style="font-weight:600;">${pct}%</span>
+                          </div>
+                        </td>
+                        <td>
+                          <span class="badge badge-${club.status === 'active' ? 'success' : 'danger'}">
+                            ${club.status}
+                          </span>
+                        </td>
+                        <td style="text-align:center;">
+                          <button class="btn btn-ghost btn-xs adjust-club-points-btn" data-club-id="${club.id}" data-club-name="${club.name}" style="padding:4px 8px;">
+                            <i data-lucide="sliders" style="width:12px;height:12px;margin-right:3px;vertical-align:-1px;"></i> Adjust
+                          </button>
+                        </td>
+                      </tr>
+                    `;
+                  }).join('');
+                })()}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
 
-      <div class="grid-2 stagger-enter" style="margin-top:1.5rem;">
-        <!-- Leaderboard -->
-        <div class="card hover-lift">
-          <div class="card-header">
-            <h3 class="card-title">
-              <i data-lucide="trophy" style="width:18px;height:18px;color:#f59e0b"></i>
-              Club Leaderboard
-            </h3>
-          </div>
-          <div class="card-body" style="padding:0;">
-            <div class="data-table-wrapper">
-              <table class="data-table">
-                <thead>
-                  <tr>
-                    <th style="width:45px">#</th>
-                    <th>Club</th>
-                    <th>Points</th>
-                    <th style="width:120px">Progress</th>
-                    <th style="width:100px">Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  ${leaderboard.map((club, i) => {
-                    const maxVal = Math.max(1, totalMaxPoints);
-                    const pct = Math.max(0, Math.min(100, Math.round((club.totalPoints / maxVal) * 100)));
-                    const medal = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : `${i+1}`;
-                    return `
-                      <tr>
-                        <td style="font-weight:700; font-size:1rem;">${medal}</td>
-                        <td>
-                          <div style="font-weight:600;">${club.name.replace('Leo Club of ', '')}</div>
-                          <div style="font-size:0.7rem; color:var(--color-text-muted);">${club.zone}</div>
-                        </td>
-                        <td><span style="font-weight:700; color:var(--color-primary); font-size:1rem;">${club.totalPoints.toLocaleString()}</span></td>
-                        <td>
-                          <div style="background:var(--color-bg-secondary); border-radius:4px; height:6px; overflow:hidden;">
-                            <div style="height:100%; width:${pct}%; background:linear-gradient(90deg, var(--color-primary), var(--color-cyan)); border-radius:4px;"></div>
-                          </div>
-                          <div style="font-size:0.65rem; color:var(--color-text-muted); margin-top:2px;">${pct}%</div>
-                        </td>
-                        <td>
-                          <button class="btn btn-ghost btn-xs adjust-club-points-btn" data-club-id="${club.id}" data-club-name="${club.name}">
-                            <i data-lucide="sliders" style="width:12px;height:12px;margin-right:2px;vertical-align:-1px;"></i> Adjust
-                          </button>
-                        </td>
-                      </tr>`;
-                  }).join('')}
-                </tbody>
-              </table>
-            </div>
-          </div>
+      <!-- Point Criteria Table -->
+      <div class="card stagger-enter hover-lift" style="margin-top:1.5rem;">
+        <div class="card-header" style="display:flex; justify-content:space-between; align-items:center;">
+          <h3 class="card-title" style="display:flex; align-items:center; gap:8px;">
+            <i data-lucide="list-checks" style="width:18px;height:18px;color:var(--color-primary)"></i>
+            Point Criteria Reference List (Grouped)
+          </h3>
+          <span style="font-size:12px; color:var(--color-text-muted);">Evaluation Guidelines</span>
         </div>
-
-        <!-- Radar Chart -->
-        <div class="card hover-lift">
-          <div class="card-header">
-            <h3 class="card-title">
-              <i data-lucide="radar" style="width:18px;height:18px;color:var(--color-cyan)"></i>
-              Normalized Points Distribution (%)
-            </h3>
-          </div>
-          <div class="card-body">
-            <div class="chart-container" style="height:320px;">
-              <canvas id="points-radar-chart"></canvas>
-            </div>
-          </div>
+        <div class="card-body" style="padding:0; overflow-x:auto;">
+          ${criteriaTableHtml}
         </div>
       </div>
     `;
@@ -500,6 +566,7 @@ export function renderDistrictPoints() {
           <!-- Page Header -->
           <div class="page-header stagger-enter">
             <div>
+              <span class="section-badge" style="margin-bottom:0.5rem;display:inline-block;">DISTRICT STANDINGS</span>
               <h1 style="margin:0;">Points & Criteria</h1>
               <p style="margin:0.25rem 0 0; color:var(--color-text-secondary);">Manage club performance evaluation criteria and view standings</p>
             </div>
@@ -541,30 +608,6 @@ export function renderDistrictPoints() {
   });
 
   if (activeTab === 'leaderboard') {
-    // Radar Chart initialization
-    const radarLabels = Object.keys(categoryMaxPoints);
-    const topClubs = leaderboard.slice(0, 3);
-    const radarDatasets = topClubs.map(club => {
-      const cp = club.pointBreakdown;
-      const pcts = getCategoryPercentages(cp?.points || {});
-      return {
-        label: club.name.replace('Leo Club of ', ''),
-        data: radarLabels.map(cat => pcts[cat] || 0)
-      };
-    });
-
-    if (radarDatasets.length > 0) {
-      createChart('points-radar-chart', 'radar', {
-        labels: radarLabels.map(l => l.split(':')[0]),
-        datasets: radarDatasets
-      }, {
-        plugins: { legend: { display: true, position: 'bottom' } },
-        scales: {
-          r: { min: 0, max: 100, suggestedMax: 100, beginAtZero: true }
-        }
-      });
-    }
-
     // Add Criteria
     document.getElementById('add-criteria-btn')?.addEventListener('click', () => {
       showModal('Add Point Criteria', getCriteriaFormHtml(), {

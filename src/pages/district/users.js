@@ -86,11 +86,11 @@ function getUserFormHtml(user = null) {
         <label class="form-label" style="font-weight:600; margin-bottom:0.5rem; display:flex; align-items:center; gap:6px;">
           <i data-lucide="eye" style="width:16px;height:16px;color:var(--color-primary);"></i> Sidebar Visible Options
         </label>
-        <div style="display:grid; grid-template-columns: repeat(2, 1fr); gap:0.5rem; padding:0.75rem; border:1px solid rgba(255,255,255,0.06); border-radius:var(--radius-md); background:var(--color-navy);">
+        <div style="display:grid; grid-template-columns: repeat(2, 1fr); gap:0.5rem; padding:0.75rem; border:1px solid var(--color-border); border-radius:var(--radius-md); background:var(--color-surface-muted);">
           ${availableOptions.map(opt => {
             const checked = userVisible.includes(opt.id);
             return `
-              <label style="display:flex; align-items:center; gap:0.35rem; cursor:pointer; font-size:0.82rem; color:var(--color-text-secondary); padding:0.25rem 0.5rem; border-radius:var(--radius-sm); border:1px solid rgba(255,255,255,0.06); background:var(--color-bg-primary);">
+              <label style="display:flex; align-items:center; gap:0.35rem; cursor:pointer; font-size:0.82rem; color:var(--color-text-secondary); padding:0.35rem 0.6rem; border-radius:var(--radius-pill); border:1px solid var(--color-border); background:var(--color-surface);">
                 <input type="checkbox" class="visibility-checkbox" value="${opt.id}" ${checked ? 'checked' : ''} />
                 ${opt.label}
               </label>
@@ -228,6 +228,7 @@ export function renderDistrictUsers() {
             <!-- Page Header -->
             <div class="page-header stagger-enter">
               <div>
+                <span class="section-badge" style="margin-bottom:0.5rem;display:inline-block;">ACCESS CONTROL</span>
                 <h1 style="margin:0;">User Management</h1>
                 <p style="margin:0.25rem 0 0; color:var(--color-text-secondary);">Manage portal users and access roles</p>
               </div>

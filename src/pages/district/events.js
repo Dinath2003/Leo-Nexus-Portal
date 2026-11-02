@@ -147,6 +147,7 @@ export function renderDistrictEvents() {
             <!-- Page Header -->
             <div class="page-header stagger-enter">
               <div>
+                <span class="section-badge" style="margin-bottom:0.5rem;display:inline-block;">DISTRICT CALENDAR</span>
                 <h1 style="margin:0;">Events Management</h1>
                 <p style="margin:0.25rem 0 0; color:var(--color-text-secondary);">Manage district events and review club payments</p>
               </div>

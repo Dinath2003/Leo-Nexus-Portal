@@ -35,7 +35,8 @@ export function renderClubEvents() {
             <!-- Page Header -->
             <div class="page-header stagger-enter">
               <div>
-                <h1>District Events & Payments</h1>
+                <span class="section-badge" style="margin-bottom:0.5rem;display:inline-block;">DISTRICT PROGRAM</span>
+                <h1 style="margin:0;">District Events & Payments</h1>
                 <p style="color:var(--color-text-muted);margin-top:4px;">Manage member event visibility and consolidated district dues</p>
               </div>
             </div>

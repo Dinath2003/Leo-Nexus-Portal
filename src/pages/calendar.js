@@ -106,9 +106,9 @@ export function renderCalendar() {
         }
         .cal-day-cell {
           aspect-ratio: 1.1 / 1;
-          border-radius: 8px;
+          border-radius: 10px;
           border: 1px solid var(--color-border);
-          background: rgba(255, 255, 255, 0.01);
+          background: var(--color-surface);
           display: flex;
           flex-direction: column;
           justify-content: space-between;
@@ -124,18 +124,18 @@ export function renderCalendar() {
           cursor: pointer;
         }
         .cal-day-real:hover {
-          background: rgba(255, 255, 255, 0.03);
+          background: var(--color-surface-muted);
           border-color: var(--color-primary);
           transform: translateY(-1px);
         }
         .cal-day-real.selected {
-          background: rgba(0, 102, 255, 0.08);
+          background: var(--color-primary-alpha);
           border-color: var(--color-primary);
-          box-shadow: 0 0 12px rgba(0, 102, 255, 0.15);
+          box-shadow: 0 4px 14px rgba(37, 99, 235, 0.15);
         }
         .cal-day-real.today {
-          border-color: #14b8a6;
-          background: rgba(20, 184, 166, 0.03);
+          border-color: #10b981;
+          background: rgba(16, 185, 129, 0.05);
         }
         .cal-day-num {
           font-size: 12px;
@@ -150,34 +150,35 @@ export function renderCalendar() {
         }
         .cal-dot {
           display: inline-block;
-          width: 5px;
-          height: 5px;
+          width: 6px;
+          height: 6px;
           border-radius: 50%;
         }
         .dot-event {
-          background: #0066ff;
-          box-shadow: 0 0 6px rgba(0, 102, 255, 0.6);
+          background: #2563eb;
+          box-shadow: 0 0 6px rgba(37, 99, 235, 0.5);
         }
         .dot-schedule {
           background: #f59e0b;
-          box-shadow: 0 0 6px rgba(245, 158, 11, 0.6);
+          box-shadow: 0 0 6px rgba(245, 158, 11, 0.5);
         }
         .cal-item-card {
-          padding: 12px;
-          border-radius: 10px;
-          background: rgba(255, 255, 255, 0.02);
+          padding: 14px;
+          border-radius: 12px;
+          background: var(--color-surface-muted);
           border: 1px solid var(--color-border);
           transition: all 0.2s ease;
         }
         .cal-item-card:hover {
           transform: translateX(3px);
-          background: rgba(255, 255, 255, 0.04);
+          background: var(--color-surface);
+          box-shadow: var(--shadow-sm);
         }
         .cal-item-card.event-type {
-          border-left: 3px solid #0066ff;
+          border-left: 4px solid #2563eb;
         }
         .cal-item-card.schedule-type {
-          border-left: 3px solid #f59e0b;
+          border-left: 4px solid #f59e0b;
         }
       </style>
       <div class="dashboard-layout">

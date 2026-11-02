@@ -125,7 +125,8 @@ export function renderClubProjects() {
             <!-- Page Header -->
             <div class="page-header stagger-enter">
               <div>
-                <h1>Service Projects</h1>
+                <span class="section-badge" style="margin-bottom:0.5rem;display:inline-block;">SERVICE IMPACT</span>
+                <h1 style="margin:0;">Service Projects</h1>
                 <p style="color:var(--color-text-muted);margin-top:4px;">Track and manage community service initiatives</p>
               </div>
               <div class="page-header-actions">

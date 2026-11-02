@@ -317,7 +317,8 @@ export function renderDistrictProjects() {
             <!-- Page Header -->
             <div class="page-header stagger-enter">
               <div>
-                <h1>District Projects &amp; Initiatives</h1>
+                <span class="section-badge" style="margin-bottom:0.5rem;display:inline-block;">DISTRICT SERVICE INITIATIVES</span>
+                <h1 style="margin:0;">District Projects &amp; Initiatives</h1>
                 <p style="color:var(--color-text-muted); margin-top:4px;">Manage large-scale district projects, budget accounts, and project final reports.</p>
               </div>
               <div class="page-header-actions">

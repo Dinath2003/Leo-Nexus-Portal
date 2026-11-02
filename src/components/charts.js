@@ -1,17 +1,17 @@
 // ============================================
 // LEO NEXUS PORTAL — CHART HELPERS
-// Ocean-themed Chart.js configuration
+// Modern SaaS Chart.js configuration
 // ============================================
 
 const chartInstances = new Map();
 
 const oceanTheme = {
-  colors: ['#0066ff', '#00d4ff', '#3d8bff', '#14b8a6', '#60a5fa', '#8b5cf6', '#f59e0b', '#ef4444'],
-  gridColor: 'rgba(0, 212, 255, 0.06)',
-  tickColor: '#5c6b94',
-  tooltipBg: 'rgba(10, 14, 39, 0.95)',
-  tooltipBorder: 'rgba(0, 212, 255, 0.2)',
-  fontFamily: "'Inter', sans-serif",
+  colors: ['#2563eb', '#38bdf8', '#6366f1', '#10b981', '#f59e0b', '#f43f5e', '#8b5cf6', '#06b6d4'],
+  gridColor: 'rgba(226, 232, 240, 0.7)',
+  tickColor: '#64748b',
+  tooltipBg: '#0f172a',
+  tooltipBorder: '#1e293b',
+  fontFamily: "'Plus Jakarta Sans', 'Inter', sans-serif",
 };
 
 function getDefaultOptions(type) {
@@ -24,7 +24,7 @@ function getDefaultOptions(type) {
         position: 'bottom',
         labels: {
           color: oceanTheme.tickColor,
-          font: { family: oceanTheme.fontFamily, size: 12 },
+          font: { family: oceanTheme.fontFamily, size: 12, weight: '600' },
           padding: 16,
           usePointStyle: true,
           pointStyle: 'circle',
@@ -32,16 +32,16 @@ function getDefaultOptions(type) {
       },
       tooltip: {
         backgroundColor: oceanTheme.tooltipBg,
-        titleColor: '#e8eaf6',
-        bodyColor: '#9aa5ce',
+        titleColor: '#ffffff',
+        bodyColor: '#cbd5e1',
         borderColor: oceanTheme.tooltipBorder,
         borderWidth: 1,
         padding: 12,
-        cornerRadius: 10,
-        titleFont: { family: oceanTheme.fontFamily, weight: '600' },
+        cornerRadius: 12,
+        titleFont: { family: oceanTheme.fontFamily, weight: '700' },
         bodyFont: { family: oceanTheme.fontFamily },
         displayColors: true,
-        boxPadding: 4,
+        boxPadding: 6,
       }
     },
     scales: (type === 'bar' || type === 'line') ? {

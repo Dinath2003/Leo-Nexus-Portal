@@ -38,7 +38,8 @@ export function renderClubAnnouncements() {
             <!-- Page Header -->
             <div class="page-header stagger-enter">
               <div>
-                <h1>District Announcements</h1>
+                <span class="section-badge" style="margin-bottom:0.5rem;display:inline-block;">DISTRICT BULLETINS</span>
+                <h1 style="margin:0;">District Announcements</h1>
                 <p style="color:var(--color-text-muted);margin-top:4px;">Stay updated with the latest from the district</p>
               </div>
               <div class="page-header-actions">

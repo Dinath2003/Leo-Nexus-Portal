@@ -25,7 +25,7 @@ import { renderClubPoints } from './pages/club/points.js';
 // New Pages
 import { renderClubProfile } from './pages/club/profile.js';
 import { renderDistrictFinance } from './pages/district/finance.js';
-import { renderDistrictProfile, renderMDProfile } from './pages/profiles.js';
+import { renderDistrictProfile, renderMDProfile } from './pages/profiles.js?v=20261102_v12';
 import { renderMemberDashboard } from './pages/member/dashboard.js';
 import { renderMemberEvents } from './pages/member/events.js';
 import { renderCalendar } from './pages/calendar.js';
@@ -50,8 +50,8 @@ router.register('/district/projects', { handler: renderDistrictProjects, require
 router.register('/district/points', { handler: renderDistrictPoints, requireAuth: true, requireDistrict: true });
 router.register('/district/reports', { handler: renderDistrictReports, requireAuth: true, requireDistrict: true });
 router.register('/district/finance', { handler: renderDistrictFinance, requireAuth: true, requireDistrict: true });
-router.register('/district/profile', { handler: renderDistrictProfile, requireAuth: true, requireDistrict: true });
-router.register('/district/md-profile', { handler: renderMDProfile, requireAuth: true, requireDistrict: true });
+router.register('/district/profile', { handler: renderDistrictProfile });
+router.register('/district/md-profile', { handler: renderMDProfile });
 
 // Club routes
 router.register('/club/dashboard', { handler: renderClubDashboard, requireAuth: true, requireClub: true });
@@ -62,13 +62,15 @@ router.register('/club/projects', { handler: renderClubProjects, requireAuth: tr
 router.register('/club/announcements', { handler: renderClubAnnouncements, requireAuth: true, requireClub: true });
 router.register('/club/events', { handler: renderClubEvents, requireAuth: true, requireClub: true });
 router.register('/club/points', { handler: renderClubPoints, requireAuth: true, requireClub: true });
-router.register('/club/district-profile', { handler: renderDistrictProfile, requireAuth: true, requireClub: true });
-router.register('/club/md-profile', { handler: renderMDProfile, requireAuth: true, requireClub: true });
+router.register('/club/district-profile', { handler: renderDistrictProfile });
+router.register('/club/md-profile', { handler: renderMDProfile });
 
 // Member routes
 router.register('/member/dashboard', { handler: renderMemberDashboard, requireAuth: true, requireMember: true });
 router.register('/member/events', { handler: renderMemberEvents, requireAuth: true, requireMember: true });
 router.register('/member/announcements', { handler: renderClubAnnouncements, requireAuth: true, requireMember: true });
+router.register('/member/district-profile', { handler: renderDistrictProfile });
+router.register('/member/md-profile', { handler: renderMDProfile });
 
 // Shared routes
 router.register('/calendar', { handler: renderCalendar, requireAuth: true });

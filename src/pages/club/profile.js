@@ -72,7 +72,7 @@ export function renderClubProfile(params = {}) {
               <!-- Banner -->
               <div style="height:200px; background: linear-gradient(135deg, #070e2f 0%, #004ecc 50%, #00d4ff 100%); position:relative;">
                 ${canEdit ? `
-                  <button class="btn btn-sm btn-secondary edit-profile-btn" style="position:absolute; bottom:16px; right:16px; background:rgba(10,14,39,0.7); backdrop-filter:blur(8px); border-color:rgba(255,255,255,0.15); color:#fff;">
+                  <button class="btn btn-sm btn-secondary edit-profile-btn" style="position:absolute; bottom:16px; right:16px; background:rgba(255,255,255,0.9); backdrop-filter:blur(8px); border-color:rgba(255,255,255,0.5); color:#0b132b; font-weight:600;">
                     <i data-lucide="edit" style="width:14px;height:14px;vertical-align:-2px;margin-right:4px;"></i> Edit Profile
                   </button>
                 ` : ''}
@@ -82,7 +82,7 @@ export function renderClubProfile(params = {}) {
               <div style="padding: 0 24px 24px; position:relative; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-end; gap:20px; margin-top:-60px;">
                 <div style="display:flex; align-items:flex-end; gap:20px; flex-wrap:wrap;">
                   <!-- Logo Container -->
-                  <div style="width:120px; height:120px; border-radius:24px; background:#0b112c; border:4px solid var(--color-bg); display:flex; align-items:center; justify-content:center; box-shadow:0 12px 24px rgba(0,0,0,0.3); overflow:hidden; position:relative; z-index:2;">
+                  <div style="width:120px; height:120px; border-radius:24px; background:var(--color-dark-surface); border:4px solid var(--color-surface); display:flex; align-items:center; justify-content:center; box-shadow:0 12px 24px rgba(0,0,0,0.15); overflow:hidden; position:relative; z-index:2;">
                     ${club.logoUrl 
                       ? `<img src="${club.logoUrl}" style="width:100%; height:100%; object-fit:cover;" />`
                       : `<i data-lucide="anchor" style="width:48px; height:48px; color:var(--color-primary);"></i>`
