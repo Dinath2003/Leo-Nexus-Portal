@@ -985,3 +985,27 @@ body.dark-theme .card:hover {
   margin-top: 4px;
 }
 
+/* ---------- Category Completion & Financial Ledger ---------- */
+.project-category-card {
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.project-category-card:hover {
+  border-color: rgba(0, 102, 255, 0.3) !important;
+}
+
+.subcrit-item-row:hover {
+  border-color: rgba(0, 102, 255, 0.2) !important;
+}
+
+.category-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  letter-spacing: 0.2px;
+}
+
+#finance-ledger-container .data-table tr:hover td {
+  background: rgba(0, 102, 255, 0.03);
+}
+

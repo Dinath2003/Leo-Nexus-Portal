@@ -25,7 +25,7 @@ import { renderClubPoints } from './pages/club/points.js';
 // New Pages
 import { renderClubProfile } from './pages/club/profile.js';
 import { renderDistrictFinance } from './pages/district/finance.js';
-import { renderDistrictProfile, renderMDProfile } from './pages/profiles.js?v=20261102_v12';
+import { renderDistrictProfile, renderMDProfile } from './pages/profiles.js?v=20261103_v14';
 import { renderMemberDashboard } from './pages/member/dashboard.js';
 import { renderMemberEvents } from './pages/member/events.js';
 import { renderCalendar } from './pages/calendar.js';
