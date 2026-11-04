@@ -47,7 +47,8 @@ export function renderMemberEvents() {
             <!-- Page Header -->
             <div class="page-header stagger-enter">
               <div>
-                <h1>District Events Registrations</h1>
+                <span class="section-badge" style="margin-bottom:0.5rem;display:inline-block;">OPPORTUNITIES & CONVENTIONS</span>
+                <h1 style="margin:0;">District Events Registrations</h1>
                 <p style="color:var(--color-text-muted);margin-top:4px;">Sign up for club-approved district events and pay your registration dues</p>
               </div>
             </div>

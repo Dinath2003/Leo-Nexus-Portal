@@ -1,7 +1,6 @@
 // ============================================
 // LEO NEXUS PORTAL — DYNAMIC THEME & BG MANAGER
-// Background animation ported from Leo Calendar ocean.js
-// Fire system adapted to Blue/Cyan storm theme.
+// Modern SaaS / LeBank Aesthetic
 // ============================================
 
 import { showModal } from './modal.js';
@@ -12,32 +11,32 @@ let animationFrameId = null;
 let canvas = null;
 let ctx    = null;
 
-// Particle arrays (Leo Calendar pattern)
+// Particle arrays
 let embers = [];
 let flames = [];
 
-// Cursor-driven wind (same physics as Leo Calendar)
+// Cursor-driven wind
 let targetWind = 0;
 let wind       = 0;
 
 // ─── Moving Gravity Point ─────────────────────────────────────────────────────
-// Orbits the screen in a slow Lissajous figure and blends toward the cursor.
 const grav = {
-  x: 0, y: 0,            // current rendered position
-  tx: 0, ty: 0,          // spring target
-  cx: 0, cy: 0,          // cursor influence (updated on mousemove)
-  t: 0,                  // orbit clock
-  strength: 0.011,       // pull on particles
-  orbitRX: 0,            // set after first resize
+  x: 0, y: 0,
+  tx: 0, ty: 0,
+  cx: 0, cy: 0,
+  t: 0,
+  strength: 0.011,
+  orbitRX: 0,
   orbitRY: 0,
-  cursorWeight: 0.22,    // 0 = pure orbit, 1 = pure cursor
+  cursorWeight: 0.22,
 };
 
 // ─── Theme config ─────────────────────────────────────────────────────────────
 const config = {
-  liveBg:      true,
-  glassEffect: true,
-  accent:      'cyan'
+  mode:        'light', // 'light' (default LeBank) or 'dark' (Midnight)
+  liveBg:      false,   // Ambient canvas particles (disabled)
+  cardTilt:    false,   // Motion disabled
+  accent:      'blue'
 };
 
 // ─── Wind + cursor tracking ───────────────────────────────────────────────────
@@ -49,43 +48,27 @@ window.addEventListener('mousemove', (e) => {
 });
 window.addEventListener('mouseleave', () => {
   targetWind = 0;
-  // Reset cursor to screen centre so orbit takes over smoothly
   if (canvas) { grav.cx = canvas.width / 2; grav.cy = canvas.height / 2; }
 });
 
 // ─── Public API ───────────────────────────────────────────────────────────────
 export function initTheme() {
-  config.liveBg      = localStorage.getItem('theme_live_bg')       !== 'false';
-  config.glassEffect = localStorage.getItem('theme_glass_effect')  !== 'false';
-  config.accent      = localStorage.getItem('theme_accent_color')  || 'cyan';
+  config.mode     = localStorage.getItem('theme_mode')         || 'light';
+  config.liveBg   = false;
+  config.cardTilt = false;
+  config.accent   = localStorage.getItem('theme_accent_color') || 'blue';
 
   applyThemeSettings();
   setupSettingsBtn();
 }
 
-// ─── Global 3D Card Tilt ──────────────────────────────────────────────────────
-// Auto-attaches spring-physics perspective tilt to every .card in the DOM.
-// Uses a MutationObserver so dynamically-rendered cards are caught too.
-// Call once from main.js after initial render.
-
+// ─── Global 3D Card Tilt (Motion Disabled) ────────────────────────────────────
 let cardTiltObserver = null;
 const tiltedCards    = new WeakSet();
 
 export function initCardTilt() {
-  // Attach to all existing cards
-  document.querySelectorAll('.card').forEach(attachTilt);
-
-  // Watch for new cards rendered by the router
-  cardTiltObserver = new MutationObserver((mutations) => {
-    for (const mut of mutations) {
-      mut.addedNodes.forEach((node) => {
-        if (node.nodeType !== 1) return;
-        if (node.matches?.('.card'))          attachTilt(node);
-        node.querySelectorAll?.('.card').forEach(attachTilt);
-      });
-    }
-  });
-  cardTiltObserver.observe(document.body, { childList: true, subtree: true });
+  // Motion effects disabled per user requirements
+  return;
 }
 
 export function destroyCardTilt() {
@@ -97,42 +80,24 @@ function attachTilt(card) {
   if (tiltedCards.has(card)) return;
   tiltedCards.add(card);
 
-  // Ensure the card has a wrapper perspective
   card.style.transformStyle = 'preserve-3d';
   card.style.willChange     = 'transform';
 
-  // Per-card spring state
-  let tRX = 0, tRY = 0;   // targets
-  let cRX = 0, cRY = 0;   // current
+  let tRX = 0, tRY = 0;
+  let cRX = 0, cRY = 0;
   let hovering = false;
   let rafId    = null;
 
-  // Add a shimmer overlay div inside each card
-  let shimmer = card.querySelector('.card-tilt-shimmer');
-  if (!shimmer) {
-    shimmer = document.createElement('div');
-    shimmer.className = 'card-tilt-shimmer';
-    Object.assign(shimmer.style, {
-      position:      'absolute',
-      inset:         '0',
-      borderRadius:  'inherit',
-      pointerEvents: 'none',
-      zIndex:        '1',
-      transition:    'background 0.08s',
-      background:    'radial-gradient(ellipse 80% 60% at 50% 50%, rgba(255,255,255,0.05) 0%, transparent 70%)',
-    });
-    card.appendChild(shimmer);
-  }
-
   function onMove(e) {
+    if (!config.cardTilt) return;
     const rect = card.getBoundingClientRect();
     const cx   = rect.left + rect.width  / 2;
     const cy   = rect.top  + rect.height / 2;
-    const dx   = (e.clientX - cx) / (rect.width  / 2);  // –1…+1
+    const dx   = (e.clientX - cx) / (rect.width  / 2);
     const dy   = (e.clientY - cy) / (rect.height / 2);
 
-    tRY =  dx * 12;   // max ±12° left/right
-    tRX = -dy *  8;   // max  ±8° up/down
+    tRY =  dx * 6;  // subtle modern tilt
+    tRX = -dy * 4;
     hovering = true;
   }
 
@@ -145,13 +110,8 @@ function attachTilt(card) {
     cRX += (tRX - cRX) * 0.12;
     cRY += (tRY - cRY) * 0.12;
 
-    const scale = hovering ? 1.025 : 1.0;
-    card.style.transform = `perspective(900px) rotateX(${cRX}deg) rotateY(${cRY}deg) scale(${scale})`;
-
-    // Specular shimmer — moves counter-tilt so it looks like light catching glass
-    const shiftX = -cRY * 2.5;
-    const shiftY =  cRX * 2.5;
-    shimmer.style.background = `radial-gradient(ellipse 75% 55% at ${50 + shiftX}% ${50 + shiftY}%, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.02) 40%, transparent 70%)`;
+    const scale = hovering ? 1.015 : 1.0;
+    card.style.transform = `perspective(1000px) rotateX(${cRX}deg) rotateY(${cRY}deg) scale(${scale})`;
 
     rafId = requestAnimationFrame(loop);
   }
@@ -162,47 +122,17 @@ function attachTilt(card) {
 }
 
 function applyThemeSettings() {
-  document.body.classList.toggle('glass-effect-enabled',  config.glassEffect);
-  document.body.classList.toggle('glass-effect-disabled', !config.glassEffect);
+  document.body.setAttribute('data-theme', config.mode);
+  document.body.classList.toggle('dark-theme', config.mode === 'dark');
   document.body.setAttribute('data-accent', config.accent);
 
   if (config.liveBg) startLiveBg();
   else               stopLiveBg();
 }
 
-// ─── Canvas life-cycle ────────────────────────────────────────────────────────
+// ─── Canvas life-cycle (Motion Disabled) ──────────────────────────────────────
 function startLiveBg() {
-  if (canvas) return; // already running
-
-  canvas = document.createElement('canvas');
-  canvas.id = 'ambient-particles-canvas';
-  Object.assign(canvas.style, {
-    position:      'fixed',
-    top:           '0',
-    left:          '0',
-    width:         '100%',
-    height:        '100%',
-    pointerEvents: 'none',
-    zIndex:        '-1'
-  });
-  document.body.appendChild(canvas);
-  ctx = canvas.getContext('2d');
-
-  // Size + re-seed on resize
-  const resize = () => {
-    canvas.width  = window.innerWidth;
-    canvas.height = window.innerHeight;
-    grav.orbitRX = canvas.width  * 0.30;
-    grav.orbitRY = canvas.height * 0.20;
-    grav.cx = canvas.width  / 2;
-    grav.cy = canvas.height / 2;
-    seedParticles();
-  };
-  resize();
-  window.addEventListener('resize', resize);
-
-  // Kick off the render loop
-  render();
+  stopLiveBg();
 }
 
 function stopLiveBg() {
@@ -212,32 +142,25 @@ function stopLiveBg() {
   flames = [];
 }
 
-// ─── Helpers (same as Leo Calendar) ──────────────────────────────────────────
 const rand  = (min, max) => Math.random() * (max - min) + min;
 const randI = (min, max) => Math.floor(rand(min, max));
 
-// Accent-colour helpers — returns [hueBase, hueShift] for HSL
 function accentHues() {
-  // Each returns [young-hue, mid-hue, old-hue] to mirror Leo Calendar's
-  // age-based gold→amber→maroon shift, but in blue/cyan territory.
   switch (config.accent) {
-    case 'blue':   return [210, 220, 240];   // cyan → blue → deep navy
-    case 'teal':   return [175, 185, 195];   // bright teal → teal → deep teal
-    case 'purple': return [270, 285, 300];   // violet → purple → deep magenta
-    default:       return [190, 205, 220];   // cyan (default): bright → mid → navy
+    case 'blue':   return [215, 225, 240];
+    case 'teal':   return [175, 185, 195];
+    case 'purple': return [265, 280, 295];
+    default:       return [200, 215, 230];
   }
 }
 
-// ─── Seed particle pools (mirrors Leo Calendar counts) ───────────────────────
 function seedParticles() {
   const W = canvas.width;
   const H = canvas.height;
-
-  embers = Array.from({ length: 120 }, () => new Ember(W, H, true));
-  flames = Array.from({ length: 45  }, () => new FlameBody(W, H, true));
+  embers = Array.from({ length: 60 }, () => new Ember(W, H, true));
+  flames = Array.from({ length: 20 }, () => new FlameBody(W, H, true));
 }
 
-// ─── 1. Ember / Spark (port of Leo Calendar Ember class, blue palette) ───────
 class Ember {
   constructor(W, H, init = false) {
     this.W = W; this.H = H;
@@ -250,15 +173,14 @@ class Ember {
 
     this.baseX     = rand(0, W);
     this.x         = this.baseX;
-    // Identical to Leo Calendar: init anywhere, else near bottom
     this.y         = init ? rand(H * 0.2, H) : rand(H - 40, H);
-    this.size      = rand(1.2, 3.8);
-    this.vy        = rand(-1.2, -3.2);
+    this.size      = rand(1.5, 3.5);
+    this.vy        = rand(-0.8, -2.0);
     this.life      = 0;
-    this.maxLife   = randI(150, 320);
+    this.maxLife   = randI(180, 360);
     this.alpha     = 1;
     this.phase     = rand(0, Math.PI * 2);
-    this.frequency = rand(0.01, 0.035);
+    this.frequency = rand(0.01, 0.025);
   }
 
   update() {
@@ -269,17 +191,16 @@ class Ember {
     this.y    += this.vy;
     this.phase += this.frequency;
 
-    const sway     = Math.sin(this.phase) * 12;
-    const windPush = wind * (H - this.y) * 0.45;
+    const sway     = Math.sin(this.phase) * 10;
+    const windPush = wind * (H - this.y) * 0.3;
     this.x = this.baseX + sway + windPush;
 
-    // Gravity pull toward moving gravity point
     const dx   = grav.x - this.x;
     const dy   = grav.y - this.y;
     const dist = Math.sqrt(dx * dx + dy * dy) || 1;
-    const pull = (grav.strength * 280) / Math.max(dist, 55);
-    this.baseX += (dx / dist) * pull * 1.6;
-    this.y     += (dy / dist) * pull * 0.5;
+    const pull = (grav.strength * 200) / Math.max(dist, 55);
+    this.baseX += (dx / dist) * pull * 1.2;
+    this.y     += (dy / dist) * pull * 0.4;
 
     this.alpha = 1 - (this.life / this.maxLife);
 
@@ -291,21 +212,17 @@ class Ember {
   draw() {
     const ageRatio = this.life / this.maxLife;
     const hues     = accentHues();
+    const isDark   = config.mode === 'dark';
 
-    // Mirrors Leo Calendar's age-based hue shift (gold→amber→maroon → cyan→blue→navy)
-    let hue;
-    if (ageRatio < 0.35)       hue = hues[0];
-    else if (ageRatio < 0.75)  hue = hues[1];
-    else                       hue = hues[2];
-
+    let hue = ageRatio < 0.5 ? hues[0] : hues[1];
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-    ctx.fillStyle = `hsla(${hue}, 100%, 65%, ${this.alpha})`;
+    const opacity = isDark ? this.alpha * 0.7 : this.alpha * 0.35;
+    ctx.fillStyle = `hsla(${hue}, 90%, 60%, ${opacity})`;
     ctx.fill();
   }
 }
 
-// ─── 2. Flame Body (port of Leo Calendar FlameBody class, blue palette) ──────
 class FlameBody {
   constructor(W, H, init = false) {
     this.W = W; this.H = H;
@@ -318,209 +235,116 @@ class FlameBody {
 
     this.baseX     = rand(0, W);
     this.x         = this.baseX;
-    // Leo Calendar: init in lower 40%, else near very bottom
     this.y         = init ? rand(H * 0.6, H) : rand(H - 60, H);
-    this.r         = rand(30, 85);
-    this.vy        = rand(-1.0, -2.5);
+    this.r         = rand(30, 75);
+    this.vy        = rand(-0.6, -1.8);
     this.life      = 0;
-    this.maxLife   = randI(80, 160);
-    this.alpha     = rand(0.35, 0.65);
+    this.maxLife   = randI(90, 180);
+    this.alpha     = rand(0.2, 0.45);
     this.phase     = rand(0, Math.PI * 2);
-    this.frequency = rand(0.01, 0.025);
+    this.frequency = rand(0.01, 0.02);
   }
 
   update() {
     const H = canvas.height;
-
     this.life++;
     this.y    += this.vy;
     this.phase += this.frequency;
 
-    const sway     = Math.sin(this.phase) * 18;
-    const windPush = wind * (H - this.y) * 0.5;
+    const sway     = Math.sin(this.phase) * 14;
+    const windPush = wind * (H - this.y) * 0.35;
     this.x = this.baseX + sway + windPush;
 
-    // Gravity pull toward moving gravity point (gentler for blobs)
-    const dx   = grav.x - this.x;
-    const dy   = grav.y - this.y;
-    const dist = Math.sqrt(dx * dx + dy * dy) || 1;
-    const pull = (grav.strength * 180) / Math.max(dist, 75);
-    this.baseX += (dx / dist) * pull * 1.1;
-    this.y     += (dy / dist) * pull * 0.35;
-
-    const progress    = this.life / this.maxLife;
-    this.currentR     = this.r * (1 - progress * 0.78);
-    this.currentAlpha = this.alpha * (1 - progress);
-
-    if (this.life >= this.maxLife || this.y < H - H * 0.6 || this.x < -this.r || this.x > canvas.width + this.r) {
+    this.alpha = (1 - (this.life / this.maxLife)) * 0.35;
+    if (this.life >= this.maxLife || this.y < -this.r) {
       this.reset();
     }
   }
 
   draw() {
-    const ageRatio = this.life / this.maxLife;
-    const hues     = accentHues();
-
-    // Age-based hue shift mirrors Leo Calendar (bright core → dark outer edges)
-    let hue;
-    if (ageRatio < 0.25)       hue = hues[0];
-    else if (ageRatio < 0.60)  hue = hues[1];
-    else                       hue = hues[2];
-
-    // Radial gradient identical to Leo Calendar:
-    const grad = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.currentR);
-    grad.addColorStop(0,    `hsla(${hue},     100%, 60%, ${this.currentAlpha * 0.55})`);
-    grad.addColorStop(0.35, `hsla(${hue - 15}, 90%, 42%, ${this.currentAlpha * 0.25})`);
-    grad.addColorStop(1,    `hsla(${hues[2]},  80%, 25%, 0)`);
+    const hues   = accentHues();
+    const isDark = config.mode === 'dark';
+    const grad   = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.r);
+    const op     = isDark ? this.alpha * 0.6 : this.alpha * 0.25;
+    grad.addColorStop(0, `hsla(${hues[0]}, 90%, 65%, ${op})`);
+    grad.addColorStop(1, `hsla(${hues[2]}, 80%, 40%, 0)`);
 
     ctx.beginPath();
-    ctx.arc(this.x, this.y, this.currentR, 0, Math.PI * 2);
+    ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
     ctx.fillStyle = grad;
     ctx.fill();
   }
 }
 
-// ─── Background & glow (ported from Leo Calendar, blue palette) ───────────────
-function drawBackground() {
-  const W = canvas.width;
-  const H = canvas.height;
-
-  // Deep dark background matching Leo Calendar's fire-pit gradient style
-  // but in deep-navy / indigo to suit the blue fire look
-  const grad = ctx.createRadialGradient(W / 2, H, 0, W / 2, H, Math.max(W, H));
-  grad.addColorStop(0, '#020510'); // deep navy core
-  grad.addColorStop(1, '#010204'); // near-black edge
-  ctx.fillStyle = grad;
-  ctx.fillRect(0, 0, W, H);
-}
-
-function drawGroundGlow() {
-  const W = canvas.width;
-  const H = canvas.height;
-  const hues = accentHues();
-
-  // Leo Calendar flicker formula exactly:
-  const flicker    = Math.sin(Date.now() * 0.006) * 0.05 + Math.cos(Date.now() * 0.013) * 0.03 + 0.95;
-  const baseGlowH  = H * 0.22 * flicker;
-
-  const grad = ctx.createLinearGradient(0, H, 0, H - baseGlowH);
-  // Leo Calendar used rgba(118,35,47) maroon → rgba(234,170,0) gold
-  // We use deep blue → bright cyan equivalent:
-  grad.addColorStop(0,   `hsla(${hues[2]}, 100%, 25%, ${0.48 * flicker})`);   // deep colour base
-  grad.addColorStop(0.4, `hsla(${hues[0]},  90%, 60%, ${0.16 * flicker})`);   // bright colour mid
-  grad.addColorStop(1,   `rgba(0, 0, 0, 0)`);
-
-  ctx.fillStyle = grad;
-  ctx.fillRect(0, H - baseGlowH, W, baseGlowH);
-}
-
-// ─── Update gravity point position ───────────────────────────────────────────
-function updateGravityPoint() {
-  const W = canvas.width, H = canvas.height;
-  grav.t += 0.005;
-  // Lissajous autonomous orbit
-  const orbitX = W / 2 + Math.cos(grav.t * 1.0) * grav.orbitRX;
-  const orbitY = H / 2 + Math.sin(grav.t * 1.3) * grav.orbitRY;
-  // Blend orbit with cursor
-  grav.tx = orbitX * (1 - grav.cursorWeight) + grav.cx * grav.cursorWeight;
-  grav.ty = orbitY * (1 - grav.cursorWeight) + grav.cy * grav.cursorWeight;
-  // Spring toward target
-  grav.x += (grav.tx - grav.x) * 0.04;
-  grav.y += (grav.ty - grav.y) * 0.04;
-}
-
-// ─── Draw pulsing gravity orb ─────────────────────────────────────────────────
-function drawGravityOrb() {
-  const pulse = 0.6 + Math.sin(Date.now() * 0.004) * 0.4;
-  const r     = 24 + Math.sin(Date.now() * 0.007) * 8;
-
-  // Outer diffuse halo
-  const outer = ctx.createRadialGradient(grav.x, grav.y, 0, grav.x, grav.y, r * 3.8);
-  outer.addColorStop(0,   `rgba(0, 200, 255, ${0.15 * pulse})`);
-  outer.addColorStop(0.5, `rgba(0, 100, 200, ${0.06 * pulse})`);
-  outer.addColorStop(1,   `rgba(0,  50, 150, 0)`);
-  ctx.beginPath();
-  ctx.arc(grav.x, grav.y, r * 3.8, 0, Math.PI * 2);
-  ctx.fillStyle = outer;
-  ctx.fill();
-
-  // Bright core
-  const core = ctx.createRadialGradient(grav.x, grav.y, 0, grav.x, grav.y, r);
-  core.addColorStop(0,   `rgba(200, 240, 255, ${0.88 * pulse})`);
-  core.addColorStop(0.35,`rgba( 80, 180, 255, ${0.65 * pulse})`);
-  core.addColorStop(0.75,`rgba(  0, 100, 220, ${0.30 * pulse})`);
-  core.addColorStop(1,   `rgba(  0,  50, 160, 0)`);
-  ctx.beginPath();
-  ctx.arc(grav.x, grav.y, r, 0, Math.PI * 2);
-  ctx.fillStyle = core;
-  ctx.fill();
-
-  // Nucleus spark
-  ctx.beginPath();
-  ctx.arc(grav.x, grav.y, 3.5, 0, Math.PI * 2);
-  ctx.fillStyle = `rgba(255, 255, 255, ${0.95 * pulse})`;
-  ctx.shadowBlur  = 12;
-  ctx.shadowColor = 'rgba(100, 220, 255, 0.9)';
-  ctx.fill();
-  ctx.shadowBlur = 0;
-}
-
-// ─── Main render loop ─────────────────────────────────────────────────────────
 function render() {
   if (!canvas || !ctx) return;
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  wind += (targetWind - wind) * 0.065;
+  wind += (targetWind - wind) * 0.04;
 
-  updateGravityPoint();
-  drawBackground();
+  grav.t += 0.008;
+  const orbitX = canvas.width  / 2 + Math.sin(grav.t * 0.7) * grav.orbitRX;
+  const orbitY = canvas.height / 2 + Math.cos(grav.t * 0.5) * grav.orbitRY;
 
-  // Draw gravity orb before 'screen' pass so fire blooms over it
-  drawGravityOrb();
+  grav.tx = orbitX * (1 - grav.cursorWeight) + grav.cx * grav.cursorWeight;
+  grav.ty = orbitY * (1 - grav.cursorWeight) + grav.cy * grav.cursorWeight;
+  grav.x += (grav.tx - grav.x) * 0.05;
+  grav.y += (grav.ty - grav.y) * 0.05;
 
-  ctx.save();
-  ctx.globalCompositeOperation = 'screen';
   flames.forEach(f => { f.update(); f.draw(); });
   embers.forEach(e => { e.update(); e.draw(); });
-  ctx.restore();
-
-  drawGroundGlow();
 
   animationFrameId = requestAnimationFrame(render);
 }
 
-// ─── Settings UI ──────────────────────────────────────────────────────────────
+// ─── Settings Button & Modal ──────────────────────────────────────────────────
 function setupSettingsBtn() {
   document.addEventListener('click', (e) => {
-    if (e.target.closest('#theme-control-btn')) openThemeSettingsModal();
+    const btn = e.target.closest('#theme-control-btn');
+    if (btn) openThemeSettingsModal();
   });
 }
 
-export function openThemeSettingsModal() {
+function openThemeSettingsModal() {
   const modalHtml = `
-    <div style="display:flex; flex-direction:column; gap:20px;">
+    <div style="display:flex; flex-direction:column; gap:24px;">
+
+      <!-- Theme Mode Switcher -->
+      <div>
+        <label class="form-label" style="margin-bottom:10px; display:block;">Appearance Mode</label>
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
+          <button class="btn theme-mode-btn ${config.mode === 'light' ? 'btn-primary' : 'btn-secondary'}" data-mode="light" style="justify-content:center; padding:12px 18px;">
+            <i data-lucide="sun" style="width:18px;height:18px"></i>
+            Light (LeBank Modern)
+          </button>
+          <button class="btn theme-mode-btn ${config.mode === 'dark' ? 'btn-primary' : 'btn-secondary'}" data-mode="dark" style="justify-content:center; padding:12px 18px;">
+            <i data-lucide="moon" style="width:18px;height:18px"></i>
+            Midnight Dark
+          </button>
+        </div>
+      </div>
 
       <!-- Accent Palette -->
       <div>
-        <label class="form-label" style="margin-bottom:10px; font-weight:600;">Accent Color Theme</label>
+        <label class="form-label" style="margin-bottom:10px; display:block;">Primary Accent Color</label>
         <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:10px;">
           ${[
-            { id: 'cyan',   label: 'Neon Cyan',      color: '#00d4ff' },
-            { id: 'blue',   label: 'Electric Blue',   color: '#0066ff' },
-            { id: 'teal',   label: 'Emerald Teal',    color: '#14b8a6' },
-            { id: 'purple', label: 'Violet Purple',   color: '#8b5cf6' }
+            { id: 'blue',   label: 'Royal Blue',    color: '#2563eb' },
+            { id: 'cyan',   label: 'Sky Cyan',      color: '#0284c7' },
+            { id: 'teal',   label: 'Emerald Teal',  color: '#0d9488' },
+            { id: 'purple', label: 'Violet Indigo', color: '#7c3aed' }
           ].map(opt => {
             const active = config.accent === opt.id;
             return `
               <button class="btn accent-selector-btn" data-accent="${opt.id}"
-                style="height:56px; border-radius:12px;
-                       border:2px solid ${active ? 'var(--color-text-white)' : 'rgba(255,255,255,0.06)'};
-                       background:rgba(255,255,255,0.02);
+                style="height:60px; border-radius:14px;
+                       border:2px solid ${active ? 'var(--color-primary)' : 'var(--color-border)'};
+                       background:${active ? 'var(--color-primary-alpha)' : 'var(--color-surface)'};
                        display:flex; flex-direction:column; align-items:center;
-                       justify-content:center; gap:6px; cursor:pointer;">
-                <span style="width:16px; height:16px; border-radius:50%;
-                             background:${opt.color}; box-shadow:0 0 10px ${opt.color}80;"></span>
-                <span style="font-size:10px; font-weight:700;
-                             color:${active ? 'var(--color-text-primary)' : 'var(--color-text-muted)'};">
+                       justify-content:center; gap:6px; cursor:pointer; padding:8px;">
+                <span style="width:18px; height:18px; border-radius:50%;
+                             background:${opt.color}; box-shadow:0 0 10px ${opt.color}60;"></span>
+                <span style="font-size:10px; font-weight:700; color:var(--color-text-primary);">
                   ${opt.label}
                 </span>
               </button>`;
@@ -528,74 +352,47 @@ export function openThemeSettingsModal() {
         </div>
       </div>
 
-      <!-- Live Background Toggle -->
+      <!-- Motion Effects Status -->
       <div style="display:flex; justify-content:space-between; align-items:center;
-                  padding:12px 16px; background:rgba(255,255,255,0.02);
-                  border:1px solid var(--color-border); border-radius:12px;">
+                  padding:14px 18px; background:var(--color-surface-muted);
+                  border:1px solid var(--color-border); border-radius:16px;">
         <div>
-          <div style="font-size:13px; font-weight:600; color:var(--color-text-primary);">
-            Ambient Fire Background
+          <div style="font-size:14px; font-weight:700; color:var(--color-text-primary);">
+            Motion & Animation Effects
           </div>
-          <div style="font-size:11px; color:var(--color-text-muted); margin-top:2px;">
-            Interactive blue fire embers rising with cursor wind
+          <div style="font-size:12px; color:var(--color-text-muted); margin-top:2px;">
+            All motion effects, page transitions, and card tilts are disabled for clean static rendering
           </div>
         </div>
-        <label class="switch-container" style="position:relative; display:inline-block; width:44px; height:24px;">
-          <input type="checkbox" id="toggle-live-bg" ${config.liveBg ? 'checked' : ''}
-                 style="opacity:0; width:0; height:0;" />
-          <span class="switch-slider"
-                style="position:absolute; cursor:pointer; inset:0;
-                       background-color:rgba(255,255,255,0.1);
-                       border:1px solid var(--color-border);
-                       border-radius:24px; transition:0.3s;"></span>
-        </label>
-      </div>
-
-      <!-- Glassmorphic toggle -->
-      <div style="display:flex; justify-content:space-between; align-items:center;
-                  padding:12px 16px; background:rgba(255,255,255,0.02);
-                  border:1px solid var(--color-border); border-radius:12px;">
-        <div>
-          <div style="font-size:13px; font-weight:600; color:var(--color-text-primary);">
-            Glassmorphism Effects
-          </div>
-          <div style="font-size:11px; color:var(--color-text-muted); margin-top:2px;">
-            Translucent backdrops with active blur styling
-          </div>
-        </div>
-        <label class="switch-container" style="position:relative; display:inline-block; width:44px; height:24px;">
-          <input type="checkbox" id="toggle-glass" ${config.glassEffect ? 'checked' : ''}
-                 style="opacity:0; width:0; height:0;" />
-          <span class="switch-slider"
-                style="position:absolute; cursor:pointer; inset:0;
-                       background-color:rgba(255,255,255,0.1);
-                       border:1px solid var(--color-border);
-                       border-radius:24px; transition:0.3s;"></span>
-        </label>
+        <span class="badge" style="background:rgba(100,116,139,0.12); color:var(--color-text-muted); font-size:12px; font-weight:700; padding:4px 12px; border-radius:20px;">
+          Disabled
+        </span>
       </div>
     </div>
-
-    <style>
-      .switch-container input:checked + .switch-slider {
-        background-color: var(--color-primary) !important;
-        box-shadow: 0 0 10px var(--color-primary);
-      }
-      .switch-slider:before {
-        position: absolute; content: "";
-        height: 16px; width: 16px;
-        left: 3px; bottom: 3px;
-        background-color: white;
-        transition: 0.3s; border-radius: 50%;
-      }
-      .switch-container input:checked + .switch-slider:before {
-        transform: translateX(20px);
-      }
-    </style>
   `;
 
-  showModal('Customize Dashboard Theme', modalHtml, { showFooter: false, size: 'md' });
+  showModal('Display & Appearance Settings', modalHtml, { showFooter: false, size: 'md' });
 
   setTimeout(() => {
+    // Mode switcher
+    document.querySelectorAll('.theme-mode-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        config.mode = btn.dataset.mode;
+        localStorage.setItem('theme_mode', config.mode);
+        applyThemeSettings();
+        document.querySelectorAll('.theme-mode-btn').forEach(b => {
+          if (b.dataset.mode === config.mode) {
+            b.classList.remove('btn-secondary');
+            b.classList.add('btn-primary');
+          } else {
+            b.classList.remove('btn-primary');
+            b.classList.add('btn-secondary');
+          }
+        });
+        showToast('success', 'Theme Updated', `Switched to ${config.mode === 'light' ? 'Light (LeBank)' : 'Midnight Dark'} mode.`);
+      });
+    });
+
     // Accent selectors
     document.querySelectorAll('.accent-selector-btn').forEach(btn => {
       btn.addEventListener('click', () => {
@@ -603,31 +400,14 @@ export function openThemeSettingsModal() {
         localStorage.setItem('theme_accent_color', config.accent);
         applyThemeSettings();
         document.querySelectorAll('.accent-selector-btn').forEach(b => {
-          b.style.borderColor = b.dataset.accent === config.accent
-            ? 'var(--color-text-white)' : 'rgba(255,255,255,0.06)';
-          b.querySelector('span:last-child').style.color = b.dataset.accent === config.accent
-            ? 'var(--color-text-primary)' : 'var(--color-text-muted)';
+          const active = b.dataset.accent === config.accent;
+          b.style.borderColor = active ? 'var(--color-primary)' : 'var(--color-border)';
+          b.style.background = active ? 'var(--color-primary-alpha)' : 'var(--color-surface)';
         });
-        showToast('success', 'Theme Updated', `Accent switched to ${config.accent}.`);
+        showToast('success', 'Accent Updated', `Color switched to ${config.accent}.`);
       });
     });
 
-    // Live BG toggle
-    document.getElementById('toggle-live-bg')?.addEventListener('change', (e) => {
-      config.liveBg = e.target.checked;
-      localStorage.setItem('theme_live_bg', config.liveBg);
-      applyThemeSettings();
-      showToast('success', 'Background Updated',
-        `Ambient fire background is now ${config.liveBg ? 'Enabled' : 'Disabled'}.`);
-    });
-
-    // Glass toggle
-    document.getElementById('toggle-glass')?.addEventListener('change', (e) => {
-      config.glassEffect = e.target.checked;
-      localStorage.setItem('theme_glass_effect', config.glassEffect);
-      applyThemeSettings();
-      showToast('success', 'Visual Style Updated',
-        `Glassmorphism effects are now ${config.glassEffect ? 'Enabled' : 'Disabled'}.`);
-    });
-  }, 200);
+    // Motion toggles disabled
+  }, 100);
 }

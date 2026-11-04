@@ -81,12 +81,12 @@ export function showAccountSettingsModal() {
         <p style="margin: 2px 0 0; font-size: 0.8rem; color: var(--color-text-secondary);">${user.email}</p>
       </div>
       <div class="form-group" style="margin-bottom: 1rem;">
-        <label class="form-label" style="font-weight: 500; margin-bottom: 6px; display: block;">New Password *</label>
-        <input type="password" class="form-input" id="my-account-new-password" placeholder="Minimum 6 characters" required style="width: 100%; padding: 10px 12px; background: rgba(255,255,255,0.03); border: 1px solid var(--color-border); border-radius: 8px; color: var(--color-text-primary);" />
+        <label class="form-label" style="margin-bottom: 6px; display: block;">New Password *</label>
+        <input type="password" class="form-input" id="my-account-new-password" placeholder="Minimum 6 characters" required />
       </div>
       <div class="form-group" style="margin-bottom: 0.5rem;">
-        <label class="form-label" style="font-weight: 500; margin-bottom: 6px; display: block;">Confirm Password *</label>
-        <input type="password" class="form-input" id="my-account-confirm-password" placeholder="Re-enter new password" required style="width: 100%; padding: 10px 12px; background: rgba(255,255,255,0.03); border: 1px solid var(--color-border); border-radius: 8px; color: var(--color-text-primary);" />
+        <label class="form-label" style="margin-bottom: 6px; display: block;">Confirm Password *</label>
+        <input type="password" class="form-input" id="my-account-confirm-password" placeholder="Re-enter new password" required />
       </div>
     </form>
   `;

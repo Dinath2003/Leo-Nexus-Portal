@@ -193,8 +193,8 @@ export function isPathAllowed(path, user) {
   if (!user) return false;
   if (!user.visibleOptions) return true;
 
-  // Always allow home/dashboard routes, calendar, and login to prevent redirect loops
-  if (['/district/dashboard', '/club/dashboard', '/member/dashboard', '/calendar', '/login'].includes(path)) {
+  // Always allow home/dashboard routes, calendar, login, and profiles to prevent redirect loops
+  if (['/district/dashboard', '/club/dashboard', '/member/dashboard', '/calendar', '/login', '/district/profile', '/club/district-profile', '/member/district-profile', '/district/md-profile', '/club/md-profile', '/member/md-profile'].includes(path)) {
     return true;
   }
 

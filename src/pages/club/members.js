@@ -110,7 +110,8 @@ export function renderClubMembers() {
             <!-- Page Header -->
             <div class="page-header stagger-enter">
               <div>
-                <h1>Club Members</h1>
+                <span class="section-badge" style="margin-bottom:0.5rem;display:inline-block;">MEMBERSHIP DIRECTORY</span>
+                <h1 style="margin:0;">Club Members</h1>
                 <p style="color:var(--color-text-muted);margin-top:4px;">Manage your club's membership roster</p>
               </div>
               <div class="page-header-actions">

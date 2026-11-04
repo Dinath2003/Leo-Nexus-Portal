@@ -434,7 +434,8 @@ export function renderDistrictFinance() {
             <!-- Page Header -->
             <div class="page-header stagger-enter">
               <div>
-                <h1>District Wallet & Finance</h1>
+                <span class="section-badge" style="margin-bottom:0.5rem;display:inline-block;">TREASURY COMMAND</span>
+                <h1 style="margin:0;">District Wallet & Finance</h1>
                 <p style="color:var(--color-text-muted);margin-top:4px;">Monitor district ledger, approve club dues, and verify income statements</p>
               </div>
               <div class="page-header-actions" style="display:flex; gap:10px;">

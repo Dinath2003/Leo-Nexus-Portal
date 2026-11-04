@@ -10,8 +10,12 @@ import { renderHeader, initHeader } from '../../components/header.js';
 import { createChart, destroyAllCharts } from '../../components/charts.js';
 import { showModal } from '../../components/modal.js';
 import { showToast } from '../../components/toast.js';
+import { PROJECT_CATEGORIES_DATA, PROJECT_AWARD_GROUPS, checkCategoryCompletion } from '../../data/projectCategories.js';
 
 let activeTab = 'overview'; // module level state
+let selectedCatMonth = '2026-06';
+let selectedAwardGroupFilter = 'all';
+let stagedCategoryClaims = {};
 
 const categoryMaxPoints = {
   'AD 1: Reporting': 1460000,
@@ -132,6 +136,9 @@ export function renderClubPoints() {
       </button>
       <button class="tab-btn ${activeTab === 'submit' ? 'active' : ''} btn btn-ghost btn-sm" data-tab="submit" style="font-weight:600; padding:8px 16px; border-radius:6px; display:flex; align-items:center; gap:6px;">
         <i data-lucide="clipboard-check" style="width:14px;height:14px;"></i> Submit Monthly Points
+      </button>
+      <button class="tab-btn ${activeTab === 'categories' ? 'active' : ''} btn btn-ghost btn-sm" data-tab="categories" style="font-weight:600; padding:8px 16px; border-radius:6px; display:flex; align-items:center; gap:6px;">
+        <i data-lucide="award" style="width:14px;height:14px;color:#f59e0b;"></i> Project Category Completion
       </button>
       <button class="tab-btn ${activeTab === 'history' ? 'active' : ''} btn btn-ghost btn-sm" data-tab="history" style="font-weight:600; padding:8px 16px; border-radius:6px; display:flex; align-items:center; gap:6px;">
         <i data-lucide="history" style="width:14px;height:14px;"></i> Submission History
@@ -499,6 +506,247 @@ export function renderClubPoints() {
         </div>
       </div>
     `;
+  } else if (activeTab === 'categories') {
+    // ------------------------------------
+    // TAB: PROJECT CATEGORY COMPLETION (37 CATEGORIES)
+    // ------------------------------------
+    const existingCatSub = store.getProjectCategorySubmissions(clubId, selectedCatMonth)[0];
+    if (existingCatSub && existingCatSub.subClaims && Object.keys(stagedCategoryClaims).length === 0) {
+      stagedCategoryClaims = JSON.parse(JSON.stringify(existingCatSub.subClaims));
+    }
+
+    // Filter categories by selected award group
+    let displayedCats = PROJECT_CATEGORIES_DATA;
+    if (selectedAwardGroupFilter !== 'all') {
+      displayedCats = displayedCats.filter(c => c.groupId === selectedAwardGroupFilter);
+    }
+
+    // Compute completion stats for all 37
+    let totalCompletedCategories = 0;
+    let g1Completed = 0;
+    let g2Completed = 0;
+    let g3Completed = 0;
+
+    PROJECT_CATEGORIES_DATA.forEach(cat => {
+      const res = checkCategoryCompletion(cat, stagedCategoryClaims);
+      if (res.isComplete) {
+        totalCompletedCategories++;
+        if (cat.groupId === 'project_awards') g1Completed++;
+        else if (cat.groupId === 'joint_project_awards') g2Completed++;
+        else if (cat.groupId === 'lions_global_service') g3Completed++;
+      }
+    });
+
+    const completionPct = Math.round((totalCompletedCategories / 37) * 100);
+
+    let categoriesCardsHtml = '';
+    displayedCats.forEach(cat => {
+      const completion = checkCategoryCompletion(cat, stagedCategoryClaims);
+      const isComplete = completion.isComplete;
+      const groupInfo = PROJECT_AWARD_GROUPS[cat.groupId];
+
+      categoriesCardsHtml += `
+        <div class="project-category-card card" data-cat-id="${cat.id}" style="margin-bottom:18px; border:1px solid ${isComplete ? 'rgba(16, 185, 129, 0.4)' : 'var(--color-glass-border)'}; border-radius:10px; overflow:hidden; background:${isComplete ? 'rgba(16, 185, 129, 0.02)' : 'var(--color-card-bg)'}; transition:all 0.2s ease;">
+          <!-- Category Card Header -->
+          <div style="background:${isComplete ? 'rgba(16, 185, 129, 0.08)' : 'rgba(255,255,255,0.02)'}; padding:14px 18px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; border-bottom:1px solid var(--color-glass-border);">
+            <div style="display:flex; align-items:center; gap:12px; flex:1; min-width:240px;">
+              <!-- Auto-Ticked Category Indicator -->
+              <div style="display:flex; align-items:center; justify-content:center; width:26px; height:26px; border-radius:6px; background:${isComplete ? '#10b981' : 'rgba(255,255,255,0.08)'}; border:1px solid ${isComplete ? '#10b981' : 'var(--color-glass-border)'};">
+                <i data-lucide="${isComplete ? 'check' : 'square'}" style="width:16px; height:16px; color:${isComplete ? '#ffffff' : 'var(--color-text-muted)'};"></i>
+              </div>
+              <div>
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <span class="badge ${groupInfo.badgeClass}" style="font-size:10px; font-weight:700;">${groupInfo.name}</span>
+                  <span style="font-size:11px; color:var(--color-text-muted); font-weight:600;">Category #${cat.number}</span>
+                </div>
+                <h3 style="margin:4px 0 0; font-size:1.05rem; font-weight:700; color:var(--color-text-primary); line-height:1.3;">
+                  ${cat.number}. ${cat.name}
+                </h3>
+              </div>
+            </div>
+
+            <!-- Status Badge -->
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span class="category-status-badge badge ${isComplete ? 'badge-success' : 'badge-secondary'}" data-cat-id="${cat.id}" style="font-size:11px; font-weight:700; padding:4px 10px;">
+                ${isComplete ? '✓ Auto-Ticked & Completed' : `Incomplete (${completion.fulfilledCount}/${completion.totalCount} with proof)`}
+              </span>
+            </div>
+          </div>
+
+          <!-- Sub-criteria List -->
+          <div style="padding:16px 18px;">
+            <div style="font-size:11px; font-weight:700; text-transform:uppercase; color:var(--color-text-muted); margin-bottom:10px; letter-spacing:0.5px;">
+              Sub-Criteria Checklist & Required Verification Proofs (${cat.subCriteria.length}):
+            </div>
+            <div style="display:flex; flex-direction:column; gap:10px;">
+              ${cat.subCriteria.map((sub, sIdx) => {
+                const subClaim = stagedCategoryClaims[sub.id] || { ticked: false, proofs: [] };
+                const isSubTicked = !!subClaim.ticked;
+                const proofsList = subClaim.proofs || [];
+
+                return `
+                  <div class="subcrit-item-row" data-cat-id="${cat.id}" data-sub-id="${sub.id}" style="padding:10px 12px; border-radius:8px; background:var(--color-bg-secondary); border:1px solid ${isSubTicked ? 'rgba(0,102,255,0.25)' : 'var(--color-glass-border)'};">
+                    <div style="display:flex; align-items:flex-start; gap:10px;">
+                      <input type="checkbox" class="subcrit-checkbox" data-cat-id="${cat.id}" data-sub-id="${sub.id}" ${isSubTicked ? 'checked' : ''} style="width:18px; height:18px; margin-top:2px; cursor:pointer; accent-color:var(--color-primary);" />
+                      <div style="flex:1;">
+                        <div style="font-size:12.5px; color:var(--color-text-secondary); line-height:1.4;">
+                          ${sub.compulsory ? '<span class="badge badge-warning" style="font-size:9px; font-weight:800; margin-right:4px;">COMPULSORY</span>' : ''}
+                          ${sub.text}
+                        </div>
+
+                        <!-- Conditional Proof Container -->
+                        <div class="subcrit-proof-container" data-cat-id="${cat.id}" data-sub-id="${sub.id}" style="display:${isSubTicked ? 'block' : 'none'}; margin-top:10px; padding:10px 12px; border-radius:6px; background:rgba(0,102,255,0.04); border:1px dashed var(--color-glass-border);">
+                          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                            <span style="font-size:11px; font-weight:700; color:var(--color-primary); display:flex; align-items:center; gap:4px;">
+                              <i data-lucide="paperclip" style="width:12px;height:12px;"></i> Upload Proof for this Sub-Criterion *
+                            </span>
+                            <span style="font-size:10px; color:var(--color-text-muted);">Required for auto-ticking</span>
+                          </div>
+                          
+                          <div style="display:flex; gap:6px; flex-wrap:wrap; align-items:center;">
+                            <input type="file" class="subcrit-file-input" data-cat-id="${cat.id}" data-sub-id="${sub.id}" multiple accept="image/*,.pdf,.doc,.docx" style="display:none;" />
+                            <button type="button" class="btn btn-secondary btn-xs upload-subcrit-proof-btn" data-cat-id="${cat.id}" data-sub-id="${sub.id}" style="height:28px; font-size:11px; display:flex; align-items:center; gap:4px;">
+                              <i data-lucide="upload" style="width:12px;height:12px;"></i> Upload File (Image/PDF)
+                            </button>
+                            <input type="url" class="form-input subcrit-link-input" data-cat-id="${cat.id}" data-sub-id="${sub.id}" placeholder="Or paste proof URL (Drive, MyLion, Social link)..." style="height:28px; font-size:11px; flex:1; min-width:160px;" />
+                            <button type="button" class="btn btn-secondary btn-xs add-subcrit-link-btn" data-cat-id="${cat.id}" data-sub-id="${sub.id}" style="height:28px; font-size:11px;">Add Link</button>
+                          </div>
+
+                          <!-- Attached Proofs List -->
+                          <div class="subcrit-proofs-list" data-cat-id="${cat.id}" data-sub-id="${sub.id}" style="display:flex; flex-direction:column; gap:4px; margin-top:8px;">
+                            ${proofsList.length === 0 ? `
+                              <span style="font-size:10px; color:var(--color-text-muted); font-style:italic;">No proof attached yet. Attach at least one proof to auto-tick this category.</span>
+                            ` : proofsList.map((att, pIdx) => `
+                              <div style="display:flex; align-items:center; justify-content:space-between; padding:4px 8px; border-radius:4px; background:rgba(0,0,0,0.3); border:1px solid var(--color-glass-border); font-size:11px;">
+                                <div style="display:flex; align-items:center; gap:6px; overflow:hidden; min-width:0;">
+                                  <i data-lucide="${att.isLink ? 'link' : 'file-text'}" style="width:12px;height:12px;color:var(--color-primary);flex-shrink:0;"></i>
+                                  <span style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:var(--color-text-primary); font-size:11px;">${att.name}</span>
+                                  <span style="color:var(--color-text-muted); font-size:10px; flex-shrink:0;">(${att.size})</span>
+                                </div>
+                                <button type="button" class="btn btn-ghost btn-xs remove-subcrit-proof-btn" data-cat-id="${cat.id}" data-sub-id="${sub.id}" data-idx="${pIdx}" style="color:var(--color-danger); padding:1px 4px;">
+                                  <i data-lucide="x" style="width:11px;height:11px;"></i>
+                                </button>
+                              </div>
+                            `).join('')}
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          </div>
+        </div>
+      `;
+    });
+
+    tabContentHtml = `
+      <div class="stagger-enter" style="display:grid; grid-template-columns: 2fr 1fr; gap:24px; align-items:start;">
+        <!-- Left: Checklist of 37 Categories -->
+        <div>
+          <!-- Top Info Banner -->
+          <div style="margin-bottom:20px;">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span class="badge badge-warning" style="font-size:10px; font-weight:700;">MONTHLY AUDIT</span>
+              <h2 style="font-size:1.35rem; margin:0; font-weight:800; color:var(--color-text-primary);">
+                Project Category Completion Checklist
+              </h2>
+            </div>
+            <p style="color:var(--color-text-muted); font-size:0.85rem; margin:6px 0 16px;">
+              Submit your monthly project category claims across the 3 official award groups. 
+              The project category will <strong>automatically tick as completed</strong> as soon as sub-criteria under it are ticked and verified with proof.
+            </p>
+
+            <!-- Group Filter Pills -->
+            <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px;">
+              <button type="button" class="btn btn-sm cat-group-tab-btn ${selectedAwardGroupFilter === 'all' ? 'btn-primary' : 'btn-secondary'}" data-group="all">
+                All Categories (37)
+              </button>
+              <button type="button" class="btn btn-sm cat-group-tab-btn ${selectedAwardGroupFilter === 'project_awards' ? 'btn-primary' : 'btn-secondary'}" data-group="project_awards">
+                Project Awards (1–24)
+              </button>
+              <button type="button" class="btn btn-sm cat-group-tab-btn ${selectedAwardGroupFilter === 'joint_project_awards' ? 'btn-primary' : 'btn-secondary'}" data-group="joint_project_awards">
+                Joint Project Awards (25–30)
+              </button>
+              <button type="button" class="btn btn-sm cat-group-tab-btn ${selectedAwardGroupFilter === 'lions_global_service' ? 'btn-primary' : 'btn-secondary'}" data-group="lions_global_service">
+                Lions Global Challenge (31–37)
+              </button>
+            </div>
+          </div>
+
+          <!-- List of Category Cards -->
+          <form id="project-categories-form">
+            ${categoriesCardsHtml}
+          </form>
+        </div>
+
+        <!-- Right: Sticky Submit & Auto-Tick Summary Box -->
+        <div style="position:sticky; top:20px;">
+          <div class="card hover-lift" style="border:1px solid rgba(245, 158, 11, 0.3);">
+            <div class="card-header" style="background:rgba(245, 158, 11, 0.05); border-bottom:1px solid var(--color-glass-border); padding:16px 20px;">
+              <h3 class="card-title" style="font-size:1.05rem; display:flex; align-items:center; gap:8px;">
+                <i data-lucide="award" style="width:18px; height:18px; color:#f59e0b;"></i> Category Completion Status
+              </h3>
+            </div>
+            
+            <div class="card-body" style="padding:20px; display:flex; flex-direction:column; gap:16px;">
+              <!-- Month Selector -->
+              <div class="form-group" style="margin:0;">
+                <label class="form-label" style="font-size:12px; margin-bottom:6px; font-weight:700;">Submission Month *</label>
+                <select class="form-input" id="cat-submit-month-select" style="height:38px; font-size:13px; font-weight:700;">
+                  <option value="2026-06" ${selectedCatMonth === '2026-06' ? 'selected' : ''}>June 2026</option>
+                  <option value="2026-07" ${selectedCatMonth === '2026-07' ? 'selected' : ''}>July 2026</option>
+                  <option value="2026-08" ${selectedCatMonth === '2026-08' ? 'selected' : ''}>August 2026</option>
+                </select>
+              </div>
+
+              <!-- Overall Auto-Ticked Progress -->
+              <div style="border-top:1px solid var(--color-glass-border); padding-top:14px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                  <span style="font-size:13px; color:var(--color-text-secondary); font-weight:600;">Auto-Ticked Categories:</span>
+                  <span id="side-cat-completed-badge" style="font-weight:800; color:#10b981; font-size:1.15rem;">
+                    ${totalCompletedCategories} / 37
+                  </span>
+                </div>
+                <div style="background:rgba(255,255,255,0.08); height:8px; border-radius:4px; overflow:hidden;">
+                  <div id="side-cat-progress-bar" style="width:${completionPct}%; background:#10b981; height:100%; transition:width 0.3s ease;"></div>
+                </div>
+                <div style="text-align:right; font-size:10px; color:var(--color-text-muted); margin-top:4px;">
+                  ${completionPct}% Completed
+                </div>
+              </div>
+
+              <!-- Group Breakdown Counters -->
+              <div style="display:flex; flex-direction:column; gap:6px; font-size:12px; background:var(--color-bg-secondary); padding:10px 12px; border-radius:6px; border:1px solid var(--color-glass-border);">
+                <div style="display:flex; justify-content:space-between;">
+                  <span style="color:var(--color-primary); font-weight:600;">Project Awards (1–24):</span>
+                  <strong id="side-g1-count">${g1Completed} / 24</strong>
+                </div>
+                <div style="display:flex; justify-content:space-between;">
+                  <span style="color:#f59e0b; font-weight:600;">Joint Awards (25–30):</span>
+                  <strong id="side-g2-count">${g2Completed} / 6</strong>
+                </div>
+                <div style="display:flex; justify-content:space-between;">
+                  <span style="color:#14b8a6; font-weight:600;">Global Challenge (31–37):</span>
+                  <strong id="side-g3-count">${g3Completed} / 7</strong>
+                </div>
+              </div>
+
+              <!-- Submit Button -->
+              <button type="button" class="btn btn-primary" id="submit-cat-claims-btn" style="width:100%; height:44px; display:flex; align-items:center; justify-content:center; gap:8px; font-weight:700;">
+                <i data-lucide="send" style="width:16px; height:16px;"></i> Submit to District
+              </button>
+
+              <p style="font-size:11px; color:var(--color-text-muted); margin:0; line-height:1.4; text-align:center;">
+                Submissions automatically update District Project Category Completion reports and audit ledgers.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
   } else if (activeTab === 'history') {
     // ------------------------------------
     // TAB: SUBMISSION HISTORY
@@ -589,6 +837,7 @@ export function renderClubPoints() {
           <!-- Page Header -->
           <div class="page-header stagger-enter">
             <div>
+              <span class="section-badge" style="margin-bottom:0.5rem;display:inline-block;">PERFORMANCE & MERIT</span>
               <h1 style="margin:0;">Club Performance Points</h1>
               <p style="color:var(--color-text-muted);margin-top:4px;">Submit monthly point checklists and review standings</p>
             </div>
@@ -929,6 +1178,282 @@ export function renderClubPoints() {
         store.submitMonthlyPoints(clubId, club?.name || 'Club', month, checkedCriteria, pointsClaimed, submittedBy, stagedAttachmentsByCrit);
         showToast('success', 'Form Submitted', `Monthly points checklist for ${month} has been submitted successfully.`);
         activeTab = 'history';
+        renderClubPoints();
+      } catch (err) {
+        showToast('error', 'Submission Failed', err.message);
+      }
+    });
+  }
+
+  // Categories Tab Specifics (Auto-ticking + Proof Uploads)
+  if (activeTab === 'categories') {
+    // 1. Group filter buttons
+    document.querySelectorAll('.cat-group-tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        selectedAwardGroupFilter = btn.dataset.group;
+        renderClubPoints();
+      });
+    });
+
+    // 2. Month selector change
+    const catMonthSelect = document.getElementById('cat-submit-month-select');
+    catMonthSelect?.addEventListener('change', (e) => {
+      selectedCatMonth = e.target.value;
+      stagedCategoryClaims = {};
+      const existing = store.getProjectCategorySubmissions(clubId, selectedCatMonth)[0];
+      if (existing && existing.subClaims) {
+        stagedCategoryClaims = JSON.parse(JSON.stringify(existing.subClaims));
+      }
+      renderClubPoints();
+    });
+
+    // 3. Re-render proofs list helper
+    function renderSubCritProofs(catId, subId) {
+      const container = document.querySelector(`.subcrit-proofs-list[data-cat-id="${catId}"][data-sub-id="${subId}"]`);
+      if (!container) return;
+      const list = stagedCategoryClaims[subId]?.proofs || [];
+      if (list.length === 0) {
+        container.innerHTML = `<span style="font-size:10px; color:var(--color-text-muted); font-style:italic;">No proof attached yet. Attach at least one proof to auto-tick this category.</span>`;
+        return;
+      }
+
+      container.innerHTML = list.map((att, idx) => `
+        <div style="display:flex; align-items:center; justify-content:space-between; padding:4px 8px; border-radius:4px; background:rgba(0,0,0,0.3); border:1px solid var(--color-glass-border); font-size:11px;">
+          <div style="display:flex; align-items:center; gap:6px; overflow:hidden; min-width:0;">
+            <i data-lucide="${att.isLink ? 'link' : 'file-text'}" style="width:12px;height:12px;color:var(--color-primary);flex-shrink:0;"></i>
+            <span style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:var(--color-text-primary); font-size:11px;">${att.name}</span>
+            <span style="color:var(--color-text-muted); font-size:10px; flex-shrink:0;">(${att.size})</span>
+          </div>
+          <button type="button" class="btn btn-ghost btn-xs remove-subcrit-proof-btn" data-cat-id="${catId}" data-sub-id="${subId}" data-idx="${idx}" style="color:var(--color-danger); padding:1px 4px;">
+            <i data-lucide="x" style="width:11px;height:11px;"></i>
+          </button>
+        </div>
+      `).join('');
+
+      if (window.lucide) lucide.createIcons({ nodes: [container] });
+
+      container.querySelectorAll('.remove-subcrit-proof-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const cId = btn.dataset.catId;
+          const sId = btn.dataset.subId;
+          const i = parseInt(btn.dataset.idx);
+          if (stagedCategoryClaims[sId]?.proofs) {
+            stagedCategoryClaims[sId].proofs.splice(i, 1);
+            renderSubCritProofs(cId, sId);
+            evaluateCategoryCompletion(cId);
+          }
+        });
+      });
+    }
+
+    // 4. Reactive Auto-ticking Evaluator
+    function evaluateCategoryCompletion(catId) {
+      const cat = PROJECT_CATEGORIES_DATA.find(c => c.id === catId);
+      if (!cat) return;
+
+      const result = checkCategoryCompletion(cat, stagedCategoryClaims);
+      const card = document.querySelector(`.project-category-card[data-cat-id="${catId}"]`);
+      const badge = document.querySelector(`.category-status-badge[data-cat-id="${catId}"]`);
+      const iconWrapper = card?.querySelector('div[style*="border-radius:6px"]');
+
+      if (badge) {
+        if (result.isComplete) {
+          badge.className = 'category-status-badge badge badge-success';
+          badge.style.fontSize = '11px';
+          badge.style.fontWeight = '700';
+          badge.innerHTML = `<i data-lucide="check" style="width:11px;height:11px;display:inline-block;vertical-align:middle;"></i> ✓ Auto-Ticked & Completed`;
+        } else {
+          badge.className = 'category-status-badge badge badge-secondary';
+          badge.style.fontSize = '11px';
+          badge.textContent = `Incomplete (${result.fulfilledCount}/${result.totalCount} with proof)`;
+        }
+      }
+
+      if (iconWrapper) {
+        if (result.isComplete) {
+          iconWrapper.style.background = '#10b981';
+          iconWrapper.style.borderColor = '#10b981';
+          iconWrapper.innerHTML = `<i data-lucide="check" style="width:16px;height:16px;color:#ffffff;"></i>`;
+        } else {
+          iconWrapper.style.background = 'rgba(255,255,255,0.08)';
+          iconWrapper.style.borderColor = 'var(--color-glass-border)';
+          iconWrapper.innerHTML = `<i data-lucide="square" style="width:16px;height:16px;color:var(--color-text-muted);"></i>`;
+        }
+      }
+
+      if (card) {
+        if (result.isComplete) {
+          card.style.borderColor = 'rgba(16, 185, 129, 0.4)';
+          card.style.background = 'rgba(16, 185, 129, 0.02)';
+        } else {
+          card.style.borderColor = 'var(--color-glass-border)';
+          card.style.background = 'var(--color-card-bg)';
+        }
+      }
+
+      updateSidebarCategoryCounters();
+      if (window.lucide) lucide.createIcons();
+    }
+
+    // 5. Update Sidebar Counters
+    function updateSidebarCategoryCounters() {
+      let totalCompleted = 0;
+      let g1 = 0;
+      let g2 = 0;
+      let g3 = 0;
+
+      PROJECT_CATEGORIES_DATA.forEach(cat => {
+        const res = checkCategoryCompletion(cat, stagedCategoryClaims);
+        if (res.isComplete) {
+          totalCompleted++;
+          if (cat.groupId === 'project_awards') g1++;
+          else if (cat.groupId === 'joint_project_awards') g2++;
+          else if (cat.groupId === 'lions_global_service') g3++;
+        }
+      });
+
+      const pct = Math.round((totalCompleted / 37) * 100);
+
+      const badge = document.getElementById('side-cat-completed-badge');
+      if (badge) badge.textContent = `${totalCompleted} / 37`;
+
+      const bar = document.getElementById('side-cat-progress-bar');
+      if (bar) bar.style.width = `${pct}%`;
+
+      const g1El = document.getElementById('side-g1-count');
+      if (g1El) g1El.textContent = `${g1} / 24`;
+
+      const g2El = document.getElementById('side-g2-count');
+      if (g2El) g2El.textContent = `${g2} / 6`;
+
+      const g3El = document.getElementById('side-g3-count');
+      if (g3El) g3El.textContent = `${g3} / 7`;
+    }
+
+    // 6. Sub-criterion checkbox listener
+    document.querySelectorAll('.subcrit-checkbox').forEach(cb => {
+      cb.addEventListener('change', (e) => {
+        const catId = cb.dataset.catId;
+        const subId = cb.dataset.subId;
+        const isChecked = cb.checked;
+
+        if (!stagedCategoryClaims[subId]) {
+          stagedCategoryClaims[subId] = { ticked: false, proofs: [] };
+        }
+        stagedCategoryClaims[subId].ticked = isChecked;
+
+        const proofContainer = document.querySelector(`.subcrit-proof-container[data-cat-id="${catId}"][data-sub-id="${subId}"]`);
+        if (proofContainer) {
+          proofContainer.style.display = isChecked ? 'block' : 'none';
+        }
+
+        evaluateCategoryCompletion(catId);
+      });
+    });
+
+    // 7. File upload triggers
+    document.querySelectorAll('.upload-subcrit-proof-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const catId = btn.dataset.catId;
+        const subId = btn.dataset.subId;
+        const fileInput = document.querySelector(`.subcrit-file-input[data-cat-id="${catId}"][data-sub-id="${subId}"]`);
+        fileInput?.click();
+      });
+    });
+
+    // 8. File inputs change
+    document.querySelectorAll('.subcrit-file-input').forEach(fileInput => {
+      fileInput.addEventListener('change', (e) => {
+        const catId = fileInput.dataset.catId;
+        const subId = fileInput.dataset.subId;
+        const files = Array.from(e.target.files || []);
+        if (files.length === 0) return;
+
+        if (!stagedCategoryClaims[subId]) {
+          stagedCategoryClaims[subId] = { ticked: true, proofs: [] };
+        }
+        if (!stagedCategoryClaims[subId].proofs) stagedCategoryClaims[subId].proofs = [];
+
+        let pending = files.length;
+        files.forEach(file => {
+          const reader = new FileReader();
+          reader.onload = (evt) => {
+            stagedCategoryClaims[subId].proofs.push({
+              id: 'file_' + Math.random().toString(36).substr(2, 9),
+              name: file.name,
+              type: file.type || 'document',
+              size: (file.size / 1024 > 1024) ? (file.size / (1024 * 1024)).toFixed(1) + ' MB' : Math.round(file.size / 1024) + ' KB',
+              url: evt.target.result,
+              isLink: false
+            });
+            pending--;
+            if (pending === 0) {
+              renderSubCritProofs(catId, subId);
+              evaluateCategoryCompletion(catId);
+            }
+          };
+          reader.readAsDataURL(file);
+        });
+        fileInput.value = '';
+      });
+    });
+
+    // 9. Add URL Link button
+    document.querySelectorAll('.add-subcrit-link-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const catId = btn.dataset.catId;
+        const subId = btn.dataset.subId;
+        const linkInput = document.querySelector(`.subcrit-link-input[data-cat-id="${catId}"][data-sub-id="${subId}"]`);
+        const url = linkInput?.value.trim();
+
+        if (!url || !url.startsWith('http')) {
+          showToast('error', 'Validation Error', 'Please enter a valid URL starting with http:// or https://');
+          return;
+        }
+
+        if (!stagedCategoryClaims[subId]) {
+          stagedCategoryClaims[subId] = { ticked: true, proofs: [] };
+        }
+        if (!stagedCategoryClaims[subId].proofs) stagedCategoryClaims[subId].proofs = [];
+
+        let linkName = 'External Proof URL';
+        try {
+          const parsed = new URL(url);
+          linkName = parsed.hostname + (parsed.pathname.length > 1 ? parsed.pathname.slice(0, 15) + '...' : '');
+        } catch (_) {}
+
+        stagedCategoryClaims[subId].proofs.push({
+          id: 'link_' + Math.random().toString(36).substr(2, 9),
+          name: linkName,
+          type: 'link',
+          size: 'URL',
+          url: url,
+          isLink: true
+        });
+
+        linkInput.value = '';
+        renderSubCritProofs(catId, subId);
+        evaluateCategoryCompletion(catId);
+      });
+    });
+
+    // 10. Submit Category Completion Button
+    document.getElementById('submit-cat-claims-btn')?.addEventListener('click', () => {
+      let completedCount = 0;
+      PROJECT_CATEGORIES_DATA.forEach(cat => {
+        const check = checkCategoryCompletion(cat, stagedCategoryClaims);
+        if (check.isComplete) completedCount++;
+      });
+
+      if (completedCount === 0) {
+        showToast('error', 'Validation Error', 'Please complete at least one project category with attached proof before submitting.');
+        return;
+      }
+
+      try {
+        const submittedBy = auth.currentUser?.name || 'Club President';
+        store.submitProjectCategoryClaims(clubId, club?.name || 'Club', selectedCatMonth, stagedCategoryClaims, submittedBy);
+        showToast('success', 'Categories Submitted', `Successfully submitted ${completedCount} completed project categories for ${selectedCatMonth} to District!`);
         renderClubPoints();
       } catch (err) {
         showToast('error', 'Submission Failed', err.message);

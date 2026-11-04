@@ -9,6 +9,7 @@ import { renderSidebar, initSidebar } from '../../components/sidebar.js';
 import { renderHeader, initHeader } from '../../components/header.js';
 import { showToast } from '../../components/toast.js';
 import { showModal, showConfirm } from '../../components/modal.js';
+import { setPointsActiveTab } from './points.js';
 
 function getProjectFormHtml(data = {}) {
   return `
@@ -125,10 +126,14 @@ export function renderClubProjects() {
             <!-- Page Header -->
             <div class="page-header stagger-enter">
               <div>
-                <h1>Service Projects</h1>
+                <span class="section-badge" style="margin-bottom:0.5rem;display:inline-block;">SERVICE IMPACT</span>
+                <h1 style="margin:0;">Service Projects</h1>
                 <p style="color:var(--color-text-muted);margin-top:4px;">Track and manage community service initiatives</p>
               </div>
-              <div class="page-header-actions">
+              <div class="page-header-actions" style="display:flex; gap:10px; align-items:center;">
+                <a href="#/club/points" class="btn btn-secondary" id="category-completion-shortcut-btn" style="display:flex; align-items:center; gap:6px;">
+                  <i data-lucide="award" style="width:16px;height:16px;color:#f59e0b;"></i> Category Completion
+                </a>
                 ${canCreate ? '<button class="btn btn-primary" id="add-project-btn"><i data-lucide="plus" style="width:16px;height:16px"></i> New Project</button>' : ''}
               </div>
             </div>
@@ -256,6 +261,11 @@ export function renderClubProjects() {
         activeFilter = btn.dataset.filter;
         render();
       });
+    });
+
+    // Category Completion Shortcut
+    document.getElementById('category-completion-shortcut-btn')?.addEventListener('click', () => {
+      setPointsActiveTab('categories');
     });
 
     // Add Project

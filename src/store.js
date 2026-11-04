@@ -3,6 +3,8 @@
 // LocalStorage persistence + seed data
 // ============================================
 
+import { PROJECT_CATEGORIES_DATA, PROJECT_AWARD_GROUPS, checkCategoryCompletion } from './data/projectCategories.js';
+
 const STORAGE_KEY = 'leo_nexus_portal';
 
 // ---------- Seed Data ----------
@@ -1454,35 +1456,758 @@ function getDefaultData() {
       tagline: 'Serve with Passion, Lead with Integrity',
       description: 'Leo District 306 B2 Sri Lanka spans over a wide network of active Leo clubs in Colombo, Gampaha, and the North-Western province. We guide and empower young leaders to execute sustainable service projects that make a difference.',
       dg: 'Lion Samantha Perera PMJF',
-      dp: 'Leo Rahul De Silva',
-      dvp: 'Leo Kavinda Wijetunga',
-      ds: 'Leo Mithila Gunawardena',
-      dt: 'Leo Shehan Kuruppu',
+      dp: 'Leo Lion Vinuk Thismalpola',
+      ipdp: 'Leo Lion Yashika Nethmini',
+      dvp: 'Leo Lion Manish Perera',
+      leoChair: 'Lion Suranjani Wickramarathne',
+      deputyLeoChair: 'Leo Lion Dilshan Pieris',
+      ds: 'Leo Lion Hashini Nethmika',
+      dt: 'Leo Lion Bathisha Kavinda',
+      dmc: 'Leo Lion Sanduni Theekshana',
       goals: [
         { title: '1. Membership Growth & Retention', desc: 'Targeting 15% net membership growth and introducing leadership training modules to reduce drop-out rates.' },
         { title: '2. Environmental Stewardship', desc: 'Planting 5,000 trees district-wide and organizing coordinated beach cleanups in coastal areas.' },
         { title: '3. Joint Service Collaborations', desc: 'Encouraging clubs to partner on large-scale medical camps, computer literacy workshops, and library donation projects.' }
       ],
       council: {
-        ipdp: 'Leo Dilshan Fernando',
-        advisor: 'Lion Johnathan Silva',
-        coordinators: '8 District Coordinators',
-        regions: '4 Region Chairpersons',
-        zones: '8 Zone Chairpersons'
+        ipdp: 'Leo Lion Yashika Nethmini',
+        advisor: 'Lion Suranjani Wickramarathne',
+        coordinators: '7 Chief Coordinators & Editor',
+        regions: '2 Region Directors (Region A & B)',
+        zones: '4 Zone Directors (Zone A1, A2, B1, B2)'
+      },
+      officers: [
+      {
+            "order": 1,
+            "role": "District President",
+            "name": "Leo Lion Vinuk Thismalpola",
+            "club": "Leo Club of University of Colombo Faculty of Science",
+            "memberId": "6005220",
+            "phone": "0765624434",
+            "email": "vthismalpola@gmail.com",
+            "address": "78/B, Ananda Balika Mawatha, Pitakotte",
+            "dob": "18/09/2001",
+            "category": "Executive Committee",
+            "badge": "DP"
+      },
+      {
+            "order": 2,
+            "role": "Immediate Past District President",
+            "name": "Leo Lion Yashika Nethmini",
+            "club": "Leo Club of Mount Lavinia Orient Centennial",
+            "memberId": "",
+            "phone": "0769916688",
+            "email": "yashi.nethmini@gmail.com",
+            "address": "",
+            "dob": "",
+            "category": "Executive Committee",
+            "badge": "IPDP"
+      },
+      {
+            "order": 3,
+            "role": "District Vice President",
+            "name": "Leo Lion Manish Perera",
+            "club": "Leo Club of Informatics Institute of Technology (IIT)",
+            "memberId": "6163565",
+            "phone": "0774338308",
+            "email": "manishperera0205@gmail.com",
+            "address": "194, Udakanampella, Pugoda",
+            "dob": "02/05/2002",
+            "category": "Executive Committee",
+            "badge": "DVP"
+      },
+      {
+            "order": 4,
+            "role": "District Leo Chairperson",
+            "name": "Lion Suranjani Wickramarathne",
+            "club": "Lions Club of Colombo Host",
+            "memberId": "",
+            "phone": "0777281750",
+            "email": "suranjani567@yahoo.com",
+            "address": "",
+            "dob": "",
+            "category": "Executive Committee",
+            "badge": "DLC"
+      },
+      {
+            "order": 5,
+            "role": "Deputy Leo Chairperson",
+            "name": "Leo Lion Dilshan Pieris",
+            "club": "Lions Club of Moratuwa",
+            "memberId": "",
+            "phone": "",
+            "email": "",
+            "address": "",
+            "dob": "",
+            "category": "Executive Committee",
+            "badge": "Deputy DLC"
+      },
+      {
+            "order": 6,
+            "role": "District Secretary",
+            "name": "Leo Lion Hashini Nethmika",
+            "club": "Leo Club of University of Colombo Faculty of Arts",
+            "memberId": "6270352",
+            "phone": "0752770922",
+            "email": "nethmikahashini64@gmail.com",
+            "address": "",
+            "dob": "06/09/2002",
+            "category": "Executive Committee",
+            "badge": "DS"
+      },
+      {
+            "order": 7,
+            "role": "District Treasurer",
+            "name": "Leo Lion Bathisha Kavinda",
+            "club": "Leo Club of University of Colombo Faculty of Science",
+            "memberId": "6196553",
+            "phone": "0703593154",
+            "email": "iambathisha@gmail.com",
+            "address": "344/H, Batagama north, jaela",
+            "dob": "20/11/2001",
+            "category": "Executive Committee",
+            "badge": "DT"
+      },
+      {
+            "order": 8,
+            "role": "District Membership Chairperson",
+            "name": "Leo Lion Sanduni Theekshana",
+            "club": "Leo Club of Colombo (Host)",
+            "memberId": "5727258",
+            "phone": "0758650060",
+            "email": "leo.sandunitheekshana@gmail.com",
+            "address": "294/C, Mulleriyawa North, Angoda.",
+            "dob": "21/06/1999",
+            "category": "Executive Committee",
+            "badge": "DMC"
+      },
+      {
+            "order": 9,
+            "role": "District Assistant Secretary",
+            "name": "Leo Lion Prabhavee Mayasha",
+            "club": "Leo Club of Informatics Institute of Technology (IIT)",
+            "memberId": "6208905",
+            "phone": "0770045416",
+            "email": "prabhaveemayasha2002@gmail.com",
+            "address": "251/1/A, Moratuwa Road, Suwarapola, Piliyandala",
+            "dob": "28/12/2002",
+            "category": "Executive Committee",
+            "badge": "DAS"
+      },
+      {
+            "order": 10,
+            "role": "District Assistant Secretary",
+            "name": "Leo Dulari Christoper",
+            "club": "Leo Club of UOC Alumni",
+            "memberId": "5379433",
+            "phone": "0719933330",
+            "email": "christopherdulari@gmail.com",
+            "address": "96, Vystwyke rd, Colombo 15",
+            "dob": "07/12/1998",
+            "category": "Executive Committee",
+            "badge": "DAS"
+      },
+      {
+            "order": 11,
+            "role": "District Assistant Treasurer",
+            "name": "Leo Lion Chamal Pramod",
+            "club": "Leo Club of Moratuwa",
+            "memberId": "6012135",
+            "phone": "0711952062",
+            "email": "chamalps21@gmail.com",
+            "address": "365/65, Wimalarathana rd, Kudaarukgoda, Alubomulla",
+            "dob": "21/04/1996",
+            "category": "Executive Committee",
+            "badge": "DAT"
+      },
+      {
+            "order": 12,
+            "role": "District Assistant Treasurer",
+            "name": "Leo Oshada Tharusha",
+            "club": "Leo Club of Mount Lavinia Orient Centennial",
+            "memberId": "6394323",
+            "phone": "0707032981",
+            "email": "oshadhatharusha1@gmail.com",
+            "address": "102/11, Udapeekwalla rd, Maddawatta, Matara.",
+            "dob": "17/05/2005",
+            "category": "Executive Committee",
+            "badge": "DAT"
+      },
+      {
+            "order": 13,
+            "role": "Chief Council Coordinator",
+            "name": "Leo Lion Randiv De Silva",
+            "club": "Leo Club of Moratuwa 2020",
+            "memberId": "6350895",
+            "phone": "0767658129",
+            "email": "Sanuth.desilva@gmail.com",
+            "address": "116/5, Justin Dias Mawatha, Egodauyana, Moratuwa",
+            "dob": "25/06/2004",
+            "category": "Chief Coordinators & Editor",
+            "badge": "CCC"
+      },
+      {
+            "order": 14,
+            "role": "Chief Regional Coordinator",
+            "name": "Leo Lion Kasun Sapumohotti",
+            "club": "Leo Club of Moratuwa",
+            "memberId": "6047384",
+            "phone": "0779935395",
+            "email": "kasunsapumohotti30@gmail.com",
+            "address": "No.05, Nadun Uyana, Andugoda, Dikkumbura, Galle",
+            "dob": "29/02/2000",
+            "category": "Chief Coordinators & Editor",
+            "badge": "CRC"
+      },
+      {
+            "order": 15,
+            "role": "Chief Operational Coordinator",
+            "name": "Leo Kulindu Thenuka Bopage",
+            "club": "Leo Club of Royal Achievers",
+            "memberId": "",
+            "phone": "0715289759",
+            "email": "kulinduthenuka.lcra@gmail.com",
+            "address": "\"Randi\", Malegoda, Payagala",
+            "dob": "12/12/2000",
+            "category": "Chief Coordinators & Editor",
+            "badge": "COC"
+      },
+      {
+            "order": 16,
+            "role": "Chief Performance Coordinator",
+            "name": "Leo Lion Savidya Ranawaka",
+            "club": "Leo Club of University of Colombo Faculty of Science",
+            "memberId": "26815475",
+            "phone": "0777644824",
+            "email": "savidyaranawaka17@gmail.com",
+            "address": "282/B, Lumbini Place, Thalawathugoda",
+            "dob": "17/06/2002",
+            "category": "Chief Coordinators & Editor",
+            "badge": "CPC"
+      },
+      {
+            "order": 17,
+            "role": "Chief IT and Strategic Coordinator",
+            "name": "Leo Lion Senuth Wanniarachchi",
+            "club": "Leo Club of Informatics Institute of Technology (IIT)",
+            "memberId": "26866603",
+            "phone": "0774158788",
+            "email": "senuthdilnadarox@gmail.com",
+            "address": "No 4-B, Maitipe 2nd Lane, Galle",
+            "dob": "20/10/2006",
+            "category": "Chief Coordinators & Editor",
+            "badge": "CITSC"
+      },
+      {
+            "order": 18,
+            "role": "Chief PR and Branding Coordinator",
+            "name": "Leo Lion Dinath Wijesooriya",
+            "club": "Leo Club of Informatics Institute of Technology (IIT)",
+            "memberId": "26761326",
+            "phone": "0761087967",
+            "email": "dinathwijesooriya@gmail.com",
+            "address": "38/6A Wekunagoda Road, Galle",
+            "dob": "13/08/2003",
+            "category": "Chief Coordinators & Editor",
+            "badge": "CPRBC"
+      },
+      {
+            "order": 19,
+            "role": "Chief Editor",
+            "name": "Leo Lion Uvini Imalna",
+            "club": "Leo Club of Informatics Institute of Technology (IIT)",
+            "memberId": "27194977",
+            "phone": "0743423494",
+            "email": "uviniwa1123@gmail.com",
+            "address": "No:38, Kingscourt, Thalpawila, Kekanadura, Matara",
+            "dob": "23/11/2007",
+            "category": "Chief Coordinators & Editor",
+            "badge": "CE"
+      },
+      {
+            "order": 20,
+            "role": "Regional Director - Region A",
+            "name": "Leo Dewmi Tharunya",
+            "club": "Leo Club of Informatics Institute of Technology (IIT)",
+            "memberId": "26866618",
+            "phone": "0770538457",
+            "email": "dewmitharunya2@gmail.com",
+            "address": "\"Damruk\", Walahanduwa, Galle",
+            "dob": "24/10/2006",
+            "category": "Regional & Zonal Leadership",
+            "badge": "RD-A"
+      },
+      {
+            "order": 21,
+            "role": "Regional Director - Region B",
+            "name": "Leo Hiruni Fernando",
+            "club": "Leo Club of Colombo (Host)",
+            "memberId": "5577538",
+            "phone": "0719267661",
+            "email": "hirufernando26@gmail.com",
+            "address": "\"Aneeta\", Jude Road, Diyalagoda, Maggona",
+            "dob": "11/06/1998",
+            "category": "Regional & Zonal Leadership",
+            "badge": "RD-B"
+      },
+      {
+            "order": 22,
+            "role": "Zonal Director - Zone A1",
+            "name": "Leo Nadeesha Mayomi Ekanayaka",
+            "club": "Leo Club of University of Colombo Faculty of Arts",
+            "memberId": "26867439",
+            "phone": "0781895516",
+            "email": "mayomiekanayaka2002@gmail.com",
+            "address": "Behind the Fair Road, Galapitiyagama, Nikaweratiya",
+            "dob": "04/03/2002",
+            "category": "Regional & Zonal Leadership",
+            "badge": "ZD-A1"
+      },
+      {
+            "order": 23,
+            "role": "Zonal Director - Zone A2",
+            "name": "Leo Lion Udara Nawarathna",
+            "club": "Leo Club of University of Colombo Faculty of Science",
+            "memberId": "6260655",
+            "phone": "0776952731",
+            "email": "udaran92@gmail.com",
+            "address": "No.90/1, Nagolla Road, Kegalle",
+            "dob": "14/01/2003",
+            "category": "Regional & Zonal Leadership",
+            "badge": "ZD-A2"
+      },
+      {
+            "order": 24,
+            "role": "Zonal Director - Zone B1",
+            "name": "Leo Vihanga Kothalawala",
+            "club": "Leo Club of Moratuwa",
+            "memberId": "27033559",
+            "phone": "0741612668",
+            "email": "vihangakothalawsla@gmail.com",
+            "address": "No.08, 1st Lane, Rawathawaththa, Moratuwa.",
+            "dob": "06/09/2004",
+            "category": "Regional & Zonal Leadership",
+            "badge": "ZD-B1"
+      },
+      {
+            "order": 25,
+            "role": "Zonal Director - Zone B2",
+            "name": "Leo Meuni Liyanage",
+            "club": "Leo Club of Kalutara Balika Vidyalaya",
+            "memberId": "6219400",
+            "phone": "0741140564",
+            "email": "meuniliyanage726@gmail.com",
+            "address": "\"Kalhari\", Bombuwala, Kalutara",
+            "dob": "26/07/2007",
+            "category": "Regional & Zonal Leadership",
+            "badge": "ZD-B2"
+      },
+      {
+            "order": 26,
+            "role": "Co-Head - District Service Committee",
+            "name": "Leo Sudam Jayawardana",
+            "club": "Leo Club of Mount Lavinia Orient Centennial",
+            "memberId": "6005154",
+            "phone": "0771646116",
+            "email": "sudamjayawardana06@gmail.com",
+            "address": "156/5G, 6th lane, Weragala place, Thalawathugoda",
+            "dob": "06/11/2000",
+            "category": "District Committee Leadership",
+            "badge": "DSC"
+      },
+      {
+            "order": 27,
+            "role": "Co-Head - District Service Committee",
+            "name": "Leo Treveen Rozairo",
+            "club": "Leo Club of Prince of Wales College",
+            "memberId": "26935999",
+            "phone": "0705631777",
+            "email": "treveenrozairo500@gmail.com",
+            "address": "16/A, 5th Lane, Rawathawatta, Moratuwa",
+            "dob": "10/07/2007",
+            "category": "District Committee Leadership",
+            "badge": "DSC"
+      },
+      {
+            "order": 28,
+            "role": "Head - District Talent Committee",
+            "name": "Leo Lion Thenuji Jayakody",
+            "club": "Leo Club of Princess of Wales College",
+            "memberId": "27005837",
+            "phone": "0702901180",
+            "email": "thenujijayakody@gmail.com",
+            "address": "28/3/1, Gangaboda Road, Wewala, Piliyandala",
+            "dob": "05/08/2008",
+            "category": "District Committee Leadership",
+            "badge": "DTC"
+      },
+      {
+            "order": 29,
+            "role": "Head - District Sports Committee",
+            "name": "Leo Lithira Kalubowila",
+            "club": "Leo Club of UOC Alumni",
+            "memberId": "27154893",
+            "phone": "0710495670",
+            "email": "lithiratk@gmail.com",
+            "address": "7/2, Temple road, Kalutara north",
+            "dob": "31/05/2007",
+            "category": "District Committee Leadership",
+            "badge": "DSC"
+      },
+      {
+            "order": 30,
+            "role": "Head - IT and Infastructure Committee",
+            "name": "Leo Buddika Ashan",
+            "club": "Leo Club of Colombo (Host)",
+            "memberId": "27202047",
+            "phone": "0788861811",
+            "email": "BuddikaAshanSilva@Hotmail.com",
+            "address": "36/13, Vijayaraja MW, Nadimala, Dehiwala",
+            "dob": "18/05/2003",
+            "category": "District Committee Leadership",
+            "badge": "ITC"
+      },
+      {
+            "order": 31,
+            "role": "Head - PR Committee",
+            "name": "Leo Lion Deveen Rathnayaka",
+            "club": "Leo Club of Informatics Institute of Technology (IIT)",
+            "memberId": "",
+            "phone": "",
+            "email": "",
+            "address": "",
+            "dob": "",
+            "category": "District Committee Leadership",
+            "badge": "PRC"
       }
+]
     },
     mdProfile: {
       title: 'Leo Multiple District 306',
       subtitle: 'National administrative structure and Multiple District Council coordinates',
-      description: 'Leo Multiple District 306 Sri Lanka unites six individual sub-districts under one unified council. It is led by the Multiple District Council Chairperson and coordinates nationwide community campaigns.',
-      councilChairperson: 'Leo Senath Jayawickrama',
+      description: 'Leo Multiple District 306 Sri Lanka unites twelve individual sub-districts under one unified council. It is led by the Multiple District President and coordinates nationwide community campaigns, youth leadership development, and inter-district cooperation.',
+      councilChairperson: 'Leo Nisal Dulmith FLM',
       sponsoringLionChairperson: 'Lion Dr. Lasantha Goonewardene',
-      activeDistricts: '6 Districts (A1, A2, B1, B2, C1, C2)',
+      activeDistricts: '12 Districts (D1 – D12)',
       totalMembers: '8,500+ Leos',
       secretariat: 'Lions Activity Center, No 41, Albert Crescent, Colombo 07.',
       email: 'md306@leosrilanka.org',
       web: 'www.leosrilanka.org',
-      publications: '"The Sri Lankan Leo" Magazine — published quarterly celebrating club service achievements nationwide.'
+      publications: '"The Sri Lankan Leo" Magazine — published quarterly celebrating club service achievements nationwide.',
+      officers: [
+        {
+          order: 1,
+          role: "Multiple District President",
+          name: "Leo Nisal Dulmith FLM",
+          district: "Multiple District 306",
+          phone: "0774497047",
+          email: "leonisaldulmith@gmail.com",
+          dob: "12/09/1997",
+          category: "Executive Committee",
+          badge: "MDP"
+        },
+        {
+          order: 2,
+          role: "Immediate Past Multiple District President",
+          name: "Leo Lion Rageesh Yogeswaran MJF PMAF PFLM RLLI",
+          district: "Multiple District 306",
+          phone: "0772639274",
+          email: "rageesh@leomd306.org",
+          dob: "26/06/1996",
+          category: "Executive Committee",
+          badge: "IPMDP"
+        },
+        {
+          order: 3,
+          role: "Multiple District Vice President",
+          name: "Leo Lion Sunera Naveed MAF FLM",
+          district: "Multiple District 306",
+          phone: "0767891020",
+          email: "sunera@leomd306.org",
+          dob: "20/10/2000",
+          category: "Executive Committee",
+          badge: "MDVP"
+        },
+        {
+          order: 4,
+          role: "Multiple District Secretary",
+          name: "Leo Lion Sajani Wijesuriya",
+          district: "Multiple District 306",
+          phone: "0715577228",
+          email: "wanthilawijesuriya@gmail.com",
+          dob: "16/09/1996",
+          category: "Executive Committee",
+          badge: "MDS"
+        },
+        {
+          order: 5,
+          role: "Multiple District Treasurer",
+          name: "Leo Lion Lasikumar Parameswaran",
+          district: "Multiple District 306",
+          phone: "0755828387",
+          email: "Lasikumar1996@gmail.com",
+          dob: "28/07/1996",
+          category: "Executive Committee",
+          badge: "MDT"
+        },
+        {
+          order: 6,
+          role: "Multiple District Membership Chairperson",
+          name: "Leo Anjana Udesh FLM",
+          district: "Multiple District 306",
+          phone: "0710417588",
+          email: "anjanaudesh123@gmail.com",
+          dob: "27/05/1997",
+          category: "Executive Committee",
+          badge: "MDMC",
+          additionalRoles: ["Orientation Committee", "Operations Committee"],
+          portfolioNote: "Head - Orientation & Operations Committees"
+        },
+        {
+          order: 7,
+          role: "Multiple District Assistant Secretary",
+          name: "Leo Sachith Lakshan",
+          district: "Multiple District 306",
+          phone: "0711489927",
+          email: "sachithl.leo@gmail.com",
+          dob: "20/01/1999",
+          category: "Executive Committee",
+          badge: "MDAS"
+        },
+        {
+          order: 8,
+          role: "Multiple District Assistant Secretary",
+          name: "Leo Devinda Perera",
+          district: "Multiple District 306",
+          phone: "0714085967",
+          email: "devinda2001perera@gmail.com",
+          dob: "02/10/2001",
+          category: "Executive Committee",
+          badge: "MDAS"
+        },
+        {
+          order: 9,
+          role: "Multiple District Assistant Treasurer",
+          name: "Leo Lion Laxshan Arunasalam",
+          district: "Multiple District 306",
+          phone: "0764649634",
+          email: "laxshana.leolion@gmail.com",
+          dob: "06/06/2002",
+          category: "Executive Committee",
+          badge: "MDAT"
+        },
+        {
+          order: 10,
+          role: "Multiple District Assistant Treasurer",
+          name: "Leo Peenaka Wedamulla",
+          district: "Multiple District 306",
+          phone: "0703189612",
+          email: "peenakawedamulla123@gmail.com",
+          dob: "21/08/2001",
+          category: "Executive Committee",
+          badge: "MDAT"
+        },
+        {
+          order: 11,
+          role: "District President",
+          name: "Leo Lion Vinuk Thismalpola",
+          district: "District 306 D1",
+          phone: "0765624434",
+          email: "vthismalpola@gmail.com",
+          dob: "18/09/2001",
+          category: "District Presidents Council",
+          badge: "DP-D1"
+        },
+        {
+          order: 12,
+          role: "District President",
+          name: "Leo Lion Buddhika Abenayake",
+          district: "District 306 D2",
+          phone: "0774598115",
+          email: "buddhika@leodistrict306a2.org",
+          dob: "06/01/2000",
+          category: "District Presidents Council",
+          badge: "DP-D2"
+        },
+        {
+          order: 13,
+          role: "District President",
+          name: "Leo Lion Chanuka Wijeweera",
+          district: "District 306 D3",
+          phone: "0772874743",
+          email: "chanukawvk@gmail.com",
+          dob: "24/04/2003",
+          category: "District Presidents Council",
+          badge: "DP-D3"
+        },
+        {
+          order: 14,
+          role: "District President",
+          name: "Leo Lion Dimithri Ranawake MAF PFLM",
+          district: "District 306 D4",
+          phone: "0773560904",
+          email: "dimithraranawake1999@gmail.com",
+          dob: "23/08/1999",
+          category: "District Presidents Council",
+          badge: "DP-D4"
+        },
+        {
+          order: 15,
+          role: "District President",
+          name: "Leo Lion Abilash Gnanasekaram",
+          district: "District 306 D5",
+          phone: "0777878617",
+          email: "Abilashg.leo@gmail.com",
+          dob: "25/11/1999",
+          category: "District Presidents Council",
+          badge: "DP-D5"
+        },
+        {
+          order: 16,
+          role: "District President",
+          name: "Leo Lion Ravindi Hettiarachchi PFLM",
+          district: "District 306 D6",
+          phone: "0710169819",
+          email: "ravindi.hettiarachchi@gmail.com",
+          dob: "06/04/1998",
+          category: "District Presidents Council",
+          badge: "DP-D6"
+        },
+        {
+          order: 17,
+          role: "District President",
+          name: "Leo Lion Nipuni Wijesekara",
+          district: "District 306 D7",
+          phone: "0705714939",
+          email: "nipuniwijesekara.d7@gmail.com",
+          dob: "03/01/2000",
+          category: "District Presidents Council",
+          badge: "DP-D7"
+        },
+        {
+          order: 18,
+          role: "District President",
+          name: "Leo Lohan Devasurendra",
+          district: "District 306 D8",
+          phone: "0779642190",
+          email: "leolohandevasurendra@gmail.com",
+          dob: "05/08/1999",
+          category: "District Presidents Council",
+          badge: "DP-D8"
+        },
+        {
+          order: 19,
+          role: "District President",
+          name: "Leo Lion Udara Herath",
+          district: "District 306 D9",
+          phone: "0711525865",
+          email: "udaraherath2001@gmail.com",
+          dob: "02/04/2001",
+          category: "District Presidents Council",
+          badge: "DP-D9"
+        },
+        {
+          order: 20,
+          role: "District President",
+          name: "Leo Sahan Panditharathna",
+          district: "District 306 D10",
+          phone: "0774113454",
+          email: "panditharathnasahan@gmail.com",
+          dob: "15/12/1999",
+          category: "District Presidents Council",
+          badge: "DP-D10"
+        },
+        {
+          order: 21,
+          role: "District President",
+          name: "Leo Lion Pasindu Karunarathna",
+          district: "District 306 D11",
+          phone: "0722564344",
+          email: "lpasindu.k27@gmail.com",
+          dob: "27/02/2006",
+          category: "District Presidents Council",
+          badge: "DP-D11"
+        },
+        {
+          order: 22,
+          role: "District President",
+          name: "Leo Lion Balasivanujan Balashanker",
+          district: "District 306 D12",
+          phone: "0767066351",
+          email: "Sivanujansiva26@gmail.com",
+          dob: "26/05/2000",
+          category: "District Presidents Council",
+          badge: "DP-D12"
+        },
+        {
+          order: 23,
+          role: "Head - Evaluation & Administration Committees",
+          name: "Leo Lion Sajithraj Puganeskumar PFLM",
+          district: "Multiple District 306",
+          phone: "0774073512",
+          email: "sajithraj@leomd306.org",
+          dob: "30/07/2002",
+          category: "Multiple District Committees",
+          badge: "EVAL-ADMIN",
+          additionalRoles: ["Evaluation Committee", "Administration Committee"]
+        },
+        {
+          order: 24,
+          role: "Head - Legal & Editorial Committees",
+          name: "Leo Nimasha Jayakody FLM",
+          district: "Multiple District 306",
+          phone: "0710547510",
+          email: "nimashaj.leo@gmail.com",
+          dob: "11/01/2001",
+          category: "Multiple District Committees",
+          badge: "LEGAL-ED",
+          additionalRoles: ["Legal Committee", "Editorial Committee"]
+        },
+        {
+          order: 25,
+          role: "Head - IT & PR Committee",
+          name: "Leo Supasan Deemantha",
+          district: "Multiple District 306",
+          phone: "0705804110",
+          email: "supasandeeemantha@gmail.com",
+          dob: "20/10/1999",
+          category: "Multiple District Committees",
+          badge: "IT-PR"
+        },
+        {
+          order: 26,
+          role: "Head - Finance Committee",
+          name: "Leo Anushka Liyanage",
+          district: "Multiple District 306",
+          phone: "0777339036",
+          email: "anushkaliyanageleo@gmail.com",
+          dob: "14/01/1998",
+          category: "Multiple District Committees",
+          badge: "FIN"
+        },
+        {
+          order: 27,
+          role: "Head - Web & App Development Committee",
+          name: "Leo Thameera Dananjaya",
+          district: "Multiple District 306",
+          phone: "0701205186",
+          email: "",
+          dob: "",
+          category: "Multiple District Committees",
+          badge: "DEV"
+        },
+        {
+          order: 28,
+          role: "Head - Outstation Admin & Operations",
+          name: "Leo Harishanthan Sivakumaran",
+          district: "Multiple District 306",
+          phone: "0752880245",
+          email: "sharishanthan@gmail.com",
+          dob: "10/12/1995",
+          category: "Multiple District Committees",
+          badge: "OUT-ADMIN"
+        }
+      ]
     },
     pointsSubmissions: [
       {
@@ -1536,6 +2261,144 @@ function getDefaultData() {
         proofAttachments: {
           ad1_1: [{ name: "Horizon_Activity_Proof.pdf", type: "application/pdf", size: "2.1 MB", url: "#" }]
         },
+      }
+    ],
+    projectCategorySubmissions: [
+      {
+        id: "pcs_1",
+        clubId: "c6",
+        clubName: "Leo Club of Informatics Institute of Technology",
+        month: "2026-06",
+        status: "approved",
+        submittedAt: "2026-06-25T12:00:00Z",
+        submittedBy: "Leo Lion Manish Perera",
+        subClaims: {
+          cat_1_sub_1: { ticked: true, proofs: [{ name: "MyLion_Activity_Report_Jun26.pdf", type: "application/pdf", size: "1.2 MB", url: "#" }] },
+          cat_1_sub_2: { ticked: true, proofs: [{ name: "Children_Attendance_Register.jpg", type: "image/jpeg", size: "840 KB", url: "#" }] },
+          cat_1_sub_3: { ticked: true, proofs: [{ name: "Storytelling_Reading_Corner_Photos.pdf", type: "application/pdf", size: "2.4 MB", url: "#" }] },
+          cat_8_sub_1: { ticked: true, proofs: [{ name: "MyLion_PR_June.pdf", type: "application/pdf", size: "750 KB", url: "#" }] },
+          cat_8_sub_2: { ticked: true, proofs: [{ name: "Branding_Media_Reach.pdf", type: "application/pdf", size: "1.1 MB", url: "#" }] },
+          cat_9_sub_1: { ticked: true, proofs: [{ name: "MyLion_Fundraiser_Log.pdf", type: "application/pdf", size: "900 KB", url: "#" }] },
+          cat_9_sub_2: { ticked: true, proofs: [{ name: "Audited_Accounts_Ledger.pdf", type: "application/pdf", size: "1.8 MB", url: "#" }] },
+          cat_25_sub_1: { ticked: true, proofs: [{ name: "Serving_Together_Banner_Patch.jpg", type: "image/jpeg", size: "1.5 MB", url: "#" }] },
+          cat_25_sub_2: { ticked: true, proofs: [{ name: "Lions_Club_Confirmation_Letter.pdf", type: "application/pdf", size: "800 KB", url: "#" }] },
+          cat_31_sub_1: { ticked: true, proofs: [{ name: "MyLion_Diabetes_Camp.pdf", type: "application/pdf", size: "1.1 MB", url: "#" }] },
+          cat_31_sub_2: { ticked: true, proofs: [{ name: "Diabetes_Screening_Photos.jpg", type: "image/jpeg", size: "1.9 MB", url: "#" }] },
+          cat_32_sub_1: { ticked: true, proofs: [{ name: "MyLion_Environment_Reforest.pdf", type: "application/pdf", size: "1.4 MB", url: "#" }] },
+          cat_32_sub_2: { ticked: true, proofs: [{ name: "Tree_Planting_GPS_Log.pdf", type: "application/pdf", size: "2.1 MB", url: "#" }] }
+        },
+        completedCategories: [
+          { categoryId: "cat_1", categoryNumber: 1, categoryName: "Best Project for Spotlight on Children", groupId: "project_awards" },
+          { categoryId: "cat_8", categoryNumber: 8, categoryName: "Best Project for Public Relations", groupId: "project_awards" },
+          { categoryId: "cat_9", categoryNumber: 9, categoryName: "Best Project for Fundraiser", groupId: "project_awards" },
+          { categoryId: "cat_25", categoryNumber: 25, categoryName: "Best Serving Together Project", groupId: "joint_project_awards" },
+          { categoryId: "cat_31", categoryNumber: 31, categoryName: "Best Project for Diabetes", groupId: "lions_global_service" },
+          { categoryId: "cat_32", categoryNumber: 32, categoryName: "Best Project for the Environment", groupId: "lions_global_service" }
+        ],
+        completedCount: 6,
+        totalPossible: 37
+      },
+      {
+        id: "pcs_2",
+        clubId: "c1",
+        clubName: "Leo Club of Sapphire Coast",
+        month: "2026-06",
+        status: "approved",
+        submittedAt: "2026-06-28T14:30:00Z",
+        submittedBy: "Kasun Perera",
+        subClaims: {
+          cat_2_sub_1: { ticked: true, proofs: [{ name: "MyLion_WasteMgmt_Report.pdf", type: "application/pdf", size: "1.1 MB", url: "#" }] },
+          cat_2_sub_2: { ticked: true, proofs: [{ name: "Recycling_Drive_Receipts.pdf", type: "application/pdf", size: "890 KB", url: "#" }] },
+          cat_10_sub_1: { ticked: true, proofs: [{ name: "MyLion_Education_Report.pdf", type: "application/pdf", size: "1.3 MB", url: "#" }] },
+          cat_10_sub_2: { ticked: true, proofs: [{ name: "School_SmartClassroom_Handover.pdf", type: "application/pdf", size: "2.0 MB", url: "#" }] },
+          cat_26_sub_1: { ticked: true, proofs: [{ name: "MyLion_NGO_Joint.pdf", type: "application/pdf", size: "1.0 MB", url: "#" }] },
+          cat_26_sub_2: { ticked: true, proofs: [{ name: "Rotaract_Partner_MOU.pdf", type: "application/pdf", size: "1.2 MB", url: "#" }] },
+          cat_33_sub_1: { ticked: true, proofs: [{ name: "MyLion_Hunger_Relief.pdf", type: "application/pdf", size: "950 KB", url: "#" }] },
+          cat_33_sub_2: { ticked: true, proofs: [{ name: "Community_Kitchen_Photos.jpg", type: "image/jpeg", size: "1.7 MB", url: "#" }] }
+        },
+        completedCategories: [
+          { categoryId: "cat_2", categoryNumber: 2, categoryName: "Best Project for Responsible Consumption & Waste Management", groupId: "project_awards" },
+          { categoryId: "cat_10", categoryNumber: 10, categoryName: "Best Project for Quality Education & Literacy", groupId: "project_awards" },
+          { categoryId: "cat_26", categoryNumber: 26, categoryName: "Best Joint Project with a Non-Leo/Outside Organisation", groupId: "joint_project_awards" },
+          { categoryId: "cat_33", categoryNumber: 33, categoryName: "Best Project for Hunger", groupId: "lions_global_service" }
+        ],
+        completedCount: 4,
+        totalPossible: 37
+      },
+      {
+        id: "pcs_3",
+        clubId: "c8",
+        clubName: "Leo Club of University of Colombo Faculty of Arts",
+        month: "2026-06",
+        status: "approved",
+        submittedAt: "2026-06-29T10:15:00Z",
+        submittedBy: "Leo Lion Hashini Nethmika",
+        subClaims: {
+          cat_4_sub_1: { ticked: true, proofs: [{ name: "MyLion_Cultural_Festival.pdf", type: "application/pdf", size: "1.6 MB", url: "#" }] },
+          cat_4_sub_2: { ticked: true, proofs: [{ name: "InterCultural_Dialogue_Cert.pdf", type: "application/pdf", size: "900 KB", url: "#" }] },
+          cat_11_sub_1: { ticked: true, proofs: [{ name: "MyLion_WomenEmpowerment.pdf", type: "application/pdf", size: "1.2 MB", url: "#" }] },
+          cat_11_sub_2: { ticked: true, proofs: [{ name: "Sanitary_Hygiene_Dist_Photos.jpg", type: "image/jpeg", size: "1.4 MB", url: "#" }] },
+          cat_27_sub_1: { ticked: true, proofs: [{ name: "MyLion_InterDistrict_Report.pdf", type: "application/pdf", size: "1.5 MB", url: "#" }] },
+          cat_27_sub_2: { ticked: true, proofs: [{ name: "MD306_InterDistrict_Approval.pdf", type: "application/pdf", size: "1.1 MB", url: "#" }] },
+          cat_34_sub_1: { ticked: true, proofs: [{ name: "MyLion_Childhood_Cancer.pdf", type: "application/pdf", size: "1.0 MB", url: "#" }] },
+          cat_34_sub_2: { ticked: true, proofs: [{ name: "Apeksha_Hospital_Donation.pdf", type: "application/pdf", size: "2.3 MB", url: "#" }] }
+        },
+        completedCategories: [
+          { categoryId: "cat_4", categoryNumber: 4, categoryName: "Best Project for Peace & Cultural Activities", groupId: "project_awards" },
+          { categoryId: "cat_11", categoryNumber: 11, categoryName: "Best Project for Women Empowerment", groupId: "project_awards" },
+          { categoryId: "cat_27", categoryNumber: 27, categoryName: "Best Joint Inter-District Project", groupId: "joint_project_awards" },
+          { categoryId: "cat_34", categoryNumber: 34, categoryName: "Best Project for Childhood Cancer", groupId: "lions_global_service" }
+        ],
+        completedCount: 4,
+        totalPossible: 37
+      },
+      {
+        id: "pcs_4",
+        clubId: "c7",
+        clubName: "Leo Club of University of Colombo Faculty of Science",
+        month: "2026-06",
+        status: "approved",
+        submittedAt: "2026-06-30T16:20:00Z",
+        submittedBy: "Leo Lion Vinuk Thismalpola",
+        subClaims: {
+          cat_16_sub_1: { ticked: true, proofs: [{ name: "MyLion_RnD_Project.pdf", type: "application/pdf", size: "2.5 MB", url: "#" }] },
+          cat_16_sub_2: { ticked: true, proofs: [{ name: "Water_Quality_Analysis_Data.pdf", type: "application/pdf", size: "3.1 MB", url: "#" }] },
+          cat_35_sub_1: { ticked: true, proofs: [{ name: "MyLion_Eye_Screening.pdf", type: "application/pdf", size: "1.3 MB", url: "#" }] },
+          cat_35_sub_2: { ticked: true, proofs: [{ name: "National_Eye_Bank_Collaboration.pdf", type: "application/pdf", size: "1.8 MB", url: "#" }] }
+        },
+        completedCategories: [
+          { categoryId: "cat_16", categoryNumber: 16, categoryName: "Best Project for Research & Development", groupId: "project_awards" },
+          { categoryId: "cat_35", categoryNumber: 35, categoryName: "Best Project for Vision", groupId: "lions_global_service" }
+        ],
+        completedCount: 2,
+        totalPossible: 37
+      },
+      {
+        id: "pcs_5",
+        clubId: "c6",
+        clubName: "Leo Club of Informatics Institute of Technology",
+        month: "2026-07",
+        status: "approved",
+        submittedAt: "2026-07-28T15:45:00Z",
+        submittedBy: "Leo Lion Manish Perera",
+        subClaims: {
+          cat_3_sub_1: { ticked: true, proofs: [{ name: "MyLion_Nutrition_Camp.pdf", type: "application/pdf", size: "1.2 MB", url: "#" }] },
+          cat_3_sub_2: { ticked: true, proofs: [{ name: "Food_Safety_Awareness.pdf", type: "application/pdf", size: "1.4 MB", url: "#" }] },
+          cat_5_sub_1: { ticked: true, proofs: [{ name: "MyLion_Sports_Cricket.pdf", type: "application/pdf", size: "980 KB", url: "#" }] },
+          cat_5_sub_2: { ticked: true, proofs: [{ name: "Sports_Kit_Distribution.jpg", type: "image/jpeg", size: "1.6 MB", url: "#" }] },
+          cat_28_sub_1: { ticked: true, proofs: [{ name: "MyLion_IntraDistrict_Joint.pdf", type: "application/pdf", size: "1.1 MB", url: "#" }] },
+          cat_28_sub_2: { ticked: true, proofs: [{ name: "IntraDistrict_Hosting_Letter.pdf", type: "application/pdf", size: "850 KB", url: "#" }] },
+          cat_36_sub_1: { ticked: true, proofs: [{ name: "MyLion_Youth_Tech_Summit.pdf", type: "application/pdf", size: "2.1 MB", url: "#" }] },
+          cat_36_sub_2: { ticked: true, proofs: [{ name: "Coding_Bootcamp_Attendance.pdf", type: "application/pdf", size: "1.5 MB", url: "#" }] }
+        },
+        completedCategories: [
+          { categoryId: "cat_3", categoryNumber: 3, categoryName: "Best Project for Health, Nutrition & Food Safety", groupId: "project_awards" },
+          { categoryId: "cat_5", categoryNumber: 5, categoryName: "Best Project for Sports & Recreation", groupId: "project_awards" },
+          { categoryId: "cat_28", categoryNumber: 28, categoryName: "Best Joint Intra-District Project", groupId: "joint_project_awards" },
+          { categoryId: "cat_36", categoryNumber: 36, categoryName: "Best Project for Youth", groupId: "lions_global_service" }
+        ],
+        completedCount: 4,
+        totalPossible: 37
       }
     ],
     districtSchedules: [
@@ -1710,29 +2573,11 @@ class Store {
           };
           this.save();
         }
-        if (!this._data.districtProfile) {
+        if (!this._data.districtProfile || !Array.isArray(this._data.districtProfile.officers) || this._data.districtProfile.officers.length < 31 || this._data.districtProfile_version !== '2026_officers_v6') {
           const fresh = getDefaultData();
           this._data.districtProfile = fresh.districtProfile;
+          this._data.districtProfile_version = '2026_officers_v6';
           this.save();
-        } else {
-          let updated = false;
-          if (!this._data.districtProfile.dvp) {
-            this._data.districtProfile.dvp = 'Leo Kavinda Wijetunga';
-            updated = true;
-          }
-          if (!this._data.districtProfile.council) {
-            this._data.districtProfile.council = {
-              ipdp: 'Leo Dilshan Fernando',
-              advisor: 'Lion Johnathan Silva',
-              coordinators: '8 District Coordinators',
-              regions: '4 Region Chairpersons',
-              zones: '8 Zone Chairpersons'
-            };
-            updated = true;
-          }
-          if (updated) {
-            this.save();
-          }
         }
         if (!this._data.mdProfile) {
           const fresh = getDefaultData();
@@ -1743,6 +2588,12 @@ class Store {
         if (!this._data.pointsSubmissions) {
           const fresh = getDefaultData();
           this._data.pointsSubmissions = fresh.pointsSubmissions;
+          this.save();
+        }
+
+        if (!this._data.projectCategorySubmissions || !Array.isArray(this._data.projectCategorySubmissions) || this._data.projectCategorySubmissions.length === 0) {
+          const fresh = getDefaultData();
+          this._data.projectCategorySubmissions = fresh.projectCategorySubmissions;
           this.save();
         }
         
@@ -3125,7 +3976,22 @@ class Store {
   }
 
   getDistrictProfile() {
-    return this._data.districtProfile || getDefaultData().districtProfile;
+    if (!this._data.districtProfile || !Array.isArray(this._data.districtProfile.officers) || this._data.districtProfile.officers.length < 31 || this._data.districtProfile_version !== '2026_officers_v6') {
+      const fresh = getDefaultData();
+      this._data.districtProfile = fresh.districtProfile;
+      this._data.districtProfile_version = '2026_officers_v6';
+      this.save();
+    }
+    return this._data.districtProfile;
+  }
+
+  resetDistrictProfile() {
+    const fresh = getDefaultData();
+    this._data.districtProfile = fresh.districtProfile;
+    this._data.districtProfile_version = '2026_officers_v6';
+    this.save();
+    this.emit('districtProfile:updated', this._data.districtProfile);
+    return this._data.districtProfile;
   }
 
   updateDistrictProfile(updates) {
@@ -3135,7 +4001,23 @@ class Store {
   }
 
   getMDProfile() {
-    return this._data.mdProfile || getDefaultData().mdProfile;
+    if (!this._data.mdProfile || !Array.isArray(this._data.mdProfile.officers) || this._data.mdProfile.officers.length < 28) {
+      const fresh = getDefaultData();
+      this._data.mdProfile = { ...fresh.mdProfile, ...(this._data.mdProfile || {}) };
+      this._data.mdProfile.officers = fresh.mdProfile.officers;
+      this._data.mdProfile_version = '2026_md_officers_v1';
+      this.save();
+    }
+    return this._data.mdProfile;
+  }
+
+  resetMDProfile() {
+    const fresh = getDefaultData();
+    this._data.mdProfile = fresh.mdProfile;
+    this._data.mdProfile_version = '2026_md_officers_v1';
+    this.save();
+    this.emit('mdProfile:updated', this._data.mdProfile);
+    return this._data.mdProfile;
   }
 
   updateMDProfile(updates) {
@@ -3285,6 +4167,141 @@ class Store {
     });
     
     return ledger;
+  }
+
+  // ---------- Project Categories (37 Categories across 3 Groups) ----------
+  getProjectCategories(groupId = null) {
+    if (!groupId || groupId === 'all') return PROJECT_CATEGORIES_DATA;
+    return PROJECT_CATEGORIES_DATA.filter(c => c.groupId === groupId);
+  }
+
+  getProjectAwardGroups() {
+    return PROJECT_AWARD_GROUPS;
+  }
+
+  getProjectCategory(catId) {
+    return PROJECT_CATEGORIES_DATA.find(c => c.id === catId || String(c.number) === String(catId)) || null;
+  }
+
+  getProjectCategorySubmissions(clubId = null, month = null) {
+    if (!this._data.projectCategorySubmissions) this._data.projectCategorySubmissions = [];
+    return this._data.projectCategorySubmissions.filter(s => {
+      if (clubId && s.clubId !== clubId) return false;
+      if (month && month !== 'all' && s.month !== month) return false;
+      return true;
+    });
+  }
+
+  submitProjectCategoryClaims(clubId, clubName, month, subClaims, submittedBy) {
+    if (!this._data.projectCategorySubmissions) this._data.projectCategorySubmissions = [];
+
+    // Calculate completed categories using checkCategoryCompletion
+    const completedCategories = [];
+    PROJECT_CATEGORIES_DATA.forEach(cat => {
+      const check = checkCategoryCompletion(cat, subClaims);
+      if (check.isComplete) {
+        completedCategories.push({
+          categoryId: cat.id,
+          categoryNumber: cat.number,
+          categoryName: cat.name,
+          groupId: cat.groupId,
+          fulfilledCount: check.fulfilledCount,
+          totalCount: check.totalCount
+        });
+      }
+    });
+
+    const existingIdx = this._data.projectCategorySubmissions.findIndex(
+      s => s.clubId === clubId && s.month === month
+    );
+
+    const submission = {
+      id: existingIdx >= 0 ? this._data.projectCategorySubmissions[existingIdx].id : 'pcs_' + this.generateId(),
+      clubId,
+      clubName,
+      month,
+      status: 'approved',
+      submittedAt: new Date().toISOString(),
+      submittedBy: submittedBy || 'Club Officer',
+      subClaims: subClaims || {},
+      completedCategories,
+      completedCount: completedCategories.length,
+      totalPossible: PROJECT_CATEGORIES_DATA.length
+    };
+
+    if (existingIdx >= 0) {
+      this._data.projectCategorySubmissions[existingIdx] = submission;
+    } else {
+      this._data.projectCategorySubmissions.push(submission);
+    }
+
+    this.save();
+    this.emit('projectCategorySubmissions:changed');
+    return submission;
+  }
+
+  getMonthlyCategoryCompletionStats(month = null) {
+    const subs = this.getProjectCategorySubmissions(null, month);
+    const clubs = this.getAll('clubs') || [];
+    
+    // Per-category completion count across clubs
+    const categoryStats = {};
+    PROJECT_CATEGORIES_DATA.forEach(cat => {
+      categoryStats[cat.id] = {
+        category: cat,
+        completedClubCount: 0,
+        completingClubs: []
+      };
+    });
+
+    // Group stats
+    const groupStats = {
+      project_awards: { totalCategories: 24, completedSum: 0, completedClubs: new Set() },
+      joint_project_awards: { totalCategories: 6, completedSum: 0, completedClubs: new Set() },
+      lions_global_service: { totalCategories: 7, completedSum: 0, completedClubs: new Set() }
+    };
+
+    subs.forEach(s => {
+      (s.completedCategories || []).forEach(cc => {
+        if (categoryStats[cc.categoryId]) {
+          categoryStats[cc.categoryId].completedClubCount++;
+          categoryStats[cc.categoryId].completingClubs.push({
+            clubId: s.clubId,
+            clubName: s.clubName,
+            month: s.month,
+            submittedAt: s.submittedAt
+          });
+        }
+        if (groupStats[cc.groupId]) {
+          groupStats[cc.groupId].completedSum++;
+          groupStats[cc.groupId].completedClubs.add(s.clubId);
+        }
+      });
+    });
+
+    return {
+      month: month || 'all',
+      totalSubmissions: subs.length,
+      totalClubs: clubs.length,
+      categoryStats,
+      groupStats: {
+        project_awards: {
+          totalCategories: groupStats.project_awards.totalCategories,
+          completedSum: groupStats.project_awards.completedSum,
+          activeClubCount: groupStats.project_awards.completedClubs.size
+        },
+        joint_project_awards: {
+          totalCategories: groupStats.joint_project_awards.totalCategories,
+          completedSum: groupStats.joint_project_awards.completedSum,
+          activeClubCount: groupStats.joint_project_awards.completedClubs.size
+        },
+        lions_global_service: {
+          totalCategories: groupStats.lions_global_service.totalCategories,
+          completedSum: groupStats.lions_global_service.completedSum,
+          activeClubCount: groupStats.lions_global_service.completedClubs.size
+        }
+      }
+    };
   }
 }
 
