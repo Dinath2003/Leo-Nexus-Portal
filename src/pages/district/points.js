@@ -486,6 +486,7 @@ export function renderDistrictPoints() {
                 if (sub.status === 'approved') badgeClass = 'badge-success';
                 else if (sub.status === 'rejected') badgeClass = 'badge-danger';
                 else if (sub.status === 'pending') badgeClass = 'badge-warning';
+                else if (sub.status === 'reversed') badgeClass = 'badge-warning';
 
                 const isPending = sub.status === 'pending';
                 const btnText = isPending ? 'Review & Action' : 'View Details';
@@ -539,6 +540,7 @@ export function renderDistrictPoints() {
                 <option value="pending" ${filterStatus === 'pending' ? 'selected' : ''}>Pending</option>
                 <option value="approved" ${filterStatus === 'approved' ? 'selected' : ''}>Approved</option>
                 <option value="rejected" ${filterStatus === 'rejected' ? 'selected' : ''}>Rejected</option>
+                <option value="reversed" ${filterStatus === 'reversed' ? 'selected' : ''}>Reversed</option>
               </select>
             </div>
           </div>
@@ -933,6 +935,72 @@ export function renderDistrictPoints() {
           </div>
         `;
 
+        let readOnlyStatusBadge = 'badge-secondary';
+        if (sub.status === 'approved') readOnlyStatusBadge = 'badge-success';
+        else if (sub.status === 'rejected') readOnlyStatusBadge = 'badge-danger';
+        else if (sub.status === 'reversed') readOnlyStatusBadge = 'badge-warning';
+
+        const canReverse = auth.canReversePointsReview && (sub.status === 'approved' || sub.status === 'rejected');
+
+        let reviewDetailsCardHtml = '';
+        if (sub.status === 'reversed') {
+          reviewDetailsCardHtml = `
+            <div style="padding:12px; border-radius:8px; background:rgba(245,158,11,0.06); border:1px solid rgba(245,158,11,0.25);">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                <span style="font-size:12px; font-weight:700; color:var(--color-warning);">Review Reversed by Leadership</span>
+                <span style="font-size:11px; color:var(--color-text-muted);">${new Date(sub.reversedAt || sub.reviewedAt).toLocaleString()}</span>
+              </div>
+              <strong style="font-size:13px; color:var(--color-text-primary); display:block;">Reversed by: ${sub.reversedBy || 'District Leadership'}</strong>
+              <p style="font-size:12px; color:var(--color-text-secondary); font-style:italic; margin-top:6px;">
+                "${sub.reverseReason || 'Reopened for resubmission.'}"
+              </p>
+              <div style="margin-top:8px; font-size:11.5px; color:#fbbf24; display:flex; align-items:center; gap:6px;">
+                <i data-lucide="info" style="width:14px;height:14px;"></i>
+                <span>Month unlocked: The club can now submit this month's criteria and proof again.</span>
+              </div>
+            </div>
+          `;
+        } else {
+          reviewDetailsCardHtml = `
+            <div style="padding:12px; border-radius:8px; background:rgba(255,255,255,0.02); border:1px solid var(--color-glass-border);">
+              <p style="font-size:12px; color:var(--color-text-muted); margin-bottom:4px;">Review Details:</p>
+              <strong style="font-size:13px; color:var(--color-text-primary); display:block;">Reviewed by: ${sub.reviewedBy || 'District Leadership'}</strong>
+              <span style="font-size:11px; color:var(--color-text-muted); display:block; margin-top:2px;">Date: ${sub.reviewedAt ? new Date(sub.reviewedAt).toLocaleString() : 'N/A'}</span>
+              <p style="font-size:12px; color:var(--color-text-secondary); font-style:italic; margin-top:8px; border-top:1px solid rgba(255,255,255,0.05); padding-top:8px;">
+                "${sub.comment || 'No comment provided.'}"
+              </p>
+            </div>
+          `;
+        }
+
+        let reverseActionHtml = '';
+        if (canReverse) {
+          reverseActionHtml = `
+            <div style="margin-top:4px; padding:14px; border-radius:8px; background:rgba(239,68,68,0.08); border:1px solid rgba(239,68,68,0.25);">
+              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+                <div style="flex:1; min-width:220px;">
+                  <strong style="display:block; font-size:13px; color:#f87171;">Reverse Review Decision</strong>
+                  <span style="display:block; font-size:11.5px; color:var(--color-text-muted); margin-top:2px;">
+                    ${sub.status === 'approved' ? `Deducts <strong>${sub.totalPoints.toLocaleString()} pts</strong> from club standings and reopens this month` : 'Reopens this month'} so the club can submit criteria and proof again.
+                  </span>
+                </div>
+                <button class="btn btn-danger btn-sm reverse-review-btn" data-sub-id="${sub.id}" style="white-space:nowrap;">
+                  <i data-lucide="rotate-ccw" style="width:14px;height:14px;margin-right:4px;"></i> Reverse Review
+                </button>
+              </div>
+            </div>
+          `;
+        } else if (sub.status === 'approved' || sub.status === 'rejected') {
+          reverseActionHtml = `
+            <div style="margin-top:4px; padding:10px 12px; border-radius:8px; background:rgba(255,255,255,0.02); border:1px solid var(--color-glass-border); display:flex; align-items:center; gap:8px;">
+              <i data-lucide="shield-alert" style="width:14px;height:14px;color:var(--color-text-muted);flex-shrink:0;"></i>
+              <span style="font-size:11px; color:var(--color-text-muted);">
+                Only District President, District Vice President &amp; Super Admin can reverse this review decision.
+              </span>
+            </div>
+          `;
+        }
+
         const readOnlyHtml = `
           <div style="display:flex; flex-direction:column; gap:16px; max-height:500px; overflow-y:auto; padding-right:6px;">
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; font-size:13px; background:rgba(255,255,255,0.02); padding:12px; border-radius:8px; border:1px solid var(--color-glass-border);">
@@ -945,26 +1013,20 @@ export function renderDistrictPoints() {
                 <strong style="display:block; color:var(--color-text-primary); margin-top:2px;">${sub.month}</strong>
               </div>
               <div>
-                <span style="color:var(--color-text-muted);">Approved Points:</span>
+                <span style="color:var(--color-text-muted);">${sub.status === 'approved' ? 'Approved Points:' : 'Claimed Points:'}</span>
                 <strong style="display:block; color:var(--color-primary); margin-top:2px; font-size:1.05rem;">${sub.totalPoints.toLocaleString()} pts</strong>
               </div>
               <div>
                 <span style="color:var(--color-text-muted);">Status:</span>
-                <span class="badge ${sub.status === 'approved' ? 'badge-success' : 'badge-danger'}" style="margin-top:4px;">${sub.status.toUpperCase()}</span>
+                <span class="badge ${readOnlyStatusBadge}" style="margin-top:4px;">${sub.status.toUpperCase()}</span>
               </div>
             </div>
 
             <h4 style="font-size:13px; font-weight:700; color:var(--color-text-primary); margin:8px 0 0 0;">Points Details</h4>
             ${itemsHtml}
 
-            <div style="padding:12px; border-radius:8px; background:rgba(255,255,255,0.02); border:1px solid var(--color-glass-border);">
-              <p style="font-size:12px; color:var(--color-text-muted); margin-bottom:4px;">Review Details:</p>
-              <strong style="font-size:13px; color:var(--color-text-primary); display:block;">Reviewed by: ${sub.reviewedBy}</strong>
-              <span style="font-size:11px; color:var(--color-text-muted); display:block; margin-top:2px;">Date: ${new Date(sub.reviewedAt).toLocaleString()}</span>
-              <p style="font-size:12px; color:var(--color-text-secondary); font-style:italic; margin-top:8px; border-top:1px solid rgba(255,255,255,0.05); padding-top:8px;">
-                "${sub.comment || 'No comment provided.'}"
-              </p>
-            </div>
+            ${reviewDetailsCardHtml}
+            ${reverseActionHtml}
           </div>
         `;
 
@@ -974,10 +1036,10 @@ export function renderDistrictPoints() {
           { showFooter: false, size: 'lg' }
         );
 
-        if (isPending) {
-          const modalNode = document.getElementById('modal-container');
-          if (window.lucide) lucide.createIcons({ nodes: [modalNode] });
+        const modalNode = document.getElementById('modal-container');
+        if (window.lucide) lucide.createIcons({ nodes: [modalNode] });
 
+        if (isPending) {
           modalNode?.querySelector('.review-cancel-btn')?.addEventListener('click', closeReview);
           
           modalNode?.querySelector('.review-reject-btn')?.addEventListener('click', () => {
@@ -1022,6 +1084,39 @@ export function renderDistrictPoints() {
             } catch (err) {
               showToast('error', 'Approval Failed', err.message);
             }
+          });
+        } else {
+          modalNode?.querySelector('.reverse-review-btn')?.addEventListener('click', () => {
+            if (!auth.canReversePointsReview) {
+              showToast('error', 'Unauthorized', 'Only District President, District Vice President, and Super Admin can reverse reviewed points.');
+              return;
+            }
+
+            showConfirm(
+              'Reverse Points Review',
+              `Are you sure you want to reverse the review for <strong>${sub.clubName.replace('Leo Club of ', '')} (${sub.month})</strong>?<br><br>
+              <div style="font-size:12px; color:var(--color-text-secondary); line-height:1.5;">
+                ${sub.status === 'approved' ? `• <strong>${sub.totalPoints.toLocaleString()} points</strong> will be deducted from club standings.<br>` : ''}
+                • The submission will be marked as reversed, allowing the club to re-select criteria and upload proof to submit again.
+              </div>
+              <div style="margin-top:12px;">
+                <label style="display:block; font-size:11.5px; font-weight:600; color:var(--color-text-secondary); margin-bottom:4px;">Reason for reversal (optional):</label>
+                <input type="text" id="reverse-reason-input" class="form-input" placeholder="e.g. Club requested to add missing proof" style="width:100%; font-size:12px; height:32px;">
+              </div>`,
+              () => {
+                const reasonInput = document.getElementById('reverse-reason-input');
+                const reason = reasonInput?.value?.trim() || 'Reopened by District Leadership for resubmission';
+                try {
+                  const revName = auth.currentUser?.name || 'District Leadership';
+                  store.reversePointsSubmission(sub.id, revName, reason, auth.currentUser?.role);
+                  showToast('success', 'Review Reversed', `Submission for ${sub.clubName.replace('Leo Club of ', '')} (${sub.month}) has been reversed and reopened.`);
+                  closeReview();
+                  renderDistrictPoints();
+                } catch (err) {
+                  showToast('error', 'Reversal Failed', err.message);
+                }
+              }
+            );
           });
         }
       });

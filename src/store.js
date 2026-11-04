@@ -4169,8 +4169,8 @@ class Store {
   submitMonthlyPoints(clubId, clubName, month, checkedCriteria, pointsClaimed, submittedBy, proofAttachments = {}) {
     if (!this._data.pointsSubmissions) this._data.pointsSubmissions = [];
     
-    // Check if there's already a submission for this month (pending or approved)
-    const existing = this._data.pointsSubmissions.find(s => s.clubId === clubId && s.month === month && s.status !== 'rejected');
+    // Check if there's already an active submission for this month (pending or approved)
+    const existing = this._data.pointsSubmissions.find(s => s.clubId === clubId && s.month === month && s.status !== 'rejected' && s.status !== 'reversed');
     if (existing) {
       throw new Error(`A submission for ${month} is already ${existing.status}.`);
     }
@@ -4258,6 +4258,49 @@ class Store {
     this.save();
     this.emit('pointsSubmissions:updated', sub);
     this.emit('pointsSubmissions:changed');
+    return sub;
+  }
+
+  reversePointsSubmission(submissionId, reversedBy, reason = '', userRole = null) {
+    if (userRole && userRole !== 'admin' && userRole !== 'district_president' && userRole !== 'district_vp') {
+      throw new Error('Unauthorized: Only District President, District Vice President, and Super Admin can reverse reviewed submissions.');
+    }
+    if (!this._data.pointsSubmissions) return null;
+    const sub = this._data.pointsSubmissions.find(s => s.id === submissionId);
+    if (!sub) return null;
+
+    if (sub.status !== 'approved' && sub.status !== 'rejected') {
+      throw new Error('Only reviewed (approved or rejected) submissions can be reversed.');
+    }
+
+    const previousStatus = sub.status;
+
+    // If previously approved, deduct points from clubPoints
+    if (previousStatus === 'approved' && this._data.clubPoints) {
+      const cp = this._data.clubPoints.find(item => item.clubId === sub.clubId);
+      if (cp && cp.points && sub.pointsClaimed) {
+        for (const [critId, points] of Object.entries(sub.pointsClaimed)) {
+          if (cp.points[critId] !== undefined) {
+            cp.points[critId] = (cp.points[critId] || 0) - (points || 0);
+            if (cp.points[critId] <= 0) {
+              delete cp.points[critId];
+            }
+          }
+        }
+      }
+    }
+
+    sub.status = 'reversed';
+    sub.reversedBy = reversedBy;
+    sub.reversedAt = new Date().toISOString();
+    sub.reverseReason = reason;
+
+    this.save();
+    this.emit('pointsSubmissions:updated', sub);
+    this.emit('pointsSubmissions:changed');
+    if (previousStatus === 'approved') {
+      this.emit('clubPoints:changed');
+    }
     return sub;
   }
 

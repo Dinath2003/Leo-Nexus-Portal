@@ -8,7 +8,7 @@ import { router } from '../../router.js';
 import { renderSidebar, initSidebar } from '../../components/sidebar.js';
 import { renderHeader, initHeader } from '../../components/header.js';
 import { createChart, destroyAllCharts } from '../../components/charts.js';
-import { showModal } from '../../components/modal.js';
+import { showModal, showConfirm } from '../../components/modal.js';
 import { showToast } from '../../components/toast.js';
 import { PROJECT_CATEGORIES_DATA, PROJECT_AWARD_GROUPS, checkCategoryCompletion } from '../../data/projectCategories.js';
 
@@ -786,6 +786,7 @@ export function renderClubPoints() {
                 if (sub.status === 'approved') badgeClass = 'badge-success';
                 else if (sub.status === 'rejected') badgeClass = 'badge-danger';
                 else if (sub.status === 'pending') badgeClass = 'badge-warning';
+                else if (sub.status === 'reversed') badgeClass = 'badge-warning';
 
                 return `
                   <tr>
@@ -1112,24 +1113,44 @@ export function renderClubPoints() {
     function checkMonthSubmission() {
       const month = monthSelect.value;
       const submissions = store.getAll('pointsSubmissions');
-      const existing = submissions.find(s => s.clubId === clubId && s.month === month && s.status !== 'rejected');
+      const activeExisting = submissions.find(s => s.clubId === clubId && s.month === month && s.status !== 'rejected' && s.status !== 'reversed');
+      const reversedExisting = submissions.find(s => s.clubId === clubId && s.month === month && s.status === 'reversed');
       
       const banner = document.getElementById('submission-warning-banner');
       const submitBtn = document.getElementById('submit-points-form-btn');
       
-      if (existing) {
+      if (activeExisting) {
         banner.style.display = 'block';
-        banner.style.background = existing.status === 'approved' ? 'rgba(16,185,129,0.1)' : 'rgba(245,158,11,0.1)';
-        banner.style.border = existing.status === 'approved' ? '1px solid rgba(16,185,129,0.2)' : '1px solid rgba(245,158,11,0.2)';
-        banner.style.color = existing.status === 'approved' ? '#34d399' : '#fbbf24';
+        banner.style.background = activeExisting.status === 'approved' ? 'rgba(16,185,129,0.1)' : 'rgba(245,158,11,0.1)';
+        banner.style.border = activeExisting.status === 'approved' ? '1px solid rgba(16,185,129,0.2)' : '1px solid rgba(245,158,11,0.2)';
+        banner.style.color = activeExisting.status === 'approved' ? '#34d399' : '#fbbf24';
         banner.innerHTML = `
           <div style="display:flex;align-items:center;gap:8px;">
             <i data-lucide="alert-triangle" style="width:16px;height:16px;"></i>
-            <span>A submission for <strong>${month}</strong> is already <strong>${existing.status}</strong>. You cannot submit another form for this month.</span>
+            <span>A submission for <strong>${month}</strong> is already <strong>${activeExisting.status}</strong>. You cannot submit another form for this month.</span>
           </div>
         `;
         if (window.lucide) lucide.createIcons({ nodes: [banner] });
         submitBtn.disabled = true;
+      } else if (reversedExisting) {
+        banner.style.display = 'block';
+        banner.style.background = 'rgba(59,130,246,0.1)';
+        banner.style.border = '1px solid rgba(59,130,246,0.25)';
+        banner.style.color = '#60a5fa';
+        banner.innerHTML = `
+          <div style="display:flex;align-items:flex-start;gap:8px;">
+            <i data-lucide="rotate-ccw" style="width:16px;height:16px;margin-top:2px;flex-shrink:0;"></i>
+            <div>
+              <strong>Previous review for ${month} was reversed by ${reversedExisting.reversedBy || 'District Leadership'}.</strong>
+              <div style="font-size:11.5px; opacity:0.9; margin-top:2px;">
+                ${reversedExisting.reverseReason ? `Reason: "${reversedExisting.reverseReason}". ` : ''}
+                Your club can now re-select criteria, attach required proof, and submit again.
+              </div>
+            </div>
+          </div>
+        `;
+        if (window.lucide) lucide.createIcons({ nodes: [banner] });
+        submitBtn.disabled = false;
       } else {
         banner.style.display = 'none';
         submitBtn.disabled = false;
@@ -1539,6 +1560,36 @@ export function renderClubPoints() {
               <p style="font-size:12px; color:var(--color-text-secondary); font-style:italic;">"${sub.comment || 'No comment provided.'}"</p>
             </div>
           `;
+        } else if (sub.status === 'reversed') {
+          approvalDetailsHtml = `
+            <div style="margin-top:16px; padding:12px; border-radius:8px; background:rgba(245,158,11,0.06); border:1px solid rgba(245,158,11,0.2);">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                <span style="font-size:12px; font-weight:700; color:var(--color-warning);">Review Reversed by District Leadership</span>
+                <span style="font-size:11px; color:var(--color-text-muted);">${new Date(sub.reversedAt || sub.reviewedAt).toLocaleString()}</span>
+              </div>
+              <p style="font-size:13px; font-weight:600; color:var(--color-text-primary); margin-bottom:4px;">Reversed by: ${sub.reversedBy || 'District Leadership'}</p>
+              <p style="font-size:12px; color:var(--color-text-secondary); font-style:italic;">"${sub.reverseReason || 'Reopened for resubmission.'}"</p>
+              <div style="margin-top:8px; font-size:11.5px; color:#fbbf24; display:flex; align-items:center; gap:6px;">
+                <i data-lucide="info" style="width:14px;height:14px;"></i>
+                <span>Your club can now resubmit points and proof for <strong>${sub.month}</strong> in the Submit Monthly Points tab.</span>
+              </div>
+            </div>
+          `;
+        }
+
+        let reverseActionHtml = '';
+        if (auth.canReversePointsReview && (sub.status === 'approved' || sub.status === 'rejected')) {
+          reverseActionHtml = `
+            <div style="margin-top:12px; padding:12px; border-radius:8px; background:rgba(239,68,68,0.08); border:1px solid rgba(239,68,68,0.25); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+              <div>
+                <strong style="display:block; font-size:12.5px; color:#f87171;">Reverse Review Decision</strong>
+                <span style="font-size:11px; color:var(--color-text-muted);">Allow club to submit this month's criteria and proof again.</span>
+              </div>
+              <button class="btn btn-danger btn-sm club-reverse-review-btn" data-sub-id="${sub.id}">
+                <i data-lucide="rotate-ccw" style="width:14px;height:14px;margin-right:4px;"></i> Reverse Review
+              </button>
+            </div>
+          `;
         }
 
         const modalHtml = `
@@ -1566,11 +1617,48 @@ export function renderClubPoints() {
             ${itemsHtml}
 
             ${approvalDetailsHtml}
+            ${reverseActionHtml}
           </div>
         `;
 
-        showModal(`Submission Details - ${sub.month}`, modalHtml, {
+        const closeModal = showModal(`Submission Details - ${sub.month}`, modalHtml, {
           showFooter: false
+        });
+
+        const modalNode = document.getElementById('modal-container');
+        if (window.lucide) lucide.createIcons({ nodes: [modalNode] });
+
+        modalNode?.querySelector('.club-reverse-review-btn')?.addEventListener('click', () => {
+          if (!auth.canReversePointsReview) {
+            showToast('error', 'Unauthorized', 'Only District President, District Vice President, and Super Admin can reverse reviewed points.');
+            return;
+          }
+
+          showConfirm(
+            'Reverse Points Review',
+            `Are you sure you want to reverse the review for <strong>${sub.clubName || 'Club'} (${sub.month})</strong>?<br><br>
+            <div style="font-size:12px; color:var(--color-text-secondary); line-height:1.5;">
+              ${sub.status === 'approved' ? `• <strong>${sub.totalPoints.toLocaleString()} points</strong> will be deducted from club standings.<br>` : ''}
+              • The submission will be reopened, allowing the club to re-select criteria and upload proof to submit again.
+            </div>
+            <div style="margin-top:12px;">
+              <label style="display:block; font-size:11.5px; font-weight:600; color:var(--color-text-secondary); margin-bottom:4px;">Reason for reversal (optional):</label>
+              <input type="text" id="club-reverse-reason-input" class="form-input" placeholder="e.g. Club requested to add missing proof" style="width:100%; font-size:12px; height:32px;">
+            </div>`,
+            () => {
+              const reasonInput = document.getElementById('club-reverse-reason-input');
+              const reason = reasonInput?.value?.trim() || 'Reopened by District Leadership for resubmission';
+              try {
+                const revName = auth.currentUser?.name || 'District Leadership';
+                store.reversePointsSubmission(sub.id, revName, reason, auth.currentUser?.role);
+                showToast('success', 'Review Reversed', `Submission for ${sub.month} has been reversed and reopened.`);
+                closeModal();
+                renderClubPoints();
+              } catch (err) {
+                showToast('error', 'Reversal Failed', err.message);
+              }
+            }
+          );
         });
       });
     });

@@ -74,6 +74,11 @@ class Auth {
     return this.isAdmin || this._currentUser?.role?.startsWith('district_') || this._currentUser?.role === 'district_admin';
   }
 
+  get canReversePointsReview() {
+    const role = this._currentUser?.role;
+    return role === 'admin' || role === 'district_president' || role === 'district_vp';
+  }
+
   get isClubAdmin() {
     return this._currentUser?.role === 'club_admin' || this._currentUser?.role === 'club_president';
   }
