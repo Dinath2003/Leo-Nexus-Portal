@@ -63,7 +63,7 @@ function getEventFormHtml(event = null) {
       </div>
       <div class="form-group">
         <label class="form-label">Payment Instructions (To Clubs & District)</label>
-        <textarea class="form-textarea" id="evt-paymentInstructions" rows="2" placeholder="e.g. Transfer to District Account: Bank of Ceylon A/C 987654321">${event?.paymentInstructions || 'Please transfer the consolidated fee to BOC A/C 123456789 (District 306B2)'}</textarea>
+        <textarea class="form-textarea" id="evt-paymentInstructions" rows="2" placeholder="e.g. Transfer to District Account: Bank of Ceylon A/C 987654321">${event?.paymentInstructions || 'Please transfer the consolidated fee to BOC A/C 123456789 (District 306D1)'}</textarea>
       </div>
       <div class="form-row">
         <div class="form-group">

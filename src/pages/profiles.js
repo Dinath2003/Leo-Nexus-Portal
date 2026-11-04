@@ -867,13 +867,13 @@ export function renderDistrictProfile() {
             <!-- Page Header -->
             <div class="page-header" style="margin-bottom:24px;">
               <div>
-                <span class="section-badge" style="margin-bottom:0.5rem;display:inline-block;">DISTRICT 306 B2</span>
-                <h1 style="margin:0; font-size:26px; font-weight:800; color:var(--color-text-primary);">${profile.title || 'Leo District 306 B2'}</h1>
+                <span class="section-badge" style="margin-bottom:0.5rem;display:inline-block;">DISTRICT 306 D1</span>
+                <h1 style="margin:0; font-size:26px; font-weight:800; color:var(--color-text-primary);">${profile.title || 'Leo District 306 D1'}</h1>
                 <p style="color:var(--color-text-muted); margin-top:4px; font-size:14px;">Official leadership directory and administration for the Leoistic Year 2026/2027</p>
               </div>
               <div class="page-header-actions" style="display:flex; gap:10px; align-items:center;">
                 <span class="badge" style="background:var(--color-primary-alpha); color:var(--color-primary); font-weight:700; padding:6px 14px; border-radius:20px; font-size:12px;">
-                  <i data-lucide="users" style="width:14px;height:14px;vertical-align:-2px;margin-right:4px;"></i> 31 Cabinet Officers
+                  <i data-lucide="users" style="width:14px;height:14px;vertical-align:-2px;margin-right:4px;"></i> 31 Council Officers
                 </span>
                 ${isAdmin ? `
                   <button class="btn btn-primary edit-profile-btn" id="edit-district-btn">
@@ -914,13 +914,13 @@ export function renderDistrictProfile() {
               </div>
             </div>
 
-            <!-- Complete District Cabinet Directory -->
+            <!-- Complete District Council Directory -->
             <div class="card" style="border:1px solid var(--color-border); border-radius:var(--radius-2xl); background:var(--color-surface); overflow:hidden; margin-bottom:32px;">
               <div class="card-header" style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:16px; padding:20px 24px; border-bottom:1px solid var(--color-border);">
                 <div>
                   <h3 class="card-title" style="margin:0; font-size:18px; font-weight:800; display:flex; align-items:center; gap:8px;">
                     <i data-lucide="award" style="color:var(--color-primary); width:20px; height:20px;"></i>
-                    Complete District Cabinet Directory
+                    Complete District Council Directory
                   </h3>
                   <p style="margin:4px 0 0; font-size:12px; color:var(--color-text-muted);">
                     All 31 official district officers with complete portfolio, contact, and club affiliations
@@ -1334,7 +1334,7 @@ export function renderDistrictProfile() {
           </div>
         `;
 
-        showModal('Cabinet Officer Profile', modalHtml, { showFooter: false, size: 'md' });
+        showModal('Council Officer Profile', modalHtml, { showFooter: false, size: 'md' });
         lucide.createIcons();
       });
     });

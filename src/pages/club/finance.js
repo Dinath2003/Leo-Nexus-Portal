@@ -517,7 +517,7 @@ export function renderClubFinance() {
                     <div class="card-body" style="padding:0;">
                       ${renderTable(
                         [
-                          { label: 'Owed To', render: () => 'District 306B2' },
+                          { label: 'Owed To', render: () => 'District 306D1' },
                           { label: 'Reference Code', key: 'reference' },
                           { label: 'Date Filed', key: 'date', render: row => new Date(row.date).toLocaleDateString() },
                           { label: 'Amount', key: 'amount', render: row => `<span style="font-weight:700; color:#ef4444;">Rs. ${row.amount.toLocaleString()}</span>` }

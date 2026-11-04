@@ -179,7 +179,7 @@ export function renderLogin() {
           </div>
           <div class="partner-logo-item">
             <i data-lucide="shield-check" style="width:18px;height:18px;color:var(--color-primary)"></i>
-            <span>DISTRICT 306 B2</span>
+            <span>DISTRICT 306 D1</span>
           </div>
           <div class="partner-logo-item">
             <i data-lucide="shield-check" style="width:18px;height:18px;color:var(--color-primary)"></i>

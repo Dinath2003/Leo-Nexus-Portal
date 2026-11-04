@@ -21,7 +21,7 @@ function getMemberFormHtml(data = {}) {
       <div class="form-group">
         <label class="form-label">Role *</label>
         <select class="form-select" id="member-role">
-          ${['President', 'VP', 'Secretary', 'Treasurer', 'Director', 'Member']
+          ${['President', 'Vice President', 'Vice President 1', 'Vice President 2', 'Vice President 3', 'First Vice President', 'Second Vice President', 'Third Vice President', 'Secretary', 'Treasurer', 'Membership Chairperson', 'Director', 'Member']
             .map(r => `<option value="${r}" ${data.role === r ? 'selected' : ''}>${r}</option>`).join('')}
         </select>
       </div>
@@ -89,9 +89,17 @@ export function renderClubMembers() {
 
     const roleColors = {
       'President': 'badge-primary',
+      'Vice President': 'badge-cyan',
       'VP': 'badge-cyan',
+      'Vice President 1': 'badge-cyan',
+      'Vice President 2': 'badge-cyan',
+      'Vice President 3': 'badge-cyan',
+      'First Vice President': 'badge-cyan',
+      'Second Vice President': 'badge-cyan',
+      'Third Vice President': 'badge-cyan',
       'Secretary': 'badge-success',
       'Treasurer': 'badge-warning',
+      'Membership Chairperson': 'badge-secondary',
       'Director': 'badge-primary',
       'Member': 'badge-primary'
     };
@@ -180,7 +188,7 @@ export function renderClubMembers() {
                         ${row.status}
                       </div>
                     `},
-                    { label: 'Joined', key: 'joinDate', render: row => new Date(row.joinDate).toLocaleDateString() },
+                    { label: 'Joined', key: 'joinDate', render: row => row.joinDate ? new Date(row.joinDate).toLocaleDateString() : '—' },
                     { label: 'Phone', key: 'phone', render: row => row.phone || '—' },
                   ],
                   filtered,

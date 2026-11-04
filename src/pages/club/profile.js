@@ -48,13 +48,28 @@ export function renderClubProfile(params = {}) {
     }).length;
 
     // Filter officers
-    const president = clubMembers.find(m => m.role.toLowerCase() === 'president')?.name || club.president || 'Not Appointed';
-    const secretary = clubMembers.find(m => m.role.toLowerCase() === 'secretary')?.name || 'Not Appointed';
-    const treasurer = clubMembers.find(m => m.role.toLowerCase() === 'treasurer')?.name || 'Not Appointed';
-    const membershipChair = clubMembers.find(m => m.role.toLowerCase() === 'membership chairperson' || m.role.toLowerCase() === 'membership chair')?.name || 'Not Appointed';
+    const officerMembers = clubMembers.filter(m => m.role && m.role.toLowerCase() !== 'member');
     const advisor = club.advisor_name || 'Lio. Johnathan Silva';
     const advisorEmail = club.advisor_email || 'advisor@lions.org';
     const advisorPhone = club.advisor_phone || '+94 77 987 6543';
+
+    const getOfficerIcon = (role = '') => {
+      const r = role.toLowerCase();
+      if (r.includes('president')) return 'shield';
+      if (r.includes('secretary')) return 'file-text';
+      if (r.includes('treasurer')) return 'wallet';
+      if (r.includes('membership') || r.includes('chair')) return 'users';
+      return 'award';
+    };
+    const getOfficerColor = (role = '') => {
+      const r = role.toLowerCase();
+      if (r === 'president') return 'var(--color-primary)';
+      if (r.includes('president')) return 'var(--color-cyan)';
+      if (r.includes('secretary')) return '#10b981';
+      if (r.includes('treasurer')) return '#f59e0b';
+      if (r.includes('membership')) return '#8b5cf6';
+      return 'var(--color-primary)';
+    };
 
     app.innerHTML = `
       <div class="dashboard-layout">
@@ -92,7 +107,7 @@ export function renderClubProfile(params = {}) {
                   <div>
                     <h1 style="margin:0; font-size:24px; font-weight:800; color:var(--color-text-primary); text-shadow: 0 2px 4px rgba(0,0,0,0.5);">${club.name}</h1>
                     <div style="font-size:14px; color:var(--color-text-secondary); margin-top:6px; display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
-                      <span>District 306 B2</span>
+                      <span>District 306 D1</span>
                       <span style="width:4px; height:4px; border-radius:50%; background:var(--color-text-muted);"></span>
                       <span>${club.zone || 'A1'}</span>
                       <span style="width:4px; height:4px; border-radius:50%; background:var(--color-text-muted);"></span>
@@ -247,9 +262,9 @@ export function renderClubProfile(params = {}) {
                                 </div>
                               </td>
                               <td>${m.role}</td>
-                              <td>${new Date(m.joinDate).toLocaleDateString()}</td>
-                              <td>${m.email}</td>
-                              <td>${m.phone}</td>
+                              <td>${m.joinDate ? new Date(m.joinDate).toLocaleDateString() : '—'}</td>
+                              <td>${m.email || '—'}</td>
+                              <td>${m.phone || '—'}</td>
                               <td><span class="badge ${m.status === 'active' ? 'badge-success' : 'badge-danger'}">${m.status}</span></td>
                             </tr>
                           `).join('')}
@@ -266,34 +281,23 @@ export function renderClubProfile(params = {}) {
                   <div class="card hover-lift">
                     <div class="card-header"><h3 class="card-title"><i data-lucide="award" style="width:18px;height:18px;color:var(--color-primary);"></i> Current Office Bearers</h3></div>
                     <div class="card-body" style="display:flex; flex-direction:column; gap:16px;">
-                      <div style="display:flex; align-items:center; gap:14px; padding:10px 14px; background:rgba(255,255,255,0.02); border:1px solid var(--color-border); border-radius:10px;">
-                        <i data-lucide="shield" style="color:var(--color-primary);"></i>
-                        <div>
-                          <div style="font-size:11px; color:var(--color-text-muted);">Club President</div>
-                          <div style="font-size:14px; font-weight:700; color:var(--color-text-primary);">${president}</div>
+                      ${officerMembers.length > 0 ? officerMembers.map(off => `
+                        <div style="display:flex; align-items:center; gap:14px; padding:10px 14px; background:rgba(255,255,255,0.02); border:1px solid var(--color-border); border-radius:10px;">
+                          <i data-lucide="${getOfficerIcon(off.role)}" style="color:${getOfficerColor(off.role)};"></i>
+                          <div>
+                            <div style="font-size:11px; color:var(--color-text-muted);">${off.role}</div>
+                            <div style="font-size:14px; font-weight:700; color:var(--color-text-primary);">${off.name}</div>
+                          </div>
                         </div>
-                      </div>
-                      <div style="display:flex; align-items:center; gap:14px; padding:10px 14px; background:rgba(255,255,255,0.02); border:1px solid var(--color-border); border-radius:10px;">
-                        <i data-lucide="file-text" style="color:var(--color-cyan);"></i>
-                        <div>
-                          <div style="font-size:11px; color:var(--color-text-muted);">Club Secretary</div>
-                          <div style="font-size:14px; font-weight:700; color:var(--color-text-primary);">${secretary}</div>
+                      `).join('') : `
+                        <div style="display:flex; align-items:center; gap:14px; padding:10px 14px; background:rgba(255,255,255,0.02); border:1px solid var(--color-border); border-radius:10px;">
+                          <i data-lucide="shield" style="color:var(--color-primary);"></i>
+                          <div>
+                            <div style="font-size:11px; color:var(--color-text-muted);">Club President</div>
+                            <div style="font-size:14px; font-weight:700; color:var(--color-text-primary);">${club.president || 'Not Appointed'}</div>
+                          </div>
                         </div>
-                      </div>
-                      <div style="display:flex; align-items:center; gap:14px; padding:10px 14px; background:rgba(255,255,255,0.02); border:1px solid var(--color-border); border-radius:10px;">
-                        <i data-lucide="wallet" style="color:#14b8a6;"></i>
-                        <div>
-                          <div style="font-size:11px; color:var(--color-text-muted);">Club Treasurer</div>
-                          <div style="font-size:14px; font-weight:700; color:var(--color-text-primary);">${treasurer}</div>
-                        </div>
-                      </div>
-                      <div style="display:flex; align-items:center; gap:14px; padding:10px 14px; background:rgba(255,255,255,0.02); border:1px solid var(--color-border); border-radius:10px;">
-                        <i data-lucide="users" style="color:#8b5cf6;"></i>
-                        <div>
-                          <div style="font-size:11px; color:var(--color-text-muted);">Membership Chairperson</div>
-                          <div style="font-size:14px; font-weight:700; color:var(--color-text-primary);">${membershipChair}</div>
-                        </div>
-                      </div>
+                      `}
                     </div>
                   </div>
 

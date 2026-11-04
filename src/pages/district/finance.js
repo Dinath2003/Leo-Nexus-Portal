@@ -538,7 +538,7 @@ export function renderDistrictFinance() {
                 <div class="card hover-lift" style="max-width:700px; margin: 0 auto;">
                   <div class="card-header" style="text-align:center;">
                     <h2 style="margin:0; font-size:18px;">District Balance Sheet</h2>
-                    <div style="font-size:12px; color:var(--color-text-muted); margin-top:2px;">Leo District 306 B2 | Leoistic Year 2026/2027</div>
+                    <div style="font-size:12px; color:var(--color-text-muted); margin-top:2px;">Leo District 306 D1 | Leoistic Year 2026/2027</div>
                   </div>
                   <div class="card-body">
                     <!-- ASSETS -->
