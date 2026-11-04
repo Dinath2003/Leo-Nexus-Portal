@@ -33,10 +33,10 @@ const grav = {
 
 // ─── Theme config ─────────────────────────────────────────────────────────────
 const config = {
-  mode:        'light', // 'light' (default LeBank) or 'dark' (Midnight)
-  liveBg:      false,   // Ambient canvas particles (disabled)
-  cardTilt:    false,   // Motion disabled
-  accent:      'blue'
+  mode:        'dark',   // 'dark' (Default Black & Silver Glowing) or 'light'
+  liveBg:      false,    // Ambient canvas particles (disabled)
+  cardTilt:    false,    // Motion disabled
+  accent:      'silver'  // Silver glowing accent
 };
 
 // ─── Wind + cursor tracking ───────────────────────────────────────────────────
@@ -53,10 +53,10 @@ window.addEventListener('mouseleave', () => {
 
 // ─── Public API ───────────────────────────────────────────────────────────────
 export function initTheme() {
-  config.mode     = localStorage.getItem('theme_mode')         || 'light';
+  config.mode     = localStorage.getItem('theme_mode')         || 'dark';
   config.liveBg   = false;
   config.cardTilt = false;
-  config.accent   = localStorage.getItem('theme_accent_color') || 'blue';
+  config.accent   = localStorage.getItem('theme_accent_color') || 'silver';
 
   applyThemeSettings();
   setupSettingsBtn();
@@ -147,10 +147,13 @@ const randI = (min, max) => Math.floor(rand(min, max));
 
 function accentHues() {
   switch (config.accent) {
+    case 'silver': return [0, 0, 95];
+    case 'white':  return [0, 0, 100];
+    case 'chrome': return [215, 10, 80];
     case 'blue':   return [215, 225, 240];
     case 'teal':   return [175, 185, 195];
     case 'purple': return [265, 280, 295];
-    default:       return [200, 215, 230];
+    default:       return [0, 0, 95];
   }
 }
 
@@ -313,13 +316,13 @@ function openThemeSettingsModal() {
       <div>
         <label class="form-label" style="margin-bottom:10px; display:block;">Appearance Mode</label>
         <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
-          <button class="btn theme-mode-btn ${config.mode === 'light' ? 'btn-primary' : 'btn-secondary'}" data-mode="light" style="justify-content:center; padding:12px 18px;">
-            <i data-lucide="sun" style="width:18px;height:18px"></i>
-            Light (LeBank Modern)
-          </button>
           <button class="btn theme-mode-btn ${config.mode === 'dark' ? 'btn-primary' : 'btn-secondary'}" data-mode="dark" style="justify-content:center; padding:12px 18px;">
             <i data-lucide="moon" style="width:18px;height:18px"></i>
-            Midnight Dark
+            Obsidian & Silver Glow (Default)
+          </button>
+          <button class="btn theme-mode-btn ${config.mode === 'light' ? 'btn-primary' : 'btn-secondary'}" data-mode="light" style="justify-content:center; padding:12px 18px;">
+            <i data-lucide="sun" style="width:18px;height:18px"></i>
+            Platinum Light
           </button>
         </div>
       </div>
@@ -329,21 +332,21 @@ function openThemeSettingsModal() {
         <label class="form-label" style="margin-bottom:10px; display:block;">Primary Accent Color</label>
         <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:10px;">
           ${[
-            { id: 'blue',   label: 'Royal Blue',    color: '#2563eb' },
-            { id: 'cyan',   label: 'Sky Cyan',      color: '#0284c7' },
-            { id: 'teal',   label: 'Emerald Teal',  color: '#0d9488' },
-            { id: 'purple', label: 'Violet Indigo', color: '#7c3aed' }
+            { id: 'silver', label: 'Platinum Silver', color: '#e2e8f0' },
+            { id: 'white',  label: 'Radiant White',   color: '#ffffff' },
+            { id: 'chrome', label: 'Titanium Chrome', color: '#94a3b8' },
+            { id: 'blue',   label: 'Royal Blue',      color: '#3b82f6' }
           ].map(opt => {
             const active = config.accent === opt.id;
             return `
               <button class="btn accent-selector-btn" data-accent="${opt.id}"
                 style="height:60px; border-radius:14px;
                        border:2px solid ${active ? 'var(--color-primary)' : 'var(--color-border)'};
-                       background:${active ? 'var(--color-primary-alpha)' : 'var(--color-surface)'};
+                       background:${active ? 'rgba(255, 255, 255, 0.12)' : 'var(--color-surface)'};
                        display:flex; flex-direction:column; align-items:center;
                        justify-content:center; gap:6px; cursor:pointer; padding:8px;">
                 <span style="width:18px; height:18px; border-radius:50%;
-                             background:${opt.color}; box-shadow:0 0 10px ${opt.color}60;"></span>
+                             background:${opt.color}; box-shadow:0 0 10px ${opt.color}80;"></span>
                 <span style="font-size:10px; font-weight:700; color:var(--color-text-primary);">
                   ${opt.label}
                 </span>
@@ -364,7 +367,7 @@ function openThemeSettingsModal() {
             All motion effects, page transitions, and card tilts are disabled for clean static rendering
           </div>
         </div>
-        <span class="badge" style="background:rgba(100,116,139,0.12); color:var(--color-text-muted); font-size:12px; font-weight:700; padding:4px 12px; border-radius:20px;">
+        <span class="badge" style="background:rgba(255,255,255,0.08); color:var(--color-text-muted); font-size:12px; font-weight:700; padding:4px 12px; border-radius:20px; border:1px solid rgba(255,255,255,0.15);">
           Disabled
         </span>
       </div>
@@ -389,7 +392,7 @@ function openThemeSettingsModal() {
             b.classList.add('btn-secondary');
           }
         });
-        showToast('success', 'Theme Updated', `Switched to ${config.mode === 'light' ? 'Light (LeBank)' : 'Midnight Dark'} mode.`);
+        showToast('success', 'Theme Updated', `Switched to ${config.mode === 'dark' ? 'Obsidian & Silver Glow' : 'Platinum Light'} mode.`);
       });
     });
 
