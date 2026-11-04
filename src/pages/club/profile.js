@@ -324,7 +324,7 @@ export function renderClubProfile(params = {}) {
                         </div>
                         <div style="display:flex; align-items:center; gap:8px; color:var(--color-text-secondary);">
                           <i data-lucide="building" style="width:14px;height:14px;"></i>
-                          <span>Sponsoring Lions Club: Lions Club of Sapphire Coast</span>
+                          <span>Sponsoring Lions Club: ${club.sponsoring_lions_club || 'Lions Club of ' + club.name.replace('Leo Club of ', '')}</span>
                         </div>
                       </div>
                     </div>

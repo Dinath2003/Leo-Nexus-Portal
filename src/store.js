@@ -21,126 +21,7 @@ function getDefaultData() {
     ],
 
     clubs: [
-      {
-        id: 'c1',
-        name: 'Leo Club of Sapphire Coast',
-        code: 'LC-024',
-        president: 'Kasun Perera',
-        charter_date: '2024-03-15',
-        zone: 'A1',
-        region: 'A',
-        status: 'active',
-        memberCount: 32,
-        email: 'sapphire@leo.org',
-        phone: '+94 77 123 4567',
-        meetingDay: 'Every Saturday',
-        description: 'A vibrant Leo club dedicated to community service and youth leadership development.'
-      },
-      {
-        id: 'c2',
-        name: 'Leo Club of Phoenix Rising',
-        code: 'LC-025',
-        president: 'Amaya Silva',
-        charter_date: '2023-08-20',
-        zone: 'A2',
-        region: 'A',
-        status: 'active',
-        memberCount: 28,
-        email: 'phoenix@leo.org',
-        phone: '+94 77 234 5678',
-        meetingDay: 'Every Sunday',
-        description: 'Committed to serving communities through innovative projects and teamwork.'
-      },
-      {
-        id: 'c7',
-        name: 'Leo Club of University of Colombo Faculty of Science',
-        code: 'LC-003',
-        president: 'Sajeetharan Mahadevan',
-        charter_date: '2025-02-15',
-        zone: 'A2',
-        region: 'A',
-        status: 'active',
-        memberCount: 35,
-        email: 'fos@leo.org',
-        phone: '+94 77 111 2222',
-        meetingDay: 'Every Monday',
-        description: 'Empowering science students to lead and serve the community.'
-      },
-      {
-        id: 'c3',
-        name: 'Leo Club of Horizon',
-        code: 'LC-021',
-        president: 'Nimal Fernando',
-        charter_date: '2025-01-10',
-        zone: 'B1',
-        region: 'B',
-        status: 'active',
-        memberCount: 20,
-        email: 'horizon@leo.org',
-        phone: '+94 77 345 6789',
-        meetingDay: 'Every Friday',
-        description: 'Focusing on environmental sustainability and educational empowerment.'
-      },
-      {
-        id: 'c4',
-        name: 'Leo Club of Aurora',
-        code: 'LC-022',
-        president: 'Tharindu Jayawardena',
-        charter_date: '2024-11-05',
-        zone: 'B2',
-        region: 'B',
-        status: 'active',
-        memberCount: 25,
-        email: 'aurora@leo.org',
-        phone: '+94 77 456 7890',
-        meetingDay: 'Every Saturday',
-        description: 'Driven by creativity and compassion, making a difference one project at a time.'
-      },
-      {
-        id: 'c5',
-        name: 'Leo Club of Nebula',
-        code: 'LC-023',
-        president: 'Dilshan Bandara',
-        charter_date: '2025-06-01',
-        zone: 'B1',
-        region: 'B',
-        status: 'inactive',
-        memberCount: 15,
-        email: 'nebula@leo.org',
-        phone: '+94 77 567 8901',
-        meetingDay: 'Every Sunday',
-        description: 'A newly chartered club aiming to expand outreach and membership.'
-      },
-      {
-        id: 'c6',
-        name: 'Leo Club of Informatics Institute of Technology',
-        code: 'LC-001',
-        president: 'Sithuli Pehansa Amunuthuduwa',
-        charter_date: '2025-05-10',
-        zone: 'A2',
-        region: 'A',
-        status: 'active',
-        memberCount: 22,
-        email: 'iit@leo.org',
-        phone: '+94 77 987 6543',
-        meetingDay: 'Every Wednesday',
-        description: 'Fostering technology-driven service and leadership at Informatics Institute of Technology.'
-      },
-      {
-        id: 'c8',
-        name: 'Leo Club of University of Colombo Faculty of Arts',
-        code: 'LC-002',
-        president: 'Manampeli Mahapatabadiralalage Vimukthi Rukshika Cooray',
-        charter_date: '2025-03-20',
-        zone: 'A2',
-        region: 'A',
-        status: 'active',
-        memberCount: 40,
-        email: 'foa@leo.org',
-        phone: '+94 77 333 4444',
-        meetingDay: 'Every Tuesday',
-        description: 'Promoting social harmony and leadership development through creative service.'
-      },
+      // Zone A1
       {
         id: 'c9',
         name: 'Leo Club of Colombo (Host)',
@@ -201,6 +82,53 @@ function getDefaultData() {
         meetingDay: 'Every Sunday',
         description: 'Alumni of UOC uniting to continue their Leostic journey.'
       },
+
+      // Zone A2
+      {
+        id: 'c6',
+        name: 'Leo Club of Informatics Institute of Technology',
+        code: 'LC-001',
+        president: 'Sithuli Pehansa Amunuthuduwa',
+        charter_date: '2025-05-10',
+        zone: 'A2',
+        region: 'A',
+        status: 'active',
+        memberCount: 22,
+        email: 'iit@leo.org',
+        phone: '+94 77 987 6543',
+        meetingDay: 'Every Wednesday',
+        description: 'Fostering technology-driven service and leadership at Informatics Institute of Technology.'
+      },
+      {
+        id: 'c7',
+        name: 'Leo Club of University of Colombo Faculty of Science',
+        code: 'LC-003',
+        president: 'Sajeetharan Mahadevan',
+        charter_date: '2025-02-15',
+        zone: 'A2',
+        region: 'A',
+        status: 'active',
+        memberCount: 35,
+        email: 'fos@leo.org',
+        phone: '+94 77 111 2222',
+        meetingDay: 'Every Monday',
+        description: 'Empowering science students to lead and serve the community.'
+      },
+      {
+        id: 'c8',
+        name: 'Leo Club of University of Colombo Faculty of Arts',
+        code: 'LC-002',
+        president: 'Manampeli Mahapatabadiralalage Vimukthi Rukshika Cooray',
+        charter_date: '2025-03-20',
+        zone: 'A2',
+        region: 'A',
+        status: 'active',
+        memberCount: 40,
+        email: 'foa@leo.org',
+        phone: '+94 77 333 4444',
+        meetingDay: 'Every Tuesday',
+        description: 'Promoting social harmony and leadership development through creative service.'
+      },
       {
         id: 'c13',
         name: 'Leo Club of UOC FOA Alumni',
@@ -216,6 +144,8 @@ function getDefaultData() {
         meetingDay: 'Every Saturday',
         description: 'Arts Faculty alumni contributing to creative societal development.'
       },
+
+      // Zone B1
       {
         id: 'c14',
         name: 'Leo Club of Prince of Wales College',
@@ -399,25 +329,6 @@ function getDefaultData() {
     ],
 
     members: [
-      // Sapphire Coast members
-      { id: 'm1', clubId: 'c1', name: 'Kasun Perera', role: 'President', status: 'active', joinDate: '2024-03-15', phone: '+94 77 100 0001', email: 'kasun@email.com' },
-      { id: 'm2', clubId: 'c1', name: 'Sanduni Rajapaksa', role: 'Secretary', status: 'active', joinDate: '2024-03-15', phone: '+94 77 100 0002', email: 'sanduni@email.com' },
-      { id: 'm3', clubId: 'c1', name: 'Dinesh Kumara', role: 'Treasurer', status: 'active', joinDate: '2024-04-01', phone: '+94 77 100 0003', email: 'dinesh@email.com' },
-      { id: 'm4', clubId: 'c1', name: 'Ishara Wickrama', role: 'Member', status: 'active', joinDate: '2024-05-10', phone: '+94 77 100 0004', email: 'ishara@email.com' },
-      { id: 'm5', clubId: 'c1', name: 'Tharushi Gamage', role: 'Member', status: 'active', joinDate: '2024-06-20', phone: '+94 77 100 0005', email: 'tharushi@email.com' },
-      { id: 'm6', clubId: 'c1', name: 'Ravindu Seneviratne', role: 'VP', status: 'active', joinDate: '2024-03-15', phone: '+94 77 100 0006', email: 'ravindu@email.com' },
-      { id: 'm7', clubId: 'c1', name: 'Chamari Herath', role: 'Member', status: 'inactive', joinDate: '2024-07-01', phone: '+94 77 100 0007', email: 'chamari@email.com' },
-      { id: 'm8', clubId: 'c1', name: 'Lakshan Peris', role: 'Member', status: 'active', joinDate: '2025-01-15', phone: '+94 77 100 0008', email: 'lakshan@email.com' },
-      // Phoenix Rising members
-      { id: 'm9', clubId: 'c2', name: 'Amaya Silva', role: 'President', status: 'active', joinDate: '2023-08-20', phone: '+94 77 200 0001', email: 'amaya@email.com' },
-      { id: 'm10', clubId: 'c2', name: 'Nuwan Jayasuriya', role: 'Secretary', status: 'active', joinDate: '2023-08-20', phone: '+94 77 200 0002', email: 'nuwan@email.com' },
-      { id: 'm11', clubId: 'c2', name: 'Kavindi Rathnayake', role: 'Treasurer', status: 'active', joinDate: '2023-09-01', phone: '+94 77 200 0003', email: 'kavindi@email.com' },
-      { id: 'm12', clubId: 'c2', name: 'Shehan Gunasekara', role: 'Member', status: 'active', joinDate: '2024-01-10', phone: '+94 77 200 0004', email: 'shehan@email.com' },
-      // Horizon members
-      { id: 'm13', clubId: 'c3', name: 'Nimal Fernando', role: 'President', status: 'active', joinDate: '2025-01-10', phone: '+94 77 300 0001', email: 'nimal@email.com' },
-      { id: 'm14', clubId: 'c3', name: 'Rashika Mendis', role: 'Secretary', status: 'active', joinDate: '2025-01-10', phone: '+94 77 300 0002', email: 'rashika@email.com' },
-      { id: 'm15', clubId: 'c3', name: 'Chamara Weerasinghe', role: 'Member', status: 'active', joinDate: '2025-02-20', phone: '+94 77 300 0003', email: 'chamara@email.com' },
-
       // Zone A1: Leo Club of Colombo (Host)
       { id: 'm89', clubId: 'c9', name: 'Anju Gayathri', role: 'President', status: 'active', joinDate: '', phone: '', email: '' },
       { id: 'm90', clubId: 'c9', name: 'Hiruni Fernando', role: 'Vice President', status: 'active', joinDate: '', phone: '', email: '' },
@@ -614,22 +525,11 @@ function getDefaultData() {
     ],
 
     finances: [
-      // Sapphire Coast finances
-      { id: 'f1', clubId: 'c1', type: 'income', category: 'Membership Fees', amount: 45000, date: '2026-01-05', description: 'Annual membership collection', reference: 'MF-001' },
-      { id: 'f2', clubId: 'c1', type: 'income', category: 'Sponsorship', amount: 75000, date: '2026-01-20', description: 'Corporate sponsor - ABC Corp', reference: 'SP-001' },
-      { id: 'f3', clubId: 'c1', type: 'income', category: 'Fundraising', amount: 32000, date: '2026-02-14', description: 'Valentine charity dinner proceeds', reference: 'FR-001' },
-      { id: 'f4', clubId: 'c1', type: 'expense', category: 'Events', amount: 28000, date: '2026-02-14', description: 'Valentine charity dinner costs', reference: 'EX-001' },
-      { id: 'f5', clubId: 'c1', type: 'expense', category: 'Administration', amount: 5000, date: '2026-01-10', description: 'Stationery and printing', reference: 'EX-002' },
-      { id: 'f6', clubId: 'c1', type: 'income', category: 'Donations', amount: 20000, date: '2026-03-01', description: 'Individual donor contribution', reference: 'DN-001' },
-      { id: 'f7', clubId: 'c1', type: 'expense', category: 'Projects', amount: 35000, date: '2026-03-15', description: 'School renovation project materials', reference: 'EX-003' },
-      { id: 'f8', clubId: 'c1', type: 'expense', category: 'Travel', amount: 12000, date: '2026-04-01', description: 'District convention transport', reference: 'EX-004' },
-      { id: 'f9', clubId: 'c1', type: 'income', category: 'Fundraising', amount: 55000, date: '2026-04-20', description: 'Annual fundraising gala', reference: 'FR-002' },
-      { id: 'f10', clubId: 'c1', type: 'expense', category: 'Events', amount: 22000, date: '2026-04-20', description: 'Gala event expenses', reference: 'EX-005' },
-      // Phoenix Rising finances
-      { id: 'f11', clubId: 'c2', type: 'income', category: 'Membership Fees', amount: 38000, date: '2026-01-10', description: 'Annual membership fees', reference: 'MF-001' },
-      { id: 'f12', clubId: 'c2', type: 'income', category: 'Sponsorship', amount: 50000, date: '2026-02-01', description: 'Sponsor - XYZ Ltd', reference: 'SP-001' },
-      { id: 'f13', clubId: 'c2', type: 'expense', category: 'Projects', amount: 40000, date: '2026-03-10', description: 'Community health camp', reference: 'EX-001' },
-      { id: 'f14', clubId: 'c2', type: 'expense', category: 'Administration', amount: 8000, date: '2026-02-15', description: 'Office supplies and meeting costs', reference: 'EX-002' },
+      // IIT finances
+      { id: 'f-iit-1', clubId: 'c6', type: 'income', category: 'Membership Fees', amount: 45000, date: '2026-01-05', description: 'Annual membership collection', reference: 'MF-IIT-001' },
+      { id: 'f-iit-2', clubId: 'c6', type: 'income', category: 'Sponsorship', amount: 75000, date: '2026-01-20', description: 'Corporate sponsor - Virtusa', reference: 'SP-IIT-001' },
+      { id: 'f-iit-3', clubId: 'c6', type: 'expense', category: 'Projects', amount: 35000, date: '2026-03-15', description: 'Tech workshop materials', reference: 'EX-IIT-001' },
+      { id: 'f-iit-4', clubId: 'c6', type: 'expense', category: 'Administration', amount: 5000, date: '2026-01-10', description: 'Stationery and printing', reference: 'EX-IIT-002' },
       // District-level finances
       { id: 'f15', clubId: 'district', type: 'income', category: 'Membership Fees', amount: 150000, date: '2026-01-10', description: 'Consolidated district dues from clubs', reference: 'DIST-INC-001' },
       { id: 'f16', clubId: 'district', type: 'income', category: 'Sponsorship', amount: 200000, date: '2026-02-15', description: 'Main Sponsor - Dialog Axiata', reference: 'DIST-INC-002' },
@@ -729,13 +629,10 @@ function getDefaultData() {
           { description: 'Publicity materials', type: 'expense', amount: 5000 }
         ]
       },
-      { id: 'p1', clubId: 'c1', name: 'School Renovation Drive', category: 'Education', status: 'completed', startDate: '2026-02-01', endDate: '2026-03-15', participants: 24, budget: 35000, description: 'Renovated classrooms and library at Gamini Maha Vidyalaya.', impact: '350 students benefited' },
-      { id: 'p2', clubId: 'c1', name: 'Beach Cleanup Campaign', category: 'Environment', status: 'completed', startDate: '2026-04-05', endDate: '2026-04-05', participants: 30, budget: 5000, description: 'Organized coastal cleanup along 2km stretch.', impact: '500kg waste collected' },
-      { id: 'p3', clubId: 'c1', name: 'Blood Donation Camp', category: 'Health', status: 'in_progress', startDate: '2026-06-20', endDate: '2026-06-20', participants: 20, budget: 15000, description: 'Annual blood donation campaign in partnership with National Blood Bank.', impact: 'Target: 100 pints' },
-      { id: 'p4', clubId: 'c1', name: 'Youth Leadership Workshop', category: 'Leadership', status: 'planned', startDate: '2026-07-10', endDate: '2026-07-12', participants: 0, budget: 25000, description: 'Three-day leadership development workshop for Leo members.', impact: 'Expected: 50 participants' },
-      { id: 'p5', clubId: 'c2', name: 'Community Health Screening', category: 'Health', status: 'completed', startDate: '2026-03-10', endDate: '2026-03-10', participants: 22, budget: 40000, description: 'Free medical screening camp for underprivileged communities.', impact: '200+ people screened' },
-      { id: 'p6', clubId: 'c2', name: 'Tree Planting Initiative', category: 'Environment', status: 'completed', startDate: '2026-04-22', endDate: '2026-04-22', participants: 28, budget: 10000, description: 'Earth Day tree planting across 3 locations.', impact: '500 trees planted' },
-      { id: 'p7', clubId: 'c3', name: 'Digital Literacy Program', category: 'Education', status: 'in_progress', startDate: '2026-05-01', endDate: '2026-08-30', participants: 15, budget: 30000, description: 'Teaching basic computer skills to rural youth.', impact: 'Ongoing: 60 students enrolled' },
+      // IIT projects
+      { id: 'p-iit-1', clubId: 'c6', name: 'STEM & Robotics Workshop', category: 'Education', status: 'completed', startDate: '2026-02-01', endDate: '2026-03-15', participants: 24, budget: 35000, description: 'Introduced robotics and programming to underprivileged school children.', impact: '350 students benefited' },
+      { id: 'p-iit-2', clubId: 'c6', name: 'E-Waste Recycling Drive', category: 'Environment', status: 'completed', startDate: '2026-04-05', endDate: '2026-04-05', participants: 30, budget: 5000, description: 'Collected and responsibly recycled electronic waste.', impact: '500kg e-waste recycled' },
+      { id: 'p-iit-3', clubId: 'c6', name: 'Digital Inclusion Camp', category: 'Leadership', status: 'in_progress', startDate: '2026-06-20', endDate: '2026-06-20', participants: 20, budget: 15000, description: 'Basic digital skills and web tools for rural youth.', impact: 'Target: 100 students' },
       // UOC Faculty of Science projects
       { id: 'p8', clubId: 'c7', name: 'Science Day Exhibition', category: 'Education', status: 'completed', startDate: '2026-03-10', endDate: '2026-03-10', participants: 25, budget: 25000, description: 'Organized science exhibition for school children.', impact: '150+ students attended' },
       { id: 'p9', clubId: 'c7', name: 'Lab Safety Seminar', category: 'Health', status: 'in_progress', startDate: '2026-06-15', endDate: '2026-06-15', participants: 18, budget: 5000, description: 'Lab safety and first aid training for university students.', impact: 'Ongoing: 40 students enrolled' },
@@ -775,7 +672,7 @@ function getDefaultData() {
         targetClubs: 'all',
         createdAt: '2026-06-01',
         author: 'District Governor',
-        read: ['c1']
+        read: ['c9']
       },
       {
         id: 'a2',
@@ -800,22 +697,22 @@ function getDefaultData() {
       {
         id: 'a4',
         title: 'Zone A1 Joint Meeting Invitation',
-        content: 'All Zone A1 clubs are invited to attend the quarterly joint meeting on June 25, 2026 at 4:00 PM. Venue: Lions Hall, Galle. Agenda includes zone project planning and inter-club collaboration opportunities.',
+        content: 'All Zone A1 clubs are invited to attend the quarterly joint meeting on June 25, 2026 at 4:00 PM. Venue: Colombo. Agenda includes zone project planning and inter-club collaboration opportunities.',
         priority: 'normal',
-        targetClubs: ['c1', 'c3'],
+        targetClubs: ['c9', 'c10'],
         createdAt: '2026-06-14',
         author: 'Zone Chairperson',
         read: []
       },
       {
         id: 'a5',
-        title: 'Congratulations to Leo Club of Sapphire Coast!',
-        content: 'We congratulate the Leo Club of Sapphire Coast for winning the Best Community Project Award for their School Renovation Drive. Outstanding work by the entire club!',
+        title: 'Congratulations to Leo Club of Informatics Institute of Technology!',
+        content: 'We congratulate the Leo Club of Informatics Institute of Technology for winning the Best Community Project Award for their STEM & Robotics Workshop. Outstanding work by the entire club!',
         priority: 'normal',
         targetClubs: 'all',
         createdAt: '2026-05-28',
         author: 'District Governor',
-        read: ['c1', 'c2']
+        read: ['c6', 'c7']
       }
     ],
 
@@ -831,8 +728,8 @@ function getDefaultData() {
         description: 'The flagship annual gathering of all Leo clubs in the district. Features keynote speakers, workshops, awards ceremony, and fellowship activities.',
         status: 'open',
         registrations: [
-          { clubId: 'c1', participants: ['m1', 'm2', 'm6'], registeredAt: '2026-06-05', status: 'confirmed' },
-          { clubId: 'c2', participants: ['m9', 'm10'], registeredAt: '2026-06-08', status: 'confirmed' },
+          { clubId: 'c6', participants: ['m111', 'm112', 'm113'], registeredAt: '2026-06-05', status: 'confirmed' },
+          { clubId: 'c7', participants: ['m77', 'm78'], registeredAt: '2026-06-08', status: 'confirmed' },
         ]
       },
       {
@@ -846,7 +743,7 @@ function getDefaultData() {
         description: 'Annual sports competition between Leo clubs. Events include cricket, volleyball, athletics, and team challenges.',
         status: 'open',
         registrations: [
-          { clubId: 'c1', participants: ['m1', 'm4', 'm5', 'm8'], registeredAt: '2026-06-12', status: 'confirmed' },
+          { clubId: 'c6', participants: ['m111', 'm114', 'm115'], registeredAt: '2026-06-12', status: 'confirmed' },
         ]
       },
       {
@@ -872,9 +769,9 @@ function getDefaultData() {
         description: 'A unified district-wide community service day where all clubs participate in service activities simultaneously across different locations.',
         status: 'open',
         registrations: [
-          { clubId: 'c1', participants: ['m1', 'm2', 'm3', 'm4', 'm5', 'm6', 'm8'], registeredAt: '2026-06-15', status: 'confirmed' },
-          { clubId: 'c2', participants: ['m9', 'm10', 'm11', 'm12'], registeredAt: '2026-06-16', status: 'pending' },
-          { clubId: 'c3', participants: ['m13', 'm14', 'm15'], registeredAt: '2026-06-16', status: 'confirmed' },
+          { clubId: 'c6', participants: ['m111', 'm112', 'm113', 'm114', 'm115', 'm116'], registeredAt: '2026-06-15', status: 'confirmed' },
+          { clubId: 'c7', participants: ['m77', 'm78', 'm79', 'm80'], registeredAt: '2026-06-16', status: 'confirmed' },
+          { clubId: 'c8', participants: ['m82', 'm83', 'm84'], registeredAt: '2026-06-16', status: 'confirmed' },
         ]
       }
     ],
@@ -1072,7 +969,7 @@ function getDefaultData() {
 
     clubPoints: [
       {
-        clubId: 'c1',
+        clubId: 'c6',
         points: {
           ad1_1: 10000, ad1_2: 100000, ad1_3: 10000, ad1_6: 1000000,
           ad2_3: 500000, ad2_4: 1000000,
@@ -1085,7 +982,7 @@ function getDefaultData() {
         }
       },
       {
-        clubId: 'c2',
+        clubId: 'c7',
         points: {
           ad1_1: 10000, ad1_2: 100000, ad1_6: 1000000,
           ad2_3: 500000,
@@ -1097,7 +994,7 @@ function getDefaultData() {
         }
       },
       {
-        clubId: 'c3',
+        clubId: 'c8',
         points: {
           ad1_1: 10000, ad1_3: 10000,
           ad2_1: 10000, ad2_5: 200000,
@@ -1109,7 +1006,7 @@ function getDefaultData() {
         }
       },
       {
-        clubId: 'c4',
+        clubId: 'c9',
         points: {
           ad1_1: 10000, ad1_2: 100000,
           ad2_3: 500000,
@@ -1121,7 +1018,7 @@ function getDefaultData() {
         }
       },
       {
-        clubId: 'c5',
+        clubId: 'c10',
         points: {
           ad1_3: 10000,
           ad2_2: 10000,
@@ -1130,36 +1027,6 @@ function getDefaultData() {
           int2_2: 2000,
           sp2_3: 100000,
           sp4_5: -100000
-        }
-      },
-      {
-        clubId: 'c6',
-        points: {
-          ad1_1: 10000, ad1_3: 10000, ad2_1: 10000, sp1_1: 100000
-        }
-      },
-      {
-        clubId: 'c7',
-        points: {
-          ad1_1: 10000, ad1_3: 10000, ad2_1: 10000
-        }
-      },
-      {
-        clubId: 'c8',
-        points: {
-          ad1_1: 10000, ad1_3: 10000, ad2_1: 10000
-        }
-      },
-      {
-        clubId: 'c9',
-        points: {
-          ad1_1: 10000, ad1_3: 10000, ad2_1: 10000
-        }
-      },
-      {
-        clubId: 'c10',
-        points: {
-          ad1_1: 10000, ad1_3: 10000, ad2_1: 10000
         }
       },
       {
@@ -1194,67 +1061,35 @@ function getDefaultData() {
       { clubId: 'c25', points: { ad1_1: 10000, ad1_3: 10000, ad2_1: 10000 } }
     ],
     memberPayments: [
-      { id: 'mp1', eventId: 'e1', clubId: 'c1', memberId: 'm1', name: 'Kasun Perera', amount: 1000, status: 'paid', date: '2026-06-05', method: 'Bank Transfer', reference: 'REF-M-101', registrationStatus: 'approved', paymentStatus: 'paid' },
-      { id: 'mp2', eventId: 'e1', clubId: 'c1', memberId: 'm2', name: 'Sanduni Rajapaksa', amount: 1000, status: 'paid', date: '2026-06-06', method: 'Cash', reference: 'REF-M-102', registrationStatus: 'approved', paymentStatus: 'paid' },
-      { id: 'mp3', eventId: 'e1', clubId: 'c1', memberId: 'm6', name: 'Ravindu Seneviratne', amount: 1000, status: 'pending', date: '2026-06-12', method: 'Bank Transfer', reference: 'REF-M-103', registrationStatus: 'pending', paymentStatus: 'unpaid' }
+      { id: 'mp1', eventId: 'e1', clubId: 'c6', memberId: 'm111', name: 'Leo Lion Sithuli Amunuthuduwa', amount: 1000, status: 'paid', date: '2026-06-05', method: 'Bank Transfer', reference: 'REF-M-101', registrationStatus: 'approved', paymentStatus: 'paid' },
+      { id: 'mp2', eventId: 'e1', clubId: 'c6', memberId: 'm112', name: 'Leo Dinath Wijesooriya', amount: 1000, status: 'paid', date: '2026-06-06', method: 'Cash', reference: 'REF-M-102', registrationStatus: 'approved', paymentStatus: 'paid' },
+      { id: 'mp3', eventId: 'e1', clubId: 'c6', memberId: 'm113', name: 'Leo Thimira Anjana', amount: 1000, status: 'pending', date: '2026-06-12', method: 'Bank Transfer', reference: 'REF-M-103', registrationStatus: 'pending', paymentStatus: 'unpaid' }
     ],
     clubPayments: [
-      { id: 'cp1', eventId: 'e1', clubId: 'c1', amount: 3000, status: 'paid', date: '2026-06-12', method: 'Bank Deposit', reference: 'REF-DIST-101', receiptUrl: 'receipt_c1_e1.png', registeredCount: 3 }
+      { id: 'cp1', eventId: 'e1', clubId: 'c6', amount: 3000, status: 'paid', date: '2026-06-12', method: 'Bank Deposit', reference: 'REF-DIST-101', receiptUrl: 'receipt_c6_e1.png', registeredCount: 3 }
     ],
     clubEventSettings: [
-      { id: 'ces1', clubId: 'c1', eventId: 'e1', visibleToMembers: true },
-      { id: 'ces2', clubId: 'c1', eventId: 'e2', visibleToMembers: true },
-      { id: 'ces3', clubId: 'c1', eventId: 'e3', visibleToMembers: false },
-      { id: 'ces4', clubId: 'c1', eventId: 'e4', visibleToMembers: true }
+      { id: 'ces1', clubId: 'c6', eventId: 'e1', visibleToMembers: true },
+      { id: 'ces2', clubId: 'c6', eventId: 'e2', visibleToMembers: true },
+      { id: 'ces3', clubId: 'c6', eventId: 'e3', visibleToMembers: false },
+      { id: 'ces4', clubId: 'c6', eventId: 'e4', visibleToMembers: true }
     ],
     invoices: [
       {
         id: 'inv1',
         invoiceNumber: 'INV-2026-001',
-        clubId: 'c1',
-        clubName: 'Leo Club of Sapphire Coast',
+        clubId: 'c6',
+        clubName: 'Leo Club of Informatics Institute of Technology',
         amount: 15000,
         issueDate: '2026-06-01',
         dueDate: '2026-06-30',
         description: 'Annual District Membership Dues (Leostic Year 2026/27)',
         category: 'Membership Fees',
-        status: 'unpaid',
-        receiptUrl: '',
-        reference: '',
-        remarks: '',
-        eventId: null
-      },
-      {
-        id: 'inv2',
-        invoiceNumber: 'INV-2026-002',
-        clubId: 'c2',
-        clubName: 'Leo Club of Phoenix Rising',
-        amount: 12000,
-        issueDate: '2026-06-01',
-        dueDate: '2026-06-30',
-        description: 'Annual District Membership Dues (Leostic Year 2026/27)',
-        category: 'Membership Fees',
         status: 'paid',
-        receiptUrl: 'receipt_c2_dues.png',
+        receiptUrl: 'receipt_c6_dues.png',
         reference: 'DEP-90801',
         remarks: 'Approved by District Treasurer',
         eventId: null
-      },
-      {
-        id: 'inv3',
-        invoiceNumber: 'INV-2026-003',
-        clubId: 'c3',
-        clubName: 'Leo Club of Horizon',
-        amount: 10000,
-        issueDate: '2026-06-05',
-        dueDate: '2026-06-25',
-        description: 'District Conference Admin & Levy Fee',
-        category: 'Conference Levy',
-        status: 'pending',
-        receiptUrl: 'receipt_c3_levy.png',
-        reference: 'DEP-88923',
-        remarks: '',
-        eventId: 'e1'
       },
       {
         id: 'inv4',
@@ -2326,12 +2161,12 @@ function getDefaultData() {
     pointsSubmissions: [
       {
         id: "ps_1",
-        clubId: "c1",
-        clubName: "Leo Club of Sapphire Coast",
+        clubId: "c7",
+        clubName: "Leo Club of University of Colombo Faculty of Science",
         month: "2026-05",
         status: "approved",
         submittedAt: "2026-05-08T14:30:00Z",
-        submittedBy: "Kasun Perera",
+        submittedBy: "Leo Lion G.D Thevindu Nirmitha",
         checkedCriteria: ["ad1_1", "ad1_3", "ad2_1", "sp1_1"],
         pointsClaimed: { ad1_1: 10000, ad1_3: 10000, ad2_1: 10000, sp1_1: 100000 },
         totalPoints: 130000,
@@ -2345,12 +2180,12 @@ function getDefaultData() {
       },
       {
         id: "ps_2",
-        clubId: "c2",
-        clubName: "Leo Club of Phoenix Rising",
+        clubId: "c9",
+        clubName: "Leo Club of Colombo (Host)",
         month: "2026-05",
         status: "approved",
         submittedAt: "2026-05-09T18:45:00Z",
-        submittedBy: "Amaya Silva",
+        submittedBy: "Leo Lion Anju Gayathri",
         checkedCriteria: ["ad1_1", "ad2_1", "sp1_2"],
         pointsClaimed: { ad1_1: 10000, ad2_1: 10000, sp1_2: 150000 },
         totalPoints: 170000,
@@ -2363,17 +2198,17 @@ function getDefaultData() {
       },
       {
         id: "ps_3",
-        clubId: "c3",
-        clubName: "Leo Club of Horizon",
+        clubId: "c10",
+        clubName: "Leo Club of Colombo Millennium",
         month: "2026-05",
         status: "pending",
         submittedAt: "2026-06-05T10:15:00Z",
-        submittedBy: "Nimal Fernando",
+        submittedBy: "Leo Lion Vinuthi Thisansa",
         checkedCriteria: ["ad1_1", "ad1_3"],
         pointsClaimed: { ad1_1: 10000, ad1_3: 10000 },
         totalPoints: 20000,
         proofAttachments: {
-          ad1_1: [{ name: "Horizon_Activity_Proof.pdf", type: "application/pdf", size: "2.1 MB", url: "#" }]
+          ad1_1: [{ name: "Millennium_Activity_Proof.pdf", type: "application/pdf", size: "2.1 MB", url: "#" }]
         },
       }
     ],
@@ -2414,12 +2249,12 @@ function getDefaultData() {
       },
       {
         id: "pcs_2",
-        clubId: "c1",
-        clubName: "Leo Club of Sapphire Coast",
+        clubId: "c7",
+        clubName: "Leo Club of University of Colombo Faculty of Science",
         month: "2026-06",
         status: "approved",
         submittedAt: "2026-06-28T14:30:00Z",
-        submittedBy: "Kasun Perera",
+        submittedBy: "Leo Lion G.D Thevindu Nirmitha",
         subClaims: {
           cat_2_sub_1: { ticked: true, proofs: [{ name: "MyLion_WasteMgmt_Report.pdf", type: "application/pdf", size: "1.1 MB", url: "#" }] },
           cat_2_sub_2: { ticked: true, proofs: [{ name: "Recycling_Drive_Receipts.pdf", type: "application/pdf", size: "890 KB", url: "#" }] },
@@ -2583,15 +2418,43 @@ class Store {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) {
         this._data = JSON.parse(raw);
-        if (this._data.clubOfficers_version !== '2026_club_officers_v1') {
+        if (this._data.clubOfficers_version !== '2026_club_officers_v2') {
           const fresh = getDefaultData();
           this._data.clubs = fresh.clubs;
           this._data.members = fresh.members;
+          this._data.finances = fresh.finances;
+          this._data.projects = fresh.projects;
+          this._data.events = fresh.events;
+          this._data.announcements = fresh.announcements;
+          this._data.clubPoints = fresh.clubPoints;
+          this._data.memberPayments = fresh.memberPayments;
+          this._data.clubPayments = fresh.clubPayments;
+          this._data.clubEventSettings = fresh.clubEventSettings;
+          this._data.invoices = fresh.invoices;
+          this._data.pointsSubmissions = fresh.pointsSubmissions;
+          this._data.projectCategorySubmissions = fresh.projectCategorySubmissions;
           if (this._data.districtProfile) {
             this._data.districtProfile.title = 'Leo District 306 D1';
             this._data.districtProfile.description = fresh.districtProfile.description;
           }
-          this._data.clubOfficers_version = '2026_club_officers_v1';
+          this._data.clubOfficers_version = '2026_club_officers_v2';
+          this.save();
+        }
+
+        // Explicitly purge any remaining mock clubs c1-c5 and associated data
+        const mockClubIds = ['c1', 'c2', 'c3', 'c4', 'c5'];
+        if (this._data.clubs && this._data.clubs.some(c => mockClubIds.includes(c.id))) {
+          this._data.clubs = this._data.clubs.filter(c => !mockClubIds.includes(c.id));
+          if (this._data.members) this._data.members = this._data.members.filter(m => !mockClubIds.includes(m.clubId));
+          if (this._data.finances) this._data.finances = this._data.finances.filter(f => !mockClubIds.includes(f.clubId));
+          if (this._data.projects) this._data.projects = this._data.projects.filter(p => !mockClubIds.includes(p.clubId));
+          if (this._data.clubPoints) this._data.clubPoints = this._data.clubPoints.filter(cp => !mockClubIds.includes(cp.clubId));
+          if (this._data.invoices) this._data.invoices = this._data.invoices.filter(inv => !mockClubIds.includes(inv.clubId));
+          if (this._data.memberPayments) this._data.memberPayments = this._data.memberPayments.filter(mp => !mockClubIds.includes(mp.clubId));
+          if (this._data.clubPayments) this._data.clubPayments = this._data.clubPayments.filter(cp => !mockClubIds.includes(cp.clubId));
+          if (this._data.clubEventSettings) this._data.clubEventSettings = this._data.clubEventSettings.filter(ces => !mockClubIds.includes(ces.clubId));
+          if (this._data.pointsSubmissions) this._data.pointsSubmissions = this._data.pointsSubmissions.filter(ps => !mockClubIds.includes(ps.clubId));
+          if (this._data.projectCategorySubmissions) this._data.projectCategorySubmissions = this._data.projectCategorySubmissions.filter(pcs => !mockClubIds.includes(pcs.clubId));
           this.save();
         }
         // Ensure new collections exist in case of upgrade
@@ -2739,12 +2602,7 @@ class Store {
         let hasLegacyClub = false;
         if (this._data.clubs) {
           this._data.clubs.forEach(c => {
-            if (c.id === 'c1' && c.code !== 'LC-024') { c.code = 'LC-024'; hasLegacyClub = true; }
-            else if (c.id === 'c2' && c.code !== 'LC-025') { c.code = 'LC-025'; hasLegacyClub = true; }
-            else if (c.id === 'c3' && c.code !== 'LC-021') { c.code = 'LC-021'; hasLegacyClub = true; }
-            else if (c.id === 'c4' && c.code !== 'LC-022') { c.code = 'LC-022'; hasLegacyClub = true; }
-            else if (c.id === 'c5' && c.code !== 'LC-023') { c.code = 'LC-023'; hasLegacyClub = true; }
-            else if (c.id === 'c6' && c.code !== 'LC-001') { c.code = 'LC-001'; hasLegacyClub = true; }
+            if (c.id === 'c6' && c.code !== 'LC-001') { c.code = 'LC-001'; hasLegacyClub = true; }
             else if (c.id === 'c7' && c.code !== 'LC-003') { c.code = 'LC-003'; hasLegacyClub = true; }
             else if (c.id === 'c8' && c.code !== 'LC-002') { c.code = 'LC-002'; hasLegacyClub = true; }
             else if (c.id === 'c9' && c.code !== 'LC-004') { c.code = 'LC-004'; hasLegacyClub = true; }
@@ -2767,18 +2625,11 @@ class Store {
 
             if (c.zone && c.zone.startsWith('Zone ')) {
               hasLegacyClub = true;
-              if (c.id === 'c1') c.zone = 'A1';
-              else if (c.id === 'c2') c.zone = 'A2';
-              else if (c.id === 'c3') c.zone = 'B1';
-              else if (c.id === 'c4') c.zone = 'B2';
-              else if (c.id === 'c5') c.zone = 'B1';
-              else c.zone = c.zone.replace('Zone ', 'A');
+              c.zone = c.zone.replace('Zone ', 'A');
             }
             if (c.region && c.region.startsWith('Region ')) {
               hasLegacyClub = true;
-              if (c.id === 'c1' || c.id === 'c2') c.region = 'A';
-              else if (c.id === 'c3' || c.id === 'c4' || c.id === 'c5') c.region = 'B';
-              else c.region = c.region.replace('Region ', '');
+              c.region = c.region.replace('Region ', '');
             }
             if (c.region === 'C') {
               c.region = 'B';
