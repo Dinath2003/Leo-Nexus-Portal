@@ -60,9 +60,11 @@ function getUserFormHtml(user = null) {
             <option value="district_president" ${user?.role === 'district_president' ? 'selected' : ''}>District President</option>
             <option value="district_vp" ${user?.role === 'district_vp' ? 'selected' : ''}>District Vice President</option>
             <option value="district_secretary" ${user?.role === 'district_secretary' ? 'selected' : ''}>District Secretary</option>
+            <option value="district_assistant_secretary" ${user?.role === 'district_assistant_secretary' ? 'selected' : ''}>District Assistant Secretary</option>
             <option value="district_membership" ${user?.role === 'district_membership' ? 'selected' : ''}>District Membership Chair</option>
             <option value="district_admin" ${user?.role === 'district_admin' ? 'selected' : ''}>District Admin</option>
             <option value="district_treasurer" ${user?.role === 'district_treasurer' ? 'selected' : ''}>District Treasurer</option>
+            <option value="district_assistant_treasurer" ${user?.role === 'district_assistant_treasurer' ? 'selected' : ''}>District Assistant Treasurer</option>
             <option value="club_president" ${user?.role === 'club_president' ? 'selected' : ''}>Club President</option>
             <option value="club_secretary" ${user?.role === 'club_secretary' ? 'selected' : ''}>Club Secretary</option>
             <option value="club_treasurer" ${user?.role === 'club_treasurer' ? 'selected' : ''}>Club Treasurer</option>
@@ -145,9 +147,11 @@ const roleBadgeMap = {
   'district_president': { label: 'District President', class: 'badge-primary' },
   'district_vp': { label: 'District VP', class: 'badge-primary' },
   'district_secretary': { label: 'District Sec', class: 'badge-primary' },
+  'district_assistant_secretary': { label: 'District Asst Sec', class: 'badge-primary' },
   'district_membership': { label: 'District Mem', class: 'badge-primary' },
   'district_admin': { label: 'District Admin', class: 'badge-primary' },
   'district_treasurer': { label: 'District Treasurer', class: 'badge-primary' },
+  'district_assistant_treasurer': { label: 'District Asst Treas', class: 'badge-primary' },
   'club_president': { label: 'Club President', class: 'badge-cyan' },
   'club_secretary': { label: 'Club Sec', class: 'badge-cyan' },
   'club_treasurer': { label: 'Club Treas', class: 'badge-cyan' },
@@ -278,9 +282,11 @@ export function renderDistrictUsers() {
                   <option value="district_president" ${filterRole==='district_president' ? 'selected' : ''}>District President</option>
                   <option value="district_vp" ${filterRole==='district_vp' ? 'selected' : ''}>District Vice President</option>
                   <option value="district_secretary" ${filterRole==='district_secretary' ? 'selected' : ''}>District Secretary</option>
+                  <option value="district_assistant_secretary" ${filterRole==='district_assistant_secretary' ? 'selected' : ''}>District Assistant Secretary</option>
                   <option value="district_membership" ${filterRole==='district_membership' ? 'selected' : ''}>District Membership Chair</option>
                   <option value="district_admin" ${filterRole==='district_admin' ? 'selected' : ''}>District Admin</option>
                   <option value="district_treasurer" ${filterRole==='district_treasurer' ? 'selected' : ''}>District Treasurer</option>
+                  <option value="district_assistant_treasurer" ${filterRole==='district_assistant_treasurer' ? 'selected' : ''}>District Assistant Treasurer</option>
                   <option value="club_president" ${filterRole==='club_president' ? 'selected' : ''}>Club President</option>
                   <option value="club_secretary" ${filterRole==='club_secretary' ? 'selected' : ''}>Club Secretary</option>
                   <option value="club_treasurer" ${filterRole==='club_treasurer' ? 'selected' : ''}>Club Treasurer</option>
