@@ -31,7 +31,12 @@ class Auth {
 
   login(email, password) {
     const users = store.getAll('users');
-    const user = users.find(u => u.email === email && u.password === password);
+    const inputEmail = (email || '').trim().toLowerCase();
+    const user = users.find(u => {
+      const uEmail = (u.email || '').toLowerCase();
+      const uAlt = (u.altEmail || '').toLowerCase();
+      return (uEmail === inputEmail || (uAlt && uAlt === inputEmail)) && u.password === password;
+    });
 
     if (!user) {
       return { success: false, error: 'Invalid email or password' };
@@ -139,8 +144,10 @@ class Auth {
       },
       district_membership: {
         clubs: ['read'],
-        members: ['read'],
+        members: ['create', 'read', 'update'],
         reports: ['read'],
+        announcements: ['read'],
+        events: ['read'],
       },
       district_treasurer: {
         clubs: ['read'],

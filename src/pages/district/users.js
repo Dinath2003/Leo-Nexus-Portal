@@ -148,7 +148,7 @@ const roleBadgeMap = {
   'district_vp': { label: 'District VP', class: 'badge-primary' },
   'district_secretary': { label: 'District Sec', class: 'badge-primary' },
   'district_assistant_secretary': { label: 'District Asst Sec', class: 'badge-primary' },
-  'district_membership': { label: 'District Mem', class: 'badge-primary' },
+  'district_membership': { label: 'District DMC', class: 'badge-primary' },
   'district_admin': { label: 'District Admin', class: 'badge-primary' },
   'district_treasurer': { label: 'District Treasurer', class: 'badge-primary' },
   'district_assistant_treasurer': { label: 'District Asst Treas', class: 'badge-primary' },

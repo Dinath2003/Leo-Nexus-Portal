@@ -88,7 +88,7 @@ function getRoleLabel(role) {
     district_vp: 'District Vice President',
     district_secretary: 'District Secretary',
     district_assistant_secretary: 'District Assistant Secretary',
-    district_membership: 'District Membership Chair',
+    district_membership: 'District Membership Chairperson',
     district_admin: 'District Admin',
     district_treasurer: 'District Treasurer',
     district_assistant_treasurer: 'District Assistant Treasurer',

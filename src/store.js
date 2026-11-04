@@ -19,7 +19,8 @@ function getDefaultData() {
       { id: 'u6', email: 'admin.d1@leo.org', password: 'senuth123', name: 'Leo Lion Senuth Dilnada', role: 'district_admin', clubId: null, avatar: 'SD', createdAt: '2026-06-18' },
       { id: 'u7', email: 'president.iit@leo.org', password: 'sithuli123', name: 'Leo Lion Sithuli Amunuthuduwa', role: 'club_president', clubId: 'c6', avatar: 'SA', createdAt: '2026-06-18' },
       { id: 'u8', email: 'asstsec.d1@leo.org', password: 'prabhavee123', name: 'Leo Lion Prabhavee Mayasha', role: 'district_assistant_secretary', clubId: null, avatar: 'PM', createdAt: '2026-06-18' },
-      { id: 'u9', email: 'assttreasurer.d1@leo.org', password: 'chamal123', name: 'Leo Lion Chamal Pramod', role: 'district_assistant_treasurer', clubId: null, avatar: 'CP', createdAt: '2026-06-18' }
+      { id: 'u9', email: 'assttreasurer.d1@leo.org', password: 'chamal123', name: 'Leo Lion Chamal Pramod', role: 'district_assistant_treasurer', clubId: null, avatar: 'CP', createdAt: '2026-06-18' },
+      { id: 'u10', email: 'membership.d1@leo.org', altEmail: 'leo.sandunitheekshana@gmail.com', password: 'sanduni123', name: 'Leo Lion Sanduni Theekshana', role: 'district_membership', clubId: null, avatar: 'ST', phone: '0758650060', memberId: '5727258', createdAt: '2026-06-18' }
     ],
 
     clubs: [
@@ -2575,7 +2576,8 @@ class Store {
           { id: 'u6', email: 'admin.d1@leo.org', password: 'senuth123', name: 'Leo Lion Senuth Dilnada', role: 'district_admin', clubId: null, avatar: 'SD', createdAt: '2026-06-18' },
           { id: 'u7', email: 'president.iit@leo.org', password: 'sithuli123', name: 'Leo Lion Sithuli Amunuthuduwa', role: 'club_president', clubId: 'c6', avatar: 'SA', createdAt: '2026-06-18' },
           { id: 'u8', email: 'asstsec.d1@leo.org', password: 'prabhavee123', name: 'Leo Lion Prabhavee Mayasha', role: 'district_assistant_secretary', clubId: null, avatar: 'PM', createdAt: '2026-06-18' },
-          { id: 'u9', email: 'assttreasurer.d1@leo.org', password: 'chamal123', name: 'Leo Lion Chamal Pramod', role: 'district_assistant_treasurer', clubId: null, avatar: 'CP', createdAt: '2026-06-18' }
+          { id: 'u9', email: 'assttreasurer.d1@leo.org', password: 'chamal123', name: 'Leo Lion Chamal Pramod', role: 'district_assistant_treasurer', clubId: null, avatar: 'CP', createdAt: '2026-06-18' },
+          { id: 'u10', email: 'membership.d1@leo.org', altEmail: 'leo.sandunitheekshana@gmail.com', password: 'sanduni123', name: 'Leo Lion Sanduni Theekshana', role: 'district_membership', clubId: null, avatar: 'ST', phone: '0758650060', memberId: '5727258', createdAt: '2026-06-18' }
         ];
         let usersUpdated = false;
         if (!this._data.users) this._data.users = [];
