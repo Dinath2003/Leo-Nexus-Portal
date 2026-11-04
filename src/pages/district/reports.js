@@ -24,16 +24,13 @@ export function renderDistrictReports() {
   let selectedCategoryGroup = 'all';
   let financeSearchTerm = '';
   let financeSortBy = 'balance_desc';
+  let membershipTrackFilter = 'all';
+  let membershipSearchTerm = '';
 
-  // Membership trends (simulate monthly data from join dates)
-  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
-  const memberJoinsByMonth = months.map((m, i) => {
-    const monthNum = i + 1;
-    return members.filter(mem => {
-      const d = new Date(mem.joinDate);
-      return d.getMonth() + 1 <= monthNum;
-    }).length;
-  });
+  // Official Certified Membership Checkpoints (July – October 2026)
+  const membershipHistory = store.getMembershipHistory ? store.getMembershipHistory() : [];
+  const membershipTrendLabels = membershipHistory.map(m => m.shortLabel);
+  const membershipTrendData = membershipHistory.map(m => m.totalMembers);
 
   // Total district finances
   const allFinances = store.getAll('finances');
@@ -188,6 +185,108 @@ export function renderDistrictReports() {
     `;
   }
 
+  function renderMembershipLedgerHtml() {
+    let filteredClubs = clubs.filter(c => {
+      if (membershipTrackFilter !== 'all' && c.track !== membershipTrackFilter) return false;
+      if (membershipSearchTerm && !c.name.toLowerCase().includes(membershipSearchTerm.toLowerCase()) && !c.code.toLowerCase().includes(membershipSearchTerm.toLowerCase())) {
+        return false;
+      }
+      return true;
+    });
+
+    const julSum = filteredClubs.reduce((s, c) => s + ((c.membershipCheckpoints && c.membershipCheckpoints['2026-07-01']) || 0), 0);
+    const augSum = filteredClubs.reduce((s, c) => s + ((c.membershipCheckpoints && c.membershipCheckpoints['2026-08-09']) || 0), 0);
+    const sep1Sum = filteredClubs.reduce((s, c) => s + ((c.membershipCheckpoints && c.membershipCheckpoints['2026-09-01']) || 0), 0);
+    const sep30Sum = filteredClubs.reduce((s, c) => s + ((c.membershipCheckpoints && c.membershipCheckpoints['2026-09-30']) || 0), 0);
+    const octSum = filteredClubs.reduce((s, c) => s + ((c.membershipCheckpoints && c.membershipCheckpoints['2026-10-31']) || c.memberCount || 0), 0);
+    const netSum = octSum - julSum;
+
+    return `
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:12px;">
+        <div style="display:flex; gap:6px; flex-wrap:wrap;">
+          <button type="button" class="btn btn-xs mem-track-btn ${membershipTrackFilter === 'all' ? 'btn-primary' : 'btn-secondary'}" data-track="all">All Clubs (20)</button>
+          <button type="button" class="btn btn-xs mem-track-btn ${membershipTrackFilter === 'Omega Leo' ? 'btn-primary' : 'btn-secondary'}" data-track="Omega Leo">Omega Leo (14)</button>
+          <button type="button" class="btn btn-xs mem-track-btn ${membershipTrackFilter === 'Alpha Leo' ? 'btn-primary' : 'btn-secondary'}" data-track="Alpha Leo">Alpha Leo (6)</button>
+        </div>
+        <div style="display:flex; gap:8px; align-items:center;">
+          <div class="search-bar" style="height:32px;">
+            <i data-lucide="search" class="search-icon" style="width:13px;height:13px;"></i>
+            <input type="text" id="membership-search-input" placeholder="Search club..." value="${membershipSearchTerm}" style="font-size:12px; height:32px; padding-left:30px;" />
+          </div>
+        </div>
+      </div>
+
+      <div class="data-table-wrapper" style="max-height:420px; overflow-y:auto; border:1px solid var(--color-glass-border); border-radius:8px;">
+        <table class="data-table" style="font-size:12px; margin:0;">
+          <thead style="position:sticky; top:0; background:var(--color-bg-primary); z-index:2;">
+            <tr>
+              <th style="width:36px;">#</th>
+              <th>Club Name</th>
+              <th style="width:115px;">Track</th>
+              <th style="width:85px; text-align:center;">1 Jul 2026</th>
+              <th style="width:85px; text-align:center;">9 Aug 2026</th>
+              <th style="width:85px; text-align:center;">1 Sep 2026</th>
+              <th style="width:85px; text-align:center;">30 Sep 2026</th>
+              <th style="width:105px; text-align:center;">31 Oct 2026 (Now)</th>
+              <th style="width:90px; text-align:center;">Net Growth</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${filteredClubs.map((club, idx) => {
+              const cp = club.membershipCheckpoints || {};
+              const cJul = cp['2026-07-01'] || 0;
+              const cAug = cp['2026-08-09'] || 0;
+              const cSep1 = cp['2026-09-01'] || 0;
+              const cSep30 = cp['2026-09-30'] || 0;
+              const cOct = cp['2026-10-31'] || club.memberCount || 0;
+              const diff = cOct - cJul;
+              const isAlpha = club.track === 'Alpha Leo';
+              return `
+                <tr>
+                  <td style="font-weight:700; color:var(--color-text-muted);">${idx + 1}</td>
+                  <td>
+                    <div style="font-weight:600; color:var(--color-text-primary); line-height:1.2;">${club.name}</div>
+                    <div style="font-size:10px; color:var(--color-text-muted);">${club.code} · Zone ${club.zone || 'A1'}</div>
+                  </td>
+                  <td>
+                    <span class="badge ${isAlpha ? 'badge-warning' : 'badge-primary'}" style="font-size:10px; font-weight:600;">
+                      ${club.track || 'Omega Leo'}
+                    </span>
+                  </td>
+                  <td style="text-align:center; font-weight:600; color:var(--color-text-secondary);">${cJul}</td>
+                  <td style="text-align:center; font-weight:600; color:var(--color-text-secondary);">${cAug}</td>
+                  <td style="text-align:center; font-weight:600; color:var(--color-text-secondary);">${cSep1}</td>
+                  <td style="text-align:center; font-weight:600; color:var(--color-text-secondary);">${cSep30}</td>
+                  <td style="text-align:center; font-weight:800; color:var(--color-primary); background:rgba(0,102,255,0.05); font-size:13px;">${cOct}</td>
+                  <td style="text-align:center;">
+                    <span class="badge ${diff > 0 ? 'badge-success' : diff < 0 ? 'badge-danger' : 'badge-secondary'}" style="font-weight:700; font-size:11px;">
+                      ${diff > 0 ? '+' + diff : diff}
+                    </span>
+                  </td>
+                </tr>
+              `;
+            }).join('')}
+          </tbody>
+          <tfoot style="position:sticky; bottom:0; background:rgba(15, 23, 42, 0.96); backdrop-filter:blur(8px); z-index:2; border-top:2px solid var(--color-glass-border);">
+            <tr style="font-weight:800;">
+              <td colspan="3" style="color:var(--color-text-primary);">TOTAL (${filteredClubs.length} Clubs)</td>
+              <td style="text-align:center; color:var(--color-text-secondary);">${julSum}</td>
+              <td style="text-align:center; color:var(--color-text-secondary);">${augSum}</td>
+              <td style="text-align:center; color:var(--color-text-secondary);">${sep1Sum}</td>
+              <td style="text-align:center; color:var(--color-text-secondary);">${sep30Sum}</td>
+              <td style="text-align:center; color:var(--color-primary); font-size:14px; background:rgba(0,102,255,0.12);">${octSum.toLocaleString()}</td>
+              <td style="text-align:center;">
+                <span class="badge ${netSum >= 0 ? 'badge-success' : 'badge-danger'}" style="font-weight:800; font-size:11px;">
+                  ${netSum >= 0 ? '+' + netSum : netSum}
+                </span>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    `;
+  }
+
   function getProjectCategoryStats() {
     const stats = store.getMonthlyCategoryCompletionStats(selectedMonth);
     return stats;
@@ -284,6 +383,25 @@ export function renderDistrictReports() {
               <div class="card-body" id="finance-ledger-body">
                 ${renderFinanceLedgerHtml()}
               </div>
+            </div>
+          </div>
+
+          <!-- Certified Monthly Membership Records (July – October 2026) -->
+          <div class="card hover-lift stagger-enter" id="membership-ledger-container" style="margin-top:1.5rem; border:1px solid rgba(0, 102, 255, 0.25);">
+            <div class="card-header" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+              <div>
+                <h3 class="card-title" style="display:flex; align-items:center; gap:8px; margin:0;">
+                  <i data-lucide="users" style="width:18px;height:18px;color:var(--color-primary)"></i>
+                  Official Monthly Membership Records (Jul – Oct 2026)
+                </h3>
+                <p style="margin:4px 0 0; color:var(--color-text-muted); font-size:0.8rem;">
+                  Certified district checkpoint progression for all 20 clubs (Omega & Alpha tracks)
+                </p>
+              </div>
+              <span class="badge badge-primary" style="font-size:10px;">Certified District Checkpoints</span>
+            </div>
+            <div class="card-body" id="membership-ledger-body">
+              ${renderMembershipLedgerHtml()}
             </div>
           </div>
 
@@ -756,15 +874,46 @@ export function renderDistrictReports() {
   }
   attachFinanceLedgerEvents();
 
-  // Membership Trend Line Chart
+  // Attach Membership Ledger Live Filter & Search
+  function attachMembershipLedgerEvents() {
+    document.querySelectorAll('.mem-track-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        membershipTrackFilter = e.currentTarget.dataset.track;
+        const memBody = document.getElementById('membership-ledger-body');
+        if (memBody) {
+          memBody.innerHTML = renderMembershipLedgerHtml();
+          lucide.createIcons();
+          attachMembershipLedgerEvents();
+        }
+      });
+    });
+
+    const searchInput = document.getElementById('membership-search-input');
+    searchInput?.addEventListener('input', (e) => {
+      membershipSearchTerm = e.target.value;
+      const memBody = document.getElementById('membership-ledger-body');
+      if (memBody) {
+        memBody.innerHTML = renderMembershipLedgerHtml();
+        lucide.createIcons();
+        attachMembershipLedgerEvents();
+      }
+    });
+  }
+  attachMembershipLedgerEvents();
+
+  // Certified Membership Trend Line Chart
   createChart('membership-trend-chart', 'line', {
-    labels: months,
+    labels: membershipTrendLabels.length > 0 ? membershipTrendLabels : ['1 Jul', '9 Aug', '1 Sep', '30 Sep', '31 Oct'],
     datasets: [{
-      label: 'Total Members',
-      data: memberJoinsByMonth,
+      label: 'Total District Members',
+      data: membershipTrendData.length > 0 ? membershipTrendData : [922, 801, 772, 799, 1083],
       borderColor: '#0066ff',
-      backgroundColor: 'rgba(0, 102, 255, 0.1)',
-      fill: true
+      backgroundColor: 'rgba(0, 102, 255, 0.12)',
+      fill: true,
+      tension: 0.35,
+      pointRadius: 5,
+      pointHoverRadius: 7,
+      pointBackgroundColor: '#0066ff'
     }]
   });
 

@@ -245,7 +245,7 @@ export function renderDistrictClubs() {
                 </div>
               ` : clubs.map(club => {
                 const points = store.getTotalClubPoints(club.id);
-                const members = store.getClubMembers(club.id).length || club.memberCount;
+                const members = club.memberCount || store.getClubMembers(club.id).length;
                 return `
                   <div class="card hover-lift water-effect club-card" data-club-id="${club.id}" style="cursor:pointer;">
                     <div class="card-body">
@@ -254,6 +254,7 @@ export function renderDistrictClubs() {
                           <i data-lucide="building-2" style="width:20px;height:20px;color:var(--color-primary)"></i>
                         </div>
                         <div style="display:flex; gap:0.5rem; align-items:center;">
+                          <span class="badge ${club.track === 'Alpha Leo' ? 'badge-warning' : 'badge-primary'}" style="font-size:10px; font-weight:600;">${club.track || 'Omega Leo'}</span>
                           <span class="badge badge-${club.status === 'active' ? 'success' : 'danger'}">${club.status}</span>
                           <div style="position:relative;">
                             <button class="btn btn-icon btn-ghost btn-sm club-menu-btn" data-club-id="${club.id}" onclick="event.stopPropagation()">

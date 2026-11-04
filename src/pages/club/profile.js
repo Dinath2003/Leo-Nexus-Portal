@@ -107,6 +107,8 @@ export function renderClubProfile(params = {}) {
                   <div>
                     <h1 style="margin:0; font-size:24px; font-weight:800; color:var(--color-text-primary); text-shadow: 0 2px 4px rgba(0,0,0,0.5);">${club.name}</h1>
                     <div style="font-size:14px; color:var(--color-text-secondary); margin-top:6px; display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
+                      <span class="badge ${club.track === 'Alpha Leo' ? 'badge-warning' : 'badge-primary'}" style="font-size:11px; font-weight:600;">${club.track || 'Omega Leo'}</span>
+                      <span style="width:4px; height:4px; border-radius:50%; background:var(--color-text-muted);"></span>
                       <span>District 306 D1</span>
                       <span style="width:4px; height:4px; border-radius:50%; background:var(--color-text-muted);"></span>
                       <span>${club.zone || 'A1'}</span>
@@ -141,8 +143,8 @@ export function renderClubProfile(params = {}) {
               <!-- Quick Metrics Section -->
               <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); border-top:1px solid var(--color-border); background:rgba(255,255,255,0.01);">
                 <div style="padding:16px; border-right:1px solid var(--color-border); text-align:center;">
-                  <div style="font-size:24px; font-weight:800; color:var(--color-primary);">${clubMembers.length}</div>
-                  <div style="font-size:12px; color:var(--color-text-muted); margin-top:2px;">Total Members</div>
+                  <div style="font-size:24px; font-weight:800; color:var(--color-primary);">${club.memberCount || clubMembers.length}</div>
+                  <div style="font-size:12px; color:var(--color-text-muted); margin-top:2px;">Certified Members</div>
                 </div>
                 <div style="padding:16px; border-right:1px solid var(--color-border); text-align:center;">
                   <div style="font-size:24px; font-weight:800; color:#14b8a6;">${clubProjects.length}</div>
@@ -222,13 +224,13 @@ export function renderClubProfile(params = {}) {
                 <div class="stats-grid" style="margin-bottom:20px;">
                   <div class="card stat-card" style="border:1px solid rgba(20,184,166,0.2);">
                     <div class="stat-icon" style="color:#14b8a6; background:rgba(20,184,166,0.1);"><i data-lucide="user-check"></i></div>
-                    <div class="stat-value" style="color:#14b8a6;">${activeCount}</div>
-                    <div class="stat-label">Active Members</div>
+                    <div class="stat-value" style="color:#14b8a6;">${club.memberCount || activeCount}</div>
+                    <div class="stat-label">Certified Members</div>
                   </div>
                   <div class="card stat-card" style="border:1px solid rgba(239,68,68,0.2);">
                     <div class="stat-icon" style="color:#ef4444; background:rgba(239,68,68,0.1);"><i data-lucide="user-minus"></i></div>
                     <div class="stat-value" style="color:#ef4444;">${inactiveCount}</div>
-                    <div class="stat-label">Inactive Members</div>
+                    <div class="stat-label">Inactive Roster</div>
                   </div>
                   <div class="card stat-card" style="border:1px solid rgba(0,102,255,0.2);">
                     <div class="stat-icon" style="color:var(--color-primary); background:var(--color-primary-alpha);"><i data-lucide="user-plus"></i></div>
@@ -236,6 +238,40 @@ export function renderClubProfile(params = {}) {
                     <div class="stat-label">Inductions (This Year)</div>
                   </div>
                 </div>
+
+                ${club.membershipCheckpoints ? `
+                  <div class="card hover-lift" style="margin-bottom:20px; padding:16px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:8px;">
+                      <h4 style="margin:0; font-size:0.95rem; display:flex; align-items:center; gap:8px;">
+                        <i data-lucide="line-chart" style="width:16px;height:16px;color:var(--color-primary)"></i>
+                        Certified Monthly Membership Progression (2026)
+                      </h4>
+                      <span class="badge ${club.track === 'Alpha Leo' ? 'badge-warning' : 'badge-primary'}">${club.track || 'Omega Leo'}</span>
+                    </div>
+                    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap:10px;">
+                      <div style="padding:10px; background:rgba(255,255,255,0.02); border:1px solid var(--color-glass-border); border-radius:8px; text-align:center;">
+                        <div style="font-size:11px; color:var(--color-text-muted);">1 July 2026</div>
+                        <div style="font-size:1.3rem; font-weight:800; color:var(--color-text-primary); margin-top:2px;">${club.membershipCheckpoints['2026-07-01'] || '—'}</div>
+                      </div>
+                      <div style="padding:10px; background:rgba(255,255,255,0.02); border:1px solid var(--color-glass-border); border-radius:8px; text-align:center;">
+                        <div style="font-size:11px; color:var(--color-text-muted);">9 August 2026</div>
+                        <div style="font-size:1.3rem; font-weight:800; color:var(--color-text-primary); margin-top:2px;">${club.membershipCheckpoints['2026-08-09'] || '—'}</div>
+                      </div>
+                      <div style="padding:10px; background:rgba(255,255,255,0.02); border:1px solid var(--color-glass-border); border-radius:8px; text-align:center;">
+                        <div style="font-size:11px; color:var(--color-text-muted);">1 September 2026</div>
+                        <div style="font-size:1.3rem; font-weight:800; color:var(--color-text-primary); margin-top:2px;">${club.membershipCheckpoints['2026-09-01'] || '—'}</div>
+                      </div>
+                      <div style="padding:10px; background:rgba(255,255,255,0.02); border:1px solid var(--color-glass-border); border-radius:8px; text-align:center;">
+                        <div style="font-size:11px; color:var(--color-text-muted);">30 September 2026</div>
+                        <div style="font-size:1.3rem; font-weight:800; color:var(--color-text-primary); margin-top:2px;">${club.membershipCheckpoints['2026-09-30'] || '—'}</div>
+                      </div>
+                      <div style="padding:10px; background:rgba(0,102,255,0.08); border:1px solid rgba(0,102,255,0.3); border-radius:8px; text-align:center;">
+                        <div style="font-size:11px; color:var(--color-primary); font-weight:600;">31 October 2026</div>
+                        <div style="font-size:1.3rem; font-weight:800; color:var(--color-primary); margin-top:2px;">${club.membershipCheckpoints['2026-10-31'] || club.memberCount}</div>
+                      </div>
+                    </div>
+                  </div>
+                ` : ''}
 
                 <div class="card hover-lift">
                   <div class="card-header"><h3 class="card-title"><i data-lucide="users" style="width:18px;height:18px;color:var(--color-primary);"></i> Active Membership Directory</h3></div>

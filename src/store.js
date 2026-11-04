@@ -26,12 +26,14 @@ function getDefaultData() {
         id: 'c9',
         name: 'Leo Club of Colombo (Host)',
         code: 'LC-004',
+        track: 'Omega Leo',
         president: 'Anju Gayathri',
         charter_date: '2020-05-10',
         zone: 'A1',
         region: 'A',
         status: 'active',
-        memberCount: 25,
+        memberCount: 40,
+        membershipCheckpoints: { '2026-07-01': 32, '2026-08-09': 32, '2026-09-01': 32, '2026-09-30': 32, '2026-10-31': 40 },
         email: 'colombo.host@leo.org',
         phone: '+94 77 123 0001',
         meetingDay: 'Every Sunday',
@@ -41,12 +43,14 @@ function getDefaultData() {
         id: 'c10',
         name: 'Leo Club of Colombo Millennium',
         code: 'LC-005',
+        track: 'Omega Leo',
         president: 'Vinuthi Thisansa',
         charter_date: '2021-06-15',
         zone: 'A1',
         region: 'A',
         status: 'active',
-        memberCount: 28,
+        memberCount: 21,
+        membershipCheckpoints: { '2026-07-01': 21, '2026-08-09': 21, '2026-09-01': 24, '2026-09-30': 21, '2026-10-31': 21 },
         email: 'millennium@leo.org',
         phone: '+94 77 123 0002',
         meetingDay: 'Every Saturday',
@@ -56,12 +60,14 @@ function getDefaultData() {
         id: 'c11',
         name: 'Leo Club of Colombo Six New Stars',
         code: 'LC-006',
+        track: 'Omega Leo',
         president: 'K.A Sathmi Dinethra',
         charter_date: '2023-08-20',
         zone: 'A1',
         region: 'A',
         status: 'active',
-        memberCount: 24,
+        memberCount: 31,
+        membershipCheckpoints: { '2026-07-01': 31, '2026-08-09': 31, '2026-09-01': 31, '2026-09-30': 31, '2026-10-31': 31 },
         email: 'sixstars@leo.org',
         phone: '+94 77 123 0003',
         meetingDay: 'Every Saturday',
@@ -71,12 +77,14 @@ function getDefaultData() {
         id: 'c12',
         name: 'Leo Club of UOC Alumni',
         code: 'LC-007',
+        track: 'Omega Leo',
         president: 'Sasun Nimjaya Wijeratne',
         charter_date: '2024-10-01',
         zone: 'A1',
         region: 'A',
         status: 'active',
-        memberCount: 30,
+        memberCount: 48,
+        membershipCheckpoints: { '2026-07-01': 17, '2026-08-09': 40, '2026-09-01': 40, '2026-09-30': 40, '2026-10-31': 48 },
         email: 'uoc.alumni@leo.org',
         phone: '+94 77 123 0004',
         meetingDay: 'Every Sunday',
@@ -88,12 +96,14 @@ function getDefaultData() {
         id: 'c6',
         name: 'Leo Club of Informatics Institute of Technology',
         code: 'LC-001',
+        track: 'Omega Leo',
         president: 'Sithuli Pehansa Amunuthuduwa',
         charter_date: '2025-05-10',
         zone: 'A2',
         region: 'A',
         status: 'active',
-        memberCount: 22,
+        memberCount: 86,
+        membershipCheckpoints: { '2026-07-01': 27, '2026-08-09': 58, '2026-09-01': 60, '2026-09-30': 72, '2026-10-31': 86 },
         email: 'iit@leo.org',
         phone: '+94 77 987 6543',
         meetingDay: 'Every Wednesday',
@@ -103,12 +113,14 @@ function getDefaultData() {
         id: 'c7',
         name: 'Leo Club of University of Colombo Faculty of Science',
         code: 'LC-003',
-        president: 'Sajeetharan Mahadevan',
+        track: 'Omega Leo',
+        president: 'G.D Thevindu Nirmitha',
         charter_date: '2025-02-15',
         zone: 'A2',
         region: 'A',
         status: 'active',
-        memberCount: 35,
+        memberCount: 82,
+        membershipCheckpoints: { '2026-07-01': 50, '2026-08-09': 60, '2026-09-01': 64, '2026-09-30': 65, '2026-10-31': 82 },
         email: 'fos@leo.org',
         phone: '+94 77 111 2222',
         meetingDay: 'Every Monday',
@@ -118,12 +130,14 @@ function getDefaultData() {
         id: 'c8',
         name: 'Leo Club of University of Colombo Faculty of Arts',
         code: 'LC-002',
+        track: 'Omega Leo',
         president: 'Manampeli Mahapatabadiralalage Vimukthi Rukshika Cooray',
         charter_date: '2025-03-20',
         zone: 'A2',
         region: 'A',
         status: 'active',
-        memberCount: 40,
+        memberCount: 130,
+        membershipCheckpoints: { '2026-07-01': 76, '2026-08-09': 50, '2026-09-01': 50, '2026-09-30': 65, '2026-10-31': 130 },
         email: 'foa@leo.org',
         phone: '+94 77 333 4444',
         meetingDay: 'Every Tuesday',
@@ -133,12 +147,14 @@ function getDefaultData() {
         id: 'c13',
         name: 'Leo Club of UOC FOA Alumni',
         code: 'LC-008',
+        track: 'Omega Leo',
         president: 'Yoshani Sasanthika',
         charter_date: '2025-01-15',
         zone: 'A2',
         region: 'A',
         status: 'active',
-        memberCount: 26,
+        memberCount: 49,
+        membershipCheckpoints: { '2026-07-01': 48, '2026-08-09': 49, '2026-09-01': 49, '2026-09-30': 49, '2026-10-31': 49 },
         email: 'uoc.foaalumni@leo.org',
         phone: '+94 77 123 0005',
         meetingDay: 'Every Saturday',
@@ -150,12 +166,14 @@ function getDefaultData() {
         id: 'c14',
         name: 'Leo Club of Prince of Wales College',
         code: 'LC-009',
+        track: 'Alpha Leo',
         president: 'Randidu Tadeesha Jayawardena',
         charter_date: '2026-06-15',
         zone: 'B1',
         region: 'B',
         status: 'active',
-        memberCount: 20,
+        memberCount: 27,
+        membershipCheckpoints: { '2026-07-01': 23, '2026-08-09': 23, '2026-09-01': 23, '2026-09-30': 23, '2026-10-31': 27 },
         email: 'princeofwales@leo.org',
         phone: '+94 77 123 0014',
         meetingDay: 'Every Saturday',
@@ -165,12 +183,14 @@ function getDefaultData() {
         id: 'c15',
         name: 'Leo Club of Princess of Wales’ College',
         code: 'LC-010',
+        track: 'Alpha Leo',
         president: 'Vinuri Nihara Aponso',
         charter_date: '2026-06-15',
         zone: 'B1',
         region: 'B',
         status: 'active',
-        memberCount: 22,
+        memberCount: 47,
+        membershipCheckpoints: { '2026-07-01': 39, '2026-08-09': 38, '2026-09-01': 38, '2026-09-30': 38, '2026-10-31': 47 },
         email: 'princessofwales@leo.org',
         phone: '+94 77 123 0015',
         meetingDay: 'Every Sunday',
@@ -180,12 +200,14 @@ function getDefaultData() {
         id: 'c16',
         name: 'Leo Club of Sri Sumangala College',
         code: 'LC-011',
+        track: 'Alpha Leo',
         president: 'Danidu Damsith',
         charter_date: '2026-06-15',
         zone: 'B1',
         region: 'B',
         status: 'active',
-        memberCount: 20,
+        memberCount: 15,
+        membershipCheckpoints: { '2026-07-01': 43, '2026-08-09': 43, '2026-09-01': 43, '2026-09-30': 44, '2026-10-31': 15 },
         email: 'srisumangala@leo.org',
         phone: '+94 77 123 0016',
         meetingDay: 'Every Saturday',
@@ -195,12 +217,14 @@ function getDefaultData() {
         id: 'c17',
         name: 'Leo Club of Kalutara Vidyalaya',
         code: 'LC-012',
+        track: 'Alpha Leo',
         president: 'Ometh Nethsanda',
         charter_date: '2026-06-15',
         zone: 'B1',
         region: 'B',
         status: 'active',
-        memberCount: 25,
+        memberCount: 39,
+        membershipCheckpoints: { '2026-07-01': 29, '2026-08-09': 29, '2026-09-01': 29, '2026-09-30': 29, '2026-10-31': 39 },
         email: 'kalutaravidyalaya@leo.org',
         phone: '+94 77 123 0017',
         meetingDay: 'Every Saturday',
@@ -210,12 +234,14 @@ function getDefaultData() {
         id: 'c18',
         name: 'Leo Club of Kalutara Balika Vidyalaya',
         code: 'LC-013',
+        track: 'Alpha Leo',
         president: 'Sethmi Sonaya',
         charter_date: '2026-06-15',
         zone: 'B1',
         region: 'B',
         status: 'active',
-        memberCount: 24,
+        memberCount: 63,
+        membershipCheckpoints: { '2026-07-01': 78, '2026-08-09': 35, '2026-09-01': 33, '2026-09-30': 34, '2026-10-31': 63 },
         email: 'kalutarabalika@leo.org',
         phone: '+94 77 123 0018',
         meetingDay: 'Every Sunday',
@@ -225,12 +251,14 @@ function getDefaultData() {
         id: 'c19',
         name: 'Leo Club of Moratuwa 2020',
         code: 'LC-014',
+        track: 'Omega Leo',
         president: 'Pumudu Ramuditha',
         charter_date: '2026-06-15',
         zone: 'B1',
         region: 'B',
         status: 'active',
-        memberCount: 18,
+        memberCount: 28,
+        membershipCheckpoints: { '2026-07-01': 35, '2026-08-09': 36, '2026-09-01': 37, '2026-09-30': 28, '2026-10-31': 28 },
         email: 'moratuwa2020@leo.org',
         phone: '+94 77 123 0019',
         meetingDay: 'Every Saturday',
@@ -240,12 +268,14 @@ function getDefaultData() {
         id: 'c20',
         name: 'Leo Club of Royal Achievers',
         code: 'LC-015',
+        track: 'Omega Leo',
         president: 'Geemeth Methmika Bodiyabadu',
         charter_date: '2026-06-15',
         zone: 'B1',
         region: 'B',
         status: 'active',
-        memberCount: 20,
+        memberCount: 56,
+        membershipCheckpoints: { '2026-07-01': 68, '2026-08-09': 68, '2026-09-01': 49, '2026-09-30': 48, '2026-10-31': 56 },
         email: 'royalachievers@leo.org',
         phone: '+94 77 123 0020',
         meetingDay: 'Every Saturday',
@@ -255,12 +285,14 @@ function getDefaultData() {
         id: 'c21',
         name: 'Leo Club of Moratuwa Rathmalana',
         code: 'LC-016',
+        track: 'Omega Leo',
         president: 'Chamithu Senuja Kaluarachchi',
         charter_date: '2026-06-15',
         zone: 'B1',
         region: 'B',
         status: 'active',
-        memberCount: 22,
+        memberCount: 69,
+        membershipCheckpoints: { '2026-07-01': 57, '2026-08-09': 58, '2026-09-01': 58, '2026-09-30': 58, '2026-10-31': 69 },
         email: 'moratuwaratmalana@leo.org',
         phone: '+94 77 123 0021',
         meetingDay: 'Every Sunday',
@@ -270,12 +302,14 @@ function getDefaultData() {
         id: 'c22',
         name: 'Leo Club of Cosmopolitan Creators',
         code: 'LC-017',
+        track: 'Alpha Leo',
         president: 'Risindu Gunasekara',
         charter_date: '2026-06-15',
         zone: 'B1',
         region: 'B',
         status: 'active',
-        memberCount: 19,
+        memberCount: 22,
+        membershipCheckpoints: { '2026-07-01': 33, '2026-08-09': 33, '2026-09-01': 18, '2026-09-30': 18, '2026-10-31': 22 },
         email: 'cosmopolitan@leo.org',
         phone: '+94 77 123 0022',
         meetingDay: 'Every Saturday',
@@ -285,12 +319,14 @@ function getDefaultData() {
         id: 'c23',
         name: 'Leo Club of Mount Lavinia Orient Centennial',
         code: 'LC-018',
+        track: 'Omega Leo',
         president: 'Senura De Silva',
         charter_date: '2026-06-15',
         zone: 'B1',
         region: 'B',
         status: 'active',
-        memberCount: 21,
+        memberCount: 27,
+        membershipCheckpoints: { '2026-07-01': 45, '2026-08-09': 43, '2026-09-01': 36, '2026-09-30': 36, '2026-10-31': 27 },
         email: 'mtlavinia@leo.org',
         phone: '+94 77 123 0023',
         meetingDay: 'Every Saturday',
@@ -300,12 +336,14 @@ function getDefaultData() {
         id: 'c24',
         name: 'Leo Club of Moratuwa',
         code: 'LC-019',
+        track: 'Omega Leo',
         president: 'Nuran Nayanajith',
         charter_date: '2026-06-15',
         zone: 'B1',
         region: 'B',
         status: 'active',
-        memberCount: 23,
+        memberCount: 81,
+        membershipCheckpoints: { '2026-07-01': 31, '2026-08-09': 33, '2026-09-01': 37, '2026-09-30': 37, '2026-10-31': 81 },
         email: 'moratuwa@leo.org',
         phone: '+94 77 123 0024',
         meetingDay: 'Every Sunday',
@@ -315,12 +353,14 @@ function getDefaultData() {
         id: 'c25',
         name: 'Leo Club of General Sir John Kotelawala Defence University',
         code: 'LC-020',
+        track: 'Omega Leo',
         president: 'Kasun Jayawardena',
         charter_date: '2026-06-15',
         zone: 'B1',
         region: 'B',
         status: 'active',
-        memberCount: 30,
+        memberCount: 122,
+        membershipCheckpoints: { '2026-07-01': 139, '2026-08-09': 21, '2026-09-01': 21, '2026-09-30': 31, '2026-10-31': 122 },
         email: 'kdu@leo.org',
         phone: '+94 77 123 0025',
         meetingDay: 'Every Friday',
@@ -2378,29 +2418,70 @@ function getDefaultData() {
         description: 'Inaugural charter ceremony and induction of new members.',
         type: 'ceremony'
       }
+    ],
+    membershipHistory: [
+      {
+        date: '2026-07-01',
+        label: 'July 2026 (1 July)',
+        shortLabel: '1 Jul 2026',
+        month: '2026-07',
+        totalMembers: 922,
+        countsByClub: {
+          c9: 32, c10: 21, c11: 31, c7: 50, c22: 33, c6: 27, c18: 78, c17: 29, c25: 139,
+          c24: 31, c19: 35, c21: 57, c23: 45, c14: 23, c15: 39, c20: 68, c16: 43, c8: 76,
+          c12: 17, c13: 48
+        }
+      },
+      {
+        date: '2026-08-09',
+        label: 'August 2026 (9 August)',
+        shortLabel: '9 Aug 2026',
+        month: '2026-08',
+        totalMembers: 801,
+        countsByClub: {
+          c9: 32, c10: 21, c11: 31, c7: 60, c22: 33, c6: 58, c18: 35, c17: 29, c25: 21,
+          c24: 33, c19: 36, c21: 58, c23: 43, c14: 23, c15: 38, c20: 68, c16: 43, c8: 50,
+          c12: 40, c13: 49
+        }
+      },
+      {
+        date: '2026-09-01',
+        label: 'September 2026 (1 September)',
+        shortLabel: '1 Sep 2026',
+        month: '2026-09-01',
+        totalMembers: 772,
+        countsByClub: {
+          c9: 32, c10: 24, c11: 31, c7: 64, c22: 18, c6: 60, c18: 33, c17: 29, c25: 21,
+          c24: 37, c19: 37, c21: 58, c23: 36, c14: 23, c15: 38, c20: 49, c16: 43, c8: 50,
+          c12: 40, c13: 49
+        }
+      },
+      {
+        date: '2026-09-30',
+        label: 'September 2026 (30 September)',
+        shortLabel: '30 Sep 2026',
+        month: '2026-09-30',
+        totalMembers: 799,
+        countsByClub: {
+          c9: 32, c10: 21, c11: 31, c7: 65, c22: 18, c6: 72, c18: 34, c17: 29, c25: 31,
+          c24: 37, c19: 28, c21: 58, c23: 36, c14: 23, c15: 38, c20: 48, c16: 44, c8: 65,
+          c12: 40, c13: 49
+        }
+      },
+      {
+        date: '2026-10-31',
+        label: 'October 2026 (31 October)',
+        shortLabel: '31 Oct 2026',
+        month: '2026-10',
+        totalMembers: 1083,
+        countsByClub: {
+          c9: 40, c10: 21, c11: 31, c7: 82, c22: 22, c6: 86, c18: 63, c17: 39, c25: 122,
+          c24: 81, c19: 28, c21: 69, c23: 27, c14: 27, c15: 47, c20: 56, c16: 15, c8: 130,
+          c12: 48, c13: 49
+        }
+      }
     ]
   };
-
-  // Adjust default member counts to meet district requirements:
-  // Total members: 1312. IIT (c6) = 192. Arts (c8) = 175. Science (c7) = 157.
-  // The rest (22 clubs) share 788 members (18 clubs with 36, 4 clubs with 35).
-  if (data.clubs) {
-    const iitClub = data.clubs.find(c => c.id === 'c6');
-    const artsClub = data.clubs.find(c => c.id === 'c8');
-    const scienceClub = data.clubs.find(c => c.id === 'c7');
-    if (iitClub) iitClub.memberCount = 192;
-    if (artsClub) artsClub.memberCount = 175;
-    if (scienceClub) scienceClub.memberCount = 157;
-    
-    const otherClubs = data.clubs.filter(c => c.id !== 'c6' && c.id !== 'c8' && c.id !== 'c7');
-    otherClubs.forEach((c, idx) => {
-      if (idx < 18) {
-        c.memberCount = 36;
-      } else {
-        c.memberCount = 35;
-      }
-    });
-  }
 
   return data;
 }
@@ -2418,9 +2499,10 @@ class Store {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) {
         this._data = JSON.parse(raw);
-        if (this._data.clubOfficers_version !== '2026_club_officers_v2') {
+        if (this._data.membership_version !== '2026_membership_v1' || this._data.clubOfficers_version !== '2026_club_officers_v2') {
           const fresh = getDefaultData();
           this._data.clubs = fresh.clubs;
+          this._data.membershipHistory = fresh.membershipHistory;
           this._data.members = fresh.members;
           this._data.finances = fresh.finances;
           this._data.projects = fresh.projects;
@@ -2438,6 +2520,7 @@ class Store {
             this._data.districtProfile.description = fresh.districtProfile.description;
           }
           this._data.clubOfficers_version = '2026_club_officers_v2';
+          this._data.membership_version = '2026_membership_v1';
           this.save();
         }
 
@@ -3918,17 +4001,26 @@ class Store {
     });
   }
 
+  getMembershipHistory() {
+    if (!this._data.membershipHistory) {
+      this._data.membershipHistory = getDefaultData().membershipHistory;
+      this.save();
+    }
+    return this._data.membershipHistory;
+  }
+
   getDistrictStats() {
     const clubs = this.getAll('clubs');
     const members = this.getAll('members');
     const projects = this.getAll('projects');
     const events = this.getAll('events');
+    const totalClubMembers = clubs.reduce((sum, c) => sum + (c.memberCount || 0), 0);
 
     return {
       totalClubs: clubs.length,
       activeClubs: clubs.filter(c => c.status === 'active').length,
-      totalMembers: members.length,
-      activeMembers: members.filter(m => m.status === 'active').length,
+      totalMembers: totalClubMembers || members.length,
+      activeMembers: totalClubMembers || members.filter(m => m.status === 'active').length,
       totalProjects: projects.length,
       completedProjects: projects.filter(p => p.status === 'completed').length,
       totalEvents: events.length,
