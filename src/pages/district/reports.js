@@ -525,9 +525,8 @@ export function renderDistrictReports() {
                     return `<span>${active}</span> <span style="font-size:0.7rem;color:var(--color-text-muted);">/ ${m.length || row.memberCount}</span>`;
                   }},
                   { label: 'Projects', render: row => {
-                    const p = store.getClubProjects(row.id);
-                    const done = p.filter(x=>x.status==='completed').length;
-                    return `<span>${done}</span> <span style="font-size:0.7rem;color:var(--color-text-muted);">/ ${p.length}</span>`;
+                    const done = store.getClubCompletedProjectsCount(row.id);
+                    return `<span style="font-weight:700; color:var(--color-cyan);">${done}</span> <span style="font-size:0.7rem;color:var(--color-text-muted);">completed</span>`;
                   }},
                   { label: 'Finance', render: row => {
                     const s = store.getClubFinanceSummary(row.id);

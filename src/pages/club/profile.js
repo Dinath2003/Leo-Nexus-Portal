@@ -147,7 +147,7 @@ export function renderClubProfile(params = {}) {
                   <div style="font-size:12px; color:var(--color-text-muted); margin-top:2px;">Certified Members</div>
                 </div>
                 <div style="padding:16px; border-right:1px solid var(--color-border); text-align:center;">
-                  <div style="font-size:24px; font-weight:800; color:#14b8a6;">${clubProjects.length}</div>
+                  <div style="font-size:24px; font-weight:800; color:#14b8a6;">${store.getClubCompletedProjectsCount(club.id)}</div>
                   <div style="font-size:12px; color:var(--color-text-muted); margin-top:2px;">Projects Completed</div>
                 </div>
                 <div style="padding:16px; border-right:1px solid var(--color-border); text-align:center;">

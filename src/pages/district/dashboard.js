@@ -214,7 +214,7 @@ export function renderDistrictDashboard() {
                   ` : leaderboard.map((club, i) => {
                     const rank = i + 1;
                     const pct = Math.max(8, Math.min(100, Math.round((club.totalPoints / maxLeaderboardPoints) * 100)));
-                    const clubProjects = store.getClubProjects(club.id).length;
+                    const clubProjects = store.getClubCompletedProjectsCount(club.id);
                     
                     let rankBadgeHtml = '';
                     if (rank === 1) {
@@ -417,7 +417,7 @@ export function renderDistrictDashboard() {
                   </thead>
                   <tbody>
                     ${leaderboard.slice(0, 5).map((club, i) => {
-                      const clubProjects = store.getClubProjects(club.id).length;
+                      const clubProjects = store.getClubCompletedProjectsCount(club.id);
                       const medal = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : `#${i+1}`;
                       return `
                         <tr style="cursor:pointer;" onclick="location.hash='/district/clubs'">

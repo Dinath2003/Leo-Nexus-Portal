@@ -286,7 +286,7 @@ export function renderDistrictClubs() {
                           <div style="font-size:0.65rem; color:var(--color-text-muted);">Points</div>
                         </div>
                         <div style="text-align:center;">
-                          <div style="font-size:1rem; font-weight:700; color:var(--color-cyan);">${store.getClubProjects(club.id).length}</div>
+                          <div style="font-size:1rem; font-weight:700; color:var(--color-cyan);">${store.getClubCompletedProjectsCount(club.id)}</div>
                           <div style="font-size:0.65rem; color:var(--color-text-muted);">Projects</div>
                         </div>
                       </div>

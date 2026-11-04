@@ -36,6 +36,7 @@ function getDefaultData() {
         region: 'A',
         status: 'active',
         memberCount: 40,
+        projectsCompleted: 0,
         membershipCheckpoints: { '2026-07-01': 32, '2026-08-09': 32, '2026-09-01': 32, '2026-09-30': 32, '2026-10-31': 40 },
         email: 'colombo.host@leo.org',
         phone: '+94 77 123 0001',
@@ -53,6 +54,7 @@ function getDefaultData() {
         region: 'A',
         status: 'active',
         memberCount: 21,
+        projectsCompleted: 10,
         membershipCheckpoints: { '2026-07-01': 21, '2026-08-09': 21, '2026-09-01': 24, '2026-09-30': 21, '2026-10-31': 21 },
         email: 'millennium@leo.org',
         phone: '+94 77 123 0002',
@@ -70,6 +72,7 @@ function getDefaultData() {
         region: 'A',
         status: 'active',
         memberCount: 31,
+        projectsCompleted: 0,
         membershipCheckpoints: { '2026-07-01': 31, '2026-08-09': 31, '2026-09-01': 31, '2026-09-30': 31, '2026-10-31': 31 },
         email: 'sixstars@leo.org',
         phone: '+94 77 123 0003',
@@ -87,6 +90,7 @@ function getDefaultData() {
         region: 'A',
         status: 'active',
         memberCount: 48,
+        projectsCompleted: 4,
         membershipCheckpoints: { '2026-07-01': 17, '2026-08-09': 40, '2026-09-01': 40, '2026-09-30': 40, '2026-10-31': 48 },
         email: 'uoc.alumni@leo.org',
         phone: '+94 77 123 0004',
@@ -106,6 +110,7 @@ function getDefaultData() {
         region: 'A',
         status: 'active',
         memberCount: 86,
+        projectsCompleted: 8,
         membershipCheckpoints: { '2026-07-01': 27, '2026-08-09': 58, '2026-09-01': 60, '2026-09-30': 72, '2026-10-31': 86 },
         email: 'iit@leo.org',
         phone: '+94 77 987 6543',
@@ -123,6 +128,7 @@ function getDefaultData() {
         region: 'A',
         status: 'active',
         memberCount: 82,
+        projectsCompleted: 1,
         membershipCheckpoints: { '2026-07-01': 50, '2026-08-09': 60, '2026-09-01': 64, '2026-09-30': 65, '2026-10-31': 82 },
         email: 'fos@leo.org',
         phone: '+94 77 111 2222',
@@ -140,6 +146,7 @@ function getDefaultData() {
         region: 'A',
         status: 'active',
         memberCount: 130,
+        projectsCompleted: 2,
         membershipCheckpoints: { '2026-07-01': 76, '2026-08-09': 50, '2026-09-01': 50, '2026-09-30': 65, '2026-10-31': 130 },
         email: 'foa@leo.org',
         phone: '+94 77 333 4444',
@@ -157,6 +164,7 @@ function getDefaultData() {
         region: 'A',
         status: 'active',
         memberCount: 49,
+        projectsCompleted: 2,
         membershipCheckpoints: { '2026-07-01': 48, '2026-08-09': 49, '2026-09-01': 49, '2026-09-30': 49, '2026-10-31': 49 },
         email: 'uoc.foaalumni@leo.org',
         phone: '+94 77 123 0005',
@@ -176,6 +184,7 @@ function getDefaultData() {
         region: 'B',
         status: 'active',
         memberCount: 27,
+        projectsCompleted: 0,
         membershipCheckpoints: { '2026-07-01': 23, '2026-08-09': 23, '2026-09-01': 23, '2026-09-30': 23, '2026-10-31': 27 },
         email: 'princeofwales@leo.org',
         phone: '+94 77 123 0014',
@@ -193,6 +202,7 @@ function getDefaultData() {
         region: 'B',
         status: 'active',
         memberCount: 47,
+        projectsCompleted: 1,
         membershipCheckpoints: { '2026-07-01': 39, '2026-08-09': 38, '2026-09-01': 38, '2026-09-30': 38, '2026-10-31': 47 },
         email: 'princessofwales@leo.org',
         phone: '+94 77 123 0015',
@@ -210,6 +220,7 @@ function getDefaultData() {
         region: 'B',
         status: 'active',
         memberCount: 15,
+        projectsCompleted: 0,
         membershipCheckpoints: { '2026-07-01': 43, '2026-08-09': 43, '2026-09-01': 43, '2026-09-30': 44, '2026-10-31': 15 },
         email: 'srisumangala@leo.org',
         phone: '+94 77 123 0016',
@@ -227,6 +238,7 @@ function getDefaultData() {
         region: 'B',
         status: 'active',
         memberCount: 39,
+        projectsCompleted: 0,
         membershipCheckpoints: { '2026-07-01': 29, '2026-08-09': 29, '2026-09-01': 29, '2026-09-30': 29, '2026-10-31': 39 },
         email: 'kalutaravidyalaya@leo.org',
         phone: '+94 77 123 0017',
@@ -244,6 +256,7 @@ function getDefaultData() {
         region: 'B',
         status: 'active',
         memberCount: 63,
+        projectsCompleted: 1,
         membershipCheckpoints: { '2026-07-01': 78, '2026-08-09': 35, '2026-09-01': 33, '2026-09-30': 34, '2026-10-31': 63 },
         email: 'kalutarabalika@leo.org',
         phone: '+94 77 123 0018',
@@ -261,6 +274,7 @@ function getDefaultData() {
         region: 'B',
         status: 'active',
         memberCount: 28,
+        projectsCompleted: 1,
         membershipCheckpoints: { '2026-07-01': 35, '2026-08-09': 36, '2026-09-01': 37, '2026-09-30': 28, '2026-10-31': 28 },
         email: 'moratuwa2020@leo.org',
         phone: '+94 77 123 0019',
@@ -278,6 +292,7 @@ function getDefaultData() {
         region: 'B',
         status: 'active',
         memberCount: 56,
+        projectsCompleted: 0,
         membershipCheckpoints: { '2026-07-01': 68, '2026-08-09': 68, '2026-09-01': 49, '2026-09-30': 48, '2026-10-31': 56 },
         email: 'royalachievers@leo.org',
         phone: '+94 77 123 0020',
@@ -295,6 +310,7 @@ function getDefaultData() {
         region: 'B',
         status: 'active',
         memberCount: 69,
+        projectsCompleted: 0,
         membershipCheckpoints: { '2026-07-01': 57, '2026-08-09': 58, '2026-09-01': 58, '2026-09-30': 58, '2026-10-31': 69 },
         email: 'moratuwaratmalana@leo.org',
         phone: '+94 77 123 0021',
@@ -312,6 +328,7 @@ function getDefaultData() {
         region: 'B',
         status: 'active',
         memberCount: 22,
+        projectsCompleted: 1,
         membershipCheckpoints: { '2026-07-01': 33, '2026-08-09': 33, '2026-09-01': 18, '2026-09-30': 18, '2026-10-31': 22 },
         email: 'cosmopolitan@leo.org',
         phone: '+94 77 123 0022',
@@ -329,6 +346,7 @@ function getDefaultData() {
         region: 'B',
         status: 'active',
         memberCount: 27,
+        projectsCompleted: 0,
         membershipCheckpoints: { '2026-07-01': 45, '2026-08-09': 43, '2026-09-01': 36, '2026-09-30': 36, '2026-10-31': 27 },
         email: 'mtlavinia@leo.org',
         phone: '+94 77 123 0023',
@@ -346,6 +364,7 @@ function getDefaultData() {
         region: 'B',
         status: 'active',
         memberCount: 81,
+        projectsCompleted: 5,
         membershipCheckpoints: { '2026-07-01': 31, '2026-08-09': 33, '2026-09-01': 37, '2026-09-30': 37, '2026-10-31': 81 },
         email: 'moratuwa@leo.org',
         phone: '+94 77 123 0024',
@@ -363,6 +382,7 @@ function getDefaultData() {
         region: 'B',
         status: 'active',
         memberCount: 122,
+        projectsCompleted: 0,
         membershipCheckpoints: { '2026-07-01': 139, '2026-08-09': 21, '2026-09-01': 21, '2026-09-30': 31, '2026-10-31': 122 },
         email: 'kdu@leo.org',
         phone: '+94 77 123 0025',
@@ -672,38 +692,64 @@ function getDefaultData() {
           { description: 'Publicity materials', type: 'expense', amount: 5000 }
         ]
       },
-      // IIT projects
+
+      // Colombo Millennium II (c10) — 10 Completed Projects
+      { id: 'p-mil-1', clubId: 'c10', name: 'Youth Career & Higher Education Fair', category: 'Education', status: 'completed', startDate: '2026-03-10', endDate: '2026-03-10', participants: 45, budget: 35000, description: 'Career fair and higher education guidance for school leavers.', impact: '250+ youth guided' },
+      { id: 'p-mil-2', clubId: 'c10', name: 'Community Healthcare & Vision Screening', category: 'Health', status: 'completed', startDate: '2026-03-24', endDate: '2026-03-24', participants: 30, budget: 22000, description: 'Free eye screening and medical health camp for seniors.', impact: '120 citizens checked' },
+      { id: 'p-mil-3', clubId: 'c10', name: 'Coastal Mangrove Restoration Drive', category: 'Environment', status: 'completed', startDate: '2026-04-12', endDate: '2026-04-12', participants: 28, budget: 18000, description: 'Planting mangroves to protect coastal biodiversity.', impact: '300 saplings planted' },
+      { id: 'p-mil-4', clubId: 'c10', name: 'Leadership & Public Speaking Bootcamp', category: 'Leadership', status: 'completed', startDate: '2026-05-02', endDate: '2026-05-02', participants: 35, budget: 15000, description: 'Public speaking workshop for aspiring school prefects.', impact: '60 students trained' },
+      { id: 'p-mil-5', clubId: 'c10', name: 'Digital Literacy for Primary Students', category: 'Education', status: 'completed', startDate: '2026-05-18', endDate: '2026-05-18', participants: 25, budget: 20000, description: 'Basic computer skills and internet safety lessons.', impact: '85 children taught' },
+      { id: 'p-mil-6', clubId: 'c10', name: 'National Blood Donation Campaign', category: 'Health', status: 'completed', startDate: '2026-06-04', endDate: '2026-06-04', participants: 50, budget: 28000, description: 'Blood donation camp in collaboration with National Blood Transfusion Service.', impact: '94 pints collected' },
+      { id: 'p-mil-7', clubId: 'c10', name: 'Zero Plastic Beach Cleanup Campaign', category: 'Environment', status: 'completed', startDate: '2026-06-22', endDate: '2026-06-22', participants: 32, budget: 8000, description: 'Cleanup of coastal waste and awareness on single-use plastics.', impact: '180kg plastic collected' },
+      { id: 'p-mil-8', clubId: 'c10', name: 'Elderly Care Home Support & Nutrition', category: 'Health', status: 'completed', startDate: '2026-07-10', endDate: '2026-07-10', participants: 20, budget: 25000, description: 'Provision of dry rations and medicine to elders home.', impact: '45 elders supported' },
+      { id: 'p-mil-9', clubId: 'c10', name: 'School Library Book Donation & Renovation', category: 'Education', status: 'completed', startDate: '2026-07-28', endDate: '2026-07-28', participants: 22, budget: 30000, description: 'Donated 500 books and renovated reading space.', impact: '350 students benefited' },
+      { id: 'p-mil-10', clubId: 'c10', name: 'Stray Animal Welfare & Rabies Vaccination', category: 'Environment', status: 'completed', startDate: '2026-08-14', endDate: '2026-08-14', participants: 18, budget: 12000, description: 'Anti-rabies vaccination and feeding drive for stray animals.', impact: '65 dogs vaccinated' },
+
+      // Informatics Institute of Technology (c6) — 8 Completed Projects
       { id: 'p-iit-1', clubId: 'c6', name: 'STEM & Robotics Workshop', category: 'Education', status: 'completed', startDate: '2026-02-01', endDate: '2026-03-15', participants: 24, budget: 35000, description: 'Introduced robotics and programming to underprivileged school children.', impact: '350 students benefited' },
       { id: 'p-iit-2', clubId: 'c6', name: 'E-Waste Recycling Drive', category: 'Environment', status: 'completed', startDate: '2026-04-05', endDate: '2026-04-05', participants: 30, budget: 5000, description: 'Collected and responsibly recycled electronic waste.', impact: '500kg e-waste recycled' },
-      { id: 'p-iit-3', clubId: 'c6', name: 'Digital Inclusion Camp', category: 'Leadership', status: 'in_progress', startDate: '2026-06-20', endDate: '2026-06-20', participants: 20, budget: 15000, description: 'Basic digital skills and web tools for rural youth.', impact: 'Target: 100 students' },
-      // UOC Faculty of Science projects
-      { id: 'p8', clubId: 'c7', name: 'Science Day Exhibition', category: 'Education', status: 'completed', startDate: '2026-03-10', endDate: '2026-03-10', participants: 25, budget: 25000, description: 'Organized science exhibition for school children.', impact: '150+ students attended' },
-      { id: 'p9', clubId: 'c7', name: 'Lab Safety Seminar', category: 'Health', status: 'in_progress', startDate: '2026-06-15', endDate: '2026-06-15', participants: 18, budget: 5000, description: 'Lab safety and first aid training for university students.', impact: 'Ongoing: 40 students enrolled' },
-      // UOC Faculty of Arts projects
-      { id: 'p10', clubId: 'c8', name: 'Art Therapy Workshop', category: 'Health', status: 'completed', startDate: '2026-03-05', endDate: '2026-03-05', participants: 20, budget: 15000, description: 'Conducted art therapy workshop for mental well-being.', impact: '30+ participants benefited' },
-      { id: 'p11', clubId: 'c8', name: 'Cultural Heritage Exhibition', category: 'Education', status: 'planned', startDate: '2026-07-25', endDate: '2026-07-26', participants: 0, budget: 20000, description: 'Exhibition showcasing traditional Sri Lankan arts and crafts.', impact: 'Expected: 200+ visitors' },
-      // Colombo Host projects
-      { id: 'p12', clubId: 'c9', name: 'Community Kitchen', category: 'Health', status: 'completed', startDate: '2026-04-10', endDate: '2026-04-10', participants: 15, budget: 18000, description: 'Provided meals to families in need.', impact: '100+ meals served' },
-      // Colombo Millennium projects
-      { id: 'p13', clubId: 'c10', name: 'Youth Career Fair', category: 'Education', status: 'completed', startDate: '2026-05-15', endDate: '2026-05-15', participants: 25, budget: 35000, description: 'Career fair for school leavers.', impact: '200+ youth participated' },
-      // Colombo Six New Stars projects
-      { id: 'p14', clubId: 'c11', name: 'Street Animal Welfare', category: 'Environment', status: 'completed', startDate: '2026-03-20', endDate: '2026-03-20', participants: 12, budget: 8000, description: 'Feeding and vaccination drive for stray dogs.', impact: '40 stray dogs treated' },
-      // UOC Alumni projects
-      { id: 'p15', clubId: 'c12', name: 'Scholar Mentorship', category: 'Education', status: 'in_progress', startDate: '2026-05-01', endDate: '2026-07-01', participants: 10, budget: 12000, description: 'Mentoring university freshmen.', impact: 'Ongoing: 25 mentees' },
-      // UOC FOA Alumni projects
-      { id: 'p16', clubId: 'c13', name: 'Heritage Preservation', category: 'Education', status: 'completed', startDate: '2026-04-05', endDate: '2026-04-05', participants: 14, budget: 15000, description: 'Preserving local folklore stories digital archive.', impact: '50 folktales archived' },
-      { id: 'p17', clubId: 'c14', name: 'Prince School Support', category: 'Education', status: 'completed', startDate: '2026-06-15', endDate: '2026-06-15', participants: 15, budget: 10000, description: 'Donated stationeries to students.', impact: '50 students supported' },
-      { id: 'p18', clubId: 'c15', name: 'Princess Health Camp', category: 'Health', status: 'completed', startDate: '2026-06-15', endDate: '2026-06-15', participants: 18, budget: 15000, description: 'Organized free health camp.', impact: '100+ citizens checked' },
-      { id: 'p19', clubId: 'c16', name: 'Sri Sumangala Library Book Donation', category: 'Education', status: 'completed', startDate: '2026-06-15', endDate: '2026-06-15', participants: 12, budget: 12000, description: 'Donated library books.', impact: '300 students benefited' },
-      { id: 'p20', clubId: 'c17', name: 'Kalutara Shramadana Campaign', category: 'Environment', status: 'completed', startDate: '2026-06-15', endDate: '2026-06-15', participants: 20, budget: 5000, description: 'Cleaned public bus stand.', impact: 'Enhanced public hygiene' },
-      { id: 'p21', clubId: 'c18', name: 'Kalutara Balika Child Care Seminar', category: 'Health', status: 'completed', startDate: '2026-06-15', endDate: '2026-06-15', participants: 14, budget: 8000, description: 'Seminar on early child development.', impact: '50 mothers participated' },
-      { id: 'p22', clubId: 'c19', name: 'Moratuwa Beach Cleanup', category: 'Environment', status: 'completed', startDate: '2026-06-15', endDate: '2026-06-15', participants: 16, budget: 6000, description: 'Beach cleaning campaign.', impact: 'Collected 100kg plastic waste' },
-      { id: 'p23', clubId: 'c20', name: 'Royal Achievers Elder Care Visit', category: 'Health', status: 'completed', startDate: '2026-06-15', endDate: '2026-06-15', participants: 10, budget: 10000, description: 'Visited elders home with lunch.', impact: '30 elders supported' },
-      { id: 'p24', clubId: 'c21', name: 'Ratmalana Tree Planting Initiative', category: 'Environment', status: 'completed', startDate: '2026-06-15', endDate: '2026-06-15', participants: 15, budget: 7000, description: 'Planted trees around railway station.', impact: '50 saplings planted' },
-      { id: 'p25', clubId: 'c22', name: 'Cosmopolitan Creators Creative Art Class', category: 'Education', status: 'completed', startDate: '2026-06-15', endDate: '2026-06-15', participants: 12, budget: 9000, description: 'Art lessons for orphan kids.', impact: '25 children participated' },
-      { id: 'p26', clubId: 'c23', name: 'Mount Lavinia Beach Safety Awareness', category: 'Health', status: 'completed', startDate: '2026-06-15', endDate: '2026-06-15', participants: 14, budget: 8000, description: 'Beach safety and lifesaving awareness.', impact: '120 public participants' },
-      { id: 'p27', clubId: 'c24', name: 'Moratuwa Community Food Drive', category: 'Health', status: 'completed', startDate: '2026-06-15', endDate: '2026-06-15', participants: 15, budget: 20000, description: 'Distribution of dry rations to needy.', impact: '80 families benefited' },
-      { id: 'p28', clubId: 'c25', name: 'KDU Disaster Management Awareness', category: 'Education', status: 'completed', startDate: '2026-06-15', endDate: '2026-06-15', participants: 25, budget: 15000, description: 'Disaster management simulation seminar.', impact: '200+ students trained' }
+      { id: 'p-iit-3', clubId: 'c6', name: 'Tech Innovators Hackathon for Good', category: 'Leadership', status: 'completed', startDate: '2026-04-20', endDate: '2026-04-20', participants: 60, budget: 45000, description: 'Hackathon creating tech solutions for local charities.', impact: '12 social tech prototypes' },
+      { id: 'p-iit-4', clubId: 'c6', name: 'CodeCraft: Python for School Children', category: 'Education', status: 'completed', startDate: '2026-05-12', endDate: '2026-05-12', participants: 35, budget: 12000, description: 'Free introductory coding bootcamps for teens.', impact: '100+ students certified' },
+      { id: 'p-iit-5', clubId: 'c6', name: 'Cyber Safety & Digital Wellbeing Seminar', category: 'Education', status: 'completed', startDate: '2026-06-02', endDate: '2026-06-02', participants: 40, budget: 10000, description: 'Workshops protecting youth from cyberbullying and phishing.', impact: '200 participants reached' },
+      { id: 'p-iit-6', clubId: 'c6', name: 'AI & Future Careers Symposium', category: 'Leadership', status: 'completed', startDate: '2026-06-18', endDate: '2026-06-18', participants: 55, budget: 30000, description: 'Industry panel session on artificial intelligence applications.', impact: '180 students attended' },
+      { id: 'p-iit-7', clubId: 'c6', name: 'Campus Energy Conservation Campaign', category: 'Environment', status: 'completed', startDate: '2026-07-05', endDate: '2026-07-05', participants: 28, budget: 15000, description: 'Green audit and energy efficiency signage at university.', impact: '15% reduction in campus power waste' },
+      { id: 'p-iit-8', clubId: 'c6', name: 'Refurbished PC Donation to Rural School', category: 'Education', status: 'completed', startDate: '2026-07-22', endDate: '2026-07-22', participants: 20, budget: 50000, description: 'Refurbished and donated 10 desktop computers to rural lab.', impact: '150 rural students empowered' },
+
+      // Leo Club of Moratuwa (c24) — 5 Completed Projects
+      { id: 'p-mor-1', clubId: 'c24', name: 'Moratuwa Beach Cleanup & Coastal Safety', category: 'Environment', status: 'completed', startDate: '2026-03-15', endDate: '2026-03-15', participants: 30, budget: 12000, description: 'Beach cleaning campaign along Lunawa coastal belt.', impact: '150kg ocean waste removed' },
+      { id: 'p-mor-2', clubId: 'c24', name: 'Community Health & Diabetes Screening Camp', category: 'Health', status: 'completed', startDate: '2026-04-18', endDate: '2026-04-18', participants: 25, budget: 25000, description: 'Free sugar test and wellness counseling for residents.', impact: '110 adults tested' },
+      { id: 'p-mor-3', clubId: 'c24', name: 'Fisherfolk Community Welfare & Dry Rations', category: 'Health', status: 'completed', startDate: '2026-05-10', endDate: '2026-05-10', participants: 22, budget: 35000, description: 'Distribution of dry rations and food packs during rough sea season.', impact: '80 families supported' },
+      { id: 'p-mor-4', clubId: 'c24', name: 'Traditional Carpentry Craft Workshop', category: 'Education', status: 'completed', startDate: '2026-06-08', endDate: '2026-06-08', participants: 20, budget: 18000, description: 'Heritage skills training for young vocational trainees.', impact: '35 youths trained' },
+      { id: 'p-mor-5', clubId: 'c24', name: 'Youth Leadership Outbound Challenge', category: 'Leadership', status: 'completed', startDate: '2026-07-15', endDate: '2026-07-15', participants: 35, budget: 40000, description: 'Team building and outdoor survival challenge for Leos.', impact: '35 youth leaders trained' },
+
+      // Leo Club of UOC Alumni (c12) — 4 Completed Projects
+      { id: 'p-uoca-1', clubId: 'c12', name: 'Undergraduate Mentorship Program', category: 'Education', status: 'completed', startDate: '2026-03-12', endDate: '2026-03-12', participants: 25, budget: 15000, description: 'One-on-one professional mentorship for fresh graduates.', impact: '50 undergraduates mentored' },
+      { id: 'p-uoca-2', clubId: 'c12', name: 'Higher Studies & Scholarship Guidance Forum', category: 'Education', status: 'completed', startDate: '2026-04-25', endDate: '2026-04-25', participants: 40, budget: 12000, description: 'Session with alumni studying abroad regarding postgraduate scholarships.', impact: '120 applicants guided' },
+      { id: 'p-uoca-3', clubId: 'c12', name: 'Corporate Ethics & Workplace Transition Seminar', category: 'Leadership', status: 'completed', startDate: '2026-05-30', endDate: '2026-05-30', participants: 35, budget: 18000, description: 'Guidance on navigating professional careers for university students.', impact: '90 participants' },
+      { id: 'p-uoca-4', clubId: 'c12', name: 'Colombo Community Health & Nutrition Project', category: 'Health', status: 'completed', startDate: '2026-06-25', endDate: '2026-06-25', participants: 28, budget: 22000, description: 'Nutrition counseling and balanced meal kits for urban families.', impact: '60 families assisted' },
+
+      // University of Colombo Faculty of Arts (c8) — 2 Completed Projects
+      { id: 'p-arts-1', clubId: 'c8', name: 'Art Therapy & Emotional Wellness Workshop', category: 'Health', status: 'completed', startDate: '2026-03-05', endDate: '2026-03-05', participants: 20, budget: 15000, description: 'Conducted expressive art therapy workshop for university students.', impact: '45 students participated' },
+      { id: 'p-arts-2', clubId: 'c8', name: 'Inter-Cultural Harmony & Folklore Exchange', category: 'Education', status: 'completed', startDate: '2026-05-20', endDate: '2026-05-20', participants: 35, budget: 20000, description: 'Exhibition and discussion on preserving indigenous Sri Lankan folk arts.', impact: '150 visitors engaged' },
+
+      // UOC FOA Alumni (c13) — 2 Completed Projects
+      { id: 'p-foa-1', clubId: 'c13', name: 'Heritage Folklore Digital Archive', category: 'Education', status: 'completed', startDate: '2026-04-05', endDate: '2026-04-05', participants: 14, budget: 15000, description: 'Preserving local oral folklore stories into open access digital audio archive.', impact: '50 folktales recorded' },
+      { id: 'p-foa-2', clubId: 'c13', name: 'Creative Writing & Media Literacy Workshop', category: 'Education', status: 'completed', startDate: '2026-06-12', endDate: '2026-06-12', participants: 25, budget: 14000, description: 'Workshops for youth on critical news evaluation and narrative writing.', impact: '70 students trained' },
+
+      // Colombo University Faculty of Science (c7) — 1 Completed Project
+      { id: 'p-sci-1', clubId: 'c7', name: 'Science Day Exhibition & Lab Demonstrations', category: 'Education', status: 'completed', startDate: '2026-03-10', endDate: '2026-03-10', participants: 25, budget: 25000, description: 'Organized interactive science experiment demonstrations for school children.', impact: '150+ students attended' },
+
+      // Cosmopolitan Creators (c22) — 1 Completed Project
+      { id: 'p-cosmo-1', clubId: 'c22', name: 'Creative Arts & Craft Workshop for Children', category: 'Education', status: 'completed', startDate: '2026-06-15', endDate: '2026-06-15', participants: 12, budget: 9000, description: 'Art supplies donation and painting lessons for children in care home.', impact: '25 children participated' },
+
+      // Kalutara Balika Maha Vidyalaya (c18) — 1 Completed Project
+      { id: 'p-kbmv-1', clubId: 'c18', name: 'Child Care & Health Education Seminar', category: 'Health', status: 'completed', startDate: '2026-06-15', endDate: '2026-06-15', participants: 14, budget: 8000, description: 'Seminar on nutrition and primary hygiene for young school girls.', impact: '60 students guided' },
+
+      // Moratuwa 2020 (c19) — 1 Completed Project
+      { id: 'p-mor2020-1', clubId: 'c19', name: 'Urban Green Belt Tree Plantation', category: 'Environment', status: 'completed', startDate: '2026-06-15', endDate: '2026-06-15', participants: 16, budget: 6000, description: 'Planting indigenous shade trees along community parkway.', impact: '50 trees planted' },
+
+      // Princess of Wales College (c15) — 1 Completed Project
+      { id: 'p-pwc-1', clubId: 'c15', name: 'Princess Health Camp & Eye Checkup', category: 'Health', status: 'completed', startDate: '2026-06-15', endDate: '2026-06-15', participants: 18, budget: 15000, description: 'Organized free general health and eye screening camp for students.', impact: '100+ students checked' }
     ],
 
     announcements: [
@@ -2502,7 +2548,7 @@ class Store {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) {
         this._data = JSON.parse(raw);
-        if (this._data.membership_version !== '2026_membership_v1' || this._data.clubOfficers_version !== '2026_club_officers_v2') {
+        if (this._data.membership_version !== '2026_membership_v1' || this._data.clubOfficers_version !== '2026_club_officers_v2' || this._data.projects_version !== '2026_projects_v1') {
           const fresh = getDefaultData();
           this._data.clubs = fresh.clubs;
           this._data.membershipHistory = fresh.membershipHistory;
@@ -2524,6 +2570,7 @@ class Store {
           }
           this._data.clubOfficers_version = '2026_club_officers_v2';
           this._data.membership_version = '2026_membership_v1';
+          this._data.projects_version = '2026_projects_v1';
           this.save();
         }
 
@@ -3963,6 +4010,14 @@ class Store {
 
   getClubProjects(clubId) {
     return this.getByField('projects', 'clubId', clubId);
+  }
+
+  getClubCompletedProjectsCount(clubId) {
+    const club = this.getById('clubs', clubId);
+    if (club && typeof club.projectsCompleted === 'number') {
+      return club.projectsCompleted;
+    }
+    return this.getClubProjects(clubId).filter(p => p.status === 'completed').length;
   }
 
   getClubAnnouncements(clubId) {
