@@ -594,7 +594,7 @@ function getDefaultData() {
       { id: 'f-iit-3', clubId: 'c6', type: 'expense', category: 'Projects', amount: 35000, date: '2026-03-15', description: 'Tech workshop materials', reference: 'EX-IIT-001' },
       { id: 'f-iit-4', clubId: 'c6', type: 'expense', category: 'Administration', amount: 5000, date: '2026-01-10', description: 'Stationery and printing', reference: 'EX-IIT-002' },
       // District-level finances
-      { id: 'f15', clubId: 'district', type: 'income', category: 'Membership Fees', amount: 150000, date: '2026-01-10', description: 'Consolidated district dues from clubs', reference: 'DIST-INC-001' },
+      { id: 'f15', clubId: 'district', type: 'income', category: 'Membership Fees', amount: 85800, date: '2026-06-30', description: 'Consolidated settled district membership dues from clubs (INV-001, INV-005, INV-007, INV-010)', reference: 'DIST-INC-001' },
       { id: 'f16', clubId: 'district', type: 'income', category: 'Sponsorship', amount: 200000, date: '2026-02-15', description: 'Main Sponsor - Dialog Axiata', reference: 'DIST-INC-002' },
       { id: 'f17', clubId: 'district', type: 'expense', category: 'Administration', amount: 45000, date: '2026-01-20', description: 'District office stationery and postage', reference: 'DIST-EXP-001' },
       { id: 'f18', clubId: 'district', type: 'expense', category: 'Events', amount: 120000, date: '2026-03-05', description: 'Leadership seminar hall booking & catering', reference: 'DIST-EXP-002' },
@@ -1169,10 +1169,10 @@ function getDefaultData() {
         invoiceNumber: 'INV-2026-001',
         clubId: 'c6',
         clubName: 'Leo Club of Informatics Institute of Technology',
-        amount: 15000,
+        amount: 25800,
         issueDate: '2026-06-01',
         dueDate: '2026-06-30',
-        description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+        description: 'Annual District Membership Dues (86 members @ Rs. 300)',
         category: 'Membership Fees',
         status: 'paid',
         receiptUrl: 'receipt_c6_dues.png',
@@ -1185,10 +1185,10 @@ function getDefaultData() {
         invoiceNumber: 'INV-2026-004',
         clubId: 'c7',
         clubName: 'Leo Club of University of Colombo Faculty of Science',
-        amount: 15000,
+        amount: 24600,
         issueDate: '2026-06-01',
         dueDate: '2026-06-30',
-        description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+        description: 'Annual District Membership Dues (82 members @ Rs. 300)',
         category: 'Membership Fees',
         status: 'unpaid',
         receiptUrl: '',
@@ -1201,10 +1201,10 @@ function getDefaultData() {
         invoiceNumber: 'INV-2026-005',
         clubId: 'c8',
         clubName: 'Leo Club of University of Colombo Faculty of Arts',
-        amount: 15000,
+        amount: 39000,
         issueDate: '2026-06-01',
         dueDate: '2026-06-30',
-        description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+        description: 'Annual District Membership Dues (130 members @ Rs. 300)',
         category: 'Membership Fees',
         status: 'paid',
         receiptUrl: 'receipt_c8_dues.png',
@@ -1217,10 +1217,10 @@ function getDefaultData() {
         invoiceNumber: 'INV-2026-006',
         clubId: 'c9',
         clubName: 'Leo Club of Colombo (Host)',
-        amount: 15000,
+        amount: 12000,
         issueDate: '2026-06-01',
         dueDate: '2026-06-30',
-        description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+        description: 'Annual District Membership Dues (40 members @ Rs. 300)',
         category: 'Membership Fees',
         status: 'unpaid',
         receiptUrl: '',
@@ -1233,10 +1233,10 @@ function getDefaultData() {
         invoiceNumber: 'INV-2026-007',
         clubId: 'c10',
         clubName: 'Leo Club of Colombo Millennium',
-        amount: 15000,
+        amount: 6300,
         issueDate: '2026-06-01',
         dueDate: '2026-06-30',
-        description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+        description: 'Annual District Membership Dues (21 members @ Rs. 300)',
         category: 'Membership Fees',
         status: 'paid',
         receiptUrl: 'receipt_c10_dues.png',
@@ -1249,10 +1249,10 @@ function getDefaultData() {
         invoiceNumber: 'INV-2026-008',
         clubId: 'c11',
         clubName: 'Leo Club of Colombo Six New Stars',
-        amount: 15000,
+        amount: 9300,
         issueDate: '2026-06-01',
         dueDate: '2026-06-30',
-        description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+        description: 'Annual District Membership Dues (31 members @ Rs. 300)',
         category: 'Membership Fees',
         status: 'unpaid',
         receiptUrl: '',
@@ -1265,10 +1265,10 @@ function getDefaultData() {
         invoiceNumber: 'INV-2026-009',
         clubId: 'c12',
         clubName: 'Leo Club of UOC Alumni',
-        amount: 15000,
+        amount: 14400,
         issueDate: '2026-06-01',
         dueDate: '2026-06-30',
-        description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+        description: 'Annual District Membership Dues (48 members @ Rs. 300)',
         category: 'Membership Fees',
         status: 'unpaid',
         receiptUrl: '',
@@ -1281,10 +1281,10 @@ function getDefaultData() {
         invoiceNumber: 'INV-2026-010',
         clubId: 'c13',
         clubName: 'Leo Club of UOC FOA Alumni',
-        amount: 15000,
+        amount: 14700,
         issueDate: '2026-06-01',
         dueDate: '2026-06-30',
-        description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+        description: 'Annual District Membership Dues (49 members @ Rs. 300)',
         category: 'Membership Fees',
         status: 'paid',
         receiptUrl: 'receipt_c13_dues.png',
@@ -1297,10 +1297,10 @@ function getDefaultData() {
         invoiceNumber: 'INV-2026-011',
         clubId: 'c14',
         clubName: 'Leo Club of Prince of Wales’ College',
-        amount: 15000,
+        amount: 6750,
         issueDate: '2026-06-15',
         dueDate: '2026-07-15',
-        description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+        description: 'Annual District Membership Dues (27 members @ Rs. 250)',
         category: 'Membership Fees',
         status: 'unpaid',
         receiptUrl: '',
@@ -1313,10 +1313,10 @@ function getDefaultData() {
         invoiceNumber: 'INV-2026-012',
         clubId: 'c15',
         clubName: 'Leo Club of Princess of Wales’ College',
-        amount: 15000,
+        amount: 11750,
         issueDate: '2026-06-15',
         dueDate: '2026-07-15',
-        description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+        description: 'Annual District Membership Dues (47 members @ Rs. 250)',
         category: 'Membership Fees',
         status: 'unpaid',
         receiptUrl: '',
@@ -1329,10 +1329,10 @@ function getDefaultData() {
         invoiceNumber: 'INV-2026-013',
         clubId: 'c16',
         clubName: 'Leo Club of Sri Sumangala College',
-        amount: 15000,
+        amount: 3750,
         issueDate: '2026-06-15',
         dueDate: '2026-07-15',
-        description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+        description: 'Annual District Membership Dues (15 members @ Rs. 250)',
         category: 'Membership Fees',
         status: 'unpaid',
         receiptUrl: '',
@@ -1345,10 +1345,10 @@ function getDefaultData() {
         invoiceNumber: 'INV-2026-014',
         clubId: 'c17',
         clubName: 'Leo Club of Kalutara Vidyalaya',
-        amount: 15000,
+        amount: 9750,
         issueDate: '2026-06-15',
         dueDate: '2026-07-15',
-        description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+        description: 'Annual District Membership Dues (39 members @ Rs. 250)',
         category: 'Membership Fees',
         status: 'unpaid',
         receiptUrl: '',
@@ -1361,10 +1361,10 @@ function getDefaultData() {
         invoiceNumber: 'INV-2026-015',
         clubId: 'c18',
         clubName: 'Leo Club of Kalutara Balika Vidyalaya',
-        amount: 15000,
+        amount: 15750,
         issueDate: '2026-06-15',
         dueDate: '2026-07-15',
-        description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+        description: 'Annual District Membership Dues (63 members @ Rs. 250)',
         category: 'Membership Fees',
         status: 'unpaid',
         receiptUrl: '',
@@ -1377,10 +1377,10 @@ function getDefaultData() {
         invoiceNumber: 'INV-2026-016',
         clubId: 'c19',
         clubName: 'Leo Club of Moratuwa 2020',
-        amount: 15000,
+        amount: 8400,
         issueDate: '2026-06-15',
         dueDate: '2026-07-15',
-        description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+        description: 'Annual District Membership Dues (28 members @ Rs. 300)',
         category: 'Membership Fees',
         status: 'unpaid',
         receiptUrl: '',
@@ -1393,10 +1393,10 @@ function getDefaultData() {
         invoiceNumber: 'INV-2026-017',
         clubId: 'c20',
         clubName: 'Leo Club of Royal Achievers',
-        amount: 15000,
+        amount: 16800,
         issueDate: '2026-06-15',
         dueDate: '2026-07-15',
-        description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+        description: 'Annual District Membership Dues (56 members @ Rs. 300)',
         category: 'Membership Fees',
         status: 'unpaid',
         receiptUrl: '',
@@ -1409,10 +1409,10 @@ function getDefaultData() {
         invoiceNumber: 'INV-2026-018',
         clubId: 'c21',
         clubName: 'Leo Club of Moratuwa Ratmalana',
-        amount: 15000,
+        amount: 20700,
         issueDate: '2026-06-15',
         dueDate: '2026-07-15',
-        description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+        description: 'Annual District Membership Dues (69 members @ Rs. 300)',
         category: 'Membership Fees',
         status: 'unpaid',
         receiptUrl: '',
@@ -1425,10 +1425,10 @@ function getDefaultData() {
         invoiceNumber: 'INV-2026-019',
         clubId: 'c22',
         clubName: 'Leo Club of Cosmopolitian Creators',
-        amount: 15000,
+        amount: 5500,
         issueDate: '2026-06-15',
         dueDate: '2026-07-15',
-        description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+        description: 'Annual District Membership Dues (22 members @ Rs. 250)',
         category: 'Membership Fees',
         status: 'unpaid',
         receiptUrl: '',
@@ -1441,10 +1441,10 @@ function getDefaultData() {
         invoiceNumber: 'INV-2026-020',
         clubId: 'c23',
         clubName: 'Leo Club of Mount Lavinia Orient Centennial',
-        amount: 15000,
+        amount: 8100,
         issueDate: '2026-06-15',
         dueDate: '2026-07-15',
-        description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+        description: 'Annual District Membership Dues (27 members @ Rs. 300)',
         category: 'Membership Fees',
         status: 'unpaid',
         receiptUrl: '',
@@ -1457,10 +1457,10 @@ function getDefaultData() {
         invoiceNumber: 'INV-2026-021',
         clubId: 'c24',
         clubName: 'Leo Club of Moratuwa',
-        amount: 15000,
+        amount: 24300,
         issueDate: '2026-06-15',
         dueDate: '2026-07-15',
-        description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+        description: 'Annual District Membership Dues (81 members @ Rs. 300)',
         category: 'Membership Fees',
         status: 'unpaid',
         receiptUrl: '',
@@ -1473,10 +1473,10 @@ function getDefaultData() {
         invoiceNumber: 'INV-2026-022',
         clubId: 'c25',
         clubName: 'Leo Club of Kothalawala Defense University',
-        amount: 15000,
+        amount: 36600,
         issueDate: '2026-06-15',
         dueDate: '2026-07-15',
-        description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+        description: 'Annual District Membership Dues (122 members @ Rs. 300)',
         category: 'Membership Fees',
         status: 'unpaid',
         receiptUrl: '',
@@ -3586,10 +3586,10 @@ class Store {
             invoiceNumber: 'INV-2026-011',
             clubId: 'c14',
             clubName: 'Leo Club of Prince of Wales’ College',
-            amount: 15000,
+            amount: 6750,
             issueDate: '2026-06-15',
             dueDate: '2026-07-15',
-            description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+            description: 'Annual District Membership Dues (27 members @ Rs. 250)',
             category: 'Membership Fees',
             status: 'unpaid',
             receiptUrl: '',
@@ -3602,10 +3602,10 @@ class Store {
             invoiceNumber: 'INV-2026-012',
             clubId: 'c15',
             clubName: 'Leo Club of Princess of Wales’ College',
-            amount: 15000,
+            amount: 11750,
             issueDate: '2026-06-15',
             dueDate: '2026-07-15',
-            description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+            description: 'Annual District Membership Dues (47 members @ Rs. 250)',
             category: 'Membership Fees',
             status: 'unpaid',
             receiptUrl: '',
@@ -3618,10 +3618,10 @@ class Store {
             invoiceNumber: 'INV-2026-013',
             clubId: 'c16',
             clubName: 'Leo Club of Sri Sumangala College',
-            amount: 15000,
+            amount: 3750,
             issueDate: '2026-06-15',
             dueDate: '2026-07-15',
-            description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+            description: 'Annual District Membership Dues (15 members @ Rs. 250)',
             category: 'Membership Fees',
             status: 'unpaid',
             receiptUrl: '',
@@ -3634,10 +3634,10 @@ class Store {
             invoiceNumber: 'INV-2026-014',
             clubId: 'c17',
             clubName: 'Leo Club of Kalutara Vidyalaya',
-            amount: 15000,
+            amount: 9750,
             issueDate: '2026-06-15',
             dueDate: '2026-07-15',
-            description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+            description: 'Annual District Membership Dues (39 members @ Rs. 250)',
             category: 'Membership Fees',
             status: 'unpaid',
             receiptUrl: '',
@@ -3650,10 +3650,10 @@ class Store {
             invoiceNumber: 'INV-2026-015',
             clubId: 'c18',
             clubName: 'Leo Club of Kalutara Balika Vidyalaya',
-            amount: 15000,
+            amount: 15750,
             issueDate: '2026-06-15',
             dueDate: '2026-07-15',
-            description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+            description: 'Annual District Membership Dues (63 members @ Rs. 250)',
             category: 'Membership Fees',
             status: 'unpaid',
             receiptUrl: '',
@@ -3666,10 +3666,10 @@ class Store {
             invoiceNumber: 'INV-2026-016',
             clubId: 'c19',
             clubName: 'Leo Club of Moratuwa 2020',
-            amount: 15000,
+            amount: 8400,
             issueDate: '2026-06-15',
             dueDate: '2026-07-15',
-            description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+            description: 'Annual District Membership Dues (28 members @ Rs. 300)',
             category: 'Membership Fees',
             status: 'unpaid',
             receiptUrl: '',
@@ -3682,10 +3682,10 @@ class Store {
             invoiceNumber: 'INV-2026-017',
             clubId: 'c20',
             clubName: 'Leo Club of Royal Achievers',
-            amount: 15000,
+            amount: 16800,
             issueDate: '2026-06-15',
             dueDate: '2026-07-15',
-            description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+            description: 'Annual District Membership Dues (56 members @ Rs. 300)',
             category: 'Membership Fees',
             status: 'unpaid',
             receiptUrl: '',
@@ -3698,10 +3698,10 @@ class Store {
             invoiceNumber: 'INV-2026-018',
             clubId: 'c21',
             clubName: 'Leo Club of Moratuwa Ratmalana',
-            amount: 15000,
+            amount: 20700,
             issueDate: '2026-06-15',
             dueDate: '2026-07-15',
-            description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+            description: 'Annual District Membership Dues (69 members @ Rs. 300)',
             category: 'Membership Fees',
             status: 'unpaid',
             receiptUrl: '',
@@ -3714,10 +3714,10 @@ class Store {
             invoiceNumber: 'INV-2026-019',
             clubId: 'c22',
             clubName: 'Leo Club of Cosmopolitian Creators',
-            amount: 15000,
+            amount: 5500,
             issueDate: '2026-06-15',
             dueDate: '2026-07-15',
-            description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+            description: 'Annual District Membership Dues (22 members @ Rs. 250)',
             category: 'Membership Fees',
             status: 'unpaid',
             receiptUrl: '',
@@ -3730,10 +3730,10 @@ class Store {
             invoiceNumber: 'INV-2026-020',
             clubId: 'c23',
             clubName: 'Leo Club of Mount Lavinia Orient Centennial',
-            amount: 15000,
+            amount: 8100,
             issueDate: '2026-06-15',
             dueDate: '2026-07-15',
-            description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+            description: 'Annual District Membership Dues (27 members @ Rs. 300)',
             category: 'Membership Fees',
             status: 'unpaid',
             receiptUrl: '',
@@ -3746,10 +3746,10 @@ class Store {
             invoiceNumber: 'INV-2026-021',
             clubId: 'c24',
             clubName: 'Leo Club of Moratuwa',
-            amount: 15000,
+            amount: 24300,
             issueDate: '2026-06-15',
             dueDate: '2026-07-15',
-            description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+            description: 'Annual District Membership Dues (81 members @ Rs. 300)',
             category: 'Membership Fees',
             status: 'unpaid',
             receiptUrl: '',
@@ -3762,10 +3762,10 @@ class Store {
             invoiceNumber: 'INV-2026-022',
             clubId: 'c25',
             clubName: 'Leo Club of Kothalawala Defense University',
-            amount: 15000,
+            amount: 36600,
             issueDate: '2026-06-15',
             dueDate: '2026-07-15',
-            description: 'Annual District Membership Dues (Leostic Year 2026/27)',
+            description: 'Annual District Membership Dues (122 members @ Rs. 300)',
             category: 'Membership Fees',
             status: 'unpaid',
             receiptUrl: '',
@@ -3783,52 +3783,35 @@ class Store {
           });
         }
 
-        // Migrate club member counts to align with district total of 1312 members
-        if (this._data.clubs) {
-          let updatedCounts = false;
-          const iitClub = this._data.clubs.find(c => c.id === 'c6');
-          const artsClub = this._data.clubs.find(c => c.id === 'c8');
-          const scienceClub = this._data.clubs.find(c => c.id === 'c7');
-          const otherClubs = this._data.clubs.filter(c => c.id !== 'c6' && c.id !== 'c8' && c.id !== 'c7');
-
-          if (iitClub && iitClub.memberCount !== 192) {
-            iitClub.memberCount = 192;
-            updatedCounts = true;
-          }
-          if (artsClub && artsClub.memberCount !== 175) {
-            artsClub.memberCount = 175;
-            updatedCounts = true;
-          }
-          if (scienceClub && scienceClub.memberCount !== 157) {
-            scienceClub.memberCount = 157;
-            updatedCounts = true;
-          }
-
-          // Check if others are distributed correctly (18 clubs with 36, 4 clubs with 35)
-          let othersCorrect = true;
-          let count36 = 0;
-          let count35 = 0;
-          otherClubs.forEach(c => {
-            if (c.memberCount === 36) count36++;
-            else if (c.memberCount === 35) count35++;
-            else othersCorrect = false;
-          });
-          if (count36 !== 18 || count35 !== 4) othersCorrect = false;
-
-          if (!othersCorrect) {
-            otherClubs.forEach((c, idx) => {
-              if (idx < 18) {
-                c.memberCount = 36;
-              } else {
-                c.memberCount = 35;
+        // Standardize District Membership Dues (Rs. 250 for Alpha Leo, Rs. 300 for Omega Leo)
+        if (this._data.membership_dues_version !== '2026_dues_standard_v1') {
+          if (this._data.invoices && this._data.clubs) {
+            const clubMap = new Map((this._data.clubs || []).map(c => [c.id, c]));
+            this._data.invoices.forEach(inv => {
+              if (inv.category === 'Membership Fees' && (inv.description?.includes('Annual District Membership Dues') || inv.description?.includes('Annual membership') || inv.id?.startsWith('inv'))) {
+                const club = clubMap.get(inv.clubId);
+                if (club) {
+                  const isAlpha = (club.track || '').toLowerCase().includes('alpha');
+                  const rate = isAlpha ? 250 : 300;
+                  const members = club.memberCount || 0;
+                  inv.amount = members * rate;
+                  inv.description = `Annual District Membership Dues (${members} members @ Rs. ${rate})`;
+                }
               }
             });
-            updatedCounts = true;
-          }
 
-          if (updatedCounts) {
-            this.save();
+            // Re-sync consolidated district finance entry f15 with total paid membership dues
+            const paidDuesTotal = this._data.invoices
+              .filter(inv => inv.category === 'Membership Fees' && inv.status === 'paid')
+              .reduce((sum, inv) => sum + (inv.amount || 0), 0);
+            const f15 = (this._data.finances || []).find(f => f.id === 'f15');
+            if (f15 && paidDuesTotal > 0) {
+              f15.amount = paidDuesTotal;
+              f15.description = 'Consolidated settled district membership dues from clubs (INV-001, INV-005, INV-007, INV-010)';
+            }
           }
+          this._data.membership_dues_version = '2026_dues_standard_v1';
+          this.save();
         }
       } else {
         this._data = getDefaultData();
@@ -4068,6 +4051,81 @@ class Store {
       this.save();
     }
     return this._data.membershipHistory;
+  }
+
+  // Rate formula: Rs. 250 for Alpha Leo clubs, Rs. 300 for Omega Leo clubs
+  getClubMembershipDueRate(clubIdOrTrack) {
+    if (!clubIdOrTrack) return 300;
+    let track = clubIdOrTrack;
+    if (typeof clubIdOrTrack === 'string' && (clubIdOrTrack.startsWith('c') || this.getById('clubs', clubIdOrTrack))) {
+      const club = this.getById('clubs', clubIdOrTrack);
+      track = club ? club.track : clubIdOrTrack;
+    }
+    return String(track).toLowerCase().includes('alpha') ? 250 : 300;
+  }
+
+  calculateClubMembershipIncome(clubId, checkpointKey = null) {
+    const club = this.getById('clubs', clubId);
+    if (!club) return 0;
+    let count = club.memberCount || 0;
+    if (checkpointKey) {
+      const history = this.getMembershipHistory();
+      const cp = (history.checkpoints || []).find(c => c.key === checkpointKey);
+      if (cp && cp.clubCounts && cp.clubCounts[clubId] !== undefined) {
+        count = cp.clubCounts[clubId];
+      }
+    }
+    const rate = this.getClubMembershipDueRate(club.track);
+    return count * rate;
+  }
+
+  getDistrictMembershipIncomeBreakdown(checkpointKey = null) {
+    const clubs = this.getAll('clubs') || [];
+    const history = this.getMembershipHistory();
+    const cp = checkpointKey ? (history.checkpoints || []).find(c => c.key === checkpointKey) : null;
+
+    let alphaCount = 0;
+    let omegaCount = 0;
+    let alphaClubsCount = 0;
+    let omegaClubsCount = 0;
+
+    clubs.forEach(c => {
+      let members = c.memberCount || 0;
+      if (cp && cp.clubCounts && cp.clubCounts[c.id] !== undefined) {
+        members = cp.clubCounts[c.id];
+      }
+      const isAlpha = (c.track || '').toLowerCase().includes('alpha');
+      if (isAlpha) {
+        alphaClubsCount++;
+        alphaCount += members;
+      } else {
+        omegaClubsCount++;
+        omegaCount += members;
+      }
+    });
+
+    const alphaIncome = alphaCount * 250;
+    const omegaIncome = omegaCount * 300;
+    const totalIncome = alphaIncome + omegaIncome;
+    const totalMembers = alphaCount + omegaCount;
+
+    return {
+      alphaClubsCount,
+      omegaClubsCount,
+      alphaCount,
+      omegaCount,
+      alphaRate: 250,
+      omegaRate: 300,
+      alphaIncome,
+      omegaIncome,
+      totalIncome,
+      totalMembers,
+      totalClubs: clubs.length
+    };
+  }
+
+  getTotalDistrictMembershipIncome(checkpointKey = null) {
+    return this.getDistrictMembershipIncomeBreakdown(checkpointKey).totalIncome;
   }
 
   getDistrictStats() {

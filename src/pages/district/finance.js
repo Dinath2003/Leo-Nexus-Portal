@@ -79,7 +79,11 @@ function getInvoiceFormHtml(invoice = null) {
       <div class="form-group">
         <label class="form-label">Leo Club *</label>
         <select class="form-select" id="inv-club" ${invoice ? 'disabled' : ''}>
-          ${clubs.map(c => `<option value="${c.id}" ${invoice?.clubId === c.id ? 'selected' : ''}>${c.name}</option>`).join('')}
+          ${clubs.map(c => {
+            const isAlpha = (c.track || '').toLowerCase().includes('alpha');
+            const rate = isAlpha ? 250 : 300;
+            return `<option value="${c.id}" data-track="${c.track || 'Omega Leo'}" data-members="${c.memberCount || 0}" data-rate="${rate}" ${invoice?.clubId === c.id ? 'selected' : ''}>${c.name} (${c.track || 'Omega Leo'} · ${c.memberCount || 0} mem · Rs. ${rate}/m)</option>`;
+          }).join('')}
         </select>
       </div>
     </div>
@@ -87,7 +91,7 @@ function getInvoiceFormHtml(invoice = null) {
       <div class="form-group">
         <label class="form-label">Category *</label>
         <select class="form-select" id="inv-category">
-          <option value="Membership Fees" ${invoice?.category === 'Membership Fees' ? 'selected' : ''}>Membership Dues</option>
+          <option value="Membership Fees" ${(!invoice || invoice?.category === 'Membership Fees') ? 'selected' : ''}>Membership Dues (District Income)</option>
           <option value="Conference Levy" ${invoice?.category === 'Conference Levy' ? 'selected' : ''}>Conference Levy</option>
           <option value="Materials" ${invoice?.category === 'Materials' ? 'selected' : ''}>Materials & PR Items</option>
           <option value="Other" ${invoice?.category === 'Other' ? 'selected' : ''}>Other Fees</option>
@@ -96,6 +100,7 @@ function getInvoiceFormHtml(invoice = null) {
       <div class="form-group">
         <label class="form-label">Amount (Rs.) *</label>
         <input type="number" class="form-input" id="inv-amount" placeholder="0.00" min="1" step="1" value="${invoice?.amount || ''}" />
+        <div id="inv-rate-hint" style="font-size:11px; color:var(--color-primary); margin-top:5px; font-weight:600;"></div>
       </div>
     </div>
     <div class="form-row">
@@ -110,9 +115,70 @@ function getInvoiceFormHtml(invoice = null) {
     </div>
     <div class="form-group">
       <label class="form-label">Description *</label>
-      <textarea class="form-textarea" id="inv-description" rows="2" placeholder="e.g. Annual membership dues based on 30 active members...">${invoice?.description || ''}</textarea>
+      <textarea class="form-textarea" id="inv-description" rows="2" placeholder="e.g. Annual membership dues based on active members...">${invoice?.description || ''}</textarea>
     </div>
   `;
+}
+
+function attachInvoiceFormListeners(invoice = null) {
+  const clubSelect = document.getElementById('inv-club');
+  const catSelect = document.getElementById('inv-category');
+  const amountInput = document.getElementById('inv-amount');
+  const descInput = document.getElementById('inv-description');
+  const hintEl = document.getElementById('inv-rate-hint');
+
+  const updateMembershipCalculation = (force = false) => {
+    if (!clubSelect || !catSelect || !amountInput) return;
+    const opt = clubSelect.options[clubSelect.selectedIndex];
+    if (!opt) return;
+    const track = opt.dataset.track || 'Omega Leo';
+    const members = parseInt(opt.dataset.members || '0', 10);
+    const isAlpha = track.toLowerCase().includes('alpha');
+    const rate = isAlpha ? 250 : 300;
+    const calculatedAmount = members * rate;
+
+    if (catSelect.value === 'Membership Fees') {
+      if (hintEl) {
+        hintEl.style.display = 'block';
+        hintEl.innerHTML = `<i data-lucide="info" style="width:12px;height:12px;display:inline-block;vertical-align:middle;margin-right:4px;"></i> District Rate: <strong>Rs. ${rate}</strong> per member (${isAlpha ? 'Alpha Leo' : 'Omega Leo'}) · ${members} members = <strong>Rs. ${calculatedAmount.toLocaleString()}</strong>`;
+        if (window.lucide) lucide.createIcons({ nodes: [hintEl] });
+      }
+      if (force || !amountInput.value || amountInput.dataset.autoFilled === 'true') {
+        amountInput.value = calculatedAmount;
+        amountInput.dataset.autoFilled = 'true';
+      }
+      if (descInput && (force || !descInput.value || descInput.dataset.autoFilled === 'true')) {
+        descInput.value = `Annual District Membership Dues (${members} members @ Rs. ${rate})`;
+        descInput.dataset.autoFilled = 'true';
+      }
+    } else {
+      if (hintEl) {
+        hintEl.style.display = 'none';
+        hintEl.innerHTML = '';
+      }
+      if (amountInput.dataset.autoFilled === 'true') {
+        amountInput.dataset.autoFilled = 'false';
+      }
+      if (descInput && descInput.dataset.autoFilled === 'true') {
+        descInput.dataset.autoFilled = 'false';
+      }
+    }
+  };
+
+  clubSelect?.addEventListener('change', () => updateMembershipCalculation(true));
+  catSelect?.addEventListener('change', () => updateMembershipCalculation(true));
+  amountInput?.addEventListener('input', () => {
+    amountInput.dataset.autoFilled = 'false';
+  });
+  descInput?.addEventListener('input', () => {
+    descInput.dataset.autoFilled = 'false';
+  });
+
+  if (!invoice) {
+    amountInput.dataset.autoFilled = 'true';
+    if (descInput) descInput.dataset.autoFilled = 'true';
+  }
+  updateMembershipCalculation(!invoice);
 }
 
 function getInvoiceFormData(invoice = null) {
@@ -201,13 +267,17 @@ function getManualDueFormHtml() {
       <div class="form-group">
         <label class="form-label">Leo Club *</label>
         <select class="form-select" id="due-club">
-          ${clubs.map(c => `<option value="${c.id}">${c.name}</option>`).join('')}
+          ${clubs.map(c => {
+            const isAlpha = (c.track || '').toLowerCase().includes('alpha');
+            const rate = isAlpha ? 250 : 300;
+            return `<option value="${c.id}" data-track="${c.track || 'Omega Leo'}" data-rate="${rate}" data-members="${c.memberCount || 0}">${c.name} (${c.track || 'Omega Leo'} · Rs. ${rate}/m)</option>`;
+          }).join('')}
         </select>
       </div>
       <div class="form-group">
         <label class="form-label">Type of Payment *</label>
         <select class="form-select" id="due-category">
-          <option value="Membership Fees">Membership Dues Collection</option>
+          <option value="Membership Fees">Membership Dues Collection (Rs. 250 Alpha / Rs. 300 Omega)</option>
           <option value="Conference Levy">Conference Levy Collection</option>
           <option value="Events">Event Registration Collection</option>
           <option value="Other">Other Club Payments</option>
@@ -218,6 +288,7 @@ function getManualDueFormHtml() {
       <div class="form-group">
         <label class="form-label">Amount Paid (Rs.) *</label>
         <input type="number" class="form-input" id="due-amount" placeholder="0.00" min="0" step="0.01" required />
+        <div id="due-rate-hint" style="font-size:11px; color:var(--color-primary); margin-top:4px;"></div>
       </div>
       <div class="form-group">
         <label class="form-label">Payment Date *</label>
@@ -735,6 +806,7 @@ export function renderDistrictFinance() {
                 const totalInvoiced = invoices.reduce((sum, inv) => sum + inv.amount, 0);
                 const totalCollected = invoices.filter(inv => inv.status === 'paid').reduce((sum, inv) => sum + inv.amount, 0);
                 const totalOutstanding = invoices.filter(inv => inv.status !== 'paid').reduce((sum, inv) => sum + inv.amount, 0);
+                const memBreakdown = store.getDistrictMembershipIncomeBreakdown();
 
                 // Filter invoices
                 let filteredInvoices = [...invoices];
@@ -754,6 +826,39 @@ export function renderDistrictFinance() {
                 const sortedInvoices = filteredInvoices.sort((a, b) => new Date(b.issueDate) - new Date(a.issueDate));
 
                 return `
+                  <!-- District Membership Income Standard Summary Banner -->
+                  <div style="background: linear-gradient(135deg, rgba(0, 102, 255, 0.08) 0%, rgba(20, 184, 166, 0.08) 100%); border: 1px solid rgba(0, 102, 255, 0.25); border-radius: 12px; padding: 16px 20px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
+                    <div style="display: flex; align-items: center; gap: 14px;">
+                      <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(0, 102, 255, 0.15); color: var(--color-primary); display: flex; align-items: center; justify-content: center;">
+                        <i data-lucide="calculator" style="width: 22px; height: 22px;"></i>
+                      </div>
+                      <div>
+                        <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.6px; font-weight: 700; color: var(--color-primary);">District Membership Income Standard</div>
+                        <div style="font-size: 13px; font-weight: 600; color: var(--color-text-primary); margin-top: 3px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                          <span><span class="badge badge-warning" style="font-size: 10px; font-weight: 700;">Alpha Leo</span> Rs. 250 / member</span>
+                          <span style="color: var(--color-text-muted);">•</span>
+                          <span><span class="badge badge-primary" style="font-size: 10px; font-weight: 700;">Omega Leo</span> Rs. 300 / member</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
+                      <div style="text-align: right;">
+                        <div style="font-size: 11px; color: var(--color-text-muted);">Alpha Clubs (${memBreakdown.alphaClubsCount} clubs · ${memBreakdown.alphaCount} mem.)</div>
+                        <div style="font-size: 14px; font-weight: 700; color: #f59e0b;">Rs. ${memBreakdown.alphaIncome.toLocaleString()}</div>
+                      </div>
+                      <div style="width: 1px; height: 30px; background: var(--color-glass-border);"></div>
+                      <div style="text-align: right;">
+                        <div style="font-size: 11px; color: var(--color-text-muted);">Omega Clubs (${memBreakdown.omegaClubsCount} clubs · ${memBreakdown.omegaCount} mem.)</div>
+                        <div style="font-size: 14px; font-weight: 700; color: #00d4ff;">Rs. ${memBreakdown.omegaIncome.toLocaleString()}</div>
+                      </div>
+                      <div style="width: 1px; height: 30px; background: var(--color-glass-border);"></div>
+                      <div style="text-align: right;">
+                        <div style="font-size: 11px; color: var(--color-text-muted);">Total District Membership Dues</div>
+                        <div style="font-size: 17px; font-weight: 800; color: #14b8a6;">Rs. ${memBreakdown.totalIncome.toLocaleString()}</div>
+                      </div>
+                    </div>
+                  </div>
+
                   <!-- Summary Stats -->
                   <div class="grid-3" style="margin-bottom: 20px;">
                     <div style="padding: 16px; background: rgba(255,255,255,0.02); border: 1px solid var(--color-border); border-radius: 12px; display: flex; align-items: center; gap: 14px;">
@@ -1185,6 +1290,7 @@ export function renderDistrictFinance() {
           render(activeTab, searchFilter, clubFilter, statusFilter);
         }
       });
+      attachInvoiceFormListeners();
     });
 
     // Edit Invoice
@@ -1204,6 +1310,7 @@ export function renderDistrictFinance() {
             render(activeTab, searchFilter, clubFilter, statusFilter);
           }
         });
+        attachInvoiceFormListeners(inv);
       });
     });
 

@@ -200,8 +200,47 @@ export function renderDistrictReports() {
     const sep30Sum = filteredClubs.reduce((s, c) => s + ((c.membershipCheckpoints && c.membershipCheckpoints['2026-09-30']) || 0), 0);
     const octSum = filteredClubs.reduce((s, c) => s + ((c.membershipCheckpoints && c.membershipCheckpoints['2026-10-31']) || c.memberCount || 0), 0);
     const netSum = octSum - julSum;
+    const incomeSum = filteredClubs.reduce((s, c) => {
+      const cOct = (c.membershipCheckpoints && c.membershipCheckpoints['2026-10-31']) || c.memberCount || 0;
+      const isA = (c.track || '').toLowerCase().includes('alpha');
+      return s + (cOct * (isA ? 250 : 300));
+    }, 0);
+    const breakdown = store.getDistrictMembershipIncomeBreakdown();
 
     return `
+      <!-- District Membership Income Standard Summary Card -->
+      <div style="background: linear-gradient(135deg, rgba(0, 102, 255, 0.08) 0%, rgba(20, 184, 166, 0.08) 100%); border: 1px solid rgba(0, 102, 255, 0.25); border-radius: 10px; padding: 14px 18px; margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <div style="width: 38px; height: 38px; border-radius: 10px; background: rgba(0, 102, 255, 0.15); color: var(--color-primary); display: flex; align-items: center; justify-content: center;">
+            <i data-lucide="calculator" style="width: 20px; height: 20px;"></i>
+          </div>
+          <div>
+            <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.6px; font-weight: 700; color: var(--color-primary);">District Membership Income Standard</div>
+            <div style="font-size: 13px; font-weight: 600; color: var(--color-text-primary); margin-top: 2px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+              <span><span class="badge badge-warning" style="font-size: 10px; font-weight: 700;">Alpha Leo</span> Rs. 250 / member</span>
+              <span style="color: var(--color-text-muted);">•</span>
+              <span><span class="badge badge-primary" style="font-size: 10px; font-weight: 700;">Omega Leo</span> Rs. 300 / member</span>
+            </div>
+          </div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 18px; flex-wrap: wrap;">
+          <div style="text-align: right;">
+            <div style="font-size: 11px; color: var(--color-text-muted);">Alpha Clubs (${breakdown.alphaClubsCount} clubs · ${breakdown.alphaCount} mem.)</div>
+            <div style="font-size: 14px; font-weight: 700; color: #f59e0b;">Rs. ${breakdown.alphaIncome.toLocaleString()}</div>
+          </div>
+          <div style="width: 1px; height: 26px; background: var(--color-glass-border);"></div>
+          <div style="text-align: right;">
+            <div style="font-size: 11px; color: var(--color-text-muted);">Omega Clubs (${breakdown.omegaClubsCount} clubs · ${breakdown.omegaCount} mem.)</div>
+            <div style="font-size: 14px; font-weight: 700; color: #00d4ff;">Rs. ${breakdown.omegaIncome.toLocaleString()}</div>
+          </div>
+          <div style="width: 1px; height: 26px; background: var(--color-glass-border);"></div>
+          <div style="text-align: right;">
+            <div style="font-size: 11px; color: var(--color-text-muted);">Total District Membership Income</div>
+            <div style="font-size: 16px; font-weight: 800; color: #14b8a6;">Rs. ${breakdown.totalIncome.toLocaleString()}</div>
+          </div>
+        </div>
+      </div>
+
       <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:12px;">
         <div style="display:flex; gap:6px; flex-wrap:wrap;">
           <button type="button" class="btn btn-xs mem-track-btn ${membershipTrackFilter === 'all' ? 'btn-primary' : 'btn-secondary'}" data-track="all">All Clubs (20)</button>
@@ -220,15 +259,17 @@ export function renderDistrictReports() {
         <table class="data-table" style="font-size:12px; margin:0;">
           <thead style="position:sticky; top:0; background:var(--color-bg-primary); z-index:2;">
             <tr>
-              <th style="width:36px;">#</th>
+              <th style="width:32px;">#</th>
               <th>Club Name</th>
-              <th style="width:115px;">Track</th>
-              <th style="width:85px; text-align:center;">1 Jul 2026</th>
-              <th style="width:85px; text-align:center;">9 Aug 2026</th>
-              <th style="width:85px; text-align:center;">1 Sep 2026</th>
-              <th style="width:85px; text-align:center;">30 Sep 2026</th>
-              <th style="width:105px; text-align:center;">31 Oct 2026 (Now)</th>
-              <th style="width:90px; text-align:center;">Net Growth</th>
+              <th style="width:105px;">Track</th>
+              <th style="width:75px; text-align:center;">1 Jul 2026</th>
+              <th style="width:75px; text-align:center;">9 Aug 2026</th>
+              <th style="width:75px; text-align:center;">1 Sep 2026</th>
+              <th style="width:75px; text-align:center;">30 Sep 2026</th>
+              <th style="width:95px; text-align:center;">31 Oct (Now)</th>
+              <th style="width:80px; text-align:center;">Net Growth</th>
+              <th style="width:85px; text-align:center;">Due Rate</th>
+              <th style="width:115px; text-align:right;">District Income</th>
             </tr>
           </thead>
           <tbody>
@@ -240,7 +281,9 @@ export function renderDistrictReports() {
               const cSep30 = cp['2026-09-30'] || 0;
               const cOct = cp['2026-10-31'] || club.memberCount || 0;
               const diff = cOct - cJul;
-              const isAlpha = club.track === 'Alpha Leo';
+              const isAlpha = (club.track || '').toLowerCase().includes('alpha');
+              const dueRate = isAlpha ? 250 : 300;
+              const clubDues = cOct * dueRate;
               return `
                 <tr>
                   <td style="font-weight:700; color:var(--color-text-muted);">${idx + 1}</td>
@@ -263,6 +306,14 @@ export function renderDistrictReports() {
                       ${diff > 0 ? '+' + diff : diff}
                     </span>
                   </td>
+                  <td style="text-align:center;">
+                    <span class="badge ${isAlpha ? 'badge-warning' : 'badge-primary'}" style="font-size:10px; font-weight:700;">
+                      Rs. ${dueRate}
+                    </span>
+                  </td>
+                  <td style="text-align:right; font-weight:700; color:var(--color-primary); font-size:12px;">
+                    Rs. ${clubDues.toLocaleString()}
+                  </td>
                 </tr>
               `;
             }).join('')}
@@ -279,6 +330,10 @@ export function renderDistrictReports() {
                 <span class="badge ${netSum >= 0 ? 'badge-success' : 'badge-danger'}" style="font-weight:800; font-size:11px;">
                   ${netSum >= 0 ? '+' + netSum : netSum}
                 </span>
+              </td>
+              <td style="text-align:center; font-size:11px; color:var(--color-text-muted);">Standard</td>
+              <td style="text-align:right; color:#14b8a6; font-size:13px; font-weight:800; background:rgba(20,184,166,0.12);">
+                Rs. ${incomeSum.toLocaleString()}
               </td>
             </tr>
           </tfoot>
