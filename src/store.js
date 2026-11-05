@@ -4128,6 +4128,70 @@ class Store {
     return this.getDistrictMembershipIncomeBreakdown(checkpointKey).totalIncome;
   }
 
+  updateClubMembershipData(clubId, data = {}) {
+    const club = this.getById('clubs', clubId);
+    if (!club) return false;
+
+    if (data.track) {
+      club.track = data.track;
+    }
+
+    if (!club.membershipCheckpoints) {
+      club.membershipCheckpoints = {};
+    }
+
+    if (data.checkpoints && typeof data.checkpoints === 'object') {
+      Object.keys(data.checkpoints).forEach(key => {
+        const val = parseInt(data.checkpoints[key], 10);
+        if (!isNaN(val) && val >= 0) {
+          club.membershipCheckpoints[key] = val;
+        }
+      });
+    }
+
+    if (data.memberCount !== undefined && data.memberCount !== null && data.memberCount !== '') {
+      club.memberCount = Math.max(0, parseInt(data.memberCount, 10) || 0);
+      club.membershipCheckpoints['2026-10-31'] = club.memberCount;
+    } else if (club.membershipCheckpoints['2026-10-31'] !== undefined) {
+      club.memberCount = club.membershipCheckpoints['2026-10-31'];
+    }
+
+    // Sync checkpoints into membershipHistory
+    if (this._data.membershipHistory && Array.isArray(this._data.membershipHistory)) {
+      this._data.membershipHistory.forEach(ch => {
+        if (!ch.countsByClub) ch.countsByClub = {};
+        if (ch.date && club.membershipCheckpoints[ch.date] !== undefined) {
+          ch.countsByClub[clubId] = club.membershipCheckpoints[ch.date];
+        }
+        // Recalculate total checkpoint members across all clubs
+        ch.totalMembers = Object.values(ch.countsByClub).reduce((sum, v) => sum + (Number(v) || 0), 0);
+      });
+    }
+
+    // Sync club's district dues invoice
+    const rate = this.getClubMembershipDueRate(club.track);
+    const invoice = (this._data.invoices || []).find(inv => inv.clubId === clubId && inv.category === 'Membership Fees');
+    if (invoice) {
+      invoice.amount = club.memberCount * rate;
+      invoice.description = `Annual District Membership Dues (${club.memberCount} members @ Rs. ${rate})`;
+    }
+
+    // Re-sync f15 (total settled dues from paid invoices)
+    const paidDuesTotal = (this._data.invoices || [])
+      .filter(inv => inv.category === 'Membership Fees' && inv.status === 'paid')
+      .reduce((sum, inv) => sum + (inv.amount || 0), 0);
+    const f15 = (this._data.finances || []).find(f => f.id === 'f15');
+    if (f15 && paidDuesTotal > 0) {
+      f15.amount = paidDuesTotal;
+    }
+
+    this.save();
+    this.emit('clubs:changed');
+    this.emit('invoices:changed');
+    this.emit('finances:changed');
+    return true;
+  }
+
   getDistrictStats() {
     const clubs = this.getAll('clubs');
     const members = this.getAll('members');

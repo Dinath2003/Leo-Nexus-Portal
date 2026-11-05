@@ -63,7 +63,15 @@ class Auth {
   }
 
   get isAdmin() {
-    return this._currentUser?.role === 'admin';
+    return this._currentUser?.role === 'admin' || this._currentUser?.role === 'super_admin';
+  }
+
+  get isSuperAdmin() {
+    return this.isAdmin;
+  }
+
+  get canEditMembershipData() {
+    return this.isSuperAdmin;
   }
 
   get isDistrictAdmin() {

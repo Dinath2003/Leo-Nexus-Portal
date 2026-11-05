@@ -113,12 +113,35 @@ function getClubFormHtml(club = null) {
         <label class="form-label">Description</label>
         <textarea class="form-textarea" id="club-description" rows="3" placeholder="Brief description of the club...">${club?.description || ''}</textarea>
       </div>
+      ${auth.canEditMembershipData ? `
+        <div style="margin-top:1rem; padding:12px 14px; border-radius:8px; background:rgba(0,102,255,0.06); border:1px solid rgba(0,102,255,0.2);">
+          <div style="font-size:12px; font-weight:700; color:var(--color-primary); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:8px; display:flex; align-items:center; gap:6px;">
+            <i data-lucide="shield-check" style="width:14px;height:14px"></i> Membership & Track Configuration (Super Admin Access)
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Classification Track *</label>
+              <select class="form-select" id="club-track">
+                <option value="Omega Leo" ${club?.track !== 'Alpha Leo' ? 'selected' : ''}>Omega Leo (Rs. 300 / member)</option>
+                <option value="Alpha Leo" ${club?.track === 'Alpha Leo' ? 'selected' : ''}>Alpha Leo (Rs. 250 / member)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Active Member Count *</label>
+              <input type="number" class="form-input" id="club-memberCount" value="${club?.memberCount !== undefined ? club.memberCount : ''}" min="0" step="1" placeholder="e.g. 35" />
+            </div>
+          </div>
+          <div style="font-size:11px; color:var(--color-text-muted); margin-top:2px;">
+            Updating member count automatically synchronizes official checkpoints and calculates annual District Membership Dues.
+          </div>
+        </div>
+      ` : ''}
     </form>
   `;
 }
 
 function getFormValues() {
-  return {
+  const vals = {
     name: document.getElementById('club-name')?.value?.trim(),
     code: document.getElementById('club-code')?.value?.trim(),
     president: document.getElementById('club-president')?.value?.trim(),
@@ -130,6 +153,15 @@ function getFormValues() {
     meetingDay: document.getElementById('club-meetingDay')?.value?.trim(),
     description: document.getElementById('club-description')?.value?.trim(),
   };
+
+  if (auth.canEditMembershipData) {
+    const trackEl = document.getElementById('club-track');
+    const countEl = document.getElementById('club-memberCount');
+    if (trackEl) vals.track = trackEl.value;
+    if (countEl && countEl.value !== '') vals.memberCount = parseInt(countEl.value, 10);
+  }
+
+  return vals;
 }
 
 function validateForm(vals) {
@@ -331,7 +363,8 @@ export function renderDistrictClubs() {
           const vals = getFormValues();
           if (!validateForm(vals)) return;
           vals.charter_date = new Date().toISOString().split('T')[0];
-          vals.memberCount = 0;
+          vals.memberCount = vals.memberCount !== undefined ? vals.memberCount : 0;
+          vals.track = vals.track || 'Omega Leo';
           store.create('clubs', vals);
           showToast('success', 'Club Created', `${vals.name} has been added successfully.`);
           close();
@@ -354,6 +387,12 @@ export function renderDistrictClubs() {
             const vals = getFormValues();
             if (!validateForm(vals)) return;
             store.update('clubs', clubId, vals);
+            if (auth.canEditMembershipData && (vals.memberCount !== undefined || vals.track !== undefined)) {
+              store.updateClubMembershipData(clubId, {
+                track: vals.track,
+                memberCount: vals.memberCount
+              });
+            }
             showToast('success', 'Club Updated', `${vals.name} has been updated.`);
             close();
             render();

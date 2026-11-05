@@ -9,10 +9,13 @@ import { renderHeader, initHeader } from '../../components/header.js';
 import { createChart, destroyAllCharts } from '../../components/charts.js';
 import { renderTable } from '../../components/table.js';
 import { showModal } from '../../components/modal.js';
+import { showToast } from '../../components/toast.js';
 import { PROJECT_CATEGORIES_DATA, PROJECT_AWARD_GROUPS } from '../../data/projectCategories.js';
 
 export function renderDistrictReports() {
+  destroyAllCharts();
   const app = document.getElementById('app');
+  const canEditMembership = auth.canEditMembershipData;
   const stats = store.getDistrictStats();
   const clubs = store.getAll('clubs');
   const members = store.getAll('members');
@@ -270,6 +273,7 @@ export function renderDistrictReports() {
               <th style="width:80px; text-align:center;">Net Growth</th>
               <th style="width:85px; text-align:center;">Due Rate</th>
               <th style="width:115px; text-align:right;">District Income</th>
+              ${canEditMembership ? '<th style="width:65px; text-align:center;">Action</th>' : ''}
             </tr>
           </thead>
           <tbody>
@@ -314,6 +318,13 @@ export function renderDistrictReports() {
                   <td style="text-align:right; font-weight:700; color:var(--color-primary); font-size:12px;">
                     Rs. ${clubDues.toLocaleString()}
                   </td>
+                  ${canEditMembership ? `
+                    <td style="text-align:center;">
+                      <button type="button" class="btn btn-ghost btn-xs btn-icon edit-club-mem-btn" data-club-id="${club.id}" title="Edit Membership Records for ${club.name}">
+                        <i data-lucide="edit-2" style="width:13px;height:13px;color:var(--color-primary);"></i>
+                      </button>
+                    </td>
+                  ` : ''}
                 </tr>
               `;
             }).join('')}
@@ -335,6 +346,7 @@ export function renderDistrictReports() {
               <td style="text-align:right; color:#14b8a6; font-size:13px; font-weight:800; background:rgba(20,184,166,0.12);">
                 Rs. ${incomeSum.toLocaleString()}
               </td>
+              ${canEditMembership ? '<td></td>' : ''}
             </tr>
           </tfoot>
         </table>
@@ -453,7 +465,14 @@ export function renderDistrictReports() {
                   Certified district checkpoint progression for all 20 clubs (Omega & Alpha tracks)
                 </p>
               </div>
-              <span class="badge badge-primary" style="font-size:10px;">Certified District Checkpoints</span>
+              <div style="display:flex; align-items:center; gap:8px;">
+                ${canEditMembership ? `
+                  <button type="button" class="btn btn-primary btn-xs" id="quick-edit-membership-btn" style="display:inline-flex; align-items:center; gap:5px; font-weight:600;">
+                    <i data-lucide="edit-3" style="width:13px;height:13px;"></i> Edit Membership Data
+                  </button>
+                ` : ''}
+                <span class="badge badge-primary" style="font-size:10px;">Certified District Checkpoints</span>
+              </div>
             </div>
             <div class="card-body" id="membership-ledger-body">
               ${renderMembershipLedgerHtml()}
@@ -928,6 +947,199 @@ export function renderDistrictReports() {
   }
   attachFinanceLedgerEvents();
 
+  // Super Admin: Edit Official Membership Data Modal
+  function openEditMembershipModal(targetClubId = null) {
+    const allClubs = store.getAll('clubs') || [];
+    let activeClubId = targetClubId || allClubs[0]?.id;
+    let selectedClub = store.getById('clubs', activeClubId) || allClubs[0];
+
+    const renderModalBody = (club) => {
+      const cp = club.membershipCheckpoints || {};
+      const cJul = cp['2026-07-01'] !== undefined ? cp['2026-07-01'] : 0;
+      const cAug = cp['2026-08-09'] !== undefined ? cp['2026-08-09'] : 0;
+      const cSep1 = cp['2026-09-01'] !== undefined ? cp['2026-09-01'] : 0;
+      const cSep30 = cp['2026-09-30'] !== undefined ? cp['2026-09-30'] : 0;
+      const cOct = cp['2026-10-31'] !== undefined ? cp['2026-10-31'] : (club.memberCount || 0);
+      const isAlpha = (club.track || '').toLowerCase().includes('alpha');
+      const rate = isAlpha ? 250 : 300;
+      const income = cOct * rate;
+
+      return `
+        <div style="display:flex; flex-direction:column; gap:16px;">
+          <div style="padding:10px 14px; background:rgba(0,102,255,0.06); border:1px solid rgba(0,102,255,0.2); border-radius:8px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px;">
+            <div style="display:flex; align-items:center; gap:10px;">
+              <div style="width:34px; height:34px; border-radius:8px; background:rgba(0,102,255,0.15); color:var(--color-primary); display:flex; align-items:center; justify-content:center;">
+                <i data-lucide="shield-alert" style="width:18px;height:18px;"></i>
+              </div>
+              <div>
+                <div style="font-weight:700; font-size:13px; color:var(--color-text-primary);">Super Admin Membership Editor</div>
+                <div style="font-size:11px; color:var(--color-text-muted);">Updates official certified checkpoints, member counts, and recalculates district dues.</div>
+              </div>
+            </div>
+            <span class="badge badge-warning" style="font-size:10px; font-weight:700;">SUPER ADMIN ACCESS</span>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group" style="flex:2;">
+              <label class="form-label">Select Leo Club *</label>
+              <select class="form-select" id="modal-mem-club">
+                ${allClubs.map(c => `
+                  <option value="${c.id}" ${c.id === club.id ? 'selected' : ''}>
+                    ${c.name} (${c.code} · ${c.track || 'Omega Leo'})
+                  </option>
+                `).join('')}
+              </select>
+            </div>
+            <div class="form-group" style="flex:1;">
+              <label class="form-label">Track Classification *</label>
+              <select class="form-select" id="modal-mem-track">
+                <option value="Omega Leo" ${!isAlpha ? 'selected' : ''}>Omega Leo (Rs. 300/m)</option>
+                <option value="Alpha Leo" ${isAlpha ? 'selected' : ''}>Alpha Leo (Rs. 250/m)</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="border:1px solid var(--color-glass-border); border-radius:8px; padding:14px; background:rgba(0,0,0,0.12);">
+            <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:var(--color-primary); margin-bottom:12px; display:flex; align-items:center; gap:6px;">
+              <i data-lucide="calendar" style="width:14px;height:14px;"></i> Certified Checkpoint Progression (Members)
+            </div>
+            
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(130px, 1fr)); gap:12px;">
+              <div class="form-group" style="margin:0;">
+                <label class="form-label" style="font-size:11px; color:var(--color-text-muted);">1 Jul 2026</label>
+                <input type="number" class="form-input cp-input" id="cp-jul" value="${cJul}" min="0" step="1" required style="font-weight:700;" />
+              </div>
+              <div class="form-group" style="margin:0;">
+                <label class="form-label" style="font-size:11px; color:var(--color-text-muted);">9 Aug 2026</label>
+                <input type="number" class="form-input cp-input" id="cp-aug" value="${cAug}" min="0" step="1" required style="font-weight:700;" />
+              </div>
+              <div class="form-group" style="margin:0;">
+                <label class="form-label" style="font-size:11px; color:var(--color-text-muted);">1 Sep 2026</label>
+                <input type="number" class="form-input cp-input" id="cp-sep1" value="${cSep1}" min="0" step="1" required style="font-weight:700;" />
+              </div>
+              <div class="form-group" style="margin:0;">
+                <label class="form-label" style="font-size:11px; color:var(--color-text-muted);">30 Sep 2026</label>
+                <input type="number" class="form-input cp-input" id="cp-sep30" value="${cSep30}" min="0" step="1" required style="font-weight:700;" />
+              </div>
+              <div class="form-group" style="margin:0;">
+                <label class="form-label" style="font-size:11px; color:var(--color-primary); font-weight:700;">31 Oct (Active)</label>
+                <input type="number" class="form-input cp-input" id="cp-oct" value="${cOct}" min="0" step="1" required style="font-weight:800; border-color:var(--color-primary); background:rgba(0,102,255,0.06);" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Impact Summary Box -->
+          <div id="modal-mem-preview" style="background:linear-gradient(135deg, rgba(0, 102, 255, 0.08) 0%, rgba(20, 184, 166, 0.08) 100%); border:1px solid rgba(0, 102, 255, 0.25); border-radius:8px; padding:12px 16px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+            <div>
+              <div style="font-size:11px; color:var(--color-text-muted);">Applicable Dues Rate:</div>
+              <div style="font-size:13px; font-weight:700; color:var(--color-text-primary);" id="preview-rate-label">
+                Rs. ${rate} / member (${isAlpha ? 'Alpha Leo' : 'Omega Leo'})
+              </div>
+            </div>
+            <div>
+              <div style="font-size:11px; color:var(--color-text-muted);">Projected District Dues:</div>
+              <div style="font-size:15px; font-weight:800; color:#14b8a6;" id="preview-income-label">
+                Rs. ${income.toLocaleString()}
+              </div>
+            </div>
+            <div>
+              <div style="font-size:11px; color:var(--color-text-muted);">Net Growth (Jul → Oct):</div>
+              <div style="font-size:13px; font-weight:700;" id="preview-growth-label">
+                <span class="badge ${cOct - cJul >= 0 ? 'badge-success' : 'badge-danger'}">
+                  ${cOct - cJul >= 0 ? '+' + (cOct - cJul) : (cOct - cJul)}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    };
+
+    const attachModalListeners = () => {
+      const clubSelect = document.getElementById('modal-mem-club');
+      const trackSelect = document.getElementById('modal-mem-track');
+      const julInput = document.getElementById('cp-jul');
+      const octInput = document.getElementById('cp-oct');
+      const rateLabel = document.getElementById('preview-rate-label');
+      const incomeLabel = document.getElementById('preview-income-label');
+      const growthLabel = document.getElementById('preview-growth-label');
+
+      const updatePreview = () => {
+        const isAlpha = trackSelect?.value === 'Alpha Leo';
+        const rate = isAlpha ? 250 : 300;
+        const octCount = parseInt(octInput?.value || '0', 10);
+        const julCount = parseInt(julInput?.value || '0', 10);
+        const growth = octCount - julCount;
+        const income = octCount * rate;
+
+        if (rateLabel) rateLabel.textContent = `Rs. ${rate} / member (${isAlpha ? 'Alpha Leo' : 'Omega Leo'})`;
+        if (incomeLabel) incomeLabel.textContent = `Rs. ${income.toLocaleString()}`;
+        if (growthLabel) {
+          growthLabel.innerHTML = `<span class="badge ${growth >= 0 ? 'badge-success' : 'badge-danger'}">${growth >= 0 ? '+' + growth : growth}</span>`;
+        }
+      };
+
+      clubSelect?.addEventListener('change', (e) => {
+        const nextClub = store.getById('clubs', e.target.value);
+        if (nextClub) {
+          activeClubId = nextClub.id;
+          selectedClub = nextClub;
+          const container = document.querySelector('#modal-overlay .modal-body');
+          if (container) {
+            container.innerHTML = renderModalBody(nextClub);
+            lucide.createIcons();
+            attachModalListeners();
+          }
+        }
+      });
+
+      trackSelect?.addEventListener('change', updatePreview);
+      document.querySelectorAll('.cp-input').forEach(inp => {
+        inp.addEventListener('input', updatePreview);
+      });
+    };
+
+    showModal(`Edit Official Membership Data: ${selectedClub.name}`, renderModalBody(selectedClub), {
+      size: 'lg',
+      submitText: 'Save Membership Data',
+      onSubmit: (close) => {
+        const jul = parseInt(document.getElementById('cp-jul')?.value, 10);
+        const aug = parseInt(document.getElementById('cp-aug')?.value, 10);
+        const sep1 = parseInt(document.getElementById('cp-sep1')?.value, 10);
+        const sep30 = parseInt(document.getElementById('cp-sep30')?.value, 10);
+        const oct = parseInt(document.getElementById('cp-oct')?.value, 10);
+        const track = document.getElementById('modal-mem-track')?.value || 'Omega Leo';
+
+        if ([jul, aug, sep1, sep30, oct].some(v => isNaN(v) || v < 0)) {
+          showToast('error', 'Validation Error', 'Please enter valid non-negative numbers for all checkpoints.');
+          return;
+        }
+
+        const success = store.updateClubMembershipData(activeClubId, {
+          track,
+          memberCount: oct,
+          checkpoints: {
+            '2026-07-01': jul,
+            '2026-08-09': aug,
+            '2026-09-01': sep1,
+            '2026-09-30': sep30,
+            '2026-10-31': oct
+          }
+        });
+
+        if (success) {
+          showToast('success', 'Membership Data Saved', `Updated official membership counts & dues for ${selectedClub.name}.`);
+          close();
+          renderDistrictReports();
+        } else {
+          showToast('error', 'Update Failed', 'Failed to update membership data.');
+        }
+      }
+    });
+
+    attachModalListeners();
+  }
+
   // Attach Membership Ledger Live Filter & Search
   function attachMembershipLedgerEvents() {
     document.querySelectorAll('.mem-track-btn').forEach(btn => {
@@ -952,6 +1164,20 @@ export function renderDistrictReports() {
         attachMembershipLedgerEvents();
       }
     });
+
+    if (canEditMembership) {
+      document.querySelectorAll('.edit-club-mem-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const clubId = btn.dataset.clubId;
+          openEditMembershipModal(clubId);
+        });
+      });
+
+      document.getElementById('quick-edit-membership-btn')?.addEventListener('click', () => {
+        openEditMembershipModal();
+      });
+    }
   }
   attachMembershipLedgerEvents();
 
