@@ -30,7 +30,7 @@ export function renderClubDashboard() {
   const financeSummary = store.getClubFinanceSummary(clubId);
   const totalPoints = store.getTotalClubPoints(clubId);
   const submissions = store.getAll('pointsSubmissions').filter(s => s.clubId === clubId);
-  const currentMonth = '2026-06';
+  const currentMonth = '2026-07';
   const currentSubmission = submissions.find(s => s.month === currentMonth && s.status !== 'rejected' && s.status !== 'reversed');
 
   const activeMembers = members.filter(m => m.status === 'active').length;

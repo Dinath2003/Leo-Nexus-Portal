@@ -9,8 +9,8 @@ import { renderHeader, initHeader } from '../../components/header.js';
 import { createChart, destroyAllCharts } from '../../components/charts.js';
 import { renderTable } from '../../components/table.js';
 import { showModal } from '../../components/modal.js';
-import { showToast } from '../../components/toast.js';
 import { PROJECT_CATEGORIES_DATA, PROJECT_AWARD_GROUPS } from '../../data/projectCategories.js';
+import { POINTS_CLAIM_MONTHS } from '../club/points.js';
 
 export function renderDistrictReports() {
   destroyAllCharts();
@@ -502,9 +502,9 @@ export function renderDistrictReports() {
                 </label>
                 <select id="proj-cat-month-select" class="form-input" style="height:36px; font-size:13px; font-weight:700; width:190px;">
                   <option value="all" ${selectedMonth === 'all' ? 'selected' : ''}>All Months (Cumulative)</option>
-                  <option value="2026-06" ${selectedMonth === '2026-06' ? 'selected' : ''}>June 2026</option>
-                  <option value="2026-07" ${selectedMonth === '2026-07' ? 'selected' : ''}>July 2026</option>
-                  <option value="2026-08" ${selectedMonth === '2026-08' ? 'selected' : ''}>August 2026</option>
+                  ${POINTS_CLAIM_MONTHS.map(m => `
+                    <option value="${m.value}" ${selectedMonth === m.value ? 'selected' : ''}>${m.label}</option>
+                  `).join('')}
                 </select>
               </div>
             </div>

@@ -13,9 +13,24 @@ import { showToast } from '../../components/toast.js';
 import { PROJECT_CATEGORIES_DATA, PROJECT_AWARD_GROUPS, checkCategoryCompletion } from '../../data/projectCategories.js';
 
 let activeTab = 'overview'; // module level state
-let selectedCatMonth = '2026-06';
+let selectedCatMonth = '2026-07';
 let selectedAwardGroupFilter = 'all';
 let stagedCategoryClaims = {};
+
+export const POINTS_CLAIM_MONTHS = [
+  { value: '2026-07', label: 'July 2026' },
+  { value: '2026-08', label: 'August 2026' },
+  { value: '2026-09', label: 'September 2026' },
+  { value: '2026-10', label: 'October 2026' },
+  { value: '2026-11', label: 'November 2026' },
+  { value: '2026-12', label: 'December 2026' },
+  { value: '2027-01', label: 'January 2027' },
+  { value: '2027-02', label: 'February 2027' },
+  { value: '2027-03', label: 'March 2027' },
+  { value: '2027-04', label: 'April 2027' },
+  { value: '2027-05', label: 'May 2027' },
+  { value: '2027-06', label: 'June 2027' }
+];
 
 const categoryMaxPoints = {
   'AD 1: Reporting': 1460000,
@@ -482,9 +497,9 @@ export function renderClubPoints() {
               <div class="form-group" style="margin:0;">
                 <label class="form-label" style="font-size:12px; margin-bottom:6px;">Select Points Month *</label>
                 <select class="form-input" id="submit-month-select" style="height:38px; font-size:13px; font-weight:600;">
-                  <option value="2026-06" selected>June 2026</option>
-                  <option value="2026-07">July 2026</option>
-                  <option value="2026-08">August 2026</option>
+                  ${POINTS_CLAIM_MONTHS.map((m, idx) => `
+                    <option value="${m.value}" ${idx === 0 ? 'selected' : ''}>${m.label}</option>
+                  `).join('')}
                 </select>
               </div>
 
@@ -696,9 +711,9 @@ export function renderClubPoints() {
               <div class="form-group" style="margin:0;">
                 <label class="form-label" style="font-size:12px; margin-bottom:6px; font-weight:700;">Submission Month *</label>
                 <select class="form-input" id="cat-submit-month-select" style="height:38px; font-size:13px; font-weight:700;">
-                  <option value="2026-06" ${selectedCatMonth === '2026-06' ? 'selected' : ''}>June 2026</option>
-                  <option value="2026-07" ${selectedCatMonth === '2026-07' ? 'selected' : ''}>July 2026</option>
-                  <option value="2026-08" ${selectedCatMonth === '2026-08' ? 'selected' : ''}>August 2026</option>
+                  ${POINTS_CLAIM_MONTHS.map(m => `
+                    <option value="${m.value}" ${selectedCatMonth === m.value ? 'selected' : ''}>${m.label}</option>
+                  `).join('')}
                 </select>
               </div>
 
