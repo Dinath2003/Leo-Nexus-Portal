@@ -139,6 +139,51 @@ export function renderSidebar() {
     }
   });
 
+  let bottomNavItems = [];
+  if (isDistrict) {
+    bottomNavItems = [
+      { icon: 'layout-dashboard', label: 'Home', path: '/district/dashboard' },
+      { icon: 'building-2', label: 'Clubs', path: '/district/clubs' },
+      { icon: 'wallet', label: 'Finance', path: '/district/finance' },
+      { icon: 'bar-chart-3', label: 'Reports', path: '/district/reports' }
+    ];
+  } else if (isMember) {
+    bottomNavItems = [
+      { icon: 'layout-dashboard', label: 'Home', path: '/member/dashboard' },
+      { icon: 'calendar-days', label: 'Events', path: '/member/events' },
+      { icon: 'calendar', label: 'Calendar', path: '/calendar' },
+      { icon: 'megaphone', label: 'Notices', path: '/member/announcements' }
+    ];
+  } else {
+    bottomNavItems = [
+      { icon: 'layout-dashboard', label: 'Home', path: '/club/dashboard' },
+      { icon: 'users', label: 'Members', path: '/club/members' },
+      { icon: 'wallet', label: 'Finance', path: '/club/finance' },
+      { icon: 'trophy', label: 'Points', path: '/club/points' }
+    ];
+  }
+
+  const bottomNavHtml = `
+    <nav class="mobile-bottom-nav" id="mobile-bottom-nav" aria-label="Mobile Navigation">
+      ${bottomNavItems.map(item => {
+        const isActive = currentPath === item.path;
+        return `
+          <a href="#${item.path}" class="mobile-bottom-nav-item ${isActive ? 'active' : ''}">
+            <i data-lucide="${item.icon}"></i>
+            <span>${item.label}</span>
+          </a>
+        `;
+      }).join('')}
+      <button class="mobile-bottom-nav-item" id="mobile-bottom-menu-btn" type="button" aria-label="Open Full Menu">
+        <i data-lucide="menu"></i>
+        <span>Menu</span>
+      </button>
+    </nav>
+    <button class="scroll-to-top-btn" id="scroll-to-top-btn" aria-label="Scroll to top" title="Scroll to top">
+      <i data-lucide="chevron-up" style="width:20px;height:20px;"></i>
+    </button>
+  `;
+
   return `
     <aside class="sidebar" id="sidebar">
       <div class="sidebar-header">
@@ -149,6 +194,9 @@ export function renderSidebar() {
           <span class="brand-name">Leo Nexus</span>
           <span class="brand-role">${isDistrict ? 'District Portal' : (club?.name?.replace('Leo Club of ', '') || 'Club Portal')}</span>
         </div>
+        <button class="btn btn-icon btn-ghost mobile-sidebar-close" id="mobile-sidebar-close-btn" aria-label="Close sidebar">
+          <i data-lucide="x" style="width:18px;height:18px;"></i>
+        </button>
       </div>
       <nav class="sidebar-nav">
         ${menuHtml}
@@ -165,10 +213,39 @@ export function renderSidebar() {
       </div>
     </aside>
     <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+    ${bottomNavHtml}
   `;
 }
 
 export function initSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  const backdrop = document.getElementById('sidebar-backdrop');
+  const closeBtn = document.getElementById('mobile-sidebar-close-btn');
+
+  const closeSidebar = () => {
+    sidebar?.classList.remove('open');
+    backdrop?.classList.remove('show');
+  };
+
+  closeBtn?.addEventListener('click', closeSidebar);
+  backdrop?.addEventListener('click', closeSidebar);
+
+  // Close sidebar on link click on touch / mobile view
+  document.querySelectorAll('.sidebar-link').forEach(link => {
+    link.addEventListener('click', () => {
+      if (window.innerWidth <= 1024) {
+        closeSidebar();
+      }
+    });
+  });
+
+  // Mobile bottom menu button
+  const bottomMenuBtn = document.getElementById('mobile-bottom-menu-btn');
+  bottomMenuBtn?.addEventListener('click', () => {
+    sidebar?.classList.toggle('open');
+    backdrop?.classList.toggle('show');
+  });
+
   const logoutBtn = document.getElementById('sidebar-user-btn');
   if (logoutBtn) {
     logoutBtn.querySelector('[data-lucide="log-out"]')?.addEventListener('click', (e) => {
@@ -182,11 +259,19 @@ export function initSidebar() {
     });
   }
 
-  const backdrop = document.getElementById('sidebar-backdrop');
-  if (backdrop) {
-    backdrop.addEventListener('click', () => {
-      document.getElementById('sidebar')?.classList.remove('open');
-      backdrop.classList.remove('show');
+  // Floating scroll-to-top button
+  const scrollBtn = document.getElementById('scroll-to-top-btn');
+  if (scrollBtn) {
+    const handleScroll = () => {
+      if (window.scrollY > 280) {
+        scrollBtn.classList.add('visible');
+      } else {
+        scrollBtn.classList.remove('visible');
+      }
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    scrollBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
 }

@@ -964,13 +964,69 @@ body.dark-theme .card:hover {
 
 @media (max-width: 1024px) {
   .grid-3 { grid-template-columns: repeat(2, 1fr); }
+  .data-table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    max-width: 100%;
+  }
 }
 
 @media (max-width: 768px) {
   .grid-2,
   .grid-3 { grid-template-columns: 1fr; }
-  .form-row { grid-template-columns: 1fr; }
-  .page-header { flex-direction: column; align-items: flex-start; }
+  .form-row { grid-template-columns: 1fr !important; gap: 12px !important; }
+  .page-header { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .page-header-actions { width: 100%; display: flex; flex-wrap: wrap; gap: 8px; }
+  .page-header-actions > * { flex: 1 1 auto; }
+  
+  .card-header {
+    flex-direction: column;
+    align-items: flex-start !important;
+    gap: 12px !important;
+  }
+  .card-header-actions {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .card-header-actions > * {
+    flex: 1 1 auto;
+  }
+
+  /* Horizontal swipeable tabs with hidden scrollbars */
+  .tabs-header,
+  .tabs {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    flex-wrap: nowrap !important;
+    max-width: 100%;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding-bottom: 6px;
+  }
+  .tabs-header::-webkit-scrollbar,
+  .tabs::-webkit-scrollbar {
+    display: none;
+  }
+  .tabs-header .tab-btn,
+  .tab {
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+
+  /* Prevent iOS zoom on input focus & ensure comfortable tap targets */
+  .form-input,
+  .form-select,
+  .form-textarea {
+    font-size: 16px !important;
+    min-height: 42px;
+  }
+  
+  .btn {
+    min-height: 40px;
+    touch-action: manipulation;
+  }
 }
 
 /* ---------- Legacy Inline Style Adaptations to LeBank Theme ---------- */
