@@ -139,9 +139,9 @@ export function renderDistrictReports() {
         </div>
 
         <!-- High-Clarity Financial Table -->
-        <div class="data-table-wrapper" style="max-height:280px; overflow-y:auto; border:1px solid var(--color-glass-border); border-radius:8px;">
+        <div class="data-table-wrapper" style="border:1px solid var(--color-glass-border); border-radius:8px;">
           <table class="data-table" style="font-size:12px; margin:0;">
-            <thead style="position:sticky; top:0; background:var(--color-bg-primary); z-index:1;">
+            <thead>
               <tr>
                 <th>Club & Code</th>
                 <th style="text-align:right;">Income</th>
@@ -258,9 +258,9 @@ export function renderDistrictReports() {
         </div>
       </div>
 
-      <div class="data-table-wrapper" style="max-height:420px; overflow-y:auto; border:1px solid var(--color-glass-border); border-radius:8px;">
+      <div class="data-table-wrapper" style="border:1px solid var(--color-glass-border); border-radius:8px;">
         <table class="data-table" style="font-size:12px; margin:0;">
-          <thead style="position:sticky; top:0; background:var(--color-bg-primary); z-index:2;">
+          <thead>
             <tr>
               <th style="width:32px;">#</th>
               <th>Club Name</th>
@@ -329,7 +329,7 @@ export function renderDistrictReports() {
               `;
             }).join('')}
           </tbody>
-          <tfoot style="position:sticky; bottom:0; background:rgba(15, 23, 42, 0.96); backdrop-filter:blur(8px); z-index:2; border-top:2px solid var(--color-glass-border);">
+          <tfoot style="background:rgba(15, 23, 42, 0.96); border-top:2px solid var(--color-glass-border);">
             <tr style="font-weight:800;">
               <td colspan="3" style="color:var(--color-text-primary);">TOTAL (${filteredClubs.length} Clubs)</td>
               <td style="text-align:center; color:var(--color-text-secondary);">${julSum}</td>
@@ -739,9 +739,9 @@ export function renderDistrictReports() {
             <span style="font-size:11px; color:var(--color-text-muted);">Showing ${displayedCategories.length} categories</span>
           </div>
 
-          <div class="data-table-wrapper" style="max-height:280px; overflow-y:auto; border:1px solid var(--color-glass-border); border-radius:6px;">
+          <div class="data-table-wrapper" style="border:1px solid var(--color-glass-border); border-radius:6px;">
             <table class="data-table" style="font-size:12px; margin:0;">
-              <thead style="position:sticky; top:0; background:var(--color-bg-primary); z-index:1;">
+              <thead>
                 <tr>
                   <th style="width:40px;">#</th>
                   <th>Project Category</th>

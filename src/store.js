@@ -1057,97 +1057,26 @@ function getDefaultData() {
     ],
 
     clubPoints: [
-      {
-        clubId: 'c6',
-        points: {
-          ad1_1: 10000, ad1_2: 100000, ad1_3: 10000, ad1_6: 1000000,
-          ad2_3: 500000, ad2_4: 1000000,
-          ad3_1_1: 100000, ad3_5_1: 500000,
-          ac1_3: 50000, ac2_1: 200000, ac3_1: 1000000,
-          int1_1: 15000, int3_1: 10000,
-          sp1_1: 100000, sp2_1: 100000,
-          cul1_1: 50000, tech1_1: 60000,
-          sp4_1: -100000
-        }
-      },
-      {
-        clubId: 'c7',
-        points: {
-          ad1_1: 10000, ad1_2: 100000, ad1_6: 1000000,
-          ad2_3: 500000,
-          ad3_1_2: 50000, ad3_5_2: 500000,
-          ac1_2: 10000, ac2_2: 50000, ac3_2: 100000,
-          int1_1: 10000, int3_2: 8000,
-          sp1_2: 150000,
-          sp4_2: -100000
-        }
-      },
-      {
-        clubId: 'c8',
-        points: {
-          ad1_1: 10000, ad1_3: 10000,
-          ad2_1: 10000, ad2_5: 200000,
-          ad3_2_1: 20000, ad3_6_3: 200000,
-          ac1_3: 50000, ac2_3: 100000, ac3_3: 500000,
-          int2_1: 5000, int4_1: 5000,
-          sp2_2: 150000,
-          sp4_3: -100000
-        }
-      },
-      {
-        clubId: 'c9',
-        points: {
-          ad1_1: 10000, ad1_2: 100000,
-          ad2_3: 500000,
-          ad3_3_1: 50000, ad3_4_1: 10000,
-          ac1_4: 100000, ac2_4: 100000,
-          int1_2: 5000, int5_1: 20000,
-          sp1_3: 100000,
-          sp4_4: -20000
-        }
-      },
-      {
-        clubId: 'c10',
-        points: {
-          ad1_3: 10000,
-          ad2_2: 10000,
-          ad3_1_3: 50000,
-          ac2_2: 50000,
-          int2_2: 2000,
-          sp2_3: 100000,
-          sp4_5: -100000
-        }
-      },
-      {
-        clubId: 'c11',
-        points: {
-          ad1_1: 10000, ad1_3: 10000, ad2_1: 10000
-        }
-      },
-      {
-        clubId: 'c12',
-        points: {
-          ad1_1: 10000, ad1_3: 10000, ad2_1: 10000
-        }
-      },
-      {
-        clubId: 'c13',
-        points: {
-          ad1_1: 10000, ad1_3: 10000, ad2_1: 10000
-        }
-      },
-      { clubId: 'c14', points: { ad1_1: 10000, ad1_3: 10000, ad2_1: 10000 } },
-      { clubId: 'c15', points: { ad1_1: 10000, ad1_3: 10000, ad2_1: 10000 } },
-      { clubId: 'c16', points: { ad1_1: 10000, ad1_3: 10000, ad2_1: 10000 } },
-      { clubId: 'c17', points: { ad1_1: 10000, ad1_3: 10000, ad2_1: 10000 } },
-      { clubId: 'c18', points: { ad1_1: 10000, ad1_3: 10000, ad2_1: 10000 } },
-      { clubId: 'c19', points: { ad1_1: 10000, ad1_3: 10000, ad2_1: 10000 } },
-      { clubId: 'c20', points: { ad1_1: 10000, ad1_3: 10000, ad2_1: 10000 } },
-      { clubId: 'c21', points: { ad1_1: 10000, ad1_3: 10000, ad2_1: 10000 } },
-      { clubId: 'c22', points: { ad1_1: 10000, ad1_3: 10000, ad2_1: 10000 } },
-      { clubId: 'c23', points: { ad1_1: 10000, ad1_3: 10000, ad2_1: 10000 } },
-      { clubId: 'c24', points: { ad1_1: 10000, ad1_3: 10000, ad2_1: 10000 } },
-      { clubId: 'c25', points: { ad1_1: 10000, ad1_3: 10000, ad2_1: 10000 } }
+      { clubId: 'c6', points: {} },
+      { clubId: 'c7', points: {} },
+      { clubId: 'c8', points: {} },
+      { clubId: 'c9', points: {} },
+      { clubId: 'c10', points: {} },
+      { clubId: 'c11', points: {} },
+      { clubId: 'c12', points: {} },
+      { clubId: 'c13', points: {} },
+      { clubId: 'c14', points: {} },
+      { clubId: 'c15', points: {} },
+      { clubId: 'c16', points: {} },
+      { clubId: 'c17', points: {} },
+      { clubId: 'c18', points: {} },
+      { clubId: 'c19', points: {} },
+      { clubId: 'c20', points: {} },
+      { clubId: 'c21', points: {} },
+      { clubId: 'c22', points: {} },
+      { clubId: 'c23', points: {} },
+      { clubId: 'c24', points: {} },
+      { clubId: 'c25', points: {} }
     ],
     memberPayments: [
       { id: 'mp1', eventId: 'e1', clubId: 'c6', memberId: 'm111', name: 'Leo Lion Sithuli Amunuthuduwa', amount: 1000, status: 'paid', date: '2026-06-05', method: 'Bank Transfer', reference: 'REF-M-101', registrationStatus: 'approved', paymentStatus: 'paid' },
@@ -2247,60 +2176,7 @@ function getDefaultData() {
         }
       ]
     },
-    pointsSubmissions: [
-      {
-        id: "ps_1",
-        clubId: "c7",
-        clubName: "Leo Club of University of Colombo Faculty of Science",
-        month: "2026-05",
-        status: "approved",
-        submittedAt: "2026-05-08T14:30:00Z",
-        submittedBy: "Leo Lion G.D Thevindu Nirmitha",
-        checkedCriteria: ["ad1_1", "ad1_3", "ad2_1", "sp1_1"],
-        pointsClaimed: { ad1_1: 10000, ad1_3: 10000, ad2_1: 10000, sp1_1: 100000 },
-        totalPoints: 130000,
-        proofAttachments: {
-          ad1_1: [{ name: "May_2026_MAR_Report.pdf", type: "application/pdf", size: "1.4 MB", url: "#" }],
-          sp1_1: [{ name: "Event_Attendance_List.jpg", type: "image/jpeg", size: "850 KB", url: "#" }]
-        },
-        reviewedBy: "District President",
-        reviewedAt: "2026-05-10T09:15:00Z",
-        comment: "All monthly reports submitted on time. Approved!"
-      },
-      {
-        id: "ps_2",
-        clubId: "c9",
-        clubName: "Leo Club of Colombo (Host)",
-        month: "2026-05",
-        status: "approved",
-        submittedAt: "2026-05-09T18:45:00Z",
-        submittedBy: "Leo Lion Anju Gayathri",
-        checkedCriteria: ["ad1_1", "ad2_1", "sp1_2"],
-        pointsClaimed: { ad1_1: 10000, ad2_1: 10000, sp1_2: 150000 },
-        totalPoints: 170000,
-        proofAttachments: {
-          ad2_1: [{ name: "MTR_Receipt_May.pdf", type: "application/pdf", size: "920 KB", url: "#" }]
-        },
-        reviewedBy: "District President",
-        reviewedAt: "2026-05-10T09:20:00Z",
-        comment: "MAR and MTR approved."
-      },
-      {
-        id: "ps_3",
-        clubId: "c10",
-        clubName: "Leo Club of Colombo Millennium",
-        month: "2026-05",
-        status: "pending",
-        submittedAt: "2026-06-05T10:15:00Z",
-        submittedBy: "Leo Lion Vinuthi Thisansa",
-        checkedCriteria: ["ad1_1", "ad1_3"],
-        pointsClaimed: { ad1_1: 10000, ad1_3: 10000 },
-        totalPoints: 20000,
-        proofAttachments: {
-          ad1_1: [{ name: "Millennium_Activity_Proof.pdf", type: "application/pdf", size: "2.1 MB", url: "#" }]
-        },
-      }
-    ],
+    pointsSubmissions: [],
     projectCategorySubmissions: [
       {
         id: "pcs_1",
@@ -2851,12 +2727,7 @@ class Store {
         if (this._data.clubPoints && !this._data.clubPoints.some(cp => cp.clubId === 'c6')) {
           this._data.clubPoints.push({
             clubId: 'c6',
-            points: {
-              ad1_1: 10000,
-              ad1_3: 10000,
-              ad2_1: 10000,
-              sp1_1: 100000
-            }
+            points: {}
           });
           this.save();
         }
@@ -2865,11 +2736,7 @@ class Store {
         if (this._data.clubPoints && !this._data.clubPoints.some(cp => cp.clubId === 'c7')) {
           this._data.clubPoints.push({
             clubId: 'c7',
-            points: {
-              ad1_1: 10000,
-              ad1_3: 10000,
-              ad2_1: 10000
-            }
+            points: {}
           });
           this.save();
         }
@@ -2878,11 +2745,7 @@ class Store {
         if (this._data.clubPoints && !this._data.clubPoints.some(cp => cp.clubId === 'c8')) {
           this._data.clubPoints.push({
             clubId: 'c8',
-            points: {
-              ad1_1: 10000,
-              ad1_3: 10000,
-              ad2_1: 10000
-            }
+            points: {}
           });
           this.save();
         }
@@ -3097,11 +2960,11 @@ class Store {
 
         // Add points data for c9 to c13 if missing from local storage
         const newClubPoints = [
-          { clubId: 'c9', points: { ad1_1: 10000, ad1_3: 10000, ad2_1: 10000 } },
-          { clubId: 'c10', points: { ad1_1: 10000, ad1_3: 10000, ad2_1: 10000 } },
-          { clubId: 'c11', points: { ad1_1: 10000, ad1_3: 10000, ad2_1: 10000 } },
-          { clubId: 'c12', points: { ad1_1: 10000, ad1_3: 10000, ad2_1: 10000 } },
-          { clubId: 'c13', points: { ad1_1: 10000, ad1_3: 10000, ad2_1: 10000 } }
+          { clubId: 'c9', points: {} },
+          { clubId: 'c10', points: {} },
+          { clubId: 'c11', points: {} },
+          { clubId: 'c12', points: {} },
+          { clubId: 'c13', points: {} }
         ];
         if (this._data.clubPoints) {
           newClubPoints.forEach(cp => {
@@ -3461,18 +3324,18 @@ class Store {
 
         // Add points data for c14 to c25 if missing from local storage
         const newClubPointsC14toC25 = [
-          { clubId: 'c14', points: { ad1_1: 10000, ad1_3: 10000, ad2_1: 10000 } },
-          { clubId: 'c15', points: { ad1_1: 10000, ad1_3: 10000, ad2_1: 10000 } },
-          { clubId: 'c16', points: { ad1_1: 10000, ad1_3: 10000, ad2_1: 10000 } },
-          { clubId: 'c17', points: { ad1_1: 10000, ad1_3: 10000, ad2_1: 10000 } },
-          { clubId: 'c18', points: { ad1_1: 10000, ad1_3: 10000, ad2_1: 10000 } },
-          { clubId: 'c19', points: { ad1_1: 10000, ad1_3: 10000, ad2_1: 10000 } },
-          { clubId: 'c20', points: { ad1_1: 10000, ad1_3: 10000, ad2_1: 10000 } },
-          { clubId: 'c21', points: { ad1_1: 10000, ad1_3: 10000, ad2_1: 10000 } },
-          { clubId: 'c22', points: { ad1_1: 10000, ad1_3: 10000, ad2_1: 10000 } },
-          { clubId: 'c23', points: { ad1_1: 10000, ad1_3: 10000, ad2_1: 10000 } },
-          { clubId: 'c24', points: { ad1_1: 10000, ad1_3: 10000, ad2_1: 10000 } },
-          { clubId: 'c25', points: { ad1_1: 10000, ad1_3: 10000, ad2_1: 10000 } }
+          { clubId: 'c14', points: {} },
+          { clubId: 'c15', points: {} },
+          { clubId: 'c16', points: {} },
+          { clubId: 'c17', points: {} },
+          { clubId: 'c18', points: {} },
+          { clubId: 'c19', points: {} },
+          { clubId: 'c20', points: {} },
+          { clubId: 'c21', points: {} },
+          { clubId: 'c22', points: {} },
+          { clubId: 'c23', points: {} },
+          { clubId: 'c24', points: {} },
+          { clubId: 'c25', points: {} }
         ];
         if (this._data.clubPoints) {
           newClubPointsC14toC25.forEach(cp => {
@@ -3813,6 +3676,19 @@ class Store {
           this._data.membership_dues_version = '2026_dues_standard_v1';
           this.save();
         }
+
+        // Reset all club points and submissions across the portal
+        if (this._data.points_reset_version !== '2026_points_reset_v1') {
+          const allClubs = this._data.clubs || [];
+          this._data.clubPoints = allClubs.map(c => ({
+            id: this.generateId(),
+            clubId: c.id,
+            points: {}
+          }));
+          this._data.pointsSubmissions = [];
+          this._data.points_reset_version = '2026_points_reset_v1';
+          this.save();
+        }
       } else {
         this._data = getDefaultData();
         this.save();
@@ -4029,6 +3905,21 @@ class Store {
     const cp = this.getClubPoints(clubId);
     if (!cp) return 0;
     return Object.values(cp.points).reduce((sum, v) => sum + v, 0);
+  }
+
+  resetAllClubPoints() {
+    const allClubs = this._data.clubs || [];
+    this._data.clubPoints = allClubs.map(c => ({
+      id: this.generateId(),
+      clubId: c.id,
+      points: {}
+    }));
+    this._data.pointsSubmissions = [];
+    this._data.points_reset_version = '2026_points_reset_v1';
+    this.save();
+    this.emit('clubPoints:changed');
+    this.emit('pointsSubmissions:changed');
+    return true;
   }
 
   getClubFinanceSummary(clubId) {

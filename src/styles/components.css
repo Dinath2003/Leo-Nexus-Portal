@@ -513,6 +513,7 @@ body.dark-theme .card:hover {
 
 .data-table thead {
   background: var(--color-surface-muted);
+  position: static;
 }
 
 .data-table th {
@@ -526,6 +527,7 @@ body.dark-theme .card:hover {
   border-bottom: 1px solid var(--color-border);
   white-space: nowrap;
   user-select: none;
+  position: static;
 }
 
 .data-table td {

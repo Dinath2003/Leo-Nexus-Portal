@@ -330,9 +330,16 @@ export function renderDistrictPoints() {
             </h3>
             <div style="font-size:12px; color:var(--color-text-muted); margin-top:2px;">Complete district merit standings based on verified criteria</div>
           </div>
-          <span class="badge badge-primary" style="font-size:11px; padding:4px 10px;">
-            ${leaderboard.length} Ranked Clubs
-          </span>
+          <div style="display:flex; align-items:center; gap:8px;">
+            ${(auth.isDistrictPresident || auth.isDistrictVicePresident || auth.isAdmin) ? `
+              <button id="reset-all-points-btn" class="btn btn-danger btn-sm" style="font-size:11px; padding:4px 10px; display:inline-flex; align-items:center; gap:4px;">
+                <i data-lucide="rotate-ccw" style="width:13px;height:13px;"></i> Reset All Points
+              </button>
+            ` : ''}
+            <span class="badge badge-primary" style="font-size:11px; padding:4px 10px;">
+              ${leaderboard.length} Ranked Clubs
+            </span>
+          </div>
         </div>
         <div class="card-body" style="padding:0;">
           <div class="data-table-wrapper" style="border:none; border-radius:0;">
@@ -626,6 +633,38 @@ export function renderDistrictPoints() {
           renderDistrictPoints();
         }
       });
+    });
+
+    // Reset All Points
+    document.getElementById('reset-all-points-btn')?.addEventListener('click', () => {
+      showModal(
+        'Reset All Club Points',
+        `
+        <div style="text-align:center; padding:12px 0;">
+          <div style="width:52px; height:52px; border-radius:50%; background:rgba(239, 68, 68, 0.15); color:var(--color-danger); display:flex; align-items:center; justify-content:center; margin:0 auto 16px;">
+            <i data-lucide="alert-triangle" style="width:28px;height:28px;"></i>
+          </div>
+          <h4 style="margin:0 0 8px; font-weight:800; font-size:16px;">Reset All Club Points to 0?</h4>
+          <p style="color:var(--color-text-secondary); font-size:13px; line-height:1.5; margin:0 0 16px;">
+            This will reset the merit points of all 20 clubs to 0 and clear any existing points submissions.
+          </p>
+          <div style="background:rgba(255,255,255,0.03); border:1px solid var(--color-glass-border); border-radius:8px; padding:10px; font-size:12px; color:var(--color-text-muted);">
+            Authorized for: District President, District Vice President, Super Admin
+          </div>
+        </div>
+        `,
+        {
+          submitText: 'Yes, Reset All Points',
+          submitClass: 'btn-danger',
+          onSubmit: (close) => {
+            store.resetAllClubPoints();
+            showToast('success', 'Points Reset', 'All club points have been reset to 0.');
+            close();
+            renderDistrictPoints();
+          }
+        }
+      );
+      lucide.createIcons();
     });
 
     // Edit Criteria
