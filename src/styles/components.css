@@ -279,6 +279,9 @@ body.dark-theme .btn-ghost:hover {
   transition: all var(--duration-normal) var(--ease-smooth);
   position: relative;
   overflow: hidden;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .card:hover {
@@ -310,6 +313,9 @@ body.dark-theme .card:hover {
 
 .card-body {
   flex: 1;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 /* ---------- Signature Dark Contrast Container (Black & Silver Glowing) ---------- */
@@ -421,9 +427,14 @@ body.dark-theme .card:hover {
 /* ---------- Stats Grid ---------- */
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-  gap: var(--space-5);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+  gap: var(--space-4);
   margin-bottom: var(--space-6);
+}
+
+.stats-grid > * {
+  min-width: 0;
+  max-width: 100%;
 }
 
 /* ---------- Section Badges & Micro-Pills (LeBank Pattern) ---------- */
@@ -749,6 +760,9 @@ body.dark-theme .card:hover {
 .chart-container {
   position: relative;
   width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
   height: 300px;
 }
 
@@ -955,19 +969,28 @@ body.dark-theme .card:hover {
 /* ---------- Grid Layouts ---------- */
 .grid-2 {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--space-5);
 }
 
 .grid-3 {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--space-5);
+}
+
+.grid-2 > *, .grid-3 > * {
+  min-width: 0;
+  max-width: 100%;
+}
+
+@media (max-width: 1200px) {
+  .grid-2 { grid-template-columns: 1fr !important; }
 }
 
 @media (max-width: 1024px) {
   .grid-2 { grid-template-columns: 1fr !important; }
-  .grid-3 { grid-template-columns: repeat(2, 1fr); }
+  .grid-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .data-table-wrapper {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;

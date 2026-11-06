@@ -98,7 +98,7 @@ export function renderDistrictReports() {
     return `
       <div style="display:flex; flex-direction:column; gap:16px;">
         <!-- Financial Summary Banner -->
-        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap:10px;">
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap:10px;">
           <div style="padding:10px 12px; border-radius:8px; background:rgba(20,184,166,0.08); border:1px solid rgba(20,184,166,0.2);">
             <div style="font-size:10px; color:var(--color-text-muted); text-transform:uppercase; font-weight:700;">Total Inflow</div>
             <div style="font-size:14px; font-weight:800; color:#14b8a6; margin-top:2px;">Rs. ${totalIncome.toLocaleString()}</div>
@@ -140,7 +140,7 @@ export function renderDistrictReports() {
 
         <!-- High-Clarity Financial Table -->
         <div class="data-table-wrapper" style="border:1px solid var(--color-glass-border); border-radius:8px; width:100%; overflow-x:auto;">
-          <table class="data-table" style="font-size:12px; margin:0; min-width:540px;">
+          <table class="data-table" style="font-size:12px; margin:0; min-width:460px;">
             <thead>
               <tr>
                 <th>Club & Code</th>
