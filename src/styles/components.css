@@ -499,6 +499,9 @@ body.dark-theme .card:hover {
 /* ---------- Data Tables ---------- */
 .data-table-wrapper {
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
+  max-width: 100%;
   border-radius: var(--radius-lg);
   border: 1px solid var(--color-border);
   background: var(--color-surface);
@@ -963,11 +966,69 @@ body.dark-theme .card:hover {
 }
 
 @media (max-width: 1024px) {
+  .grid-2 { grid-template-columns: 1fr !important; }
   .grid-3 { grid-template-columns: repeat(2, 1fr); }
   .data-table-wrapper {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     max-width: 100%;
+    width: 100%;
+  }
+}
+
+.reports-chart-matrix-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 20px;
+  align-items: start;
+}
+
+@media (max-width: 1024px) {
+  .reports-chart-matrix-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px;
+  }
+}
+
+.reports-dues-summary-card {
+  background: linear-gradient(135deg, rgba(0, 102, 255, 0.08) 0%, rgba(20, 184, 166, 0.08) 100%);
+  border: 1px solid rgba(0, 102, 255, 0.25);
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.reports-dues-breakdown-items {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+  .reports-dues-summary-card {
+    flex-direction: column;
+    align-items: flex-start !important;
+  }
+  .reports-dues-breakdown-items {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .reports-dues-breakdown-items .dues-divider {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .reports-dues-breakdown-items {
+    grid-template-columns: 1fr !important;
   }
 }
 

@@ -139,8 +139,8 @@ export function renderDistrictReports() {
         </div>
 
         <!-- High-Clarity Financial Table -->
-        <div class="data-table-wrapper" style="border:1px solid var(--color-glass-border); border-radius:8px;">
-          <table class="data-table" style="font-size:12px; margin:0;">
+        <div class="data-table-wrapper" style="border:1px solid var(--color-glass-border); border-radius:8px; width:100%; overflow-x:auto;">
+          <table class="data-table" style="font-size:12px; margin:0; min-width:540px;">
             <thead>
               <tr>
                 <th>Club & Code</th>
@@ -212,9 +212,9 @@ export function renderDistrictReports() {
 
     return `
       <!-- District Membership Income Standard Summary Card -->
-      <div style="background: linear-gradient(135deg, rgba(0, 102, 255, 0.08) 0%, rgba(20, 184, 166, 0.08) 100%); border: 1px solid rgba(0, 102, 255, 0.25); border-radius: 10px; padding: 14px 18px; margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px;">
+      <div class="reports-dues-summary-card">
         <div style="display: flex; align-items: center; gap: 12px;">
-          <div style="width: 38px; height: 38px; border-radius: 10px; background: rgba(0, 102, 255, 0.15); color: var(--color-primary); display: flex; align-items: center; justify-content: center;">
+          <div style="width: 38px; height: 38px; border-radius: 10px; background: rgba(0, 102, 255, 0.15); color: var(--color-primary); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
             <i data-lucide="calculator" style="width: 20px; height: 20px;"></i>
           </div>
           <div>
@@ -226,19 +226,19 @@ export function renderDistrictReports() {
             </div>
           </div>
         </div>
-        <div style="display: flex; align-items: center; gap: 18px; flex-wrap: wrap;">
+        <div class="reports-dues-breakdown-items">
           <div style="text-align: right;">
             <div style="font-size: 11px; color: var(--color-text-muted);">Alpha Clubs (${breakdown.alphaClubsCount} clubs · ${breakdown.alphaCount} mem.)</div>
             <div style="font-size: 14px; font-weight: 700; color: #f59e0b;">Rs. ${breakdown.alphaIncome.toLocaleString()}</div>
           </div>
-          <div style="width: 1px; height: 26px; background: var(--color-glass-border);"></div>
+          <span class="dues-divider" style="width: 1px; height: 26px; background: var(--color-glass-border);"></span>
           <div style="text-align: right;">
             <div style="font-size: 11px; color: var(--color-text-muted);">Omega Clubs (${breakdown.omegaClubsCount} clubs · ${breakdown.omegaCount} mem.)</div>
             <div style="font-size: 14px; font-weight: 700; color: #00d4ff;">Rs. ${breakdown.omegaIncome.toLocaleString()}</div>
           </div>
-          <div style="width: 1px; height: 26px; background: var(--color-glass-border);"></div>
+          <span class="dues-divider" style="width: 1px; height: 26px; background: var(--color-glass-border);"></span>
           <div style="text-align: right;">
-            <div style="font-size: 11px; color: var(--color-text-muted);">Total District Membership Income</div>
+            <div style="font-size: 11px; color: var(--color-text-muted);">Total District Income</div>
             <div style="font-size: 16px; font-weight: 800; color: #14b8a6;">Rs. ${breakdown.totalIncome.toLocaleString()}</div>
           </div>
         </div>
@@ -250,16 +250,16 @@ export function renderDistrictReports() {
           <button type="button" class="btn btn-xs mem-track-btn ${membershipTrackFilter === 'Omega Leo' ? 'btn-primary' : 'btn-secondary'}" data-track="Omega Leo">Omega Leo (14)</button>
           <button type="button" class="btn btn-xs mem-track-btn ${membershipTrackFilter === 'Alpha Leo' ? 'btn-primary' : 'btn-secondary'}" data-track="Alpha Leo">Alpha Leo (6)</button>
         </div>
-        <div style="display:flex; gap:8px; align-items:center;">
-          <div class="search-bar" style="height:32px;">
-            <i data-lucide="search" class="search-icon" style="width:13px;height:13px;"></i>
-            <input type="text" id="membership-search-input" placeholder="Search club..." value="${membershipSearchTerm}" style="font-size:12px; height:32px; padding-left:30px;" />
+        <div style="display:flex; gap:8px; align-items:center; flex:1; max-width:260px; min-width:180px;">
+          <div style="position:relative; width:100%;">
+            <i data-lucide="search" style="position:absolute; left:10px; top:50%; transform:translateY(-50%); width:13px; height:13px; color:var(--color-text-muted);"></i>
+            <input type="text" id="membership-search-input" placeholder="Search club..." value="${membershipSearchTerm}" style="width:100%; font-size:12px; height:32px; padding-left:30px; border-radius:6px; background:var(--color-bg-secondary); border:1px solid var(--color-glass-border); color:var(--color-text-primary);" />
           </div>
         </div>
       </div>
 
-      <div class="data-table-wrapper" style="border:1px solid var(--color-glass-border); border-radius:8px;">
-        <table class="data-table" style="font-size:12px; margin:0;">
+      <div class="data-table-wrapper" style="border:1px solid var(--color-glass-border); border-radius:8px; width:100%; overflow-x:auto;">
+        <table class="data-table" style="font-size:12px; margin:0; min-width:860px;">
           <thead>
             <tr>
               <th style="width:32px;">#</th>
@@ -525,7 +525,7 @@ export function renderDistrictReports() {
                 </h3>
               </div>
               <div class="card-body">
-                <div style="display:flex; align-items:center; gap:2rem;">
+                <div style="display:flex; align-items:center; gap:2rem; flex-wrap:wrap; justify-content:center;">
                   <div class="chart-container" style="height:220px; width:220px; flex-shrink:0;">
                     <canvas id="project-status-chart"></canvas>
                   </div>
@@ -646,7 +646,7 @@ export function renderDistrictReports() {
 
     container.innerHTML = `
       <!-- 3 Award Groups KPI Cards -->
-      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:16px; margin-bottom:20px;">
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:16px; margin-bottom:20px;">
         <!-- Group 1: Project Awards -->
         <div class="card hover-lift" style="padding:16px; border:1px solid rgba(0, 102, 255, 0.25); background:rgba(0, 102, 255, 0.03);">
           <div style="display:flex; justify-content:space-between; align-items:flex-start;">
@@ -712,7 +712,7 @@ export function renderDistrictReports() {
       </div>
 
       <!-- Completion Chart & Matrix Grid -->
-      <div style="display:grid; grid-template-columns: 1fr 2fr; gap:20px; align-items:start;">
+      <div class="reports-chart-matrix-grid">
         <!-- Chart Canvas Card -->
         <div class="card" style="padding:16px; border:1px solid var(--color-glass-border);">
           <h4 style="margin:0 0 12px; font-size:0.95rem; font-weight:700; display:flex; align-items:center; gap:6px;">
@@ -739,8 +739,8 @@ export function renderDistrictReports() {
             <span style="font-size:11px; color:var(--color-text-muted);">Showing ${displayedCategories.length} categories</span>
           </div>
 
-          <div class="data-table-wrapper" style="border:1px solid var(--color-glass-border); border-radius:6px;">
-            <table class="data-table" style="font-size:12px; margin:0;">
+          <div class="data-table-wrapper" style="border:1px solid var(--color-glass-border); border-radius:6px; width:100%; overflow-x:auto;">
+            <table class="data-table" style="font-size:12px; margin:0; min-width:480px;">
               <thead>
                 <tr>
                   <th style="width:40px;">#</th>
