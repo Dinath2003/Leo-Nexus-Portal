@@ -766,7 +766,7 @@ export function renderClubPoints() {
     // ------------------------------------
     // TAB: SUBMISSION HISTORY
     // ------------------------------------
-    const submissions = store.getAll('pointsSubmissions').filter(s => s.clubId === clubId);
+    const submissions = store.getAll('pointsSubmissions').filter(s => s.clubId === clubId && s.month !== '2026-06');
     
     // Sort submissions reverse-chronologically
     submissions.sort((a, b) => b.submittedAt.localeCompare(a.submittedAt));

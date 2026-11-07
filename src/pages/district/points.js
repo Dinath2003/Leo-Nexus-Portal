@@ -166,7 +166,7 @@ export function renderDistrictPoints() {
   });
 
   // Calculate pending submissions count
-  const allSubmissions = store.getAll('pointsSubmissions');
+  const allSubmissions = store.getAll('pointsSubmissions').filter(s => s.month !== '2026-06');
   const pendingCount = allSubmissions.filter(s => s.status === 'pending').length;
 
   // Build Tab Header HTML

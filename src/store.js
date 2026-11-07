@@ -2182,70 +2182,88 @@ function getDefaultData() {
         id: "pcs_1",
         clubId: "c6",
         clubName: "Leo Club of Informatics Institute of Technology",
-        month: "2026-06",
+        month: "2026-07",
         status: "approved",
-        submittedAt: "2026-06-25T12:00:00Z",
+        submittedAt: "2026-07-28T15:45:00Z",
         submittedBy: "Leo Lion Manish Perera",
         subClaims: {
-          cat_1_sub_1: { ticked: true, proofs: [{ name: "MyLion_Activity_Report_Jun26.pdf", type: "application/pdf", size: "1.2 MB", url: "#" }] },
+          cat_1_sub_1: { ticked: true, proofs: [{ name: "MyLion_Activity_Report_Jul26.pdf", type: "application/pdf", size: "1.2 MB", url: "#" }] },
           cat_1_sub_2: { ticked: true, proofs: [{ name: "Children_Attendance_Register.jpg", type: "image/jpeg", size: "840 KB", url: "#" }] },
           cat_1_sub_3: { ticked: true, proofs: [{ name: "Storytelling_Reading_Corner_Photos.pdf", type: "application/pdf", size: "2.4 MB", url: "#" }] },
-          cat_8_sub_1: { ticked: true, proofs: [{ name: "MyLion_PR_June.pdf", type: "application/pdf", size: "750 KB", url: "#" }] },
+          cat_3_sub_1: { ticked: true, proofs: [{ name: "MyLion_Nutrition_Camp.pdf", type: "application/pdf", size: "1.2 MB", url: "#" }] },
+          cat_3_sub_2: { ticked: true, proofs: [{ name: "Food_Safety_Awareness.pdf", type: "application/pdf", size: "1.4 MB", url: "#" }] },
+          cat_5_sub_1: { ticked: true, proofs: [{ name: "MyLion_Sports_Cricket.pdf", type: "application/pdf", size: "980 KB", url: "#" }] },
+          cat_5_sub_2: { ticked: true, proofs: [{ name: "Sports_Kit_Distribution.jpg", type: "image/jpeg", size: "1.6 MB", url: "#" }] },
+          cat_8_sub_1: { ticked: true, proofs: [{ name: "MyLion_PR_July.pdf", type: "application/pdf", size: "750 KB", url: "#" }] },
           cat_8_sub_2: { ticked: true, proofs: [{ name: "Branding_Media_Reach.pdf", type: "application/pdf", size: "1.1 MB", url: "#" }] },
           cat_9_sub_1: { ticked: true, proofs: [{ name: "MyLion_Fundraiser_Log.pdf", type: "application/pdf", size: "900 KB", url: "#" }] },
           cat_9_sub_2: { ticked: true, proofs: [{ name: "Audited_Accounts_Ledger.pdf", type: "application/pdf", size: "1.8 MB", url: "#" }] },
           cat_25_sub_1: { ticked: true, proofs: [{ name: "Serving_Together_Banner_Patch.jpg", type: "image/jpeg", size: "1.5 MB", url: "#" }] },
           cat_25_sub_2: { ticked: true, proofs: [{ name: "Lions_Club_Confirmation_Letter.pdf", type: "application/pdf", size: "800 KB", url: "#" }] },
+          cat_28_sub_1: { ticked: true, proofs: [{ name: "MyLion_IntraDistrict_Joint.pdf", type: "application/pdf", size: "1.1 MB", url: "#" }] },
+          cat_28_sub_2: { ticked: true, proofs: [{ name: "IntraDistrict_Hosting_Letter.pdf", type: "application/pdf", size: "850 KB", url: "#" }] },
           cat_31_sub_1: { ticked: true, proofs: [{ name: "MyLion_Diabetes_Camp.pdf", type: "application/pdf", size: "1.1 MB", url: "#" }] },
           cat_31_sub_2: { ticked: true, proofs: [{ name: "Diabetes_Screening_Photos.jpg", type: "image/jpeg", size: "1.9 MB", url: "#" }] },
           cat_32_sub_1: { ticked: true, proofs: [{ name: "MyLion_Environment_Reforest.pdf", type: "application/pdf", size: "1.4 MB", url: "#" }] },
-          cat_32_sub_2: { ticked: true, proofs: [{ name: "Tree_Planting_GPS_Log.pdf", type: "application/pdf", size: "2.1 MB", url: "#" }] }
+          cat_32_sub_2: { ticked: true, proofs: [{ name: "Tree_Planting_GPS_Log.pdf", type: "application/pdf", size: "2.1 MB", url: "#" }] },
+          cat_36_sub_1: { ticked: true, proofs: [{ name: "MyLion_Youth_Tech_Summit.pdf", type: "application/pdf", size: "2.1 MB", url: "#" }] },
+          cat_36_sub_2: { ticked: true, proofs: [{ name: "Coding_Bootcamp_Attendance.pdf", type: "application/pdf", size: "1.5 MB", url: "#" }] }
         },
         completedCategories: [
           { categoryId: "cat_1", categoryNumber: 1, categoryName: "Best Project for Spotlight on Children", groupId: "project_awards" },
+          { categoryId: "cat_3", categoryNumber: 3, categoryName: "Best Project for Health, Nutrition & Food Safety", groupId: "project_awards" },
+          { categoryId: "cat_5", categoryNumber: 5, categoryName: "Best Project for Sports & Recreation", groupId: "project_awards" },
           { categoryId: "cat_8", categoryNumber: 8, categoryName: "Best Project for Public Relations", groupId: "project_awards" },
           { categoryId: "cat_9", categoryNumber: 9, categoryName: "Best Project for Fundraiser", groupId: "project_awards" },
           { categoryId: "cat_25", categoryNumber: 25, categoryName: "Best Serving Together Project", groupId: "joint_project_awards" },
+          { categoryId: "cat_28", categoryNumber: 28, categoryName: "Best Joint Intra-District Project", groupId: "joint_project_awards" },
           { categoryId: "cat_31", categoryNumber: 31, categoryName: "Best Project for Diabetes", groupId: "lions_global_service" },
-          { categoryId: "cat_32", categoryNumber: 32, categoryName: "Best Project for the Environment", groupId: "lions_global_service" }
+          { categoryId: "cat_32", categoryNumber: 32, categoryName: "Best Project for the Environment", groupId: "lions_global_service" },
+          { categoryId: "cat_36", categoryNumber: 36, categoryName: "Best Project for Youth", groupId: "lions_global_service" }
         ],
-        completedCount: 6,
+        completedCount: 10,
         totalPossible: 37
       },
       {
         id: "pcs_2",
         clubId: "c7",
         clubName: "Leo Club of University of Colombo Faculty of Science",
-        month: "2026-06",
+        month: "2026-07",
         status: "approved",
-        submittedAt: "2026-06-28T14:30:00Z",
+        submittedAt: "2026-07-28T14:30:00Z",
         submittedBy: "Leo Lion G.D Thevindu Nirmitha",
         subClaims: {
           cat_2_sub_1: { ticked: true, proofs: [{ name: "MyLion_WasteMgmt_Report.pdf", type: "application/pdf", size: "1.1 MB", url: "#" }] },
           cat_2_sub_2: { ticked: true, proofs: [{ name: "Recycling_Drive_Receipts.pdf", type: "application/pdf", size: "890 KB", url: "#" }] },
           cat_10_sub_1: { ticked: true, proofs: [{ name: "MyLion_Education_Report.pdf", type: "application/pdf", size: "1.3 MB", url: "#" }] },
           cat_10_sub_2: { ticked: true, proofs: [{ name: "School_SmartClassroom_Handover.pdf", type: "application/pdf", size: "2.0 MB", url: "#" }] },
+          cat_16_sub_1: { ticked: true, proofs: [{ name: "MyLion_RnD_Project.pdf", type: "application/pdf", size: "2.5 MB", url: "#" }] },
+          cat_16_sub_2: { ticked: true, proofs: [{ name: "Water_Quality_Analysis_Data.pdf", type: "application/pdf", size: "3.1 MB", url: "#" }] },
           cat_26_sub_1: { ticked: true, proofs: [{ name: "MyLion_NGO_Joint.pdf", type: "application/pdf", size: "1.0 MB", url: "#" }] },
           cat_26_sub_2: { ticked: true, proofs: [{ name: "Rotaract_Partner_MOU.pdf", type: "application/pdf", size: "1.2 MB", url: "#" }] },
           cat_33_sub_1: { ticked: true, proofs: [{ name: "MyLion_Hunger_Relief.pdf", type: "application/pdf", size: "950 KB", url: "#" }] },
-          cat_33_sub_2: { ticked: true, proofs: [{ name: "Community_Kitchen_Photos.jpg", type: "image/jpeg", size: "1.7 MB", url: "#" }] }
+          cat_33_sub_2: { ticked: true, proofs: [{ name: "Community_Kitchen_Photos.jpg", type: "image/jpeg", size: "1.7 MB", url: "#" }] },
+          cat_35_sub_1: { ticked: true, proofs: [{ name: "MyLion_Eye_Screening.pdf", type: "application/pdf", size: "1.3 MB", url: "#" }] },
+          cat_35_sub_2: { ticked: true, proofs: [{ name: "National_Eye_Bank_Collaboration.pdf", type: "application/pdf", size: "1.8 MB", url: "#" }] }
         },
         completedCategories: [
           { categoryId: "cat_2", categoryNumber: 2, categoryName: "Best Project for Responsible Consumption & Waste Management", groupId: "project_awards" },
           { categoryId: "cat_10", categoryNumber: 10, categoryName: "Best Project for Quality Education & Literacy", groupId: "project_awards" },
+          { categoryId: "cat_16", categoryNumber: 16, categoryName: "Best Project for Research & Development", groupId: "project_awards" },
           { categoryId: "cat_26", categoryNumber: 26, categoryName: "Best Joint Project with a Non-Leo/Outside Organisation", groupId: "joint_project_awards" },
-          { categoryId: "cat_33", categoryNumber: 33, categoryName: "Best Project for Hunger", groupId: "lions_global_service" }
+          { categoryId: "cat_33", categoryNumber: 33, categoryName: "Best Project for Hunger", groupId: "lions_global_service" },
+          { categoryId: "cat_35", categoryNumber: 35, categoryName: "Best Project for Vision", groupId: "lions_global_service" }
         ],
-        completedCount: 4,
+        completedCount: 6,
         totalPossible: 37
       },
       {
         id: "pcs_3",
         clubId: "c8",
         clubName: "Leo Club of University of Colombo Faculty of Arts",
-        month: "2026-06",
+        month: "2026-07",
         status: "approved",
-        submittedAt: "2026-06-29T10:15:00Z",
+        submittedAt: "2026-07-29T10:15:00Z",
         submittedBy: "Leo Lion Hashini Nethmika",
         subClaims: {
           cat_4_sub_1: { ticked: true, proofs: [{ name: "MyLion_Cultural_Festival.pdf", type: "application/pdf", size: "1.6 MB", url: "#" }] },
@@ -2262,54 +2280,6 @@ function getDefaultData() {
           { categoryId: "cat_11", categoryNumber: 11, categoryName: "Best Project for Women Empowerment", groupId: "project_awards" },
           { categoryId: "cat_27", categoryNumber: 27, categoryName: "Best Joint Inter-District Project", groupId: "joint_project_awards" },
           { categoryId: "cat_34", categoryNumber: 34, categoryName: "Best Project for Childhood Cancer", groupId: "lions_global_service" }
-        ],
-        completedCount: 4,
-        totalPossible: 37
-      },
-      {
-        id: "pcs_4",
-        clubId: "c7",
-        clubName: "Leo Club of University of Colombo Faculty of Science",
-        month: "2026-06",
-        status: "approved",
-        submittedAt: "2026-06-30T16:20:00Z",
-        submittedBy: "Leo Lion Vinuk Thismalpola",
-        subClaims: {
-          cat_16_sub_1: { ticked: true, proofs: [{ name: "MyLion_RnD_Project.pdf", type: "application/pdf", size: "2.5 MB", url: "#" }] },
-          cat_16_sub_2: { ticked: true, proofs: [{ name: "Water_Quality_Analysis_Data.pdf", type: "application/pdf", size: "3.1 MB", url: "#" }] },
-          cat_35_sub_1: { ticked: true, proofs: [{ name: "MyLion_Eye_Screening.pdf", type: "application/pdf", size: "1.3 MB", url: "#" }] },
-          cat_35_sub_2: { ticked: true, proofs: [{ name: "National_Eye_Bank_Collaboration.pdf", type: "application/pdf", size: "1.8 MB", url: "#" }] }
-        },
-        completedCategories: [
-          { categoryId: "cat_16", categoryNumber: 16, categoryName: "Best Project for Research & Development", groupId: "project_awards" },
-          { categoryId: "cat_35", categoryNumber: 35, categoryName: "Best Project for Vision", groupId: "lions_global_service" }
-        ],
-        completedCount: 2,
-        totalPossible: 37
-      },
-      {
-        id: "pcs_5",
-        clubId: "c6",
-        clubName: "Leo Club of Informatics Institute of Technology",
-        month: "2026-07",
-        status: "approved",
-        submittedAt: "2026-07-28T15:45:00Z",
-        submittedBy: "Leo Lion Manish Perera",
-        subClaims: {
-          cat_3_sub_1: { ticked: true, proofs: [{ name: "MyLion_Nutrition_Camp.pdf", type: "application/pdf", size: "1.2 MB", url: "#" }] },
-          cat_3_sub_2: { ticked: true, proofs: [{ name: "Food_Safety_Awareness.pdf", type: "application/pdf", size: "1.4 MB", url: "#" }] },
-          cat_5_sub_1: { ticked: true, proofs: [{ name: "MyLion_Sports_Cricket.pdf", type: "application/pdf", size: "980 KB", url: "#" }] },
-          cat_5_sub_2: { ticked: true, proofs: [{ name: "Sports_Kit_Distribution.jpg", type: "image/jpeg", size: "1.6 MB", url: "#" }] },
-          cat_28_sub_1: { ticked: true, proofs: [{ name: "MyLion_IntraDistrict_Joint.pdf", type: "application/pdf", size: "1.1 MB", url: "#" }] },
-          cat_28_sub_2: { ticked: true, proofs: [{ name: "IntraDistrict_Hosting_Letter.pdf", type: "application/pdf", size: "850 KB", url: "#" }] },
-          cat_36_sub_1: { ticked: true, proofs: [{ name: "MyLion_Youth_Tech_Summit.pdf", type: "application/pdf", size: "2.1 MB", url: "#" }] },
-          cat_36_sub_2: { ticked: true, proofs: [{ name: "Coding_Bootcamp_Attendance.pdf", type: "application/pdf", size: "1.5 MB", url: "#" }] }
-        },
-        completedCategories: [
-          { categoryId: "cat_3", categoryNumber: 3, categoryName: "Best Project for Health, Nutrition & Food Safety", groupId: "project_awards" },
-          { categoryId: "cat_5", categoryNumber: 5, categoryName: "Best Project for Sports & Recreation", groupId: "project_awards" },
-          { categoryId: "cat_28", categoryNumber: 28, categoryName: "Best Joint Intra-District Project", groupId: "joint_project_awards" },
-          { categoryId: "cat_36", categoryNumber: 36, categoryName: "Best Project for Youth", groupId: "lions_global_service" }
         ],
         completedCount: 4,
         totalPossible: 37
@@ -2594,6 +2564,21 @@ class Store {
         if (!this._data.projectCategorySubmissions || !Array.isArray(this._data.projectCategorySubmissions) || this._data.projectCategorySubmissions.length === 0) {
           const fresh = getDefaultData();
           this._data.projectCategorySubmissions = fresh.projectCategorySubmissions;
+          this.save();
+        }
+
+        if (this._data.points_june_cleanup_version !== '2026_june_cleanup_v2') {
+          if (Array.isArray(this._data.projectCategorySubmissions)) {
+            this._data.projectCategorySubmissions = this._data.projectCategorySubmissions.filter(s => s.month !== '2026-06');
+          }
+          if (Array.isArray(this._data.pointsSubmissions)) {
+            this._data.pointsSubmissions = this._data.pointsSubmissions.filter(s => s.month !== '2026-06');
+          }
+          if (!this._data.projectCategorySubmissions || this._data.projectCategorySubmissions.length === 0) {
+            const fresh = getDefaultData();
+            this._data.projectCategorySubmissions = fresh.projectCategorySubmissions;
+          }
+          this._data.points_june_cleanup_version = '2026_june_cleanup_v2';
           this.save();
         }
         
@@ -4321,7 +4306,7 @@ class Store {
     const totalPoints = this.getTotalClubPoints(clubId);
     
     const approvedSubs = (this._data.pointsSubmissions || [])
-      .filter(s => s.clubId === clubId && s.status === 'approved')
+      .filter(s => s.clubId === clubId && s.status === 'approved' && s.month !== '2026-06')
       .sort((a, b) => a.month.localeCompare(b.month));
     
     const sumApproved = approvedSubs.reduce((sum, s) => sum + s.totalPoints, 0);
@@ -4371,6 +4356,7 @@ class Store {
   getProjectCategorySubmissions(clubId = null, month = null) {
     if (!this._data.projectCategorySubmissions) this._data.projectCategorySubmissions = [];
     return this._data.projectCategorySubmissions.filter(s => {
+      if (s.month === '2026-06') return false;
       if (clubId && s.clubId !== clubId) return false;
       if (month && month !== 'all' && s.month !== month) return false;
       return true;

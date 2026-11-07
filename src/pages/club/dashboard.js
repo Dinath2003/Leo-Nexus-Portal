@@ -31,6 +31,7 @@ export function renderClubDashboard() {
   const totalPoints = store.getTotalClubPoints(clubId);
   const submissions = store.getAll('pointsSubmissions').filter(s => s.clubId === clubId);
   const currentMonth = '2026-07';
+  const currentMonthLabel = new Date(currentMonth + '-01').toLocaleString('default', { month: 'long', year: 'numeric' });
   const currentSubmission = submissions.find(s => s.month === currentMonth && s.status !== 'rejected' && s.status !== 'reversed');
 
   const activeMembers = members.filter(m => m.status === 'active').length;
@@ -258,7 +259,7 @@ export function renderClubDashboard() {
 
                 <div style="border-top:1px solid var(--color-border); padding-top:14px;">
                   <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                    <span style="font-size:13px; font-weight:700; color:var(--color-text-primary);">June 2026 Checklist</span>
+                    <span style="font-size:13px; font-weight:700; color:var(--color-text-primary);">${currentMonthLabel} Checklist</span>
                     ${currentSubmission ? `
                       <span class="badge badge-${currentSubmission.status === 'approved' ? 'success' : 'warning'}" style="font-size:10px;">
                         ${currentSubmission.status.toUpperCase()}
@@ -286,7 +287,7 @@ export function renderClubDashboard() {
                     </button>
                   ` : `
                     <div style="background:var(--color-danger-bg); padding:12px; border-radius:12px; font-size:12px; color:var(--color-danger-text); line-height:1.4;">
-                      Checklist not submitted for June 2026. Submit now to earn criteria points.
+                      Checklist not submitted for ${currentMonthLabel}. Submit now to earn criteria points.
                     </div>
                     <button id="dash-points-submit-btn" class="btn btn-primary btn-sm" style="width:100%; margin-top:12px; justify-content:center;">
                       <i data-lucide="clipboard-check" style="width:14px; height:14px;"></i> Submit Checklist Now
